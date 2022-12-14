@@ -51,9 +51,16 @@ touch app.js
 -get /api/csrf/restore =
 allow dev to reset csrf token cookie xsrf-token
 
-<!-- phase-1-api-routes -->
+<!-- phase-1/2-api-routes -->
 
 -mkdir api >> routes
 index.js
 
--
+-1-resource not found error handler
+app.js
+
+-2-sequelize error handler
+
+-3-err handler
+formatting all errors into res.JSON
+includes: e.msg + e.array + e.stack-trace
