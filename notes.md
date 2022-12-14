@@ -1,5 +1,7 @@
 <!-- Meet Project Notes -->
 
+<!-- phase-0-setup -->
+
 <!-- Backend -->
 
 <!-- SQL -->
@@ -49,5 +51,9 @@ touch app.js
 -get /api/csrf/restore =
 allow dev to reset csrf token cookie xsrf-token
 
+<!-- phase-1-api-routes -->
 
-<!-- Frontend -->
+-mkdir api >> routes
+index.js
+
+-

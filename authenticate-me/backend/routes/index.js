@@ -1,9 +1,12 @@
 // routes >> index.js
 
 //create express router
-
 const express = require("express");
 const router = express.Router();
+
+//connect api dir with routes
+const apiRouter = require("./api");
+router.use("/api", apiRouter);
 
 //test route
 // router.get("/hello/world", function (req, res) {
