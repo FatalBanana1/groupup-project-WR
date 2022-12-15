@@ -19,7 +19,6 @@ app.use(morgan("dev"));
 
 //import routes dir
 const routes = require("./routes");
-app.use(routes); // connect all the routes
 
 //add cookie parser
 app.use(cookieParser());
@@ -50,6 +49,10 @@ app.use(
 		},
 	})
 );
+
+// MUST go BEFORE error handlers + middleware
+app.use(routes); // connect all the routes
+
 
 // catch unhandled reqs - forward to error handler
 app.use((_req, _res, next) => {

@@ -2,13 +2,14 @@
 
 // imports
 const router = require("express").Router();
+const { restoreUser } = require("../../utils/auth.js");
 
 // routes
 
 //test api router
-router.post("/test", function (req, res) {
-	res.json({ requestBody: req.body });
-});
+// router.post("/test", function (req, res) {
+// 	res.json({ requestBody: req.body });
+// });
 
 // test in brower console:
 /*
@@ -22,5 +23,28 @@ fetch('/api/test', {
 }).then(res => res.json()).then(data => console.log(data));
 */
 
+// // testing user auth middleware - utils > auth.js
+// const { setTokenCookie } = require("../../utils/auth.js");
+// const { User } = require("../../db/models");
+// router.get("/set-token-cookie", async (_req, res) => {
+// 	const user = await User.findOne({
+// 		where: {
+// 			username: "Demo-lition",
+// 		},
+// 	});
+// 	setTokenCookie(res, user);
+// 	return res.json({ user: user });
+// });
+
+// // test user auth middle - utils > auth.js
+// // GET /api/require-auth
+router.use(restoreUser);
+// const { requireAuth } = require("../../utils/auth.js");
+// router.get("/require-auth", requireAuth, (req, res) => {
+// 	return res.json(req.user);
+// });
+
 // exports
 module.exports = router;
+
+// fin...

@@ -90,4 +90,20 @@ npx dotenv sequelize db:seed:all
 -tosafeobject method: return obj with only user instance info safe to save to jwt: id, username, email
 -validatepass method: return boolean if there is match with user instance and hashedpass
 -getcurrentuserbyid static method: return user with that id
--login static method: return search for user with credential and password keys , return: 
+-login static method: return search for user with credential and password keys , return:
+-signin static method
+
+-User auth middlewares = 3 fxns
+
+-create utils folder in backend
+-file inside = auth.js = store auth helper fxns
+
+-settokencookie method
+-restoreuser method
+-requireAuth method
+
+-test user middleware
+-add test route in backend > routes > api > index.js
+
+-import restoreuser and connect to router before other middlew/routehan
+
