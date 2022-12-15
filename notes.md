@@ -128,4 +128,10 @@ post route
 -get session user route > api/session
 restore session user
 
+-validate login inputs git feature branch
+-adding user input validation on user login reqs
 
+t> npm install express-validator
+
+-validation middleware:
+-touch validation.js > utils
