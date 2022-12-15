@@ -144,3 +144,11 @@ import check fxn from express-validator and handleVErr fxn
 
 -connect post api/session to validatelogin middleware
 
+-validating sugnup req.body: > routes/api/users.js
+-post api/users signup route
+-check with validatesignup
+-validateSignup middleware is composed of the check and handleValidationErrors middleware
+-checks to see if req.body.email exists and is an email, req.body.username is a minimum length of 4 and is not an email, and req.body.password is not empty and has a minimum length of 6
+
+
+-connect the POST /api/users route to the validateSignup middleware
