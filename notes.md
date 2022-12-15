@@ -124,3 +124,8 @@ logout route will remove token cookie and return success json msg
 
 -signup: > router/api/users
 post route
+
+-get session user route > api/session
+restore session user
+
+
