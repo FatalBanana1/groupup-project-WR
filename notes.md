@@ -107,3 +107,13 @@ npx dotenv sequelize db:seed:all
 
 -import restoreuser and connect to router before other middlew/routehan
 
+<!-- phase 4 - user auth routes -->
+
+-session router
+-touch session.js > backend/routes/api
+-touch users.js > backend/routes/api
+
+-connect all routers exported from 2 files in index.js > api
+-connect routes AFTER restoreUser
+
+-session.js - import and post route
