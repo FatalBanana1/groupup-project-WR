@@ -41,10 +41,10 @@ fetch('/api/test', {
 // // test user auth middle - utils > auth.js
 // // GET /api/require-auth
 router.use(restoreUser);
-// const { requireAuth } = require("../../utils/auth.js");
-// router.get("/require-auth", requireAuth, (req, res) => {
-// 	return res.json(req.user);
-// });
+const { requireAuth } = require("../../utils/auth.js");
+router.get("/require-auth", requireAuth, (req, res) => {
+	return res.json(req.user);
+});
 
 router.use("/session", sessionRouter);
 router.use("/users", usersRouter);

@@ -34,6 +34,9 @@ t> npx dotenv sequelize db:migrate
 
 <!-- EXPRESS -->
 
+-reset token url/path
+http://localhost:8000/api/csrf/restore
+
 touch app.js
 
 -set up routes
@@ -135,3 +138,9 @@ t> npm install express-validator
 
 -validation middleware:
 -touch validation.js > utils
+
+-validating login req body > api/session
+import check fxn from express-validator and handleVErr fxn
+
+-connect post api/session to validatelogin middleware
+
