@@ -117,3 +117,10 @@ npx dotenv sequelize db:seed:all
 -connect routes AFTER restoreUser
 
 -session.js - import and post route
+
+-user logout api route:
+-delete route > api/session
+logout route will remove token cookie and return success json msg
+
+-signup: > router/api/users
+post route

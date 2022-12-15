@@ -61,5 +61,25 @@ fetch('/api/session', {
 
 */
 
+// log out - delete
+router.delete("/", (_req, res) => {
+	res.clearCookie("token");
+	return res.json({ message: "success" });
+});
+
+/*
+// testing delete = logout user
+fetch('/api/session', {
+  method: 'DELETE',
+  headers: {
+    "Content-Type": "application/json",
+    "XSRF-TOKEN": `kShVWw7C-r9HSPD4kiCeaJheXfmcNN8Qz4Kc`
+  }
+}).then(res => res.json()).then(data => console.log(data));
+
+*/
+
+
+
 // exports
 module.exports = router;
