@@ -8,6 +8,11 @@ const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
+//import routes dir
+const routes = require("./routes");
+
+//sequelize error handler
+const { ValidationError } = require("sequelize");
 
 // check env: prod or dev
 const { environment } = require("./config");
@@ -16,9 +21,6 @@ const isProduction = environment === "production";
 const app = express();
 //connect morgan middleware
 app.use(morgan("dev"));
-
-//import routes dir
-const routes = require("./routes");
 
 //add cookie parser
 app.use(cookieParser());
@@ -39,7 +41,6 @@ app.use(
 );
 
 //set _csrf token + create req.csrftoken method
-
 app.use(
 	csurf({
 		cookie: {
@@ -53,7 +54,6 @@ app.use(
 // MUST go BEFORE error handlers + middleware
 app.use(routes); // connect all the routes
 
-
 // catch unhandled reqs - forward to error handler
 app.use((_req, _res, next) => {
 	const err = new Error(`The requested resource couldn't be found.`);
@@ -62,9 +62,6 @@ app.use((_req, _res, next) => {
 	err.status = 404;
 	next(err);
 });
-
-//sequelize error handler
-const { ValidationError } = require("sequelize");
 
 app.use((err, _req, _res, next) => {
 	// check if err is from sqlize
