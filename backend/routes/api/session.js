@@ -146,4 +146,4 @@ fetch('/api/session', {
 
 
 // exports
-module.exports = router;
+module.exports = router
