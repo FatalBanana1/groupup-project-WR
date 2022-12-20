@@ -2,13 +2,12 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Group extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		static associate(models) {
 			// define association here
+			// Group.hasMany(models.GroupImage);
+			Group.belongsToMany(models.User, {
+				through: models.Membership,
+			});
 		}
 	}
 	Group.init(
@@ -39,10 +38,18 @@ module.exports = (sequelize, DataTypes) => {
 			state: {
 				type: DataTypes.STRING,
 			},
+			// previewImage: {
+			// 	type: DataTypes.String,
+			// },
 		},
 		{
 			sequelize,
 			modelName: "Group",
+			// defaultScope: {
+			// 	attributes: {
+			// 		exclude: ["updatedAt", "createdAt"],
+			// 	},
+			// },
 		}
 	);
 	return Group;

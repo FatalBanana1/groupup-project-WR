@@ -60,13 +60,9 @@ app.use((_req, _res, next) => {
 	const err = new Error(`The requested resource couldn't be found.`);
 	err.title = `Resource Not Found`;
 	err.errors = [`The requested resource couldn't be found.`];
-	err.status = 404;
 	next(err);
 });
 
-// app.use((err, req, res, next) => {
-// 	if(err instance)
-// })
 
 app.use((err, _req, res, next) => {
 	// check if err is from sqlize
@@ -85,6 +81,8 @@ app.use((err, _req, res, next) => {
 		} else if (err.errors[1].includes("email")) {
 			err.status = 403;
 		}
+	} else {
+		err.status = 404
 	}
 	next(err);
 });

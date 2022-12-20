@@ -162,6 +162,16 @@ npx sequelize model:generate --name Group --attributes organizerId:integer,name:
 -seeders for groups t
 npx sequelize seed:generate --name test-groups
 
+-create groupimages t
+npx sequelize model:generate --name GroupImage --attributes groupId:integer,url:string,preview:boolean
+
+-add skydiving imgs - seed file
+npx sequelize seed:generate --name add-skydiving-imgs-test-1
+
+-add membership seeders
+npx sequelize seed:generate --name add-test-memberships
+
+
 -usergroups join table = memberships
 npx sequelize model:generate --name Membership --attributes userId:integer,groupId:integer,status:enum
 

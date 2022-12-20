@@ -2,46 +2,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable("Groups", {
+		await queryInterface.createTable("GroupImages", {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			organizerId: {
+			groupId: {
 				type: Sequelize.INTEGER,
 				references: {
-					model: "Users",
+					model: "Groups",
 				},
 				onDelete: "CASCADE",
 			},
-			name: {
+			url: {
 				type: Sequelize.STRING,
+				// references: {
+				// 	model: "Groups",
+				// },
+				// onDelete: "CASCADE",
 			},
-			about: {
-				type: Sequelize.STRING,
-			},
-			type: {
-				type: Sequelize.ENUM,
-				values: ["Online", "In person"],
-				defaultValue: "Online",
-			},
-			private: {
+			preview: {
 				type: Sequelize.BOOLEAN,
+				defaultValue: false,
 			},
-			city: {
-				type: Sequelize.STRING,
-			},
-			state: {
-				type: Sequelize.STRING,
-			},
-			// previewImage: {
-			// 	type: Sequelize.STRING,
-			// 	// references: {
-			// 	// 	model: "GroupImages",
-			// 	// },
-			// },
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
@@ -55,6 +40,6 @@ module.exports = {
 		});
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable("Groups");
+		await queryInterface.dropTable("GroupImages");
 	},
 };
