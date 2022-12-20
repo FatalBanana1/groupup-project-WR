@@ -11,28 +11,8 @@ const router = express.Router();
 
 // routes
 
-router.post("/", async (req, res, next) => {
-	const { credential, password } = req.body;
-
-	const user = await User.login({ credential, password });
-
-	if (!user) {
-		const err = new Error("Login failed");
-		err.status = 401;
-		err.title = "Login failed";
-		err.errors = [`The provided credentials were invalid.`];
-		return next(err);
-	}
-
-	await setTokenCookie(res, user);
-
-	return res.json({
-		user: user,
-	});
-});
-
 /*
-// Testing above post error handler - username
+// Testing post error handler - username
 fetch('/api/session', {
   method: 'POST',
   headers: {
@@ -79,15 +59,17 @@ fetch('/api/session', {
     "XSRF-TOKEN": `kShVWw7C-r9HSPD4kiCeaJheXfmcNN8Qz4Kc`
   }
 }).then(res => res.json()).then(data => console.log(data));
-
 */
 
 // Restore session user
-router.get("/", restoreUser, (req, res) => {
-	const { user } = req;
+router.get("/", restoreUser, async (req, res) => {
+	let { user } = req;
+	user = await User.scope(["defaultScope"]).findOne({
+		where: { id: user.id },
+	});
 	if (user) {
 		return res.json({
-			user: user.toSafeObject(),
+			user: user,
 		});
 	} else return res.json({ user: null });
 });
@@ -99,10 +81,10 @@ const validateLogin = [
 	check("credential")
 		.exists({ checkFalsy: true })
 		.notEmpty()
-		.withMessage("Please provide a valid email or username."),
+		.withMessage("Email is required"),
 	check("password")
 		.exists({ checkFalsy: true })
-		.withMessage("Please provide a password."),
+		.withMessage("Password is required"),
 	handleValidationErrors,
 ];
 
@@ -110,16 +92,23 @@ const validateLogin = [
 router.post("/", validateLogin, async (req, res, next) => {
 	const { credential, password } = req.body;
 
-	const user = await User.login({ credential, password });
+	let user = await User.login({ credential, password });
 
+	//if id does not exist
 	if (!user) {
-		const err = new Error("Login failed");
-		err.status = 401;
-		err.title = "Login failed";
-		err.errors = ["The provided credentials were invalid."];
-		return next(err);
+		// const err = new Error("Login Failed");
+		// err.status = 401;
+		// err.errors = ["Invalid credentials"];
+		// return next(err);
+		return res.status(401).json({
+			message: `Invalid Credentials`,
+			statusCode: 401
+		});
 	}
 
+	user = await User.scope(["defaultScope"]).findOne({
+		where: { id: user.id },
+	});
 	await setTokenCookie(res, user);
 
 	return res.json({
@@ -140,6 +129,9 @@ fetch('/api/session', {
 }).then(res => res.json()).then(data => console.log(data));
 
 */
+
+
+
 
 // exports
 module.exports = router;

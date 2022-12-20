@@ -16,6 +16,7 @@ const { ValidationError } = require("sequelize");
 
 // check env: prod or dev
 const { environment } = require("./config");
+const e = require("express");
 const isProduction = environment === "production";
 
 const app = express();
@@ -62,6 +63,10 @@ app.use((_req, _res, next) => {
 	err.status = 404;
 	next(err);
 });
+
+// app.use((err, req, res, next) => {
+// 	if(err instance)
+// })
 
 app.use((err, _req, _res, next) => {
 	// check if err is from sqlize
