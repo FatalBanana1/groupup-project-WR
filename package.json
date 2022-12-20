@@ -1,14 +1,15 @@
 {
 	"name": "authenticate-me",
 	"version": "1.0.0",
-	"description": "authenticate-me-project-wasiq-rashid",
+	"description": "",
 	"main": "index.js",
 	"scripts": {
 		"install": "npm --prefix backend install backend",
-		"build": "npm install && npm run build && npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db:migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all",
-		"start": "nodemon ./backend/app.js",
-    "sequelize":"npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db:migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all",
-		"test": "echo \"Error: no test specified\" && exit 1"
+    "dev:backend": "npm install --prefix backend start",
+    "sequelize": "npm run --prefix backend sequelize",
+    "sequelize-cli": "npm run --prefix backend sequelize-cli",
+    "start": "npm start --prefix backend",
+    "build": "npm run --prefix backend build"
 	},
 	"repository": {
 		"type": "git",
@@ -21,3 +22,13 @@
 	},
 	"homepage": "https://github.com/FatalBanana1/api-project-WR#readme"
 }
+
+
+
+/*
+// "install": "npm --prefix backend install backend",
+// "build": "npm install && npm run build && npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db:migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all",
+// "start": "nodemon ./backend/app.js",
+// "sequelize":"npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db:migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all",
+// "test": "echo \"Error: no test specified\" && exit 1"
+*/
