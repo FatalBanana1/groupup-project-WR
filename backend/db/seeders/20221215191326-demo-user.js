@@ -49,10 +49,10 @@ module.exports = {
 				},
 
 				{
-					firstName: "John",
-					lastName: "Smith",
-					email: "john.smith@gmail.com",
-					username: "JohnSmith",
+					firstName: "Al",
+					lastName: "Gore",
+					email: "globalwarming@aol.com",
+					username: "goremania",
 					hashedPassword: bcrypt.hashSync("password5"),
 				},
 			],

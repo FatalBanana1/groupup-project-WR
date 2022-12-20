@@ -68,11 +68,23 @@ app.use((_req, _res, next) => {
 // 	if(err instance)
 // })
 
-app.use((err, _req, _res, next) => {
+app.use((err, _req, res, next) => {
 	// check if err is from sqlize
 	if (err instanceof ValidationError) {
 		err.errors = err.errors.map((e) => e.message);
 		err.title = `Validation Error`;
+
+		// sign up >> email != unique
+		if (err.errors[0].includes("email")) {
+			err.status = 403;
+			res.json({
+				message: `User already exists`,
+				statusCode: 403,
+				errors: { email: `User with that email already exists` },
+			});
+		} else if (err.errors[1].includes("email")) {
+			err.status = 403;
+		}
 	}
 	next(err);
 });

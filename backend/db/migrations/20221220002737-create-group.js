@@ -20,8 +20,8 @@ module.exports = {
 			},
 			type: {
 				type: Sequelize.ENUM,
-				values: ["online", "in-person"],
-				defaultValue: "online",
+				values: ["Online", "In person"],
+				defaultValue: "Online",
 			},
 			private: {
 				type: Sequelize.BOOLEAN,

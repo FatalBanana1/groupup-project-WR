@@ -19,16 +19,26 @@ module.exports = (sequelize, DataTypes) => {
 					model: "Users",
 				},
 			},
-			name: { type: DataTypes.STRING },
-			about: { type: DataTypes.STRING },
+			name: {
+				type: DataTypes.STRING,
+			},
+			about: {
+				type: DataTypes.STRING,
+			},
 			type: {
 				type: DataTypes.ENUM,
-				values: ("online", "in-person"),
-				defaultValue: "online",
+				values: ("Online", "In person"),
+				defaultValue: "Online",
 			},
-			private: { type: DataTypes.BOOLEAN },
-			city: { type: DataTypes.STRING },
-			state: { type: DataTypes.STRING },
+			private: {
+				type: DataTypes.BOOLEAN,
+			},
+			city: {
+				type: DataTypes.STRING,
+			},
+			state: {
+				type: DataTypes.STRING,
+			},
 		},
 		{
 			sequelize,
