@@ -15,9 +15,9 @@ module.exports = {
       groupId: {
         type: Sequelize.INTEGER
       },
-      status: {
-        type: Sequelize.ENUM
-      },
+      // status: {
+      //   type: Sequelize.ENUM
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
