@@ -153,4 +153,19 @@ import check fxn from express-validator and handleVErr fxn
 
 -wrapping up backend:
 -refactor to add firstname and lastname attr
+
+<!-- migrations -->
+
+-create groups table and model
+npx sequelize model:generate --name Group --attributes organizerId:integer,name:string,about:string,type:enum,private:boolean,city:string,state:string
+
+-seeders for groups t
+npx sequelize seed:generate --name cartoon-group
+
+-usergroups join table = memberships
+npx sequelize model:generate --name Membership --attributes userId:integer,groupId:integer,status:enum
+
+//---------------------------
+-TODO
 -
+//---------------------------
