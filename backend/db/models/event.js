@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Event.belongsTo(models.Group);
 
-			Event.hasMany(models.EventImage);
-
 			Event.belongsTo(models.Venue);
 
-			Event.belongsTo(models.Attendance);
+			Event.hasMany(models.EventImage);
+
+			Event.hasMany(models.Attendance);
 		}
 	}
 	Event.init(
