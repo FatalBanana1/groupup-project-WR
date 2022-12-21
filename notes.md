@@ -171,7 +171,6 @@ npx sequelize seed:generate --name add-skydiving-imgs-test-1
 -add membership seeders
 npx sequelize seed:generate --name add-test-memberships
 
-
 -usergroups join table = memberships
 npx sequelize model:generate --name Membership --attributes userId:integer,groupId:integer,status:enum
 
@@ -179,15 +178,43 @@ npx sequelize model:generate --name Membership --attributes userId:integer,group
 
 -EVENTS
 
+-create events table
+npx sequelize model:generate --name Event --attributes venueId:integer,groupId:integer,name:string,description:string,type:enum,capacity:integer,price:integer,startDate:date,endDate:date
+
+-create seeders - events t
+npx sequelize seed:generate --name add-test-events
+
+-link events to group
+
+-create eventimages table
+
+-link eventimages to events
 
 //---------------------------
 
 -VENUES
 
 //---------------------------
+
+-Attendances
+
 //---------------------------
-//---------------------------
+tables:
+venueid: 1 = online
+
+venueid: 2 = broadway
+1681 BROADWAY, NEW YORK, NY 10036
+
+venueid: 3 = metropolitan museum of art
+1000 5th ave, nyc, ny
+
+venueid: 4 = american museum of natural history
+200 Central Park West, New York, NY 10024
+
+venueid: 5 = The Museum of Modern Art
+11 W 53rd St, New York, NY 10019
+
 //---------------------------
 -TODO
--
+
 //---------------------------

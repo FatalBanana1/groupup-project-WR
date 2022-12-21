@@ -24,7 +24,7 @@ module.exports = {
 			[
 				{
 					organizerId: "1",
-					name: "Indoor Skydiving",
+					name: "Skydiving Enthusiasts",
 					about: "Experience the thrill of skydiving without any of the danger.",
 					type: "In person",
 					private: true,
@@ -33,7 +33,7 @@ module.exports = {
 				},
 				{
 					organizerId: "3",
-					name: "Watch a famous Broadway show",
+					name: "Broadway Watchers",
 					about: "Watching a Broadway show is an experience like no other, fun guaranteed.",
 					type: "In person",
 					private: true,
@@ -42,7 +42,7 @@ module.exports = {
 				},
 				{
 					organizerId: "3",
-					name: "Visit the Museum of Natural History",
+					name: "Museum Explorers",
 					about: "Come face to face with dinosaurs at the American Natural History Museum.",
 					type: "In person",
 					private: false,
