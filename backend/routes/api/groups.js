@@ -10,6 +10,7 @@ const {
 	User,
 	Membership,
 	Event,
+	Venue,
 } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -121,6 +122,19 @@ router.get("/:groupId/events", async (req, res) => {
 		],
 	});
 	return res.json({ Events: events });
+});
+
+//TODO:
+// Get All Venues for a Group specified by its id
+// get /api/groups/:groupId/venues
+router.get("/:groupId/venues", async (req, res) => {
+	let groupId = req.params.groupId;
+
+	let venues = await Venue.scope(["defaultScope"]).findAll({
+		attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
+		where: { groupId },
+	});
+	return res.json({ Venues: venues });
 });
 
 // get all groups
