@@ -4,9 +4,13 @@ module.exports = (sequelize, DataTypes) => {
 	class Group extends Model {
 		static associate(models) {
 			// define association here
-			// Group.hasMany(models.GroupImage);
+			Group.hasMany(models.GroupImage);
 			Group.belongsToMany(models.User, {
 				through: models.Membership,
+				as: "Members",
+			});
+			Group.belongsTo(models.User, {
+				foreignKey: "organizerId",
 			});
 		}
 	}
@@ -38,9 +42,6 @@ module.exports = (sequelize, DataTypes) => {
 			state: {
 				type: DataTypes.STRING,
 			},
-			// previewImage: {
-			// 	type: DataTypes.String,
-			// },
 		},
 		{
 			sequelize,

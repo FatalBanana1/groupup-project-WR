@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 			//1-many with groups
-			// GroupImage.belongsTo(models.Group);
+			GroupImage.belongsTo(models.Group);
 		}
 	}
 	GroupImage.init(
@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: "GroupImage",
+			defaultScope: {
+				attributes: {
+					exclude: ["updatedAt", "createdAt"],
+				},
+			},
 		}
 	);
 	return GroupImage;

@@ -36,12 +36,6 @@ module.exports = {
 			state: {
 				type: Sequelize.STRING,
 			},
-			// previewImage: {
-			// 	type: Sequelize.STRING,
-			// 	// references: {
-			// 	// 	model: "GroupImages",
-			// 	// },
-			// },
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,

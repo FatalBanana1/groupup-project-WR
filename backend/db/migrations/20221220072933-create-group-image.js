@@ -18,10 +18,6 @@ module.exports = {
 			},
 			url: {
 				type: Sequelize.STRING,
-				// references: {
-				// 	model: "Groups",
-				// },
-				// onDelete: "CASCADE",
 			},
 			preview: {
 				type: Sequelize.BOOLEAN,

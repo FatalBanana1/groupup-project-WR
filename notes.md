@@ -176,6 +176,18 @@ npx sequelize seed:generate --name add-test-memberships
 npx sequelize model:generate --name Membership --attributes userId:integer,groupId:integer,status:enum
 
 //---------------------------
+
+-EVENTS
+
+
+//---------------------------
+
+-VENUES
+
+//---------------------------
+//---------------------------
+//---------------------------
+//---------------------------
 -TODO
 -
 //---------------------------

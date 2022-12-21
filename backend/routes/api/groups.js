@@ -4,7 +4,7 @@
 const express = require("express");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth.js");
-const { Group } = require("../../db/models");
+const { Group, GroupImage, User, Membership } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const router = express.Router();
@@ -33,8 +33,77 @@ const router = express.Router();
 // 	handleValidationErrors,
 // ];
 
+//-----------------get----------------------
+
+//TODO: remove the attr associated through membership table down to just 'status'
+// memberships - get all members of group by id
+// get - /groupid/members
+router.get("/:groupId/members", async (req, res) => {
+	let groupId = req.params.groupId;
+	let members = await Group.scope(["defaultScope"]).findOne({
+		attributes: [],
+		where: { id: groupId },
+		include: [
+			{
+				model: User,
+				as: "Members",
+				attributes: ["id", "firstName", "lastName"],
+			},
+		],
+	});
+
+	return res.json(members);
+});
+
+//TODO:
+// groups - get all groups joined or organized bvy current user
+// get - /groups/current
+router.get("/current", async (req, res) => {
+	let { user } = req;
+
+	let organizers = await Group.scope(["defaultScope"]).findAll({
+		where: { organizerId: user.id },
+	});
+
+	let groups = await Group.scope(["defaultScope"]).findAll({
+		include: [
+			{
+				model: User,
+				as: "Members",
+				attributes: [],
+				where: { id: user.id },
+			},
+		],
+	});
+
+	return res.json(groups);
+});
+
+//----------------post-------------------------
+
+//group images: add image
+// post - api/groups.groupid/images
+router.post("/:groupId/images", async (req, res) => {
+	let groupId = req.params.groupId;
+	let { url, preview } = req.body;
+
+	// add img to groupimages table
+	let newimage = await GroupImage.create({
+		groupId,
+		url,
+		preview,
+	});
+	newimage = await GroupImage.scope(["defaultScope"]).findOne({
+		where: {
+			groupId,
+			url,
+			preview,
+		},
+	});
+	return res.json(newimage);
+});
+
 router.post("/", async (req, res) => {
-	console.log(`inside post---------------------`);
 	return res.json(`inside the response`);
 });
 
