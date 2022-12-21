@@ -10,6 +10,7 @@ const {
 	User,
 	Membership,
 	Event,
+	EventImage,
 	Venue,
 } = require("../../db/models");
 const { check } = require("express-validator");
@@ -60,21 +61,21 @@ router.get("/", async (req, res) => {
 
 //----------------post-------------------------
 
-//group images: add image
-// post - api/groups.groupid/images
-router.post("/:groupId/images", async (req, res) => {
-	let groupId = req.params.groupId;
+// Add an Image to a Event based on the Event's id
+// post - /api/events/:eventId/images
+router.post("/:eventId/images", async (req, res) => {
+	let eventId = req.params.eventId;
 	let { url, preview } = req.body;
 
 	// add img to groupimages table
-	let newimage = await GroupImage.create({
-		groupId,
+	let newimage = await EventImage.create({
+		eventId,
 		url,
 		preview,
 	});
-	newimage = await GroupImage.scope(["defaultScope"]).findOne({
+	newimage = await EventImage.scope(["defaultScope"]).findOne({
 		where: {
-			groupId,
+			eventId,
 			url,
 			preview,
 		},
