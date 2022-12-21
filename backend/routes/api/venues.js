@@ -1,16 +1,10 @@
-// routes > api > groups
+// routes > api > Venues
 
 //imports
 const express = require("express");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth.js");
-const {
-	Group,
-	GroupImage,
-	User,
-	Membership,
-	Event,
-} = require("../../db/models");
+const { Group, GroupImage, User, Membership, Event, Venue } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const router = express.Router();
@@ -61,79 +55,7 @@ router.get("/:groupId/members", async (req, res) => {
 	return res.json(members);
 });
 
-//TODO:
-// groups - get all groups joined or organized bvy current user
-// get - /groups/current
-router.get("/current", async (req, res) => {
-	let { user } = req;
 
-	let organizers = await Group.scope(["defaultScope"]).findAll({
-		where: { organizerId: user.id },
-	});
-
-	let groups = await Group.scope(["defaultScope"]).findAll({
-		include: [
-			{
-				model: User,
-				as: "Members",
-				attributes: [],
-				where: { id: user.id },
-			},
-		],
-	});
-
-	// filter duplicate groups included in results
-	let array = [...organizers, ...groups];
-	let newarray = [];
-	let visited = new Set();
-	array.forEach((el) => {
-		if (!visited.has(el.id)) {
-			newarray.push(el);
-			visited.add(el.id);
-		}
-	});
-
-	return res.json({ Groups: newarray });
-});
-
-//TODO: add numattending + previewImage attr to results
-// groups - Get all Events of a Group specified by its id
-// get - /api/groups/:groupId/events
-router.get("/:groupId/events", async (req, res) => {
-	let groupId = req.params.groupId;
-
-	let events = await Event.scope(["defaultScope"]).findAll({
-		attributes: [
-			"id",
-			"groupId",
-			"venueId",
-			"name",
-			"type",
-			"startDate",
-			"endDate",
-		],
-		include: [
-			{
-				model: Group,
-				where: { id: groupId },
-				attributes: ["id", "name", "city", "state"],
-			},
-		],
-	});
-	return res.json({ Events: events });
-});
-
-// get all groups
-// get - /api/groups/
-router.get("/", async (req, res) => {
-	let { group } = req;
-	group = await Group.findAll();
-	if (group) {
-		return res.json({
-			group: group,
-		});
-	} else return res.json({ group: null });
-});
 
 //----------------post-------------------------
 
@@ -159,9 +81,6 @@ router.post("/:groupId/images", async (req, res) => {
 	return res.json(newimage);
 });
 
-router.post("/", async (req, res) => {
-	return res.json(`inside the response`);
-});
 
 // exports
 module.exports = router;

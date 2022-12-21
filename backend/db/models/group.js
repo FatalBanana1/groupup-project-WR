@@ -9,9 +9,12 @@ module.exports = (sequelize, DataTypes) => {
 				through: models.Membership,
 				as: "Members",
 			});
+
 			Group.belongsTo(models.User, {
 				foreignKey: "organizerId",
 			});
+
+			Group.hasMany(models.Event);
 		}
 	}
 	Group.init(

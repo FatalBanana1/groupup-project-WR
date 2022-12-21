@@ -184,9 +184,14 @@ npx sequelize model:generate --name Event --attributes venueId:integer,groupId:i
 -create seeders - events t
 npx sequelize seed:generate --name add-test-events
 
--link events to group
+-link events to group by groupid
 
 -create eventimages table
+npx sequelize model:generate --name EventImage --attributes eventId:integer,url:string,preview:boolean
+
+-create seeders - eventimages t
+npx sequelize seed:generate --name add-test-eventimages
+
 
 -link eventimages to events
 

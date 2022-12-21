@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			Event.belongsTo(models.Group);
 		}
 	}
 	Event.init(
@@ -46,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: "Event",
-			// defaultScope: {
-			// 	attributes: {
-			// 		exclude: ["createdAt", "updatedAt"],
-			// 	},
-			// },
+			defaultScope: {
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
+			},
 		}
 	);
 	return Event;
