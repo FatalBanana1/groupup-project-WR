@@ -190,7 +190,7 @@ npx sequelize seed:generate --name add-test-events
 npx sequelize model:generate --name EventImage --attributes eventId:integer,url:string,preview:boolean
 
 -create seeders - eventimages t
-npx sequelize seed:generate --name add-test-eventimages
+npx sequelize seed:generate --name add-modernart-eventimages
 
 
 -link eventimages to events
