@@ -211,6 +211,15 @@ npx sequelize seed:generate --name add-test-venues
 
 -Attendances
 
+-create attendances table
+npx sequelize model:generate --name Attendance --attributes eventId:integer,userId:integer,status:enum
+
+-create seeders - attend t
+npx sequelize seed:generate --name add-test-attendances
+
+-link venues to group by groupid
+-link venues to events by venueid
+
 //---------------------------
 tables:
 venueid: 1 = online

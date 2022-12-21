@@ -1,0 +1,38 @@
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+	class Attendance extends Model {
+		static associate(models) {
+			// define association here
+
+			Attendance.belongsTo(models.User);
+
+			Attendance.belongsTo(models.Event);
+		}
+	}
+	Attendance.init(
+		{
+			eventId: {
+				type: DataTypes.INTEGER,
+			},
+			userId: {
+				type: DataTypes.INTEGER,
+			},
+			status: {
+				type: DataTypes.ENUM,
+				values: ("member", "waitlist", "pending"),
+				defaultValue: "pending",
+			},
+		},
+		{
+			sequelize,
+			modelName: "Attendance",
+			defaultScope: {
+				attributes: {
+					exclude: ["updatedAt", "createdAt"],
+				},
+			},
+		}
+	);
+	return Attendance;
+};

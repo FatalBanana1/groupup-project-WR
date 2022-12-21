@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 			Event.hasMany(models.EventImage);
 
 			Event.belongsTo(models.Venue);
+
+			Event.belongsTo(models.Attendance);
 		}
 	}
 	Event.init(
