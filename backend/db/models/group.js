@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
 			});
 
 			Group.hasMany(models.Event);
+
+			Group.hasMany(models.Venue);
 		}
 	}
 	Group.init(

@@ -192,12 +192,20 @@ npx sequelize model:generate --name EventImage --attributes eventId:integer,url:
 -create seeders - eventimages t
 npx sequelize seed:generate --name add-modernart-eventimages
 
-
 -link eventimages to events
 
 //---------------------------
 
 -VENUES
+
+-create venues table
+npx sequelize model:generate --name Venue --attributes groupId:integer,address:string,city:string,state:string,lat:decimal,lng:decimal
+
+-create seeders - venues t
+npx sequelize seed:generate --name add-test-venues
+
+-link venues to group by groupid
+-link venues to events by venueid
 
 //---------------------------
 
