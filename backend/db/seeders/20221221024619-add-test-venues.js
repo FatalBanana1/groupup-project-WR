@@ -17,11 +17,11 @@ module.exports = {
 			[
 				{
 					groupId: 1,
-					address: null,
-					city: null,
-					state: null,
-					lat: null,
-					lng: null,
+					address: "Online",
+					city: `N/A`,
+					state: `N/A`,
+					lat: `N/A`,
+					lng: `N/A`,
 				},
 				{
 					groupId: 2,

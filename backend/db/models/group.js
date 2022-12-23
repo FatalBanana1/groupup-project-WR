@@ -28,33 +28,50 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			name: {
 				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					len: [2, 60],
+				},
 			},
 			about: {
 				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					len: [50, 200],
+				},
 			},
 			type: {
 				type: DataTypes.ENUM,
+				allowNull: false,
 				values: ("Online", "In person"),
 				defaultValue: "Online",
 			},
 			private: {
 				type: DataTypes.BOOLEAN,
+				allowNull: false,
 			},
 			city: {
 				type: DataTypes.STRING,
+				allowNull: false,
 			},
 			state: {
 				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					len: [2, 2],
+					isAlpha: true,
+					isUppercase: true,
+				},
 			},
 		},
 		{
 			sequelize,
 			modelName: "Group",
-			// defaultScope: {
-			// 	attributes: {
-			// 		exclude: ["updatedAt", "createdAt"],
-			// 	},
-			// },
+			defaultScope: {
+				attributes: {
+					exclude: ["updatedAt", "createdAt"],
+				},
+			},
 		}
 	);
 	return Group;
