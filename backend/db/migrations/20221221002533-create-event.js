@@ -19,9 +19,11 @@ module.exports = {
 				},
 				venueId: {
 					type: Sequelize.INTEGER,
+					allowNull: false,
 				},
 				groupId: {
 					type: Sequelize.INTEGER,
+					allowNull: false,
 					references: {
 						model: "Groups",
 					},
@@ -29,9 +31,11 @@ module.exports = {
 				},
 				name: {
 					type: Sequelize.STRING,
+					allowNull: false,
 				},
 				description: {
 					type: Sequelize.STRING,
+					allowNull: false,
 				},
 				type: {
 					type: Sequelize.ENUM,
@@ -40,15 +44,19 @@ module.exports = {
 				},
 				capacity: {
 					type: Sequelize.INTEGER,
+					allowNull: false,
 				},
 				price: {
-					type: Sequelize.INTEGER,
+					type: Sequelize.DECIMAL,
+					allowNull: false,
 				},
 				startDate: {
 					type: Sequelize.DATE,
+					allowNull: false,
 				},
 				endDate: {
 					type: Sequelize.DATE,
+					allowNull: false,
 				},
 				createdAt: {
 					allowNull: false,

@@ -53,7 +53,7 @@ module.exports = {
 				{
 					venueId: 3,
 					groupId: 3,
-					name: "Start with Art at the Met",
+					name: "Start with Art at the Met.",
 					description: `Fabulous museum educators engage children in conversations and activities related to a few works in the vast collection.`,
 					type: "In person",
 					capacity: 20,
@@ -64,7 +64,7 @@ module.exports = {
 				{
 					venueId: 4,
 					groupId: 3,
-					name: "Year in Review with Neil deGrasse Tyson",
+					name: "Year in Review with Neil deGrasse Tyson.",
 					description: `The annual news roundup from the universe with Neil deGrasse Tyson is back, live and in person.Find out what is new in the cosmos.`,
 					type: "In person",
 					capacity: 15,
@@ -75,7 +75,7 @@ module.exports = {
 				{
 					venueId: 5,
 					groupId: 3,
-					name: "The Best Bad Man. 1925",
+					name: "The Best Bad Man (1925)",
 					description: `The Best Bad Man. 1925. USA. Directed by John G. Blystone. Screenplay by Lillie Hayward, from a story by Max Brand. With Tom Mix, Clara Bow, Cyril Chadwick. Silent, with original music score by Ben Model.`,
 					type: "In person",
 					capacity: 30,
@@ -86,7 +86,7 @@ module.exports = {
 				{
 					venueId: 5,
 					groupId: 3,
-					name: "Outlaws of Red River. 1927.",
+					name: "Outlaws of Red River (1927)",
 					description: `Outlaws of Red River. 1927. USA. Directed by Lewis Seiler. With Tom Mix, Marjorie Daw, Arthur Clayton, William Conklin. Silent, with original music score by Ben Model.`,
 					type: "In person",
 					capacity: 15,
@@ -97,7 +97,7 @@ module.exports = {
 				{
 					venueId: 1,
 					groupId: 3,
-					name: "Cavalcade. 1933.",
+					name: "Cavalcade (1933)",
 					description: `Cavalcade. 1933. USA. Directed by Frank Lloyd. Screenplay by Reginald Berkeley, based on a play by Noël Coward. With Diana Wynyard, Clive Brook, Una OConnor, Herbert Mundin, Beryl Mercer. Digital restoration by Walt Disney Pictures in partnership with The Film Foundation.`,
 					type: "Online",
 					capacity: 100,
