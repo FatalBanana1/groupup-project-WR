@@ -64,10 +64,10 @@ fetch('/api/session', {
 // Restore session user
 router.get("/", restoreUser, async (req, res) => {
 	let { user } = req;
-	user = await User.scope(["defaultScope"]).findOne({
-		where: { id: user.id },
-	});
-	if (user) {
+	if (user.id) {
+		user = await User.scope(["defaultScope"]).findOne({
+			where: { id: user.id },
+		});
 		return res.json({
 			user: user,
 		});
@@ -102,7 +102,7 @@ router.post("/", validateLogin, async (req, res, next) => {
 		// return next(err);
 		return res.status(401).json({
 			message: `Invalid Credentials`,
-			statusCode: 401
+			statusCode: 401,
 		});
 	}
 
@@ -129,9 +129,6 @@ fetch('/api/session', {
 }).then(res => res.json()).then(data => console.log(data));
 
 */
-
-
-
 
 // exports
 module.exports = router;

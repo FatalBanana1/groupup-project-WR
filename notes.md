@@ -237,6 +237,25 @@ venueid: 5 = The Museum of Modern Art
 11 W 53rd St, New York, NY 10019
 
 //---------------------------
+
+/_
+// lazy load destructure - get all attendees of event
+// let attends = await Attendance.findAll({
+// where: { eventId },
+// attributes: ["status"],
+// });
+// users.forEach((el, i) => {
+// el.dataValues.Attendance = { status: attends[i].status };
+// return el;
+// });
+_/
+
+//---------------------------
+
+//---------------------------
+
 -TODO
+
+//---------------------------
 
 //---------------------------

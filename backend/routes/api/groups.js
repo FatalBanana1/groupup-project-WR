@@ -11,12 +11,15 @@ const {
 	Membership,
 	Event,
 	Venue,
+	sequelize,
 } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const router = express.Router();
 
 // routes
+
+// --------------------validation--------------------------------------
 
 // todo: update validation:
 
@@ -40,6 +43,20 @@ const router = express.Router();
 // 	handleValidationErrors,
 // ];
 
+// check keys + validate them
+// checks req.body.credential + req.body.password = empty
+// if empty >> error
+// const validateLogin = [
+// 	check("credential")
+// 		.exists({ checkFalsy: true })
+// 		.notEmpty()
+// 		.withMessage("Email is required"),
+// 	check("password")
+// 		.exists({ checkFalsy: true })
+// 		.withMessage("Password is required"),
+// 	handleValidationErrors,
+// ];
+
 //-----------------get----------------------
 
 //TODO: remove the attr associated through membership table down to just 'status'
@@ -52,9 +69,14 @@ router.get("/:groupId/members", async (req, res) => {
 		where: { id: groupId },
 		include: [
 			{
-				model: User,
-				as: "Members",
-				attributes: ["id", "firstName", "lastName"],
+				model: Membership,
+				attributes: [],
+				include: [
+					{
+						model: User,
+						attributes: ["id", "firstName", "lastName"],
+					},
+				],
 			},
 		],
 	});
@@ -62,24 +84,51 @@ router.get("/:groupId/members", async (req, res) => {
 	return res.json(members);
 });
 
-//TODO:
-// groups - get all groups joined or organized bvy current user
+//TODO: add aggregate fxn
+// groups - get all groups joined or organized by current user
 // get - /groups/current
 router.get("/current", async (req, res) => {
 	let { user } = req;
 
+	// await setTokenCookie(res, user);
+
 	let organizers = await Group.scope(["defaultScope"]).findAll({
 		where: { organizerId: user.id },
+		attributes: [
+			"id",
+			"organizerId",
+			"name",
+			"about",
+			"type",
+			"private",
+			"city",
+			"state",
+			"createdAt",
+			"updatedAt",
+			// [sequelize.fn("COUNT", sequelize.col("name")), "numMembers"],
+		],
 	});
 
 	let groups = await Group.scope(["defaultScope"]).findAll({
 		include: [
 			{
-				model: User,
-				as: "Members",
+				model: Membership,
+				where: { userId: user.id },
 				attributes: [],
-				where: { id: user.id },
 			},
+		],
+		attributes: [
+			"id",
+			"organizerId",
+			"name",
+			"about",
+			"type",
+			"private",
+			"city",
+			"state",
+			"createdAt",
+			"updatedAt",
+			// [sequelize.fn("COUNT", sequelize.col("name")), "numMembers"],
 		],
 	});
 
@@ -93,6 +142,17 @@ router.get("/current", async (req, res) => {
 			visited.add(el.id);
 		}
 	});
+
+	// newarray = newarray.map((el, i) => {
+	// 	el.numMembers = Membership.findAll({
+	// 		attributes: [
+	// 			[sequelize.fn("COUNT", sequelize.col("id")), "numMembers"],
+	// 		],
+	// 		where: { groupId: el.id },
+	// 	});
+	// 	console.log(el.numMembers);
+	// 	return el;
+	// });
 
 	return res.json({ Groups: newarray });
 });
@@ -144,9 +204,45 @@ router.get("/", async (req, res) => {
 	group = await Group.findAll();
 	if (group) {
 		return res.json({
-			group: group,
+			Groups: group,
 		});
 	} else return res.json({ group: null });
+});
+
+// Get details of a Group from an id
+// get - /api/groups/:groupId
+router.get("/:groupId", async (req, res) => {
+	let groupId = req.params.groupId;
+
+	let group = await Group.findOne({
+		where: { id: groupId },
+		include: [
+			{
+				model: GroupImage,
+				attributes: ["id", "url", "preview"],
+			},
+			{
+				model: User,
+				as: "Organizer",
+
+				attributes: ["id", "firstName", "lastName"],
+			},
+			{
+				model: Venue,
+				as: "Venues",
+				attributes: ["id", "groupId", "city", "state", "lat", "lng"],
+			},
+		],
+	});
+
+	if (group === null) {
+		res.status(404);
+		return res.json({
+			message: `Group couldn't be found`,
+			statusCode: 404,
+		});
+	}
+	return res.json(group);
 });
 
 //----------------post-------------------------
@@ -156,6 +252,29 @@ router.get("/", async (req, res) => {
 router.post("/:groupId/images", async (req, res) => {
 	let groupId = req.params.groupId;
 	let { url, preview } = req.body;
+
+	// check if group exists
+	let check1 = await Group.findByPk(groupId);
+	if (!check1) {
+		return res.status(404).json({
+			message: "Group couldn't be found",
+			statusCode: 404,
+		});
+	}
+
+	// check if event already exists
+	let check2 = await GroupImage.findOne({
+		where: { url, preview, groupId },
+	});
+	if (check2) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				Error: `Group image already exists.`,
+			},
+		});
+	}
 
 	// add img to groupimages table
 	let newimage = await GroupImage.create({
@@ -173,8 +292,90 @@ router.post("/:groupId/images", async (req, res) => {
 	return res.json(newimage);
 });
 
+// Create a Group
+// post -  /api/groups
 router.post("/", async (req, res) => {
-	return res.json(`inside the response`);
+	let { name, about, type, private, city, state } = req.body;
+	let options = {
+		message: "Validation Error",
+		statusCode: 400,
+		errors: [],
+	};
+
+	if (!name) options.errors.push(`Name must be 60 characters or less`);
+	if (!about) options.errors.push(`About must be 50 characters or more`);
+	if (!type) options.errors.push(`Type must be 'Online' or 'In person'`);
+	if (!private) options.errors.push(`Private must be a boolean`);
+	if (!city) options.errors.push(`City is required`);
+	if (!state) options.errors.push(`State is required`);
+
+	if (options.errors.length > 0) {
+		return res.status(400).json(options);
+	} else {
+		let { user } = req;
+		let organizerId = user.id;
+		// all info provided
+		// check if event already exists
+		let check = await Group.findOne({
+			where: { organizerId, name, about },
+		});
+		if (check) {
+			return res.status(400).json({
+				message: "Validation Error",
+				statusCode: 400,
+				errors: {
+					Error: `Group already exists.`,
+				},
+			});
+		}
+
+		let group = await Group.create({
+			name,
+			about,
+			type,
+			private,
+			city,
+			state,
+			organizerId,
+		});
+
+		return res.json(group);
+	}
+});
+
+//----------------put-------------------------
+
+//TODO: require auth
+// edit a group
+// put - /api/groups/:groupId
+router.put("/:groupId", async (req, res) => {
+	let groupId = req.params.groupId;
+	let options = {};
+	let group = await Group.findByPk(groupId);
+
+	//if group not found
+	if (!group) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				Error: `Group does not exist`,
+			},
+		});
+	}
+	let { name, about, type, private, city, state } = group;
+
+	if (name) {
+		
+		options.errors.push(`Name must be 60 characters or less`);
+	}
+	if (!about) options.errors.push(`About must be 50 characters or more`);
+	if (!type) options.errors.push(`Type must be 'Online' or 'In person'`);
+	if (!private) options.errors.push(`Private must be a boolean`);
+	if (!city) options.errors.push(`City is required`);
+	if (!state) options.errors.push(`State is required`);
+
+	return res.json();
 });
 
 // exports

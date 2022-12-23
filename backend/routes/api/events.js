@@ -12,6 +12,7 @@ const {
 	Event,
 	EventImage,
 	Venue,
+	Attendance,
 } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -42,6 +43,28 @@ const router = express.Router();
 // ];
 
 //-----------------get----------------------
+
+//TODO:
+// Get all Attendees of an Event specified by its id
+// get - /api/events/:eventId/attendees
+router.get("/:eventId/attendees", async (req, res) => {
+	let eventId = req.params.eventId;
+
+	let users = await User.scope(["defaultScope"]).findAll({
+		attributes: ["id", "firstName", "lastName"],
+		include: {
+			model: Attendance,
+			as: "Attendance",
+			where: { eventId },
+			attributes: ["status"],
+		},
+	});
+	users.forEach((el, i) => {
+		el.dataValues.Attendance = el.dataValues.Attendance[0];
+		return el; 
+	});
+	return res.json({ Attendees: users });
+});
 
 //TODO: add numattending + previewimage attrs
 //		--add venues t

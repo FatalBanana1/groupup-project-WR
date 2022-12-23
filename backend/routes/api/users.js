@@ -48,7 +48,7 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post("/", validateSignup, async (req, res) => {
+router.post("/", validateSignup, async (req, res, next) => {
 	const { firstName, lastName, email, username, password } = req.body;
 	let user = await User.signup({
 		firstName,
@@ -57,12 +57,20 @@ router.post("/", validateSignup, async (req, res) => {
 		username,
 		password,
 	});
+
 	await setTokenCookie(res, user);
-	user = await User.scope(["defaultScope"]).findOne({
-		attributes: ["id", "firstName", "lastName", "email"],
-		where: { email: user.email },
-	});
-	return res.json(user);
+
+	if (user) {
+		user = await User.scope(["defaultScope"]).findOne({
+			attributes: ["id", "firstName", "lastName", "email"],
+			where: { email: user.email },
+		});
+		return res.json(user);
+	} else {
+		// check for each part
+		err = new Error(``)
+		next(err)
+	}
 });
 
 /*

@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 
-			Attendance.belongsTo(models.User);
+			Attendance.belongsTo(models.User, {
+				as: "Attendance",
+			});
 
 			Attendance.belongsTo(models.Event);
 		}
