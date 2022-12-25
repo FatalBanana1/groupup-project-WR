@@ -117,13 +117,13 @@ router.post("/", validateLogin, async (req, res, next) => {
 });
 
 /*
-// testing post log in route above
+// testing post LOG IN
 
 fetch('/api/session', {
   method: 'POST',
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `QIH2FwIM-M5EJe7aekYnjMIaJyaPKHM_xIBg`
+    "XSRF-TOKEN": `o0jz3lyU-eAvX71C6YpOT7TKQWxXAya2BBEQ`
   },
   body: JSON.stringify({ credential: 'rocks@yahoo.com', password: 'password3' })
 }).then(res => res.json()).then(data => console.log(data));

@@ -254,7 +254,7 @@ router.get("/current", requireAuth, async (req, res) => {
 	});
 
 	let images = await GroupImage.findAll({
-		where: { preview: 1 },
+		where: { preview: true },
 		attributes: ["groupId", "url"],
 		include: {
 			model: Group,
