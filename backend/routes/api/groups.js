@@ -357,7 +357,6 @@ router.get("/:groupId", valid_group, async (req, res) => {
 			{
 				model: User,
 				as: "Organizer",
-
 				attributes: ["id", "firstName", "lastName"],
 			},
 			{
@@ -367,6 +366,20 @@ router.get("/:groupId", valid_group, async (req, res) => {
 			},
 		],
 	});
+
+	let members = await Group.findOne({
+		where: { id: groupId },
+		attributes: ["id"],
+		include: [
+			{
+				model: Membership,
+				attributes: ["userId"],
+				where: { groupId },
+			},
+		],
+	});
+
+	group.dataValues.numMembers = members.dataValues.Memberships.length;
 
 	return res.json(group);
 });
@@ -605,8 +618,8 @@ router.post("/:groupId/venues", valid_group, requireAuth, async (req, res) => {
 	}
 });
 
-//group images: add image
-// post - api/groups.groupid/images
+//Add an Image to a Group based on the Group's id
+// post - api/groups/:groupId/images
 router.post("/:groupId/images", valid_group, async (req, res) => {
 	let groupId = req.params.groupId;
 	let { url, preview } = req.body;
@@ -647,27 +660,32 @@ router.post("/:groupId/images", valid_group, async (req, res) => {
 			preview,
 		},
 	});
-	return res.json(newimage);
+
+	return res.json({
+		id: newimage.id,
+		url,
+		preview,
+	});
 });
 
 // Create a Group
 // post -  /api/groups
 router.post("/", requireAuth, async (req, res) => {
 	let { name, about, type, private, city, state } = req.body;
-	let options = {
-		message: "Validation Error",
-		statusCode: 400,
-		errors: [],
-	};
+	let errors = {};
 
-	if (!name) options.errors.push(`Name must be 60 characters or less`);
-	if (!about) options.errors.push(`About must be 50 characters or more`);
-	if (!type) options.errors.push(`Type must be 'Online' or 'In person'`);
-	if (!private) options.errors.push(`Private must be a boolean`);
-	if (!city) options.errors.push(`City is required`);
-	if (!state) options.errors.push(`State is required`);
+	if (!name || name.length > 60)
+		errors.name = `Name must be 60 characters or less`;
+	if (!about || about.length < 50)
+		errors.about = `About must be 50 characters or more`;
+	if (!type || (type !== "Online" && type !== "In Person"))
+		errors.type = `Type must be 'Online' or 'In Person'`;
+	if (!private || typeof Boolean(private) !== "boolean")
+		errors.private = `Private must be a boolean`;
+	if (!city) errors.city = `City is required`;
+	if (!state) errors.state = `State is required`;
 
-	if (options.errors.length > 0) {
+	if (Object.values(errors).length) {
 		return res.status(400).json(options);
 	} else {
 		let { user } = req;

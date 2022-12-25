@@ -414,14 +414,15 @@ router.get("/", async (req, res) => {
 	events.forEach((el, i) => {
 		if (!visited.has(el.id)) {
 			//add numattending
-			el.dataValues.previewImage = null;
-			el.dataValues.numAttending = 0;
 			for (let j in members) {
 				if (el.id === members[j].dataValues.id) {
 					el.dataValues.numAttending =
 						members[j].dataValues.Attendances.length;
 					break;
+				} else {
+					el.dataValues.numAttending = 0;
 				}
+				el.dataValues.previewImage = null;
 			}
 			//add preview image
 			for (let k in images) {
