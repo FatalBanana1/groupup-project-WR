@@ -53,13 +53,49 @@ const valid_user = async (req, res, next) => {
 		],
 	});
 	if (
-		user.id &&
+		user.dataValues.id &&
 		(auth.status === "co-host" || auth.Group.organizerId === user.id)
 	) {
 		next();
 	} else {
 		const err = new Error(
-			`Current User must be the organizer of the group or a member of the group with a status of "co-host"`
+			`Current User must be the organizer of the group or a member of the group with a status of co-host`
+		);
+		err.statusCode = 403;
+		throw err;
+	}
+};
+
+const valid_delete = async (req, res, next) => {
+	const { user } = req;
+	const { memberId } = req.body;
+	let auth = await Membership.findOne({
+		where: { userId: user.id },
+		include: [
+			{
+				model: Group,
+			},
+		],
+	});
+	if (!auth) {
+		res.status(400);
+		return res.json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				memberId: "User couldn't be found",
+			},
+		});
+	}
+	if (
+		auth.status === "co-host" ||
+		auth.Group.organizerId === user.id ||
+		user.id === memberId
+	) {
+		next();
+	} else {
+		const err = new Error(
+			`Current User must be the organizer of the group or a member of the group with a status of co-host`
 		);
 		err.statusCode = 403;
 		throw err;
@@ -632,8 +668,25 @@ router.put(
 		let checked = await Membership.findOne({
 			where: { userId: memberId, groupId },
 		});
-
 		if (!checked) {
+			return res.status(400).json({
+				message:
+					"Membership between the user and the group does not exist",
+				statusCode: 404,
+			});
+		}
+
+		// only organizer can change to co-host
+		let { user } = req;
+		let group = await Group.findByPk(groupId);
+		if (user.id !== group.organizerId && status === "co-host") {
+			return res.status(400).json({
+				message: "Validations Error",
+				statusCode: 400,
+				errors: {
+					status: `Only organizers can change a membership status to co-host`,
+				},
+			});
 		}
 
 		await Membership.update(
@@ -643,12 +696,8 @@ router.put(
 			{ where: { userId: memberId, groupId } }
 		);
 
-		let newmember = await Membership.findOne({
-			where: { userId: memberId, groupId },
-		});
-
 		return res.json({
-			id: newmember.id,
+			id: member.id,
 			groupId,
 			memberId,
 			status,
@@ -687,7 +736,7 @@ router.put(
 			});
 		}
 
-		let newgroup = await Group.update(
+		await Group.update(
 			{
 				name,
 				about,
@@ -708,6 +757,39 @@ router.put(
 );
 
 //----------------delete-------------------------
+
+// Delete membership to a group specified by id
+// delete - /api/groups/:groupId/membership
+
+router.delete(
+	"/:groupId/membership",
+	requireAuth,
+	valid_group,
+	valid_delete,
+	async (req, res) => {
+		let { memberId } = req.body;
+
+		let groupId = req.params.groupId;
+		let deleted = await Membership.findOne({
+			where: { userId: memberId, groupId },
+		});
+
+		if (!deleted) {
+			return res.status(400).json({
+				message: "Validation Error",
+				statusCode: 400,
+				errors: {
+					memberId: "User couldn't be found",
+				},
+			});
+		}
+
+		await deleted.destroy();
+		return res.json({
+			message: "Successfully deleted membership from group",
+		});
+	}
+);
 
 // Delete a Group
 // delete - /api/groups/:groupId

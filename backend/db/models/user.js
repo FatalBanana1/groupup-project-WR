@@ -57,9 +57,7 @@ module.exports = (sequelize, DataTypes) => {
 				as: "Organizer",
 			});
 
-			User.hasMany(models.Attendance, {
-				as: "Attendance",
-			});
+			User.hasMany(models.Attendance);
 		}
 	}
 	User.init(

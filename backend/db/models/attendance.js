@@ -5,9 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 
-			Attendance.belongsTo(models.User, {
-				as: "Attendance",
-			});
+			Attendance.belongsTo(models.User);
 
 			Attendance.belongsTo(models.Event);
 		}
@@ -22,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			status: {
 				type: DataTypes.ENUM,
-				values: ("member", "waitlist", "pending"),
+				values: ["attending", "waitlist", "pending"],
 				defaultValue: "pending",
 			},
 		},
