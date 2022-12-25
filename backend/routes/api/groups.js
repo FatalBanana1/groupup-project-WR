@@ -202,6 +202,20 @@ router.get("/:groupId/members", valid_group, async (req, res) => {
 //TODO: add aggregate fxn
 // groups - get all groups joined or organized by current user
 // get - /groups/current
+
+/*
+testing get all groups on postgres
+
+fetch('/api/groups/current', {
+  method: 'GET',
+  headers: {
+    "Content-Type": "application/json",
+    "XSRF-TOKEN": `QIH2FwIM-M5EJe7aekYnjMIaJyaPKHM_xIBg`
+  },
+}).then(res => res.json()).then(data => console.log(data));
+
+*/
+
 router.get("/current", requireAuth, async (req, res) => {
 	let { user } = req;
 
@@ -223,13 +237,13 @@ router.get("/current", requireAuth, async (req, res) => {
 	});
 
 	let groups = await Group.scope(["defaultScope"]).findAll({
-		include: [
-			{
-				model: Membership,
-				where: { userId: user.id },
-				attributes: [],
-			},
-		],
+		// include: [
+		// 	{
+		// 		model: Membership,
+		// 		where: { userId: user.id },
+		// 		attributes: [],
+		// 	},
+		// ],
 		attributes: [
 			"id",
 			"organizerId",
@@ -318,7 +332,7 @@ router.get("/:groupId/venues", valid_group, async (req, res) => {
 router.get("/", async (req, res) => {
 	let { group } = req;
 	group = await Group.findAll();
-	if (group) {
+	if (group.length > 0) {
 		return res.json({
 			Groups: group,
 		});

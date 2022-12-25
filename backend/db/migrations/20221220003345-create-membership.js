@@ -22,7 +22,7 @@ module.exports = {
 				},
 				onDelete: "CASCADE",
 			},
-			groupId: {
+			GroupId: {
 				type: Sequelize.INTEGER,
 				references: {
 					model: "Groups",
