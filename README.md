@@ -47,6 +47,10 @@ correct role(s) or permission(s).
     }
     ```
 
+<!-- START -->
+<!-- START -->
+<!-- START -->
+
 ### Get the Current User
 
 Returns the information about the current user that is logged in.
@@ -1630,7 +1634,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Attendance": {
-            "status": "member"
+            "status": "attending"
           },
         },
         {
@@ -1669,7 +1673,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Attendance": {
-            "status": "member"
+            "status": "attending"
           },
         },
         {

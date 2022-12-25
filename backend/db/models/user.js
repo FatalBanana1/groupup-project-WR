@@ -30,9 +30,17 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 
-		static async signup({ username, email, password }) {
+		static async signup({
+			firstName,
+			lastName,
+			username,
+			email,
+			password,
+		}) {
 			const hashedPassword = bcrypt.hashSync(password);
 			const user = await User.create({
+				firstName,
+				lastName,
 				username,
 				email,
 				hashedPassword,
@@ -42,20 +50,42 @@ module.exports = (sequelize, DataTypes) => {
 
 		static associate(models) {
 			// define association here
+			User.hasMany(models.Membership);
+
+			User.hasMany(models.Group, {
+				foreignKey: "organizerId",
+				as: "Organizer",
+			});
+
+			User.hasMany(models.Attendance);
 		}
 	}
 	User.init(
 		{
+			firstName: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					len: [2, 30],
+				},
+			},
+			lastName: {
+				type: DataTypes.STRING,
+				allowNull: false,
+				validate: {
+					len: [2, 30],
+				},
+			},
 			username: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
-					len: [4, 30]
-					// isNotEmail(value) {
-					// 	if (Validator.isEmail(value)) {
-					// 		throw new Error("Cannot be an email.");
-					// 	}
-					// },
+					len: [4, 30],
+					isNotEmail(value) {
+						if (Validator.isEmail(value)) {
+							throw new Error("Cannot be an email.");
+						}
+					},
 				},
 			},
 			email: {
@@ -79,12 +109,7 @@ module.exports = (sequelize, DataTypes) => {
 			modelName: "User",
 			defaultScope: {
 				attributes: {
-					exclude: [
-						"hashedPassword",
-						"updatedAt",
-						"email",
-						"createdAt",
-					],
+					exclude: ["hashedPassword", "updatedAt", "createdAt"],
 				},
 			},
 			scopes: {

@@ -1,7 +1,5 @@
 "use strict";
 
-const { Sequelize } = require("sequelize");
-
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
@@ -17,6 +15,14 @@ module.exports = {
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
+			},
+			firstName: {
+				type: Sequelize.STRING(30),
+				allowNull: false,
+			},
+			lastName: {
+				type: Sequelize.STRING(30),
+				allowNull: false,
 			},
 			username: {
 				type: Sequelize.STRING(30),
@@ -42,7 +48,7 @@ module.exports = {
 				type: Sequelize.DATE,
 				defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
 			},
-		}, {});
+		}, options);
 	},
 
 	down: async (queryInterface, Sequelize) => {

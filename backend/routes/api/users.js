@@ -48,15 +48,29 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post("/", validateSignup, async (req, res) => {
-	const { email, password, username } = req.body;
-	const user = await User.signup({ email, username, password });
+router.post("/", validateSignup, async (req, res, next) => {
+	const { firstName, lastName, email, username, password } = req.body;
+	let user = await User.signup({
+		firstName,
+		lastName,
+		email,
+		username,
+		password,
+	});
 
 	await setTokenCookie(res, user);
 
-	return res.json({
-		user: user,
-	});
+	if (user) {
+		user = await User.scope(["defaultScope"]).findOne({
+			attributes: ["id", "firstName", "lastName", "email"],
+			where: { email: user.email },
+		});
+		return res.json(user);
+	} else {
+		// check for each part
+		err = new Error(``)
+		next(err)
+	}
 });
 
 /*

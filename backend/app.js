@@ -16,6 +16,7 @@ const { ValidationError } = require("sequelize");
 
 // check env: prod or dev
 const { environment } = require("./config");
+const e = require("express");
 const isProduction = environment === "production";
 
 const app = express();
@@ -59,15 +60,15 @@ app.use((_req, _res, next) => {
 	const err = new Error(`The requested resource couldn't be found.`);
 	err.title = `Resource Not Found`;
 	err.errors = [`The requested resource couldn't be found.`];
-	err.status = 404;
 	next(err);
 });
 
-app.use((err, _req, _res, next) => {
+app.use((err, _req, res, next) => {
 	// check if err is from sqlize
 	if (err instanceof ValidationError) {
 		err.errors = err.errors.map((e) => e.message);
 		err.title = `Validation Error`;
+		err.status = 404;
 	}
 	next(err);
 });
