@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 
-			Membership.belongsTo(models.Group);
-			Membership.belongsTo(models.User);
+			Membership.belongsTo(models.Group, { onDelete: "CASCADE" });
+			Membership.belongsTo(models.User, { onDelete: "CASCADE" });
 		}
 	}
 	Membership.init(

@@ -1,13 +1,14 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
 	class Attendance extends Model {
 		static associate(models) {
 			// define association here
 
-			Attendance.belongsTo(models.User);
+			Attendance.belongsTo(models.User, { onDelete: "CASCADE" });
 
-			Attendance.belongsTo(models.Event);
+			Attendance.belongsTo(models.Event, { onDelete: "CASCADE" });
 		}
 	}
 	Attendance.init(

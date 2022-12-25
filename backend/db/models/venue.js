@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			Venue.belongsTo(models.Group);
+			Venue.belongsTo(models.Group, { onDelete: "CASCADE" });
 
-			Venue.hasMany(models.Event);
+			Venue.hasMany(models.Event, { onDelete: "CASCADE" });
 		}
 	}
 	Venue.init(
