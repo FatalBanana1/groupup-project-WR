@@ -52,13 +52,15 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			User.hasMany(models.Membership, {
 				foreignKey: "userId",
-				onDelete: "CASCADE"
+				onDelete: "CASCADE",
+				hooks: true,
 			});
 
 			User.hasMany(models.Group, {
 				foreignKey: "organizerId",
 				as: "Organizer",
 				onDelete: "CASCADE",
+				hooks: true,
 			});
 
 			User.hasMany(models.Attendance);

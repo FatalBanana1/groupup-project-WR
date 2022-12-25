@@ -167,7 +167,7 @@ router.get("/:groupId/members", valid_group, async (req, res) => {
 	let groupId = req.params.groupId;
 	let members = await Membership.scope(["defaultScope"]).findAll({
 		attributes: ["status"],
-		where: { groupId },
+		where: { groupId: groupId },
 		include: [
 			{
 				model: User,
@@ -202,20 +202,6 @@ router.get("/:groupId/members", valid_group, async (req, res) => {
 //TODO: add aggregate fxn
 // groups - get all groups joined or organized by current user
 // get - /groups/current
-
-/*
-testing get all groups on postgres
-
-fetch('/api/groups/current', {
-  method: 'GET',
-  headers: {
-    "Content-Type": "application/json",
-    "XSRF-TOKEN": `QIH2FwIM-M5EJe7aekYnjMIaJyaPKHM_xIBg`
-  },
-}).then(res => res.json()).then(data => console.log(data));
-
-*/
-
 router.get("/current", requireAuth, async (req, res) => {
 	let { user } = req;
 
@@ -327,12 +313,11 @@ router.get("/:groupId/venues", valid_group, async (req, res) => {
 	return res.json({ Venues: venues });
 });
 
-
-
 // Get details of a Group from an id
 // get - /api/groups/:groupId
 router.get("/:groupId", valid_group, async (req, res) => {
 	let groupId = req.params.groupId;
+	console.log(req.params);
 
 	let group = await Group.findOne({
 		where: { id: groupId },
@@ -358,15 +343,13 @@ router.get("/:groupId", valid_group, async (req, res) => {
 	return res.json(group);
 });
 
-
 // get all groups
 // get - /api/groups/
 router.get("/", async (req, res) => {
-	let { group } = req;
 	let all = await Group.findAll();
 	if (all.length > 0) {
 		return res.json({
-			Groups: group,
+			Groups: all,
 		});
 	} else return res.json({ group: null });
 });

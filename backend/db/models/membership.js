@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
 			Membership.belongsTo(models.Group, {
 				foreignKey: "groupId",
 				onDelete: "CASCADE",
+				hooks: true,
 			});
 			Membership.belongsTo(models.User, {
 				foreignKey: "userId",
 				onDelete: "CASCADE",
+				hooks: true,
 			});
 		}
 	}

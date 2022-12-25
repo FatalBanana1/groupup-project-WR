@@ -8,38 +8,42 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable("GroupImages", {
-			id: {
-				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
-				type: Sequelize.INTEGER,
-			},
-			groupId: {
-				type: Sequelize.INTEGER,
-				references: {
-					model: "Groups",
+		await queryInterface.createTable(
+			"GroupImages",
+			{
+				id: {
+					allowNull: false,
+					autoIncrement: true,
+					primaryKey: true,
+					type: Sequelize.INTEGER,
 				},
-				onDelete: "CASCADE",
+				groupId: {
+					type: Sequelize.INTEGER,
+					references: {
+						model: "Groups",
+					},
+					onDelete: "CASCADE",
+				},
+				url: {
+					type: Sequelize.STRING,
+				},
+				preview: {
+					type: Sequelize.BOOLEAN,
+					defaultValue: false,
+				},
+				createdAt: {
+					allowNull: false,
+					type: Sequelize.DATE,
+					defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+				},
+				updatedAt: {
+					allowNull: false,
+					type: Sequelize.DATE,
+					defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+				},
 			},
-			url: {
-				type: Sequelize.STRING,
-			},
-			preview: {
-				type: Sequelize.BOOLEAN,
-				defaultValue: false,
-			},
-			createdAt: {
-				allowNull: false,
-				type: Sequelize.DATE,
-				defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-			},
-			updatedAt: {
-				allowNull: false,
-				type: Sequelize.DATE,
-				defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-			},
-		}, options);
+			options
+		);
 	},
 	async down(queryInterface, Sequelize) {
 		await queryInterface.dropTable("GroupImages");

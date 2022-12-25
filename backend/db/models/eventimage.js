@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
 			//1-many with Events
 			EventImage.belongsTo(models.Event, {
 				foreignKey: "eventId",
-				onDelete: "CASCADE"
+				onDelete: "CASCADE",
+				hooks: true,
 			});
 		}
 	}
