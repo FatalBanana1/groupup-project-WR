@@ -26,8 +26,18 @@ module.exports = {
 					preview: false,
 				},
 				{
-					eventId: "7",
+					eventId: "6",
 					url: "../../upload/moma/momafest.jpg",
+					preview: false,
+				},
+				{
+					eventId: "1",
+					url: "../../upload/1/image-1.jpg",
+					preview: false,
+				},
+				{
+					eventId: "2",
+					url: "../../upload/2/image-2.jpg",
 					preview: true,
 				},
 			],

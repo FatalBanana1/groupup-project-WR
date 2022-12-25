@@ -94,12 +94,24 @@ router.post("/", validateLogin, async (req, res, next) => {
 
 	let user = await User.login({ credential, password });
 
-	//if id does not exist
+	// check credentials
+	let errors = {};
+	if (!credential) {
+		errors.email = `Email is required`;
+	}
+	if (!password) {
+		errors.password = `Password is required`;
+	}
+	//checking email/pass
+	if (Object.values(errors).length) {
+		return res.status(400).json({
+			message: "Validation error",
+			statusCode: 400,
+			errors: errors,
+		});
+	}
+
 	if (!user) {
-		// const err = new Error("Login Failed");
-		// err.status = 401;
-		// err.errors = ["Invalid credentials"];
-		// return next(err);
 		return res.status(401).json({
 			message: `Invalid Credentials`,
 			statusCode: 401,
@@ -124,6 +136,15 @@ fetch('/api/session', {
   headers: {
     "Content-Type": "application/json",
     "XSRF-TOKEN": `o0jz3lyU-eAvX71C6YpOT7TKQWxXAya2BBEQ`
+  },
+  body: JSON.stringify({ credential: 'rocks@yahoo.com', password: 'password3' })
+}).then(res => res.json()).then(data => console.log(data));
+
+fetch('/api/session', {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json",
+    "XSRF-TOKEN": `eIpEGgaL--kl-byrYq_tQ0AF4zEISt5Yvbek`
   },
   body: JSON.stringify({ credential: 'rocks@yahoo.com', password: 'password3' })
 }).then(res => res.json()).then(data => console.log(data));

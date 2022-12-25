@@ -84,11 +84,6 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: "Group",
-			defaultScope: {
-				attributes: {
-					exclude: ["updatedAt", "createdAt"],
-				},
-			},
 		}
 	);
 	return Group;

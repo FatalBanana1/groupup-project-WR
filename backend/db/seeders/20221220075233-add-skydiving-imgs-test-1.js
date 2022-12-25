@@ -32,6 +32,16 @@ module.exports = {
 					url: "../../upload/skydiving/3.jpg",
 					preview: false,
 				},
+				{
+					groupId: "3",
+					url: "../../upload/group3/image-1.jpg",
+					preview: false,
+				},
+				{
+					groupId: "3",
+					url: "../../upload/group3/image-2.jpg",
+					preview: true,
+				},
 			],
 			{}
 		);
@@ -44,7 +54,7 @@ module.exports = {
 			options,
 			{
 				id: {
-					[Op.in]: [1, 2, 3],
+					[Op.in]: [1, 2, 3, 4, 5],
 				},
 			},
 			{}

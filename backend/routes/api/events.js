@@ -302,7 +302,76 @@ router.get("/:eventId", valid_event, async (req, res) => {
 // get - /events
 router.get("/", async (req, res) => {
 	//pagination
+	let { page, size, name, type, startDate } = req.query;
 
+	//errors
+	let errors = {};
+
+	//optional queries
+	let queries = {};
+
+	//name
+	if (name) {
+		if (
+			typeof name === "string" &&
+			name !== " " &&
+			!(parseInt(name) < 10 ** 10)
+		) {
+			// queries.name = name;
+			//yield results with part of a name
+			queries.name = { [Op.like]: `%${name}%` };
+		} else {
+			errors.name = `Name must be a string`;
+		}
+	}
+	//type
+	if (type) {
+		if (type == "Online" || type == "In Person") {
+			queries.type = type;
+		} else {
+			errors.type = `Type must be 'Online' or 'In Person'`;
+		}
+	}
+	//startdate
+	if (startDate) {
+		if (Date.parse(startDate) > Date.parse(new Date())) {
+			queries.startDate = startDate;
+		} else {
+			errors.startDate = `Start date must be a valid datetime`;
+		}
+	}
+	//page error handle
+	if (page < 1) {
+		errors.page = `Page must be greater than or equal to 1`;
+	} else if (page > 10) {
+		errors.page = `Page must be less than or equal to 10`;
+	}
+	//size error handle
+	if (size < 1) {
+		errors.size = `Size must be greater than or equal to 1`;
+	} else if (size > 20) {
+		errors.size = `Size must be less than or equal to 20`;
+	}
+	//check errors before query
+	if (Object.values(errors).length) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: errors,
+		});
+	}
+	//defaults
+	if (!page) page = 1;
+	if (!size) size = 20;
+	page = +page;
+	size = parseInt(size);
+	const pagination = {};
+	if (page >= 1 && size >= 1 && page <= 10 && size <= 20) {
+		pagination.limit = size;
+		pagination.offset = size * (page - 1);
+	}
+
+	//conditionals for name query
 	let events = await Event.scope(["defaultScope"]).findAll({
 		include: [
 			{
@@ -314,9 +383,59 @@ router.get("/", async (req, res) => {
 				attributes: ["id", "city", "state"],
 			},
 		],
+		where: { ...queries },
+		...pagination,
+	});
+	if (!events.length) {
+		return res.json(
+			`0 results ... well this is embarassing, try a different query`
+		);
+	}
+	//add numattending
+	let members = await Event.scope(["defaultScope"]).findAll({
+		attributes: ["id"],
+		include: [
+			{
+				model: Attendance,
+				attributes: ["userId"],
+				where: { status: "attending" },
+			},
+		],
 	});
 
-	return res.json({ Events: events });
+	let images = await EventImage.findAll({
+		where: { preview: true },
+		attributes: ["eventId", "url"],
+	});
+
+	// filter duplicate events included in results
+	let newarray = [];
+	let visited = new Set();
+	events.forEach((el, i) => {
+		if (!visited.has(el.id)) {
+			//add numattending
+			el.dataValues.previewImage = null;
+			el.dataValues.numAttending = 0;
+			for (let j in members) {
+				if (el.id === members[j].dataValues.id) {
+					el.dataValues.numAttending =
+						members[j].dataValues.Attendances.length;
+					break;
+				}
+			}
+			//add preview image
+			for (let k in images) {
+				if (el.id === images[k].dataValues.eventId) {
+					el.dataValues.previewImage = images[k].dataValues.url;
+					break;
+				}
+			}
+			visited.add(el.id);
+			newarray.push(el);
+		}
+	});
+
+	return res.json({ Events: newarray });
 });
 
 //----------------post-------------------------
