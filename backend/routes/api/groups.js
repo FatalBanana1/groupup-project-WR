@@ -327,17 +327,7 @@ router.get("/:groupId/venues", valid_group, async (req, res) => {
 	return res.json({ Venues: venues });
 });
 
-// get all groups
-// get - /api/groups/
-router.get("/", async (req, res) => {
-	let { group } = req;
-	group = await Group.findAll();
-	if (group.length > 0) {
-		return res.json({
-			Groups: group,
-		});
-	} else return res.json({ group: null });
-});
+
 
 // Get details of a Group from an id
 // get - /api/groups/:groupId
@@ -366,6 +356,19 @@ router.get("/:groupId", valid_group, async (req, res) => {
 	});
 
 	return res.json(group);
+});
+
+
+// get all groups
+// get - /api/groups/
+router.get("/", async (req, res) => {
+	let { group } = req;
+	let all = await Group.findAll();
+	if (all.length > 0) {
+		return res.json({
+			Groups: group,
+		});
+	} else return res.json({ group: null });
 });
 
 //----------------post-------------------------

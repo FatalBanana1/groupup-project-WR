@@ -24,7 +24,7 @@ module.exports = {
 						model: "Venues",
 					},
 				},
-				GroupId: {
+				groupId: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					references: {

@@ -18,17 +18,17 @@ module.exports = {
 			options,
 			[
 				{
-					GroupId: "1",
+					groupId: "1",
 					url: "../../upload/skydiving/1.jpg",
 					preview: true,
 				},
 				{
-					GroupId: "1",
+					groupId: "1",
 					url: "../../upload/skydiving/2.jpg",
 					preview: false,
 				},
 				{
-					GroupId: "1",
+					groupId: "1",
 					url: "../../upload/skydiving/3.jpg",
 					preview: false,
 				},

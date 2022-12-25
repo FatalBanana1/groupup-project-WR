@@ -16,7 +16,7 @@ module.exports = {
 			options,
 			[
 				{
-					GroupId: 1,
+					groupId: 1,
 					address: "Online",
 					city: `N/A`,
 					state: `N/A`,
@@ -24,7 +24,7 @@ module.exports = {
 					lng: 0,
 				},
 				{
-					GroupId: 2,
+					groupId: 2,
 					address: "1681 Broadway",
 					city: "New York City",
 					state: "NY",
@@ -32,7 +32,7 @@ module.exports = {
 					lng: 101.126,
 				},
 				{
-					GroupId: 3,
+					groupId: 3,
 					address: "1000 5th Ave",
 					city: "New York City",
 					state: "NY",
@@ -40,7 +40,7 @@ module.exports = {
 					lng: 946.182,
 				},
 				{
-					GroupId: 3,
+					groupId: 3,
 					address: "200 Central Park West",
 					city: "New York City",
 					state: "NY",
@@ -48,7 +48,7 @@ module.exports = {
 					lng: 537.654,
 				},
 				{
-					GroupId: 3,
+					groupId: 3,
 					address: "11 W 53rd St",
 					city: "New York City",
 					state: "NY",

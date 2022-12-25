@@ -19,52 +19,52 @@ module.exports = {
 			[
 				{
 					userId: 1,
-					GroupId: 1,
+					groupId: 1,
 					status: "co-host",
 				},
 				{
 					userId: 1,
-					GroupId: 3,
+					groupId: 3,
 					status: "member",
 				},
 				{
 					userId: 2,
-					GroupId: 1,
+					groupId: 1,
 					status: "member",
 				},
 				{
 					userId: 2,
-					GroupId: 2,
+					groupId: 2,
 					status: "pending",
 				},
 				{
 					userId: 3,
-					GroupId: 2,
+					groupId: 2,
 					status: "co-host",
 				},
 				{
 					userId: 3,
-					GroupId: 3,
+					groupId: 3,
 					status: "co-host",
 				},
 				{
 					userId: 4,
-					GroupId: 1,
+					groupId: 1,
 					status: "member",
 				},
 				{
 					userId: 5,
-					GroupId: 1,
+					groupId: 1,
 					status: "pending",
 				},
 				{
 					userId: 5,
-					GroupId: 2,
+					groupId: 2,
 					status: "pending",
 				},
 				{
 					userId: 5,
-					GroupId: 3,
+					groupId: 3,
 					status: "pending",
 				},
 			],
