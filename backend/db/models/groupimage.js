@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 			//1-many with groups
-			GroupImage.belongsTo(models.Group, { onDelete: "CASCADE" });
+			GroupImage.belongsTo(models.Group, {
+				foreignKey: "groupId",
+				onDelete: "CASCADE"
+			});
 		}
 	}
 	GroupImage.init(
