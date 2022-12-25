@@ -1634,7 +1634,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Attendance": {
-            "status": "member"
+            "status": "attending"
           },
         },
         {
@@ -1673,7 +1673,7 @@ Returns the attendees of an event specified by its id.
           "firstName": "Clark",
           "lastName": "Adams",
           "Attendance": {
-            "status": "member"
+            "status": "attending"
           },
         },
         {

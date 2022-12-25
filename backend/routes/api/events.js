@@ -301,15 +301,22 @@ router.get("/:eventId", valid_event, async (req, res) => {
 // events - get all events
 // get - /events
 router.get("/", async (req, res) => {
+	//pagination
+
 	let events = await Event.scope(["defaultScope"]).findAll({
 		include: [
 			{
 				model: Group,
 				attributes: ["id", "name", "city", "state"],
 			},
+			{
+				model: Venue,
+				attributes: ["id", "city", "state"],
+			},
 		],
 	});
-	return res.json(events);
+
+	return res.json({ Events: events });
 });
 
 //----------------post-------------------------
@@ -555,7 +562,7 @@ router.delete(
 //----------------error handling-------------------------
 
 router.use((err, _req, res, _next) => {
-	res.status(err.status || 500);
+	res.status(err.statusCode || 500);
 	console.error(err);
 	res.json({
 		message: err.message,

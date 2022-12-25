@@ -807,7 +807,7 @@ router.delete("/:groupId", valid_group, async (req, res) => {
 //----------------error handling-------------------------
 
 router.use((err, _req, res, _next) => {
-	res.status(err.status || 500);
+	res.status(err.statusCode || 500);
 	console.error(err);
 	res.json({
 		message: err.message,

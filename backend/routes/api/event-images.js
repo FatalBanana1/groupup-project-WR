@@ -1,4 +1,4 @@
-// routes > api > Group Images
+// routes > api > Event Images
 
 //imports
 const express = require("express");
@@ -82,11 +82,11 @@ const valid_group = async (req, res, next) => {
 	next();
 };
 
-const valid_groupImage = async (req, res, next) => {
+const valid_eventImage = async (req, res, next) => {
 	const id = req.params.imageId;
-	const info = await GroupImage.findByPk(id);
+	const info = await EventImage.findByPk(id);
 	if (!info) {
-		const err = new Error("Group Image couldn't be found");
+		const err = new Error("Event Image couldn't be found");
 		err.statusCode = 404;
 		throw err;
 	}
@@ -97,16 +97,17 @@ const valid_user = async (req, res, next) => {
 	const { user } = req;
 	const imageId = req.params.imageId;
 
-	let image = await GroupImage.findByPk(imageId);
+	let image = await EventImage.findByPk(imageId);
+	let event = await Event.findByPk(image.eventId);
 	//check if current user is either organizer or cohost
 	let group = await Group.findAll({
-		where: { id: image.groupId, organizerId: user.id },
+		where: { id: event.groupId, organizerId: user.id },
 	});
 
 	//organizer - find group by groupid, check organizerId in groups t
 	//cohost = find current users id and find the status of membership, check status in membership t
 	let member = await Membership.findAll({
-		where: { status: "co-host", userId: user.id, groupId: image.groupId },
+		where: { status: "co-host", userId: user.id, groupId: event.groupId },
 	});
 
 	if (member.length < 1 && group.length < 1) {
@@ -184,13 +185,13 @@ const valid_member = async (req, res, next) => {
 // delete - /api/group-images/:imageId
 router.delete(
 	"/:imageId",
-	valid_groupImage,
+	valid_eventImage,
 	valid_user,
 	requireAuth,
 	async (req, res) => {
 		let imageId = req.params.imageId;
 
-		let image = await GroupImage.findOne({
+		let image = await EventImage.findOne({
 			where: { id: imageId },
 		});
 
