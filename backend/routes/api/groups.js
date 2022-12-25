@@ -243,38 +243,53 @@ router.get("/current", requireAuth, async (req, res) => {
 		],
 	});
 
+	let members = await Group.scope(["defaultScope"]).findAll({
+		attributes: ["id"],
+		include: [
+			{
+				model: Membership,
+				attributes: ["userId"],
+			},
+		],
+	});
+
+	let images = await GroupImage.findAll({
+		where: { preview: 1 },
+		attributes: ["groupId", "url"],
+		include: {
+			model: Group,
+			attributes: [],
+			include: {
+				model: Membership,
+				attributes: [],
+				where: { userId: user.id },
+			},
+		},
+	});
+
 	// filter duplicate groups included in results
 	let array = [...organizers, ...groups];
 	let newarray = [];
 	let visited = new Set();
-	array.forEach((el) => {
+	array.forEach((el, i) => {
 		if (!visited.has(el.id)) {
-			newarray.push(el);
+			//add nummembers
+			for (let j in members) {
+				if (el.id === members[j].dataValues.id) {
+					el.dataValues.numMembers =
+						members[j].dataValues.Memberships.length;
+				}
+			}
+			//add preview image
+			if (images[i]) {
+				el.dataValues.previewImage = images[i].dataValues.url;
+			} else {
+				el.dataValues.previewImage = null;
+			}
 			visited.add(el.id);
+			newarray.push(el);
 		}
 	});
-
-	//add nummembers for each group
-	// find number of people in each group
-	// go to memberships for group
-	// count how many members are returned
-
-	// const numMembers = await Membership.count({
-	// 	where: { groupId: groups[0].id },
-	// });
-
-	newarray.forEach((el, i) => {
-		// const numMembers2 = Membership.count({
-		// 	where: { groupId: el.id },
-		// });
-		el.numMembers = 1;
-		return el;
-	});
-	console.log(newarray[0].numMembers);
-
-	// console.log(newarray2);
-
-	// add preview image to each group
 
 	return res.json({ Groups: newarray });
 });
