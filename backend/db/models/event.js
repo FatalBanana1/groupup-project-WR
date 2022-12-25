@@ -11,14 +11,11 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Event.belongsTo(models.Group, {
 				foreignKey: "groupId",
-				onDelete: "CASCADE",
-				hooks: true,
+
 			});
 
 			Event.belongsTo(models.Venue, {
 				foreignKey: "venueId",
-				onDelete: "CASCADE",
-				hooks: true,
 			});
 
 			Event.hasMany(models.EventImage, {

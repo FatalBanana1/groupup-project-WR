@@ -23,6 +23,7 @@ module.exports = {
 					references: {
 						model: "Venues",
 					},
+					onDelete: "CASCADE",
 				},
 				groupId: {
 					type: Sequelize.INTEGER,
