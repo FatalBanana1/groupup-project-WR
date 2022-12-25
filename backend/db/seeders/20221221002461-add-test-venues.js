@@ -20,8 +20,8 @@ module.exports = {
 					address: "Online",
 					city: `N/A`,
 					state: `N/A`,
-					lat: `N/A`,
-					lng: `N/A`,
+					lat: 0,
+					lng: 0,
 				},
 				{
 					groupId: 2,
