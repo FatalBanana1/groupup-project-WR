@@ -293,6 +293,40 @@ router.get("/:eventId", valid_event, async (req, res) => {
 		],
 	});
 
+	//add numattending
+	let member = await Event.scope(["defaultScope"]).findByPk(eventId,{
+		attributes: ["id"],
+		include: [
+			{
+				model: Attendance,
+				attributes: ["userId"],
+				where: { status: "attending" },
+			},
+		],
+	});
+
+	//add preview image
+	let image = await EventImage.findOne({
+		where: { preview: true, eventId },
+		attributes: ["eventId", "url"],
+	});
+
+	console.log(`---member---`, member.dataValues.id);
+
+	//add numattending
+	if (member) {
+		event.dataValues.numAttending = member.dataValues.Attendances.length;
+	} else {
+		event.dataValues.numAttending = 0;
+	}
+
+	//add preview image
+	if (image) {
+		event.dataValues.previewImage = image.dataValues.url;
+	} else {
+		event.dataValues.previewImage = null;
+	}
+
 	return res.json(event);
 });
 
@@ -303,13 +337,9 @@ router.get("/:eventId", valid_event, async (req, res) => {
 router.get("/", async (req, res) => {
 	//pagination
 	let { page, size, name, type, startDate } = req.query;
-
-	//errors
 	let errors = {};
-
-	//optional queries
 	let queries = {};
-
+	//optional queries
 	//name
 	if (name) {
 		if (
@@ -352,7 +382,7 @@ router.get("/", async (req, res) => {
 	} else if (size > 20) {
 		errors.size = `Size must be less than or equal to 20`;
 	}
-	//check errors before query
+	//check errors
 	if (Object.values(errors).length) {
 		return res.status(400).json({
 			message: "Validation Error",
@@ -371,7 +401,7 @@ router.get("/", async (req, res) => {
 		pagination.offset = size * (page - 1);
 	}
 
-	//conditionals for name query
+	//query
 	let events = await Event.scope(["defaultScope"]).findAll({
 		include: [
 			{
@@ -402,13 +432,12 @@ router.get("/", async (req, res) => {
 			},
 		],
 	});
-
+	//add preview image
 	let images = await EventImage.findAll({
 		where: { preview: true },
 		attributes: ["eventId", "url"],
 	});
-
-	// filter duplicate events included in results
+	// filter duplicate events
 	let newarray = [];
 	let visited = new Set();
 	events.forEach((el, i) => {

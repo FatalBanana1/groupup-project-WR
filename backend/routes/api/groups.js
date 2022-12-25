@@ -11,6 +11,8 @@ const {
 	Membership,
 	Event,
 	Venue,
+	Attendance,
+	EventImage,
 	sequelize,
 } = require("../../db/models");
 const { check } = require("express-validator");
@@ -299,7 +301,6 @@ router.get("/current", requireAuth, async (req, res) => {
 	return res.json({ Groups: newarray });
 });
 
-//TODO: add numattending + previewImage attr to results
 // groups - Get all Events of a Group specified by its id
 // get - /api/groups/:groupId/events
 router.get("/:groupId/events", valid_group, async (req, res) => {
@@ -323,6 +324,51 @@ router.get("/:groupId/events", valid_group, async (req, res) => {
 			},
 		],
 	});
+
+	//add numattending
+	let members = await Event.scope(["defaultScope"]).findAll({
+		attributes: ["id"],
+		include: [
+			{
+				model: Attendance,
+				attributes: ["userId"],
+				where: { status: "attending" },
+			},
+		],
+	});
+	//add preview image
+	let images = await EventImage.findAll({
+		where: { preview: true },
+		attributes: ["eventId", "url"],
+	});
+	// filter duplicate events
+	let newarray = [];
+	let visited = new Set();
+	events.forEach((el, i) => {
+		if (!visited.has(el.id)) {
+			//add numattending
+			for (let j in members) {
+				if (el.id === members[j].dataValues.id) {
+					el.dataValues.numAttending =
+						members[j].dataValues.Attendances.length;
+					break;
+				} else {
+					el.dataValues.numAttending = 0;
+				}
+				el.dataValues.previewImage = null;
+			}
+			//add preview image
+			for (let k in images) {
+				if (el.id === images[k].dataValues.eventId) {
+					el.dataValues.previewImage = images[k].dataValues.url;
+					break;
+				}
+			}
+			visited.add(el.id);
+			newarray.push(el);
+		}
+	});
+
 	if (!events.length) {
 		return res.json({ message: `No events found for group.` });
 	}
@@ -531,7 +577,7 @@ router.post(
 		if (Date.parse(startDate) < Date.parse(new Date()) || !startDate) {
 			options.errors.startDate = `Start date must be in the future`;
 		}
-		if (endDate < startDate || !endDate) {
+		if (Date.parse(endDate) < Date.parse(startDate) || !endDate) {
 			options.errors.endDate = `End date is less than start date`;
 		}
 
@@ -571,73 +617,90 @@ router.post(
 
 // Create a new Venue for a Group specified by its id
 // post - /api/groups/:groupId/venues
-router.post("/:groupId/venues", valid_group, requireAuth, async (req, res) => {
-	let groupId = req.params.groupId;
+router.post(
+	"/:groupId/venues",
+	valid_group,
+	valid_user,
+	requireAuth,
+	async (req, res) => {
+		let groupId = req.params.groupId;
 
-	let { address, city, state, lat, lng } = req.body;
+		let { address, city, state, lat, lng } = req.body;
 
-	let options = {
-		message: "Validation Error",
-		statusCode: 400,
-		errors: {},
-	};
+		let options = {
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {},
+		};
 
-	if (!address) options.errors.address = `Street address is required`;
-	if (!city) options.errors.name = `City is required`;
-	if (!state) options.errors.state = `State is required`;
-	if (!lat) options.errors.lat = `Latitude is not valid`;
-	if (!lng) options.errors.lng = `Longitude is not valid`;
+		if (!address || address.length < 5)
+			options.errors.address = `Street address is required`;
+		if (!city || city.length < 3) options.errors.name = `City is required`;
+		if (!state || state.length !== 2)
+			options.errors.state = `State is required`;
+		if (
+			!lat ||
+			parseFloat(lat) > 10 ** 4 ||
+			typeof parseFloat(lat) !== "number"
+		)
+			options.errors.lat = `Latitude is not valid`;
+		if (
+			!lng ||
+			parseFloat(lng) > 10 ** 4 ||
+			typeof parseFloat(lng) !== "number"
+		)
+			options.errors.lng = `Longitude is not valid`;
 
-	if (Object.values(options.errors).length > 0) {
-		return res.status(400).json(options);
-	} else {
-		// check if venue already exists
-		let check = await Venue.findOne({
-			where: { address, city, state, groupId },
-		});
-		if (check) {
-			return res.status(400).json({
-				message: "Validation Error",
-				statusCode: 400,
-				errors: {
-					Error: `Venue already exists.`,
-				},
+		if (Object.values(options.errors).length > 0) {
+			return res.status(400).json(options);
+		} else {
+			// check if venue already exists
+			let check = await Venue.findOne({
+				where: { address, city, state, groupId },
+			});
+			if (check) {
+				return res.status(400).json({
+					message: "Validation Error",
+					statusCode: 400,
+					errors: {
+						Error: `Venue already exists.`,
+					},
+				});
+			}
+
+			let newvenue = await Venue.create({
+				address,
+				city,
+				state,
+				lat,
+				lng,
+				groupId,
+			});
+
+			return res.json({
+				id: newvenue.id,
+				groupId,
+				address,
+				city,
+				state,
+				lat,
+				lng,
 			});
 		}
-
-		let newvenue = await Venue.create({
-			address,
-			city,
-			state,
-			lat,
-			lng,
-			groupId,
-		});
-
-		return res.json(newvenue);
 	}
-});
+);
 
 //Add an Image to a Group based on the Group's id
 // post - api/groups/:groupId/images
-router.post("/:groupId/images", valid_group, async (req, res) => {
+router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
 	let groupId = req.params.groupId;
 	let { url, preview } = req.body;
 
-	// check if group exists
-	let check1 = await Group.findByPk(groupId);
-	if (!check1) {
-		return res.status(404).json({
-			message: "Group couldn't be found",
-			statusCode: 404,
-		});
-	}
-
-	// check if event already exists
-	let check2 = await GroupImage.findOne({
+	// check if image already exists
+	let check = await GroupImage.findOne({
 		where: { url, preview, groupId },
 	});
-	if (check2) {
+	if (check) {
 		return res.status(400).json({
 			message: "Validation Error",
 			statusCode: 400,
@@ -652,13 +715,6 @@ router.post("/:groupId/images", valid_group, async (req, res) => {
 		groupId,
 		url,
 		preview,
-	});
-	newimage = await GroupImage.scope(["defaultScope"]).findOne({
-		where: {
-			groupId,
-			url,
-			preview,
-		},
 	});
 
 	return res.json({
@@ -682,41 +738,45 @@ router.post("/", requireAuth, async (req, res) => {
 		errors.type = `Type must be 'Online' or 'In Person'`;
 	if (!private || typeof Boolean(private) !== "boolean")
 		errors.private = `Private must be a boolean`;
-	if (!city) errors.city = `City is required`;
-	if (!state) errors.state = `State is required`;
+	if (!city || city.length < 3) errors.city = `City is required`;
+	if (!state || state.length !== 2) errors.state = `State is required`;
 
 	if (Object.values(errors).length) {
-		return res.status(400).json(options);
-	} else {
-		let { user } = req;
-		let organizerId = user.id;
-		// all info provided
-		// check if event already exists
-		let check = await Group.findOne({
-			where: { organizerId, name, about },
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: errors,
 		});
-		if (check) {
-			return res.status(400).json({
-				message: "Validation Error",
-				statusCode: 400,
-				errors: {
-					Error: `Group already exists.`,
-				},
-			});
-		}
-
-		let group = await Group.create({
-			name,
-			about,
-			type,
-			private,
-			city,
-			state,
-			organizerId,
-		});
-
-		return res.json(group);
 	}
+
+	let { user } = req;
+	let organizerId = user.id;
+
+	// check if group already exists
+	let check = await Group.findOne({
+		where: { name, about, type, private, city, state },
+	});
+	if (check) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				Error: `Group already exists.`,
+			},
+		});
+	}
+
+	let group = await Group.create({
+		name,
+		about,
+		type,
+		private,
+		city,
+		state,
+		organizerId,
+	});
+
+	return res.json(group);
 });
 
 //----------------put-------------------------
@@ -799,7 +859,6 @@ router.put(
 	}
 );
 
-//TODO: test valid user on route
 // edit a group
 // put - /api/groups/:groupId
 router.put(
@@ -813,20 +872,24 @@ router.put(
 
 		let { name, about, type, private, city, state } = req.body;
 
-		if (
-			group.name === name &&
-			group.about === about &&
-			group.type === type &&
-			group.private === private &&
-			group.city === city &&
-			group.state === state
-		) {
+		let errors = {};
+
+		if (name && name.length > 60)
+			errors.name = `Name must be 60 characters or less`;
+		if (about && about.length < 50)
+			errors.about = `About must be 50 characters or more`;
+		if (type && type !== "Online" && type !== "In Person")
+			errors.type = `Type must be 'Online' or 'In Person'`;
+		if (private && typeof Boolean(private) !== "boolean")
+			errors.private = `Private must be a boolean`;
+		if (city && city.length < 3) errors.city = `City is required`;
+		if (state && state.length !== 2) errors.state = `State is required`;
+
+		if (Object.values(errors).length) {
 			return res.status(400).json({
 				message: "Validation Error",
 				statusCode: 400,
-				errors: {
-					Error: `Group is already up to date`,
-				},
+				errors: errors,
 			});
 		}
 

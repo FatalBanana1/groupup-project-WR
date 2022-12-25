@@ -158,7 +158,6 @@ const valid_member = async (req, res, next) => {
 
 //----------------put-------------------------
 
-//TODO:
 // Edit a Venue specified by its id
 // put - /api/venues/:venueId
 router.put(
@@ -171,14 +170,52 @@ router.put(
 		let { address, city, state, lat, lng } = req.body;
 		let venue = await Venue.findByPk(venueId);
 
-		venue.update({
+		//error handle
+		let options = {
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {},
+		};
+
+		if (!address || address.length < 4)
+			options.errors.address = `Street address is required`;
+		if (!city || city.length < 3) options.errors.name = `City is required`;
+		if (!state || state.length !== 2)
+			options.errors.state = `State is required`;
+		if (
+			!lat ||
+			parseFloat(lat) > 10 ** 4 ||
+			typeof parseFloat(lat) !== "number"
+		)
+			options.errors.lat = `Latitude is not valid`;
+		if (
+			!lng ||
+			parseFloat(lng) > 10 ** 4 ||
+			typeof parseFloat(lng) !== "number"
+		)
+			options.errors.lng = `Longitude is not valid`;
+
+		if (Object.values(options.errors).length > 0) {
+			return res.status(400).json(options);
+		}
+
+		await venue.update({
 			address,
 			city,
 			state,
 			lat,
 			lng,
 		});
-		return res.json({ Venue: venue });
+
+		return res.json({
+			id: venue.id,
+			groupId: venue.groupId,
+			address,
+			city,
+			state,
+			lat,
+			lng,
+		});
 	}
 );
 
