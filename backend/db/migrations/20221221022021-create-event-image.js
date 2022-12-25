@@ -8,39 +8,44 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable("EventImages", {
-			id: {
-				allowNull: false,
-				autoIncrement: true,
-				primaryKey: true,
-				type: Sequelize.INTEGER,
-			},
-			eventId: {
-				type: Sequelize.INTEGER,
-				references: {
-					model: "Events",
+		await queryInterface.createTable(
+			"EventImages",
+			{
+				id: {
+					allowNull: false,
+					autoIncrement: true,
+					primaryKey: true,
+					type: Sequelize.INTEGER,
 				},
-				onDelete: "CASCADE",
+				eventId: {
+					type: Sequelize.INTEGER,
+					references: {
+						model: "Events",
+					},
+					onDelete: "CASCADE",
+				},
+				url: {
+					type: Sequelize.STRING,
+				},
+				preview: {
+					type: Sequelize.BOOLEAN,
+				},
+				createdAt: {
+					allowNull: false,
+					type: Sequelize.DATE,
+					defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+				},
+				updatedAt: {
+					allowNull: false,
+					type: Sequelize.DATE,
+					defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+				},
 			},
-			url: {
-				type: Sequelize.STRING,
-			},
-			preview: {
-				type: Sequelize.BOOLEAN,
-			},
-			createdAt: {
-				allowNull: false,
-				type: Sequelize.DATE,
-				defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-			},
-			updatedAt: {
-				allowNull: false,
-				type: Sequelize.DATE,
-				defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-			},
-		}, options);
+			options
+		);
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable("EventImages");
+		options.tableName = "EventImages";
+		await queryInterface.dropTable(options);
 	},
 };
