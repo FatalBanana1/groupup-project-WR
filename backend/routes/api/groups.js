@@ -365,13 +365,6 @@ router.get("/:groupId", valid_group, async (req, res) => {
 		],
 	});
 
-	// if (group === null) {
-	// 	res.status(404);
-	// 	return res.json({
-	// 		message: `Group couldn't be found`,
-	// 		statusCode: 404,
-	// 	});
-	// }
 	return res.json(group);
 });
 
