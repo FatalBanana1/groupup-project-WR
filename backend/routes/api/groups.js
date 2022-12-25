@@ -218,18 +218,17 @@ router.get("/current", requireAuth, async (req, res) => {
 			"state",
 			"createdAt",
 			"updatedAt",
-			// [sequelize.fn("COUNT", sequelize.col("name")), "numMembers"],
 		],
 	});
 
 	let groups = await Group.scope(["defaultScope"]).findAll({
-		// include: [
-		// 	{
-		// 		model: Membership,
-		// 		where: { userId: user.id },
-		// 		attributes: [],
-		// 	},
-		// ],
+		include: [
+			{
+				model: Membership,
+				where: { userId: user.id },
+				attributes: [],
+			},
+		],
 		attributes: [
 			"id",
 			"organizerId",
@@ -241,7 +240,6 @@ router.get("/current", requireAuth, async (req, res) => {
 			"state",
 			"createdAt",
 			"updatedAt",
-			// [sequelize.fn("COUNT", sequelize.col("name")), "numMembers"],
 		],
 	});
 
@@ -256,16 +254,27 @@ router.get("/current", requireAuth, async (req, res) => {
 		}
 	});
 
-	// newarray = newarray.map((el, i) => {
-	// 	el.numMembers = Membership.findAll({
-	// 		attributes: [
-	// 			[sequelize.fn("COUNT", sequelize.col("id")), "numMembers"],
-	// 		],
-	// 		where: { groupId: el.id },
-	// 	});
-	// 	console.log(el.numMembers);
-	// 	return el;
+	//add nummembers for each group
+	// find number of people in each group
+	// go to memberships for group
+	// count how many members are returned
+
+	// const numMembers = await Membership.count({
+	// 	where: { groupId: groups[0].id },
 	// });
+
+	newarray.forEach((el, i) => {
+		// const numMembers2 = Membership.count({
+		// 	where: { groupId: el.id },
+		// });
+		el.numMembers = 1;
+		return el;
+	});
+	console.log(newarray[0].numMembers);
+
+	// console.log(newarray2);
+
+	// add preview image to each group
 
 	return res.json({ Groups: newarray });
 });
