@@ -56,9 +56,7 @@ app.use(
 app.use(routes); // connect all the routes
 
 //favicon
-app.get("/favicon.ico",(req, res) => {
-	return res.json('./favicon.ico')
-})
+app.use("/favicon.ico", express.static('./favicon'))
 
 // catch unhandled reqs - forward to error handler
 app.use((_req, _res, next) => {
