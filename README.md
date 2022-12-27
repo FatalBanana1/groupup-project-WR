@@ -4,7 +4,7 @@
 
 ![meetup-dbdiagram]
 
-[meetup-dbdiagram]: ./meetup_dbdiagram.png
+[meetup-dbdiagram]: ./meetup-wr-diagram.png
 
 ## API Documentation
 
