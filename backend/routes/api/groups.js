@@ -1,4 +1,4 @@
-// routes > api > groups
+// routes > api > groupsvalid_user
 
 //imports
 const express = require("express");
@@ -34,20 +34,35 @@ const router = express.Router();
 // };
 
 const valid_group = async (req, res, next) => {
+	let { user } = req;
 	const id = req.params.groupId;
-	const info = await Group.findByPk(id);
-	if (!info) {
-		const err = new Error("Group couldn't be found");
-		err.statusCode = 404;
-		throw err;
+	if (id) {
+		const info = await Group.findByPk(id);
+		if (!info) {
+			const err = new Error("Group couldn't be found");
+			err.statusCode = 404;
+			throw err;
+		}
+		req.group = info;
+		next();
+	} else {
+		let usersgroup = await Group.findOne({
+			where: { organizerId: user.id },
+		});
+		if (!usersgroup) {
+			const err = new Error("Group couldn't be found");
+			err.statusCode = 404;
+			throw err;
+		}
+		req.group = usersgroup;
+		next();
 	}
-	next();
 };
 
 const valid_user = async (req, res, next) => {
 	const { user } = req;
 	let auth = await Membership.findOne({
-		where: { userId: user.id },
+		where: { userId: user.dataValues.id },
 		include: [
 			{
 				model: Group,
@@ -693,7 +708,9 @@ router.post(
 //Add an Image to a Group based on the Group's id
 // post - api/groups/:groupId/images
 router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
-	let groupId = req.params.groupId;
+	console.log(`------------------`);
+	console.log(req);
+	let groupId = req.group.id;
 	let { url, preview } = req.body;
 
 	// check if image already exists
@@ -734,8 +751,8 @@ router.post("/", requireAuth, async (req, res) => {
 		errors.name = `Name must be 60 characters or less`;
 	if (!about || about.length < 50)
 		errors.about = `About must be 50 characters or more`;
-	if (!type || (type !== "Online" && type !== "In Person"))
-		errors.type = `Type must be 'Online' or 'In Person'`;
+	if (!type || (type !== "Online" && type !== "In person"))
+		errors.type = `Type must be 'Online' or 'In person'`;
 	if (!private || typeof Boolean(private) !== "boolean")
 		errors.private = `Private must be a boolean`;
 	if (!city || city.length < 3) errors.city = `City is required`;
@@ -774,6 +791,12 @@ router.post("/", requireAuth, async (req, res) => {
 		city,
 		state,
 		organizerId,
+	});
+
+	let member = await Membership.create({
+		userId: user.id,
+		groupId: group.id,
+		status: "co-host",
 	});
 
 	return res.json(group);
@@ -878,8 +901,8 @@ router.put(
 			errors.name = `Name must be 60 characters or less`;
 		if (about && about.length < 50)
 			errors.about = `About must be 50 characters or more`;
-		if (type && type !== "Online" && type !== "In Person")
-			errors.type = `Type must be 'Online' or 'In Person'`;
+		if (type && type !== "Online" && type !== "In person")
+			errors.type = `Type must be 'Online' or 'In person'`;
 		if (private && typeof Boolean(private) !== "boolean")
 			errors.private = `Private must be a boolean`;
 		if (city && city.length < 3) errors.city = `City is required`;

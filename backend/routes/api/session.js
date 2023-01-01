@@ -144,7 +144,7 @@ fetch('/api/session', {
   method: 'POST',
   headers: {
     "Content-Type": "application/json",
-    "XSRF-TOKEN": `eIpEGgaL--kl-byrYq_tQ0AF4zEISt5Yvbek`
+    "XSRF-TOKEN": `O0XTQ251-By7aMtAqJzRvKl4zQISjP1SZFLw`
   },
   body: JSON.stringify({ credential: 'rocks@yahoo.com', password: 'password3' })
 }).then(res => res.json()).then(data => console.log(data));

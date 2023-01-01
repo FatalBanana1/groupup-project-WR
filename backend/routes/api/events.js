@@ -294,7 +294,7 @@ router.get("/:eventId", valid_event, async (req, res) => {
 	});
 
 	//add numattending
-	let member = await Event.scope(["defaultScope"]).findByPk(eventId,{
+	let member = await Event.scope(["defaultScope"]).findByPk(eventId, {
 		attributes: ["id"],
 		include: [
 			{
@@ -310,8 +310,6 @@ router.get("/:eventId", valid_event, async (req, res) => {
 		where: { preview: true, eventId },
 		attributes: ["eventId", "url"],
 	});
-
-	console.log(`---member---`, member.dataValues.id);
 
 	//add numattending
 	if (member) {
@@ -485,18 +483,20 @@ router.post(
 		let check = await Attendance.findOne({
 			where: { eventId, userId: user.id },
 		});
-		if (check.status === "pending") {
-			return res.status(400).json({
-				message: "Attendance has already been requested",
-				statusCode: 400,
-			});
-		}
+		if (check) {
+			if (check.status === "pending") {
+				return res.status(400).json({
+					message: "Attendance has already been requested",
+					statusCode: 400,
+				});
+			}
 
-		if (check.status === "member") {
-			return res.status(400).json({
-				message: "User is already an attendee of the event",
-				statusCode: 400,
-			});
+			if (check.status === "member") {
+				return res.status(400).json({
+					message: "User is already an attendee of the event",
+					statusCode: 400,
+				});
+			}
 		}
 
 		// if not added, create new attendance
@@ -690,23 +690,37 @@ router.delete(
 
 // Delete an Event specified by its id
 // delete - /api/events/:eventId
-router.delete(
-	"/:eventId",
-	valid_user,
-	valid_event,
-	requireAuth,
-	async (req, res) => {
-		let eventId = req.params.eventId;
+router.delete("/:eventId", valid_event, requireAuth, async (req, res) => {
+	//valid_user
+	const { user } = req;
+	const eventId = req.params.eventId;
+	let event = await Event.findByPk(eventId);
 
-		let event = await Event.findByPk(eventId);
+	//check if current user is either organizer or cohost
+	let group = await Group.findAll({
+		where: { id: event.groupId, organizerId: user.id },
+	});
 
+	//organizer - find group by groupid, check organizerId in groups t
+	//cohost = find current users id and find the status of membership, check status in membership t
+	let member = await Membership.findAll({
+		where: { status: "co-host", userId: user.id, groupId: event.groupId },
+	});
+
+	if (member.length < 1 && group.length < 1) {
+		const err = new Error(
+			`Current User must be the organizer of the group or a member of the group with a status of co-host`
+		);
+		err.statusCode = 403;
+		throw err;
+	} else {
 		await event.destroy();
 
 		return res.json({
 			message: "Successfully deleted",
 		});
 	}
-);
+});
 
 //----------------error handling-------------------------
 
