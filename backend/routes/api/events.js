@@ -474,7 +474,6 @@ router.post(
 	"/:eventId/attendance",
 	valid_event,
 	requireAuth,
-	valid_member,
 	async (req, res) => {
 		let eventId = req.params.eventId;
 		let { user } = req;
@@ -517,24 +516,39 @@ router.post(
 
 // Add an Image to a Event based on the Event's id
 // post - /api/events/:eventId/images
-router.post("/:eventId/images", valid_event, async (req, res) => {
+router.post("/:eventId/images", valid_event, requireAuth, async (req, res) => {
 	let eventId = req.params.eventId;
 	let { url, preview } = req.body;
 
-	// add img to groupimages table
+	let { user } = req;
+
+	console.log(`------`);
+	console.log(url, preview);
+
+	// check if venue already exists
+	let check = await EventImage.findOne({
+		where: { eventId, url, preview },
+	});
+	if (check) {
+		return res.json({
+			id: check.id,
+			url,
+			preview,
+		});
+	}
+
+	// add img to eventimages table
 	let newimage = await EventImage.create({
 		eventId,
 		url,
 		preview,
 	});
-	newimage = await EventImage.scope(["defaultScope"]).findOne({
-		where: {
-			eventId,
-			url,
-			preview,
-		},
+
+	return res.json({
+		id: newimage.id,
+		url,
+		preview,
 	});
-	return res.json(newimage);
 });
 
 //----------------put-------------------------
@@ -680,6 +694,13 @@ router.delete(
 		let deleted = await Attendance.findOne({
 			where: { eventId, userId },
 		});
+
+		if (!deleted) {
+			return res.status(404).json({
+				message: "Attendance does not exist for this User",
+				statusCode: 404,
+			});
+		}
 
 		await deleted.destroy();
 		return res.json({

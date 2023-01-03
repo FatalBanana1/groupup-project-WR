@@ -12,10 +12,10 @@ module.exports = {
 			"EventImages",
 			{
 				id: {
-					allowNull: false,
 					autoIncrement: true,
 					primaryKey: true,
 					type: Sequelize.INTEGER,
+					allowNull: false,
 				},
 				eventId: {
 					type: Sequelize.INTEGER,

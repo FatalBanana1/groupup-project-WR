@@ -531,9 +531,9 @@ router.post(
 		});
 
 		if (check && check.status === "pending") {
-			return res.status(400).json({
-				message: `Membership has already been requested`,
-				statusCode: 400,
+			return res.json({
+				memberId: check.userId,
+				status: check.status,
 			});
 		} else if (check) {
 			return res.status(400).json({
@@ -583,11 +583,14 @@ router.post(
 		};
 
 		if (!venueId) options.errors.venueId = `Venue does not exist`;
-		if (!name) options.errors.name = `Name must be at least 5 characters`;
-		if (!type) options.errors.type = `Type must be Online or In person`;
-		if (!capacity) options.errors.capacity = `Capacity must be an integer`;
-		if (!price) options.errors.price = `Price is invalid`;
-		if (!description)
+		if (!name || name.length < 5)
+			options.errors.name = `Name must be at least 5 characters`;
+		if (!type || (type !== "Online" && type !== "In person"))
+			options.errors.type = `Type must be Online or In person`;
+		if (!capacity || capacity < 0)
+			options.errors.capacity = `Capacity must be an integer`;
+		if (!price || price < 0) options.errors.price = `Price is invalid`;
+		if (!description || description.length < 1)
 			options.errors.description = `Description is required`;
 		if (Date.parse(startDate) < Date.parse(new Date()) || !startDate) {
 			options.errors.startDate = `Start date must be in the future`;
@@ -604,13 +607,7 @@ router.post(
 				where: { name, startDate, endDate, description },
 			});
 			if (check) {
-				return res.status(400).json({
-					message: "Validation Error",
-					statusCode: 400,
-					errors: {
-						Error: `Event already exists.`,
-					},
-				});
+				return res.json(check);
 			}
 
 			let newevent = await Event.create({
@@ -674,12 +671,14 @@ router.post(
 				where: { address, city, state, groupId },
 			});
 			if (check) {
-				return res.status(400).json({
-					message: "Validation Error",
-					statusCode: 400,
-					errors: {
-						Error: `Venue already exists.`,
-					},
+				return res.json({
+					id: check.id,
+					groupId,
+					address,
+					city,
+					state,
+					lat,
+					lng,
 				});
 			}
 
@@ -708,8 +707,6 @@ router.post(
 //Add an Image to a Group based on the Group's id
 // post - api/groups/:groupId/images
 router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
-	console.log(`------------------`);
-	console.log(req);
 	let groupId = req.group.id;
 	let { url, preview } = req.body;
 
@@ -718,12 +715,10 @@ router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
 		where: { url, preview, groupId },
 	});
 	if (check) {
-		return res.status(400).json({
-			message: "Validation Error",
-			statusCode: 400,
-			errors: {
-				Error: `Group image already exists.`,
-			},
+		return res.json({
+			id: check.id,
+			url,
+			preview,
 		});
 	}
 
@@ -774,13 +769,7 @@ router.post("/", requireAuth, async (req, res) => {
 		where: { name, about, type, private, city, state },
 	});
 	if (check) {
-		return res.status(400).json({
-			message: "Validation Error",
-			statusCode: 400,
-			errors: {
-				Error: `Group already exists.`,
-			},
-		});
+		return res.json(check);
 	}
 
 	let group = await Group.create({
@@ -810,7 +799,6 @@ router.put(
 	"/:groupId/membership",
 	requireAuth,
 	valid_group,
-	valid_user,
 	async (req, res) => {
 		let groupId = req.params.groupId;
 
@@ -826,11 +814,11 @@ router.put(
 				},
 			});
 		}
-		let member = await Membership.findOne({
-			where: { userId: memberId },
+		let { user } = req;
+		let member = await User.findOne({
+			where: { id: memberId },
 		});
 
-		// if user not found
 		if (!member) {
 			return res.status(400).json({
 				message: "Validation Error",
@@ -854,7 +842,6 @@ router.put(
 		}
 
 		// only organizer can change to co-host
-		let { user } = req;
 		let group = await Group.findByPk(groupId);
 		if (user.id !== group.organizerId && status === "co-host") {
 			return res.status(400).json({
@@ -866,7 +853,7 @@ router.put(
 			});
 		}
 
-		await Membership.update(
+		let updated = await Membership.update(
 			{
 				status,
 			},
@@ -874,7 +861,7 @@ router.put(
 		);
 
 		return res.json({
-			id: member.id,
+			id: updated.id,
 			groupId,
 			memberId,
 			status,
