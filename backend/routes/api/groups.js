@@ -814,10 +814,12 @@ router.put(
 				},
 			});
 		}
+		if (memberId === null) {
+			return res.status(400).json({ extraUserId: memberId });
+		}
+
 		let { user } = req;
-		let member = await User.findOne({
-			where: { id: memberId },
-		});
+		let member = await User.findByPk(memberId);
 
 		if (!member) {
 			return res.status(400).json({
