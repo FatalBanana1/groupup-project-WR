@@ -254,6 +254,44 @@ _/
 
 //---------------------------
 
+FRONTEND:
+-commands:
+npx create-react-app . --template @appacademy/react-redux-v17 --use-npm
+
+//---------------------------
+
+-js-cookie
+npm install js-cookie
+
+//---------------------------
+
+-testing if setup is correct:
+window.store.dispatch({ type: 'hello' });
+
+//---------------------------
+
+-login thunk action test in browser
+window.store.dispatch(window.sessionActions.login({
+  credential: 'Demo-lition',
+  password: 'password'
+}));
+
+//---------------------------
+
+//---------------------------
+
+//---------------------------
+
+//---------------------------
+
+//---------------------------
+
+//---------------------------
+
+//---------------------------
+
+//---------------------------
+
 -TODO
 
 //---------------------------
