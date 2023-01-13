@@ -1,4 +1,4 @@
-# Meetup
+# Groupup
 
 ## Database Schema Design
 
