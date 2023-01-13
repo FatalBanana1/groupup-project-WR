@@ -327,6 +327,8 @@ window.store.dispatch(window.sessionActions.logout());
 
 //---------------------------
 
+npm --prefix backend install backend && npm --prefix frontend install frontend
+
 //---------------------------
 
 //---------------------------
