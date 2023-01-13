@@ -331,6 +331,27 @@ npm --prefix backend install backend && npm --prefix frontend install frontend
 
 //---------------------------
 
+# OLD Build Script
+
+npm install &&
+npm run build &&
+npm run sequelize --prefix backend db:migrate &&
+npm run sequelize --prefix backend db:seed:all
+
+//---------------------------
+
+# render new build command:
+
+npm install &&
+npm run render-postbuild &&
+npm run build &&
+npm run sequelize --prefix backend db:migrate &&
+npm run sequelize --prefix backend db:seed:all
+
+//---------------------------
+
+//---------------------------
+
 //---------------------------
 
 //---------------------------
