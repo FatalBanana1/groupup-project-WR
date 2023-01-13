@@ -294,6 +294,9 @@ password: 'password'
 
 //---------------------------
 
+-logout thunk action test
+window.store.dispatch(window.sessionActions.logout());
+
 //---------------------------
 
 //---------------------------
