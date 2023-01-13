@@ -283,7 +283,14 @@ window.store.dispatch(window.sessionActions.restoreUser());
 
 //---------------------------
 
-
+-sign up thunk test
+window.store.dispatch(window.sessionActions.signup({
+username: 'NewUser',
+firstName: 'New',
+lastName: 'User',
+email: 'new@user.io',
+password: 'password'
+}));
 
 //---------------------------
 
