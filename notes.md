@@ -272,13 +272,18 @@ window.store.dispatch({ type: 'hello' });
 
 -login thunk action test in browser
 window.store.dispatch(window.sessionActions.login({
-  credential: 'Demo-lition',
-  password: 'password'
+credential: 'Demo-lition',
+password: 'password'
 }));
 
 //---------------------------
 
+-restore user thunk
+window.store.dispatch(window.sessionActions.restoreUser());
+
 //---------------------------
+
+
 
 //---------------------------
 
