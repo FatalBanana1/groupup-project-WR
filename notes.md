@@ -313,11 +313,19 @@ The color of the parent element will be the color of the icon. For example, to r
 
 const Carrot = () => {
 return (
+
 <div style={{ color: "orange", fontSize: "100px" }}>
 <i className="fas fa-carrot"></i>
 </div>
 );
 };
+
+//---------------------------
+
+-logout thunk action test
+window.store.dispatch(window.sessionActions.logout());
+
+//---------------------------
 
 //---------------------------
 
