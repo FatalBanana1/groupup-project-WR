@@ -87,11 +87,13 @@ router.post("/", validateSignup, async (req, res, next) => {
 	});
 
 	return res.json({
-		id: user.id,
-		firstName,
-		lastName,
-		email,
-		token: ``,
+		User: {
+			id: user.id,
+			firstName,
+			lastName,
+			email,
+			username,
+		},
 	});
 });
 

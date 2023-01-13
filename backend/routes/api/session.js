@@ -64,6 +64,11 @@ fetch('/api/session', {
 // Restore session user
 router.get("/", restoreUser, async (req, res) => {
 	let { user } = req;
+	if (!user) {
+		return res.json({
+			user: null,
+		});
+	}
 	if (user.id) {
 		user = await User.scope(["defaultScope"]).findOne({
 			where: { id: user.id },
