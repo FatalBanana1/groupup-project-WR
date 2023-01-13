@@ -299,6 +299,26 @@ window.store.dispatch(window.sessionActions.logout());
 
 //---------------------------
 
+-font awesome account kit code
+
+<script src="https://kit.fontawesome.com/9224e637d0.js" crossorigin="anonymous"></script>
+
+Now you can use any of the free icons available in Font Awesome by adding the <i> element with the desired className to be rendered in a React component
+
+To change the size or color of the icon, wrap the <i> element in a parent element like a div.
+
+Manipulating the font-size of the parent element changes the size of the icon.
+
+The color of the parent element will be the color of the icon. For example, to render a big orange carrot icon:
+
+const Carrot = () => {
+return (
+<div style={{ color: "orange", fontSize: "100px" }}>
+<i className="fas fa-carrot"></i>
+</div>
+);
+};
+
 //---------------------------
 
 //---------------------------
