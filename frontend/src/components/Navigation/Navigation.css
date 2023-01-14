@@ -1,5 +1,47 @@
 /* navigation css */
 
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
+/* font-family: "Caveat", cursive; */
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+/* font-family: 'Pacifico', cursive; */
+
+.title {
+	text-decoration: none;
+	font-size: 35px;
+	font-family: "Caveat", cursive;
+	color: red;
+}
+
 .hidden {
 	display: none;
+}
+
+.nav-container {
+	/* background-color: purple; */
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	position: sticky;
+}
+
+.profile-button {
+	background-color: blue;
+	font-size: 2rem;
+}
+
+.button-container {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.profile-container {
+	/* background-color: gray; */
+	display: flex;
+	flex-direction: column;
+}
+
+#dropdown {
+	display: flex;
+	flex-direction: row-reverse;
 }
