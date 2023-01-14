@@ -55,11 +55,6 @@ app.use(
 // MUST go BEFORE error handlers + middleware
 app.use(routes); // connect all the routes
 
-//favicon
-app.get("/favicon.ico", (req, res) => {
-	return res.json("./favicon/favicon.ico");
-});
-
 // catch unhandled reqs - forward to error handler
 app.use((_req, _res, next) => {
 	const err = new Error(`The requested resource couldn't be found.`);
