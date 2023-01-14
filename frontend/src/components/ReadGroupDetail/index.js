@@ -1,6 +1,10 @@
 //read group detail
 
 //imports
+//hooks
+
+//comps
+import "./ReadGroupDetail.css";
 
 //main
 const ReadGroupDetail = (group) => {
@@ -18,7 +22,17 @@ const ReadGroupDetail = (group) => {
 	} = group.group;
 
 	//return
-	return <div>{name}</div>;
+	return (
+		<div id="detail-container">
+			<div id="detail-left">{previewImage ? previewImage : "N/A"}</div>
+			<div id="detail-right">
+				<div>{name}</div>
+				<div>{`${city}, ${state}`}</div>
+				<div>{about}</div>
+				<div>{`${numMembers}, ${type}`}</div>
+			</div>
+		</div>
+	);
 };
 
 //exports

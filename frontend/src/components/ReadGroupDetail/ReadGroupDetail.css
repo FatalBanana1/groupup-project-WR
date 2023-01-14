@@ -1,0 +1,15 @@
+/* read group detail css */
+
+#detail-container {
+	/* background-color: rgb(83, 0, 83); */
+	display: flex;
+	flex-direction: row;
+	margin-top: 20px;
+	margin-left: 15px;
+}
+
+#detail-left {
+	width: 160px;
+	height: 100px;
+	margin-right: 25px;
+}

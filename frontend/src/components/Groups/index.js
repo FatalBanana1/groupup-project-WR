@@ -25,14 +25,15 @@ const Groups = () => {
 	//return
 	return (
 		<div id="groups-container">
-			<h1>Groups</h1>
+			<div id="group-detail-header">
+				<h2>Groups</h2>
+			</div>
 			<div id="group-detail-container">
 				{groups.map((group) => (
-					<div key={group.id}>
+					<div id="group-detail" key={group.id}>
 						<ReadGroupDetail group={group} />
 					</div>
 				))}
-				{/* {groups} */}
 			</div>
 		</div>
 	);

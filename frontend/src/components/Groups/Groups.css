@@ -1,2 +1,12 @@
 /* groups css */
 
+#group-detail-header {
+	border-bottom: solid black;
+	/* margin-bottom: 20px; */
+}
+
+#group-detail {
+	border-bottom: solid black;
+	/* margin-bottom: 10px; */
+	/* padding-bottom: 5px; */
+}
