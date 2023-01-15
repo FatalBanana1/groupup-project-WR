@@ -1,9 +1,13 @@
 //home js
 
 //imports
+//hooks
+
+//comps
 import Groups from "../Groups";
 import { Redirect, Route } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import "./Splash.css";
 
 //main
 const Splash = () => {
@@ -13,20 +17,35 @@ const Splash = () => {
 
 	//return
 	return (
-		<div>
-			Splash Page Rendered
-			<div className="splash-body">
-				WHEN IS A PLAINTIFF ENTITLED TO RECOVER? A. A plaintiff who was
-				injured as as result of some negligent conduct on the part of a
-				defendant is entitled to recover compensation for such injury
-				from that defendant.A plaintiff is entitled to a verdict if jury
-				finds1. That a defendant was negligent, and2. That such
-				negligence was a cause of injury to the plaintiff. Q. WHAT IS
-				NEGLIGENCE? Negligence is the doing of something which a
-				reasonably prudent person would not do, or the failure to do
-				something
+		<div id="splash">
+			<div id="splash-container">
+				<div id="left">
+					<div id="north">
+						<h1>
+							The people platform—Where interests become
+							friendships
+						</h1>
+					</div>
+					<div className="south">
+						Whatever your interest, from hiking and reading to
+						networking and skill sharing, there are thousands of
+						people who share it on Meetup. Events are happening
+						every day—log in to join the fun.
+					</div>
+				</div>
+				<div id="right">
+					<img
+						id="splash-img-right"
+						src="/images/splash-transp-ppl-1.png"
+						// src="https://i.pinimg.com/564x/11/cd/2c/11cd2ce3a8f1faa87632f7f8a7080647.jpg"
+					/>
+				</div>
 			</div>
-			<NavLink to="/groups">Groups</NavLink>
+			<div id="groups-link-container">
+				<NavLink id="groups-link" to="/groups">
+					Find Groups
+				</NavLink>
+			</div>
 		</div>
 	);
 };

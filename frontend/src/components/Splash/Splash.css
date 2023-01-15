@@ -1,0 +1,27 @@
+/* splash css */
+
+#groups-link {
+	text-decoration: none;
+	font-size: 20px;
+}
+
+#groups-link-container {
+	margin: 20px;
+}
+
+#splash-container {
+	/* background-color: blue; */
+	/* background-image: url('../../../public/images/background.png'); */
+	display: flex;
+	flex-direction: row;
+}
+
+#splash-img-right{
+	height: auto;
+	width: 300px;
+}
+
+#splash {
+	margin-right: 7vw;
+	margin-left: 7vw;
+}

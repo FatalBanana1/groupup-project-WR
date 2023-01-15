@@ -1,0 +1,11 @@
+/* profile button css */
+
+.profile-dropdown {
+	/* display: flex;
+	flex-direction: row; */
+	position: absolute;
+	top: 44px;
+	right: 20px;
+	border: solid black;
+	background-color: white;
+}

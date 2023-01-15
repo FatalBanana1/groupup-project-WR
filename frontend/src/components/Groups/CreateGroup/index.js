@@ -1,11 +1,26 @@
+//create form modal
+
+//imports
+//hooks
+
+//comps
+
+//main
+// export default CreateGroupModal = () => {
+// 	//return
+// 	return;
+// };
+
+//exports
+
 // frontend/src/components/SignupFormPage/index.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
-import * as sessionActions from "../../store/session";
-import "./SignupForm.css";
+import { useModal } from "../../../context/Modal";
+import * as sessionActions from "../../../store/session";
+import "./CreateGroup.css";
 
-function SignupFormModal() {
+const CreateGroup = () => {
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
@@ -128,6 +143,6 @@ function SignupFormModal() {
 			</form>
 		</div>
 	);
-}
+};
 
-export default SignupFormModal;
+export default CreateGroup;

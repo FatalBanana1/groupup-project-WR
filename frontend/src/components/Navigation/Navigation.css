@@ -22,10 +22,13 @@
 	flex-direction: row;
 	justify-content: space-between;
 	position: sticky;
+	border-bottom: solid 1px black;
+	height: 45px;
+	padding: 0 10px;
 }
 
 .profile-button {
-	background-color: blue;
+	background-color: white;
 	font-size: 2rem;
 }
 
@@ -39,9 +42,13 @@
 	/* background-color: gray; */
 	display: flex;
 	flex-direction: column;
+	margin-top: 0;
+	padding-top: 0;
 }
 
 #dropdown {
 	display: flex;
 	flex-direction: row-reverse;
+	margin-top: 0;
+	padding-top: 0;
 }

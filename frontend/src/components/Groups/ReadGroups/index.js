@@ -7,7 +7,7 @@
 import "./ReadGroupDetail.css";
 
 //main
-const ReadGroupDetail = (group) => {
+const ReadGroups = (group) => {
 	let {
 		id,
 		organizerId,
@@ -26,7 +26,7 @@ const ReadGroupDetail = (group) => {
 		<div id="detail-container">
 			<div id="detail-left">{previewImage ? previewImage : "N/A"}</div>
 			<div id="detail-right">
-				<div>{name}</div>
+				<h3>{name}</h3>
 				<div>{`${city}, ${state}`}</div>
 				<div>{about}</div>
 				<div>{`${numMembers}, ${type}`}</div>
@@ -36,7 +36,7 @@ const ReadGroupDetail = (group) => {
 };
 
 //exports
-export default ReadGroupDetail;
+export default ReadGroups;
 
 //structure of group prop
 // {

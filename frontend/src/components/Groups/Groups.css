@@ -1,5 +1,10 @@
 /* groups css */
 
+#groups-container {
+	margin-left: 10px;
+	margin-right: 160px;
+}
+
 #group-detail-header {
 	border-bottom: solid black;
 	/* margin-bottom: 20px; */
@@ -9,4 +14,19 @@
 	border-bottom: solid black;
 	/* margin-bottom: 10px; */
 	/* padding-bottom: 5px; */
+}
+
+NavLink {
+	text-decoration: none;
+}
+
+h2 {
+	text-decoration: none;
+	/* text-decoration-line: underline; */
+	/* text-underline-offset: 5px; */
+	/* color: lightskyblue; */
+}
+
+#create-group-link{
+	font-size: 20px;
 }
