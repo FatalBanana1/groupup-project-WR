@@ -34,7 +34,7 @@ const CreateGroup = () => {
 			city,
 			state,
 		};
-		console.log(`privated `);
+
 		return dispatch(thunkCreateGroups(payload))
 			.then(closeModal)
 			.catch(async (res) => {
@@ -51,9 +51,7 @@ const CreateGroup = () => {
 		// 	history.push(`/groups/${createdGroup.id}`);
 		// }
 	};
-	console.log(`errors----------`, errors);
-	console.log(`privated----------`, privated);
-	console.log(`typeof----------`, typeof privated);
+
 	return (
 		<div id="create-group-container">
 			<div id="create-group">
