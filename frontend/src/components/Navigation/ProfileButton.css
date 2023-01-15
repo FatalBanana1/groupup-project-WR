@@ -8,4 +8,10 @@
 	right: 20px;
 	border: solid black;
 	background-color: white;
+	padding: 15px;
+}
+
+.profile-button {
+	background-color: red;
+	border-radius: 80px;
 }

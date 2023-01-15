@@ -1,3 +1,12 @@
 /* create group css */
 
+#type-container {
+	display: flex;
+	flex-direction: row;
+}
+
+#private-container {
+	display: flex;
+	flex-direction: row;
+}
 

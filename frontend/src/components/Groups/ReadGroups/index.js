@@ -4,7 +4,7 @@
 //hooks
 
 //comps
-import "./ReadGroupDetail.css";
+import "./ReadGroups.css";
 
 //main
 const ReadGroups = (group) => {

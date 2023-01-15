@@ -34,3 +34,7 @@ function App() {
 }
 
 export default App;
+
+// eye dropper
+// page ruler
+// paint tool

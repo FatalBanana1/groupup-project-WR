@@ -61,7 +61,7 @@ module.exports = {
 			options,
 			{
 				id: {
-					[Op.in]: [1, 2, 3],
+					[Op.gt]: 0,
 				},
 			},
 			{}

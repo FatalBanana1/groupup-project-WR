@@ -18,7 +18,7 @@ import CreateGroup from "./CreateGroup";
 const Groups = () => {
 	let dispatch = useDispatch();
 
-	//-----------
+	//-----------------
 
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
@@ -65,7 +65,7 @@ const Groups = () => {
 	return (
 		<div id="groups-container">
 			<div id="group-detail-header">
-				<NavLink exact to="/groups">
+				<NavLink className="groups-page-link" exact to="/groups">
 					<h2>Groups</h2>
 				</NavLink>
 			</div>
@@ -77,10 +77,6 @@ const Groups = () => {
 				))}
 			</div>
 			<div id="groups-link-container">
-				{/* <NavLink id="create-group-link" to="/groups">
-					Create a Group
-				</NavLink> */}
-
 				<OpenModalButton
 					buttonText="Create Group"
 					onButtonClick={closeMenu}

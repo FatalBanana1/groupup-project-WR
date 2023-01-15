@@ -1,31 +1,20 @@
 //create form modal
 
 //imports
-//hooks
-
-//comps
-
-//main
-// export default CreateGroupModal = () => {
-// 	//return
-// 	return;
-// };
-
-//exports
-
-// frontend/src/components/SignupFormPage/index.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import * as sessionActions from "../../../store/session";
 import "./CreateGroup.css";
 
+//main
 const CreateGroup = () => {
 	const dispatch = useDispatch();
-	const [email, setEmail] = useState("");
-	const [username, setUsername] = useState("");
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
+	const [type, setType] = useState("In person");
+	const [city, setCity] = useState("");
+	const [state, setState] = useState("");
+	const [name, setName] = useState("");
+	const [about, setAbout] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
@@ -37,11 +26,11 @@ const CreateGroup = () => {
 			setErrors([]);
 			return dispatch(
 				sessionActions.signup({
-					email,
-					username,
-					firstName,
-					lastName,
-					password,
+					name,
+					about,
+					type,
+					city,
+					state,
 				})
 			)
 				.then(closeModal)
@@ -56,9 +45,9 @@ const CreateGroup = () => {
 	};
 
 	return (
-		<div id="signup-container">
-			<div id="sign-up">
-				<h1>Sign Up</h1>
+		<div id="create-group-container">
+			<div id="create-group">
+				<h1>Create a Group</h1>
 			</div>
 			<form onSubmit={handleSubmit}>
 				{errors ? null : (
@@ -72,73 +61,76 @@ const CreateGroup = () => {
 				)}
 				<div id="name">
 					<label>
-						First Name
+						Name
 						<input
 							type="text"
-							value={firstName}
-							onChange={(e) => setFirstName(e.target.value)}
+							value={name}
+							onChange={(e) => setName(e.target.value)}
 							required
 						/>
 					</label>
 				</div>
-				<div id="lastname">
+				<div id="about">
 					<label>
-						Last Name
+						About
 						<input
 							type="text"
-							value={lastName}
-							onChange={(e) => setLastName(e.target.value)}
+							value={about}
+							onChange={(e) => setAbout(e.target.value)}
 							required
 						/>
 					</label>
 				</div>
-				<div id="email">
-					<label>
-						Email
-						<input
-							type="text"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							required
-						/>
+				<div id="type">
+					<label id="type-container">
+						<div id="text-type">Type</div>
+						<div id="type-select">
+							<select>
+								<option>In person</option>
+								<option>Online</option>
+							</select>
+						</div>
 					</label>
 				</div>
-				<div id="username">
+
+				<div id="private">
+					<label id="private-container">
+						<div id="text-private">Private</div>
+						<div id="private-select">
+							<select>
+								<option>True</option>
+								<option>False</option>
+							</select>
+						</div>
+					</label>
+				</div>
+
+				<div id="city">
 					<label>
-						Username
+						City
 						<input
 							type="text"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
+							value={city}
+							onChange={(e) => setCity(e.target.value)}
 							required
 						/>
 					</label>
 				</div>
 
-				<div id="password">
+				<div id="state">
 					<label>
-						Password
+						State
 						<input
-							type="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							type="text"
+							value={state}
+							onChange={(e) => setState(e.target.value)}
 							required
 						/>
 					</label>
 				</div>
-				<div id="confirm-password">
-					<label>
-						Confirm Password
-						<input
-							type="password"
-							value={confirmPassword}
-							onChange={(e) => setConfirmPassword(e.target.value)}
-							required
-						/>
-					</label>
-				</div>
+
 				<button id="submit-button" type="submit">
-					Sign Up
+					Create Group
 				</button>
 			</form>
 		</div>

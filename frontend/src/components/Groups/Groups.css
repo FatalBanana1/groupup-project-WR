@@ -16,17 +16,14 @@
 	/* padding-bottom: 5px; */
 }
 
-NavLink {
+.groups-page-link {
+	font-size: 15px;
 	text-decoration: none;
+	text-decoration-line: underline;
+	text-underline-offset: 10px;
+	color: lightskyblue;
 }
 
-h2 {
-	text-decoration: none;
-	/* text-decoration-line: underline; */
-	/* text-underline-offset: 5px; */
-	/* color: lightskyblue; */
-}
-
-#create-group-link{
+#create-group-link {
 	font-size: 20px;
 }

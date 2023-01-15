@@ -47,8 +47,8 @@ function ProfileButton({ user }) {
 			<div className="button-container">
 				{showMenu ? `^` : `v`}
 				<button className="profile-button" onClick={openMenu}>
-					{/* <i className="fas fa-user-circle" /> */}
-					<i className="fa-solid fa-person" />
+					<i className="fas fa-user-circle" />
+					{/* <i className="fa-solid fa-person" /> */}
 				</button>
 			</div>
 			<ul className={ulClassName} ref={ulRef}>
