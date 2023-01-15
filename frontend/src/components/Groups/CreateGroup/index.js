@@ -3,62 +3,71 @@
 //imports
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
+import { thunkCreateGroups } from "../../../store/groups";
 import * as sessionActions from "../../../store/session";
 import "./CreateGroup.css";
 
 //main
 const CreateGroup = () => {
 	const dispatch = useDispatch();
+	let history = useHistory();
 	const [type, setType] = useState("In person");
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
 	const [name, setName] = useState("");
 	const [about, setAbout] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
+	const [privated, setPrivated] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (password === confirmPassword) {
-			setErrors([]);
-			return dispatch(
-				sessionActions.signup({
-					name,
-					about,
-					type,
-					city,
-					state,
-				})
-			)
-				.then(closeModal)
-				.catch(async (res) => {
-					const data = await res.json();
-					if (data && data.errors) setErrors(data.errors);
-				});
-		}
-		return setErrors([
-			"Confirm Password field must be the same as the Password field",
-		]);
-	};
+		setErrors([]);
 
+		const payload = {
+			name,
+			about,
+			type,
+			private: privated,
+			city,
+			state,
+		};
+		console.log(`privated `);
+		return dispatch(thunkCreateGroups(payload))
+			.then(closeModal)
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(data.errors);
+			});
+
+		//------------
+
+		// let createdGroup = dispatch(thunkCreateGroups(payload));
+		// console.log(`created group------`, createdGroup);
+
+		// if (createdGroup) {
+		// 	history.push(`/groups/${createdGroup.id}`);
+		// }
+	};
+	console.log(`errors----------`, errors);
+	console.log(`privated----------`, privated);
+	console.log(`typeof----------`, typeof privated);
 	return (
 		<div id="create-group-container">
 			<div id="create-group">
 				<h1>Create a Group</h1>
 			</div>
 			<form onSubmit={handleSubmit}>
-				{errors ? null : (
-					<div id="errors">
-						<ul>
-							{errors.map((error, idx) => (
-								<li key={idx}>{error}</li>
-							))}
-						</ul>
-					</div>
-				)}
+				<div id="errors">
+					<ul>
+						{Object.values(errors).map((error) => (
+							<li key={error}>{error}</li>
+						))}
+					</ul>
+				</div>
+
 				<div id="name">
 					<label>
 						Name
@@ -85,7 +94,10 @@ const CreateGroup = () => {
 					<label id="type-container">
 						<div id="text-type">Type</div>
 						<div id="type-select">
-							<select>
+							<select
+								value={type}
+								onChange={(e) => setType(e.target.value)}
+							>
 								<option>In person</option>
 								<option>Online</option>
 							</select>
@@ -97,9 +109,18 @@ const CreateGroup = () => {
 					<label id="private-container">
 						<div id="text-private">Private</div>
 						<div id="private-select">
-							<select>
-								<option>True</option>
-								<option>False</option>
+							<select
+								value={privated}
+								onChange={(e) =>
+									setPrivated(
+										e.target.value === "false"
+											? false
+											: true
+									)
+								}
+							>
+								<option value={true}>True</option>
+								<option value={false}>False</option>
 							</select>
 						</div>
 					</label>

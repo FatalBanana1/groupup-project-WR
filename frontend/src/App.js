@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom";
 import Splash from "./components/Splash";
 import Groups from "./components/Groups";
+import GroupDetail from "./components/GroupDetail";
 
 function App() {
 	const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function App() {
 					</Route>
 					<Route exact path="/groups">
 						<Groups />
+					</Route>
+					<Route path="/groups/:groupId">
+						<GroupDetail />
 					</Route>
 				</Switch>
 			)}

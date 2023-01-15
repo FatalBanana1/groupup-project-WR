@@ -748,7 +748,7 @@ router.post("/", requireAuth, async (req, res) => {
 		errors.about = `About must be 50 characters or more`;
 	if (!type || (type !== "Online" && type !== "In person"))
 		errors.type = `Type must be 'Online' or 'In person'`;
-	if (!private || typeof Boolean(private) !== "boolean")
+	if (typeof Boolean(private) !== "boolean")
 		errors.private = `Private must be a boolean`;
 	if (!city || city.length < 3) errors.city = `City is required`;
 	if (!state || state.length !== 2) errors.state = `State is required`;

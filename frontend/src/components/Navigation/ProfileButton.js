@@ -7,11 +7,13 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./ProfileButton.css";
 import DemoFormModal from "../DemoFormModal";
+import { useModal } from "../../context/Modal";
 
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
+	const { closeModal } = useModal();
 
 	const openMenu = () => {
 		if (showMenu) return;
@@ -38,6 +40,15 @@ function ProfileButton({ user }) {
 		e.preventDefault();
 		dispatch(sessionActions.logout());
 		closeMenu();
+	};
+
+	const demoSignin = (e) => {
+		e.preventDefault();
+		let credential = "Demo-lition";
+		let password = "password";
+		return dispatch(sessionActions.login({ credential, password })).then(
+			closeModal
+		);
 	};
 
 	const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -80,11 +91,12 @@ function ProfileButton({ user }) {
 							/>
 						</div>
 						<div>
-							<OpenModalButton
+							{/* <OpenModalButton
 								buttonText="Demo User"
 								onButtonClick={closeMenu}
 								modalComponent={<DemoFormModal />}
-							/>
+							/> */}
+							<button onClick={demoSignin}>Demo User</button>
 						</div>
 					</>
 				)}
