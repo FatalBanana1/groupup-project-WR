@@ -36,20 +36,12 @@ const CreateGroup = () => {
 		};
 
 		return dispatch(thunkCreateGroups(payload))
+			.then((data) => history.push(`/groups/${data.id}`))
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(data.errors);
 			});
-
-		//------------
-
-		// let createdGroup = dispatch(thunkCreateGroups(payload));
-		// console.log(`created group------`, createdGroup);
-
-		// if (createdGroup) {
-		// 	history.push(`/groups/${createdGroup.id}`);
-		// }
 	};
 
 	return (

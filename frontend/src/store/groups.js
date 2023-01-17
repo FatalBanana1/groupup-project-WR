@@ -7,6 +7,7 @@ import { csrfFetch } from "./csrf";
 
 //types crud - groups
 const READ_GROUPS = `groups/READ`;
+const READ_GROUP_DETAILS = `group/READ`;
 const CREATE_GROUP = `groups/CREATE`;
 const UPDATE_GROUP = `groups/UPDATE`;
 const DELETE_GROUP = `groups/DELETE`;
@@ -18,6 +19,12 @@ const DELETE_GROUP = `groups/DELETE`;
 const actionReadGroups = (groups) => ({
 	type: READ_GROUPS,
 	groups,
+});
+
+//read group details
+const actionReadGroupDetails = (group) => ({
+	type: READ_GROUP_DETAILS,
+	group,
 });
 
 //create
@@ -53,9 +60,21 @@ export const thunkReadGroups = () => async (dispatch) => {
 	}
 };
 
+// GET: Get details of a Group Route: /api/groups/:groupId
+export const thunkReadGroupDetails = (payload) => async (dispatch) => {
+	const response = await csrfFetch(`/api/groups/${payload}`);
+	// console.log(`response = thunk -----------`, response);
+
+	if (response.ok) {
+		const group = await response.json();
+		dispatch(actionReadGroupDetails(group));
+		return group;
+	}
+};
+
 // GET: Get All Groups Route: /api/groups
 export const thunkCreateGroups = (payload) => async (dispatch) => {
-	console.log(`BEFORE FETCH000000000000000000000`)
+	// console.log(`BEFORE FETCH000000000000000000000`);
 
 	const response = await csrfFetch(`/api/groups`, {
 		method: `POST`,
@@ -63,12 +82,12 @@ export const thunkCreateGroups = (payload) => async (dispatch) => {
 		body: JSON.stringify(payload),
 	});
 
-	console.log(`response=======`, response);
+	// console.log(`response=======`, response);
 
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionCreateGroups(group));
-		return group
+		return group;
 	}
 };
 
@@ -82,13 +101,23 @@ const groupsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
 			const newGroups = {};
-			// console.log(`reducer>>>>>>>`, action.groups.Groups);
+			console.log(`reducer>>>>>>>`, action.groups.Groups);
 			action.groups.Groups.forEach((group) => {
 				newGroups[group.id] = group;
 			});
 			return {
 				...state,
 				...newGroups,
+			};
+		}
+
+		case READ_GROUP_DETAILS: {
+			action.group["privated"] = action.group.private;
+			console.log(`reducer>>>>>>>`, action.group);
+
+			return {
+				...state,
+				...action.group,
 			};
 		}
 

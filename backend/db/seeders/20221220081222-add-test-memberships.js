@@ -50,12 +50,12 @@ module.exports = {
 				{
 					userId: 4,
 					groupId: 1,
-					status: "member",
+					status: "pending",
 				},
 				{
 					userId: 5,
 					groupId: 1,
-					status: "pending",
+					status: "member",
 				},
 				{
 					userId: 5,
@@ -79,7 +79,7 @@ module.exports = {
 			options,
 			{
 				id: {
-					[Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+					[Op.gt]: 0,
 				},
 			},
 			{}

@@ -71,7 +71,12 @@ const Groups = () => {
 			</div>
 			<div id="group-detail-container">
 				{groups.map((group) => (
-					<NavLink id="group-detail" key={group.id} to="/groups/:groupId">
+					<NavLink
+						id="group-detail"
+						key={group.id}
+						to={`/groups/${group.id}`}
+						group={group}
+					>
 						<ReadGroups group={group} />
 					</NavLink>
 				))}

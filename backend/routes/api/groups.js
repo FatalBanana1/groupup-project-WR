@@ -772,6 +772,8 @@ router.post("/", requireAuth, async (req, res) => {
 		return res.json(check);
 	}
 
+	if (!private) private = false;
+
 	let group = await Group.create({
 		name,
 		about,

@@ -42,10 +42,28 @@ function ProfileButton({ user }) {
 		closeMenu();
 	};
 
-	const demoSignin = (e) => {
+	const demoSignin1 = (e) => {
 		e.preventDefault();
 		let credential = "Demo-lition";
 		let password = "password";
+		return dispatch(sessionActions.login({ credential, password })).then(
+			closeModal
+		);
+	};
+
+	const demoSignin2 = (e) => {
+		e.preventDefault();
+		let credential = "baggins";
+		let password = "password2";
+		return dispatch(sessionActions.login({ credential, password })).then(
+			closeModal
+		);
+	};
+
+	const demoSignin3 = (e) => {
+		e.preventDefault();
+		let credential = "thebaby";
+		let password = "password4";
 		return dispatch(sessionActions.login({ credential, password })).then(
 			closeModal
 		);
@@ -96,7 +114,19 @@ function ProfileButton({ user }) {
 								onButtonClick={closeMenu}
 								modalComponent={<DemoFormModal />}
 							/> */}
-							<button onClick={demoSignin}>Demo User</button>
+							<button onClick={demoSignin1}>
+								Demo User (Admin)
+							</button>
+						</div>
+						<div>
+							<button onClick={demoSignin2}>
+								Demo User (Member)
+							</button>
+						</div>
+						<div>
+							<button onClick={demoSignin3}>
+								Demo User (Non-member)
+							</button>
 						</div>
 					</>
 				)}
