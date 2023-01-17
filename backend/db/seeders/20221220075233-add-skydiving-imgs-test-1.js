@@ -19,7 +19,7 @@ module.exports = {
 			[
 				{
 					groupId: "1",
-					url: "../../upload/skydiving/1.jpg",
+					url: "https://skydivemonroe.com/wp-content/uploads/3-Way-Formation-Skydive.jpg",
 					preview: true,
 				},
 				{
@@ -33,13 +33,18 @@ module.exports = {
 					preview: false,
 				},
 				{
+					groupId: "2",
+					url: "https://i0.wp.com/mytheatreweekend.com/wp-content/uploads/2018/06/LyricTheatreBroadway-1350x900.jpeg?fit=1350%2C900&ssl=1",
+					preview: true,
+				},
+				{
 					groupId: "3",
 					url: "../../upload/group3/image-1.jpg",
 					preview: false,
 				},
 				{
 					groupId: "3",
-					url: "../../upload/group3/image-2.jpg",
+					url: "https://thedali.org/wp-content/uploads/2020/08/1200x500-James-Family-Wing-Groups.jpg",
 					preview: true,
 				},
 			],

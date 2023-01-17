@@ -56,6 +56,8 @@ const GroupDetail = () => {
 	// 	let img = imgs.find((group) => group.preview === true);
 	// }
 
+	console.log(groupImages);
+
 	//return
 	return (
 		<div id="other">
@@ -63,9 +65,7 @@ const GroupDetail = () => {
 			<div>Testing group details:</div>
 			<div id="details-container">
 				<div id="left">
-					{/* {.map((img) => (
-					<div>{1}</div>
-				))} */}
+					{/* {previewImage ? <img src={previewImage} /> : "N/A"} */}
 				</div>
 				<div id="right">
 					<div id="name">
