@@ -10,3 +10,13 @@
 #other {
 	margin-top: 15px;
 }
+
+#about-section {
+	/* background-color: blue; */
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	height: 200px;
+	overflow-wrap:break-word;
+	margin-top: 40px;
+}

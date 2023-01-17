@@ -77,7 +77,6 @@ module.exports = (sequelize, DataTypes) => {
 				validate: {
 					len: [2, 2],
 					isAlpha: true,
-					isUppercase: true,
 				},
 			},
 		},

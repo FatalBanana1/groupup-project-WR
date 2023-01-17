@@ -4,7 +4,7 @@
 	/* background-color: darkgoldenrod; */
 	display: flex;
 	flex-direction: column;
-	width:100%;
+	width: 100%;
 	margin-left: 10px;
 	margin-right: 160px;
 	align-items: center;
@@ -45,10 +45,9 @@
 	font-size: 20px;
 }
 
-#detail-right{
+#detail-right {
 	width: 400px;
 	/* background-color: blue; */
-
 }
 
 #detail-left {
@@ -60,7 +59,7 @@
 	align-items: center;
 }
 
-#detail-container{
+#detail-container {
 	/* background-color: darkolivegreen; */
 	display: flex;
 	flex-direction: row;
@@ -68,7 +67,7 @@
 	/* margin-left: ; */
 }
 
-#group-detail-container{
+#group-detail-container {
 	/* background-color: yellowgreen; */
 	width: max-content;
 	display: flex;

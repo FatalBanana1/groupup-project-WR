@@ -22,28 +22,18 @@ const ReadGroups = (group) => {
 		numMembers,
 		previewImage,
 	} = group.group;
-	console.log(group);
 
 	//return
 	return (
-		// <NavLink
-		// 	id="group-detail"
-		// 	key={group.group.id}
-		// 	to={`/groups/${group.group.id}`}
-		// >
-			<div id="detail-container">
-				<div id="detail-left">
-					{previewImage ? previewImage : "N/A"}
-				</div>
-				<div id="detail-right">
-					<h3>{name}</h3>
-					<div>{`${city}, ${state}`}</div>
-					<div>{about}</div>
-					<div>{`${numMembers}, ${type}`}</div>
-				</div>
+		<div id="detail-container">
+			<div id="detail-left">{previewImage ? previewImage : "N/A"}</div>
+			<div id="detail-right">
+				<h3>{name}</h3>
+				<div>{`${city}, ${state}`}</div>
+				<div>{about}</div>
+				<div>{`${numMembers}, ${type}`}</div>
 			</div>
-			// {/* <GroupDetail group={group} /> */}
-		// </NavLink>
+		</div>
 	);
 };
 

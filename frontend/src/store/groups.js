@@ -74,15 +74,11 @@ export const thunkReadGroupDetails = (payload) => async (dispatch) => {
 
 // GET: Get All Groups Route: /api/groups
 export const thunkCreateGroups = (payload) => async (dispatch) => {
-	// console.log(`BEFORE FETCH000000000000000000000`);
-
 	const response = await csrfFetch(`/api/groups`, {
 		method: `POST`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
-	// console.log(`response=======`, response);
 
 	if (response.ok) {
 		const group = await response.json();
@@ -101,7 +97,7 @@ const groupsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
 			const newGroups = {};
-			console.log(`reducer>>>>>>>`, action.groups.Groups);
+			// console.log(`reducer>>>>>>>`, action.groups.Groups);
 			action.groups.Groups.forEach((group) => {
 				newGroups[group.id] = group;
 			});
@@ -113,7 +109,7 @@ const groupsReducer = (state = initialState, action) => {
 
 		case READ_GROUP_DETAILS: {
 			action.group["privated"] = action.group.private;
-			console.log(`reducer>>>>>>>`, action.group);
+			// console.log(`reducer>>>>>>>`, action.group);
 
 			return {
 				...state,

@@ -59,7 +59,8 @@ const Groups = () => {
 	// {groups: {1:{1}, 2:{2}...} }
 	const selector = useSelector((state) => state.groups);
 	const groups = Object.values(selector);
-	// console.log(`-----groups--------`, groups);
+
+	if (!groups.length) return null;
 
 	//return
 	return (
@@ -70,19 +71,26 @@ const Groups = () => {
 				</NavLink>
 			</div>
 			<div id="group-detail-container">
-				{groups.map((group) => (
-					<NavLink
-						id="group-detail"
-						key={group.id}
-						to={`/groups/${group.id}`}
-						group={group}
-					>
-						<ReadGroups group={group} />
-					</NavLink>
-				))}
+				{groups.map((group) => {
+					if (!group.name) {
+						return null;
+					} else {
+						return (
+							<NavLink
+								id="group-detail"
+								key={group.id}
+								to={`/groups/${group.id}`}
+								group={group}
+							>
+								<ReadGroups group={group} />
+							</NavLink>
+						);
+					}
+				})}
 			</div>
 			<div id="groups-link-container">
 				<OpenModalButton
+					className="create-group-button"
 					buttonText="Create Group"
 					onButtonClick={closeMenu}
 					modalComponent={<CreateGroup />}

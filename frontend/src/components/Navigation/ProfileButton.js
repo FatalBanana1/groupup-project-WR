@@ -6,7 +6,6 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./ProfileButton.css";
-import DemoFormModal from "../DemoFormModal";
 import { useModal } from "../../context/Modal";
 
 function ProfileButton({ user }) {
@@ -32,7 +31,7 @@ function ProfileButton({ user }) {
 		document.addEventListener("click", closeMenu);
 
 		return () => document.removeEventListener("click", closeMenu);
-	}, [showMenu]);
+	}, [showMenu, dispatch]);
 
 	const closeMenu = () => setShowMenu(false);
 
@@ -94,37 +93,43 @@ function ProfileButton({ user }) {
 					</>
 				) : (
 					<>
-						<div>
+						<div className="users">
 							<OpenModalButton
+								className="users-button"
 								buttonText="Log In"
 								onButtonClick={closeMenu}
 								modalComponent={<LoginFormModal />}
 							/>
 						</div>
-						<div>
+						<div className="users">
 							<OpenModalButton
+								className="users-button"
 								buttonText="Sign Up"
 								onButtonClick={closeMenu}
 								modalComponent={<SignupFormModal />}
 							/>
 						</div>
-						<div>
-							{/* <OpenModalButton
-								buttonText="Demo User"
-								onButtonClick={closeMenu}
-								modalComponent={<DemoFormModal />}
-							/> */}
-							<button onClick={demoSignin1}>
+						<div className="users">
+							<button
+								className="users-button"
+								onClick={demoSignin1}
+							>
 								Demo User (Admin)
 							</button>
 						</div>
-						<div>
-							<button onClick={demoSignin2}>
+						<div className="users">
+							<button
+								className="users-button"
+								onClick={demoSignin2}
+							>
 								Demo User (Member)
 							</button>
 						</div>
-						<div>
-							<button onClick={demoSignin3}>
+						<div className="users">
+							<button
+								className="users-button"
+								onClick={demoSignin3}
+							>
 								Demo User (Non-member)
 							</button>
 						</div>

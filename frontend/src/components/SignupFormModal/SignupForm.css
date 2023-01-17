@@ -1,12 +1,54 @@
 /* sign up form css */
 
-#signup-container{
+#signup-container {
 	display: flex;
 	flex-direction: column;
+	width: 530px;
+	border: solid 0.5px black;
+	box-shadow: 0 0 100px 10px rgba(0, 0, 0, 0.7);
+	border-radius: 4%;
 }
 
-#sign-up{
+#sign-up {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
+}
+
+.error-list-signup {
+	font-size: 18px;
+	height: auto;
+	width: 480px;
+	/* background-color: gray; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: rgb(252, 42, 42);
+	font-style: italic;
+	overflow-wrap: normal;
+}
+
+.signup {
+	/* background-color: blue; */
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin: 5px;
+}
+
+.signup-button {
+	width: 100px;
+	margin-left: 215px;
+}
+
+.signup-form {
+	/* background-color: blue; */
+	display: flex;
+	flex-direction: column;
+	justify-self: center;
+	padding: 5px;
+	margin-right: 150px;
 }

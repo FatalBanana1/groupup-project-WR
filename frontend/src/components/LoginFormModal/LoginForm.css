@@ -1,23 +1,46 @@
 /* Log in form */
 
-.form-container {
-	padding: 1vh;
+#login-container {
+	background-color: white;
+	height: 220px;
+	width: 400px;
 	display: flex;
 	flex-direction: column;
+	padding: 30px;
+	align-items: center;
+	justify-content: center;
+	border: solid 0.5px black;
+	box-shadow: 0 0 100px 10px rgba(0, 0, 0, 0.7);
+	border-radius: 4%;
 }
 
-.name-container {
-	padding: 2vh;
+#modal-content {
+	border-radius: 4%;
+	/* background-color: red; */
 }
 
-.password-container {
-	padding: 2vh;
+#username,
+#password {
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin-right: 60px;
+	margin-bottom: 15px;
 }
 
-.submit-container {
-	padding: 2vh;
+#login-button {
+	margin-top: 10px;
+	margin-left: 170px;
+	font-size: 15px;
 }
 
-.submit-button {
-	background-color: blue;
+.error-list-login {
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: rgb(252, 42, 42);
+	font-style: italic;
 }

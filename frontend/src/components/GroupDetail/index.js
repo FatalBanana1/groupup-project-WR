@@ -77,8 +77,8 @@ const GroupDetail = () => {
 					} group`}</div>
 					<div id="name">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
 				</div>
+				<div id="about-section">{about}</div>
 			</div>
-			<div id="about-section"></div>
 		</div>
 	);
 };

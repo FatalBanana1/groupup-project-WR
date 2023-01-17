@@ -18,7 +18,7 @@ const CreateGroup = () => {
 	const [state, setState] = useState("");
 	const [name, setName] = useState("");
 	const [about, setAbout] = useState("");
-	const [privated, setPrivated] = useState("");
+	const [privated, setPrivated] = useState(false);
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
@@ -40,17 +40,22 @@ const CreateGroup = () => {
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.errors) setErrors(data.errors);
+				if (data && data.message === "Authentication required")
+					setErrors((data[errors] = [data.message]));
+				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	};
 
+	console.log(`type: `, type);
+	console.log(`private: `, privated);
+
 	return (
 		<div id="create-group-container">
-			<div id="create-group">
+			<div id="create-group" className="create">
 				<h1>Create a Group</h1>
 			</div>
 			<form onSubmit={handleSubmit}>
-				<div id="errors">
+				<div id="errors" className="create">
 					<ul>
 						{Object.values(errors).map((error) => (
 							<li key={error}>{error}</li>
@@ -58,9 +63,9 @@ const CreateGroup = () => {
 					</ul>
 				</div>
 
-				<div id="name">
+				<div id="name" className="create">
 					<label>
-						Name
+						Name:{" "}
 						<input
 							type="text"
 							value={name}
@@ -69,9 +74,9 @@ const CreateGroup = () => {
 						/>
 					</label>
 				</div>
-				<div id="about">
+				<div id="about" className="create">
 					<label>
-						About
+						About:{" "}
 						<input
 							type="text"
 							value={about}
@@ -80,26 +85,28 @@ const CreateGroup = () => {
 						/>
 					</label>
 				</div>
-				<div id="type">
+				<div id="type" className="create">
 					<label id="type-container">
-						<div id="text-type">Type</div>
+						<div id="text-type">Type:</div>
 						<div id="type-select">
 							<select
+								className="selected"
 								value={type}
 								onChange={(e) => setType(e.target.value)}
 							>
-								<option>In person</option>
-								<option>Online</option>
+								<option className="options">In person</option>
+								<option className="options">Online</option>
 							</select>
 						</div>
 					</label>
 				</div>
 
-				<div id="private">
+				<div id="private" className="create">
 					<label id="private-container">
-						<div id="text-private">Private</div>
+						<div id="text-private">Private:</div>
 						<div id="private-select">
 							<select
+								className="selected"
 								value={privated}
 								onChange={(e) =>
 									setPrivated(
@@ -109,16 +116,20 @@ const CreateGroup = () => {
 									)
 								}
 							>
-								<option value={true}>True</option>
-								<option value={false}>False</option>
+								<option value={true} className="options">
+									Yes
+								</option>
+								<option value={false} className="options">
+									No
+								</option>
 							</select>
 						</div>
 					</label>
 				</div>
 
-				<div id="city">
+				<div id="city" className="create">
 					<label>
-						City
+						City:{" "}
 						<input
 							type="text"
 							value={city}
@@ -128,19 +139,25 @@ const CreateGroup = () => {
 					</label>
 				</div>
 
-				<div id="state">
+				<div id="state" className="create">
 					<label>
-						State
+						State:{" "}
 						<input
 							type="text"
 							value={state}
-							onChange={(e) => setState(e.target.value)}
+							onChange={(e) =>
+								setState(e.target.value.toUpperCase())
+							}
 							required
 						/>
 					</label>
 				</div>
 
-				<button id="submit-button" type="submit">
+				<button
+					id="submit-button"
+					type="submit"
+					className="create selected"
+				>
 					Create Group
 				</button>
 			</form>

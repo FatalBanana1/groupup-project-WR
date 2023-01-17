@@ -101,12 +101,11 @@ router.post("/", validateLogin, async (req, res, next) => {
 
 	// check credentials
 	let errors = {};
-	if (!credential) {
-		errors.email = `Email is required`;
+
+	if (user === undefined) {
+		errors.user = `Invalid Credentials`;
 	}
-	if (!password) {
-		errors.password = `Password is required`;
-	}
+
 	//checking email/pass
 	if (Object.values(errors).length) {
 		return res.status(400).json({
@@ -116,7 +115,7 @@ router.post("/", validateLogin, async (req, res, next) => {
 		});
 	}
 
-	if (!user) {
+	if (!user.id) {
 		return res.status(401).json({
 			message: `Invalid Credentials`,
 			statusCode: 401,
@@ -127,10 +126,6 @@ router.post("/", validateLogin, async (req, res, next) => {
 		where: { id: user.id },
 	});
 	await setTokenCookie(res, user);
-
-	// return res.json({
-	// 	user: user,
-	// });
 
 	return res.json({
 		user: {
