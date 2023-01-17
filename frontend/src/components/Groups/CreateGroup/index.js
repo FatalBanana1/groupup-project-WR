@@ -21,6 +21,7 @@ const CreateGroup = () => {
 	const [privated, setPrivated] = useState(false);
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
+	const stateError = "State is required";
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -46,16 +47,13 @@ const CreateGroup = () => {
 			});
 	};
 
-	console.log(`type: `, type);
-	console.log(`private: `, privated);
-
 	return (
 		<div id="create-group-container">
-			<div id="create-group" className="create">
+			<div id="create-group">
 				<h1>Create a Group</h1>
 			</div>
 			<form onSubmit={handleSubmit}>
-				<div id="errors" className="create">
+				<div id="errors-create-group">
 					<ul>
 						{Object.values(errors).map((error) => (
 							<li key={error}>{error}</li>
@@ -74,6 +72,7 @@ const CreateGroup = () => {
 						/>
 					</label>
 				</div>
+
 				<div id="about" className="create">
 					<label>
 						About:{" "}
@@ -85,7 +84,8 @@ const CreateGroup = () => {
 						/>
 					</label>
 				</div>
-				<div id="type" className="create">
+
+				<div id="type">
 					<label id="type-container">
 						<div id="text-type">Type:</div>
 						<div id="type-select">
@@ -101,7 +101,7 @@ const CreateGroup = () => {
 					</label>
 				</div>
 
-				<div id="private" className="create">
+				<div id="private">
 					<label id="private-container">
 						<div id="text-private">Private:</div>
 						<div id="private-select">

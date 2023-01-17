@@ -751,7 +751,8 @@ router.post("/", requireAuth, async (req, res) => {
 	if (typeof Boolean(private) !== "boolean")
 		errors.private = `Private must be a boolean`;
 	if (!city || city.length < 3) errors.city = `City is required`;
-	if (!state || state.length !== 2) errors.state = `State is required`;
+	if (!state) errors.state = `State is required`;
+	if (state.length !== 2) errors.state = `State must be 2 characters.`;
 
 	if (Object.values(errors).length) {
 		return res.status(400).json({
