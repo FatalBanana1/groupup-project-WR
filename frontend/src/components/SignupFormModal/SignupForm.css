@@ -47,6 +47,11 @@
 .signup-button {
 	width: 100px;
 	margin-left: 160px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+	height: 30px;
 }
 
 .signup-form {

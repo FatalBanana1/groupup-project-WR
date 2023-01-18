@@ -113,23 +113,11 @@
 
 /* ------------------------------- */
 
-/* -------------- media screen ----------------- */
+/* -------------- media screens ----------------- */
 
 /* ------------------------------- */
 
-@media screen and (min-width: 1200px) {
-	#details-container-body {
-		/* background-color: blue; */
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 100%;
-	}
-}
-
-/* ------------------------------- */
-
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1140px) {
 	#details-img-default {
 		width: 600px;
 		height: 300px;

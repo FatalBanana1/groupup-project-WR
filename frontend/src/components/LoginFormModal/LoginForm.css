@@ -31,10 +31,23 @@
 
 #login-button {
 	margin-top: 10px;
-	margin-left: 170px;
+	margin-left: 150px;
 	font-size: 15px;
+	width: 100px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+	height: 30px;
 }
 
+#delete-group-button {
+	width: 100px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+}
 .error-list-login {
 	font-size: 20px;
 	display: flex;

@@ -195,7 +195,7 @@ const UpdateGroup = (group) => {
 					type="submit"
 					className="create selected"
 				>
-					UPDATE Group
+					Edit Group
 				</button>
 			</form>
 		</div>

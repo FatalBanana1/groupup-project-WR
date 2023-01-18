@@ -113,7 +113,7 @@ function ProfileButton({ user }) {
 					<>
 						<div className="users">
 							<OpenModalButton
-								className="users-button"
+								className="users-button dropdown-buttons"
 								buttonText="Log In"
 								onButtonClick={closeMenu}
 								modalComponent={<LoginFormModal />}
@@ -121,7 +121,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<OpenModalButton
-								className="users-button"
+								className="users-button dropdown-buttons"
 								buttonText="Sign Up"
 								onButtonClick={closeMenu}
 								modalComponent={<SignupFormModal />}
@@ -129,7 +129,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<button
-								className="users-button"
+								className="users-button dropdown-buttons"
 								onClick={demoSignin1}
 							>
 								Demo User (Admin)
@@ -137,7 +137,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<button
-								className="users-button"
+								className="users-button dropdown-buttons"
 								onClick={demoSignin2}
 							>
 								Demo User (Member)
@@ -145,7 +145,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<button
-								className="users-button"
+								className="users-button dropdown-buttons"
 								onClick={demoSignin3}
 							>
 								Demo User (Non-member)

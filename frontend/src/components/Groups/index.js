@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkReadGroups } from "../../store/groups";
 import { NavLink } from "react-router-dom";
+import CreateModalButton from './CreateGroup/CreateModalButton'
 import OpenModalButton from "../../components/OpenModalButton";
 import * as sessionActions from "../../store/session";
 
@@ -94,7 +95,7 @@ const Groups = () => {
 				)}
 			</div>
 			<div id="groups-link-container">
-				<OpenModalButton
+				<CreateModalButton
 					className="create-group-button"
 					buttonText="Create Group"
 					onButtonClick={closeMenu}

@@ -1,9 +1,9 @@
 // frontend/src/components/OpenModalButton/index.js
 import React from "react";
-import { useModal } from "../../context/Modal";
-import "./OpenModalButton.css";
+import { useModal } from "../../../context/Modal";
+import "./CreateGroup.css";
 
-function OpenModalButton({
+function CreateModalButton({
 	modalComponent, // component to render inside the modal
 	buttonText, // text of the button that opens the modal
 	onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
@@ -18,10 +18,14 @@ function OpenModalButton({
 	};
 
 	return (
-		<button className="users-button dropdown-buttons" onClick={onClick}>
+		<button
+			className="users-button"
+			id="create-group-button"
+			onClick={onClick}
+		>
 			{buttonText}
 		</button>
 	);
 }
 
-export default OpenModalButton;
+export default CreateModalButton;

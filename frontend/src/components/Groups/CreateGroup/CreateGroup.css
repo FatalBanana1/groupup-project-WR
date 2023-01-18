@@ -49,6 +49,11 @@
 
 button.create {
 	margin-left: 110px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+	height: 30px;
 }
 
 #text-private,
@@ -65,6 +70,9 @@ button.create {
 	font-size: 14px;
 }
 
+#submit-button:hover {
+	background-color: rgb(248, 98, 81);
+}
 #submit-button {
 	margin-top: 25px;
 	margin-bottom: 30px;
@@ -83,4 +91,17 @@ button.create {
 	font-style: italic;
 	overflow-wrap: normal;
 	margin-right: 70px;
+}
+
+#create-group-button {
+	width: 120px;
+	height: 40px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+}
+
+#create-group-button:hover {
+	background-color: rgb(248, 98, 81);
 }

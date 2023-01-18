@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import logo from "../Groups/images/groupup-logo.png";
 
 function Navigation({ isLoaded }) {
 	const sessionUser = useSelector((state) => state.session.user);
@@ -11,7 +12,7 @@ function Navigation({ isLoaded }) {
 	return (
 		<div className="nav-container">
 			<NavLink className="nav-title" exact to="/">
-				Groupup
+				<img id='groupup-logo-wr' src={logo} alt="Groupup site logo" />
 			</NavLink>
 			<ul id="dropdown">
 				{isLoaded && (

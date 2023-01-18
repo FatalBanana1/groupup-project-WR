@@ -5,6 +5,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../../components/OpenModalButton";
+import DeleteModalButton from "../Groups/DeleteGroup/DeleteModalButton.js";
+import EditModalButton from "../Groups/UpdateGroup/EditModalButton.js";
 import * as sessionActions from "../../store/session";
 import { useParams } from "react-router-dom";
 
@@ -117,14 +119,14 @@ const GroupDetail = () => {
 			<div id="details-container-body">
 				<div id="details-nav-section">
 					<div id="update-groups-link-container">
-						<OpenModalButton
+						<EditModalButton
 							id="update-group-button"
 							buttonText="Edit Group"
 							onButtonClick={closeMenu}
 							modalComponent={<UpdateGroup group={group} />}
 						/>
 
-						<OpenModalButton
+						<DeleteModalButton
 							id="delete-group-button"
 							buttonText="Delete Group"
 							onButtonClick={closeMenu}
