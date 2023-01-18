@@ -12,14 +12,13 @@ import { useParams } from "react-router-dom";
 import { thunkReadGroupDetails } from "../../store/groups";
 import UpdateGroup from "../Groups/UpdateGroup";
 import "./GroupDetail.css";
+import DeleteGroup from "../Groups/DeleteGroup";
 
 //main
 const GroupDetail = () => {
 	//states
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
-
-	console.log(`inside group details === groupid ====`, groupId);
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId));
@@ -67,7 +66,7 @@ const GroupDetail = () => {
 		name,
 		about,
 		type,
-		privated,
+		private: privated,
 		city,
 		state,
 		createdAt,
@@ -79,15 +78,21 @@ const GroupDetail = () => {
 	} = group;
 	if (!organizer) return null;
 
-	let imgs = groupImages.find((el) => el.preview === true);
+	let image = groupImages.find((el) => el.preview === true);
+
+	//dates
+	let date = new Date(createdAt).toString().split(" ");
+	let month = date[1];
+	let day = date[2];
+	let year = date[3];
 
 	//return
 	return (
 		<div id="group-details-page">
 			<div id="details-container-header">
 				<div id="left-details-img">
-					{imgs !== undefined ? (
-						<img src={imgs.url} id="details-img-default" />
+					{image !== undefined ? (
+						<img src={image.url} id="details-img-default" />
 					) : (
 						<img
 							src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
@@ -118,6 +123,13 @@ const GroupDetail = () => {
 							onButtonClick={closeMenu}
 							modalComponent={<UpdateGroup group={group} />}
 						/>
+
+						<OpenModalButton
+							id="delete-group-button"
+							buttonText="Delete Group"
+							onButtonClick={closeMenu}
+							modalComponent={<DeleteGroup group={group} />}
+						/>
 					</div>
 				</div>
 
@@ -136,6 +148,8 @@ const GroupDetail = () => {
 							</h2>
 						</div>
 						<div className="about-details-font">{`${organizer.firstName} ${organizer.lastName}`}</div>
+						<div className="about-details-font">{`Type: ${type}`}</div>
+						<div className="about-details-font">{`Est: ${month}, ${day}, ${year}`}</div>
 					</div>
 				</div>
 			</div>

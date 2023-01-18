@@ -88,6 +88,7 @@
 
 .about-details-font {
 	font-size: 14px;
+	padding: 2px;
 }
 
 .about-title-font {
@@ -106,6 +107,16 @@
 	flex-direction: row-reverse;
 }
 
+.users-button {
+	margin: 0 10px;
+}
+
+/* ------------------------------- */
+
+/* -------------- media screen ----------------- */
+
+/* ------------------------------- */
+
 @media screen and (min-width: 1200px) {
 	#details-container-body {
 		/* background-color: blue; */
@@ -115,6 +126,9 @@
 		width: 100%;
 	}
 }
+
+/* ------------------------------- */
+
 @media screen and (min-width: 1000px) {
 	#details-img-default {
 		width: 600px;
@@ -137,6 +151,8 @@
 		font-size: 32px;
 	}
 }
+
+/* ------------------------------- */
 
 @media screen and (max-width: 839px) {
 	#about-section-container {

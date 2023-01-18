@@ -11,8 +11,8 @@ import * as sessionActions from "../../store/session";
 
 //comps
 import ReadGroups from "./ReadGroups";
-import "./Groups.css";
 import CreateGroup from "./CreateGroup";
+import "./Groups.css";
 
 //main
 const Groups = () => {
@@ -58,9 +58,9 @@ const Groups = () => {
 
 	// {groups: {1:{1}, 2:{2}...} }
 	const selector = useSelector((state) => state.groups);
+	if (!selector)
+		return <div className="groups-null">No Groups to display...</div>;
 	const groups = Object.values(selector);
-
-	if (!groups.length) return null;
 
 	//return
 	return (
@@ -71,22 +71,26 @@ const Groups = () => {
 				</NavLink>
 			</div>
 			<div id="group-detail-container">
-				{groups.map((group) => {
-					if (!group.name) {
-						return null;
-					} else {
-						return (
-							<NavLink
-								id="group-detail"
-								key={group.id}
-								to={`/groups/${group.id}`}
-								group={group}
-							>
-								<ReadGroups group={group} />
-							</NavLink>
-						);
-					}
-				})}
+				{groups.length > 0 ? (
+					groups.map((group) => {
+						if (!group.name) {
+							return null;
+						} else {
+							return (
+								<NavLink
+									id="group-detail"
+									key={group.id}
+									to={`/groups/${group.id}`}
+									group={group}
+								>
+									<ReadGroups group={group} />
+								</NavLink>
+							);
+						}
+					})
+				) : (
+					<div>No Groups to display.</div>
+				)}
 			</div>
 			<div id="groups-link-container">
 				<OpenModalButton

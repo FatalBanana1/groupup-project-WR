@@ -31,6 +31,9 @@ function App() {
 					<Route path="/groups/:groupId">
 						<GroupDetail />
 					</Route>
+					<Route>
+						<div>404: Error Not Found.</div>
+					</Route>
 				</Switch>
 			)}
 		</>

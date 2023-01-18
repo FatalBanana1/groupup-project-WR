@@ -103,6 +103,21 @@ export const thunkUpdateGroup = (payload) => async (dispatch) => {
 	}
 };
 
+// DELETE: Delete a Group Route: /api/groups/:groupId
+export const thunkDeleteGroup = (payload) => async (dispatch) => {
+	const response = await csrfFetch(`/api/groups/${payload.id}`, {
+		method: `DELETE`,
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+	});
+
+	if (response.ok) {
+		const group = await response.json();
+		dispatch(actionUpdateGroup(group));
+		return group;
+	}
+};
+
 //----------------------------------------------
 
 //reducer
@@ -112,15 +127,18 @@ const initialState = {};
 const groupsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
-			const newGroups = {};
-			// console.log(`reducer>>>>>>>`, action.groups.Groups);
-			action.groups.Groups.forEach((group) => {
-				newGroups[group.id] = group;
-			});
-			return {
-				...state,
-				...newGroups,
-			};
+			if (action.groups.Groups) {
+				const newGroups = {};
+				action.groups.Groups.forEach((group) => {
+					newGroups[group.id] = group;
+				});
+				return {
+					...state,
+					...newGroups,
+				};
+			} else {
+				return null;
+			}
 		}
 
 		case READ_GROUP_DETAILS: {
@@ -140,8 +158,14 @@ const groupsReducer = (state = initialState, action) => {
 		}
 
 		case UPDATE_GROUP: {
-			console.log(`reducer>>>>>>>>>>>>>`, action.group);
 			return { ...state, ...(state[action.group.id] = action.group) };
+		}
+
+		case DELETE_GROUP: {
+			console.log(`reducer>>>>>>>>>>>>>`, action.group);
+			const newState = { ...state };
+			delete newState[action.group.id];
+			return newState;
 		}
 
 		default:

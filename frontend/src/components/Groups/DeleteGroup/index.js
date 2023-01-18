@@ -4,73 +4,72 @@
 //hooks
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkUpdateGroup } from "../../../store/groups";
+import { thunkDeleteGroup } from "../../../store/groups";
 import * as sessionActions from "../../../store/session";
 
 //comps
 import { NavLink } from "react-router-dom";
-import "./UpdateGroup.css";
+import Groups from "..";
+import "./DeleteGroup.css";
 
 //main
-const UpdateGroup = (group) => {
-	// let {
-	// 	id,
-	// 	organizerId,
-	// 	name,
-	// 	about,
-	// 	type,
-	// 	privates,
-	// 	city,
-	// 	state,
-	// 	numMembers,
-	// 	previewImage,
-	// } = group.group;
-	// console.log(group.group);
+const DeleteGroup = (group) => {
+	let {
+		id,
+		organizerId,
+		about,
+		type,
+		private: privated,
+		city,
+		state,
+		numMembers,
+		previewImage,
+	} = group.group;
 
 	const dispatch = useDispatch();
 	let history = useHistory();
-	let [type, setType] = useState(group.group.type);
-	let [city, setCity] = useState(group.group.city);
-	let [state, setState] = useState(group.group.state);
-	let [name, setName] = useState(group.group.name);
-	let [about, setAbout] = useState(group.group.about);
-	let [privated, setPrivated] = useState(group.group.private);
+	let [name, setName] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
-	const stateError = "State is required";
-
-	// useEffect(() => {}, [privated]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
 
-		const payload = {
-			...group,
-			id: group.group.id,
-			name,
-			about,
-			type,
-			private: privated,
-			city,
-			state,
-		};
+		if (name === `Delete ${group.group.name}.`) {
+			const payload = {
+				...group,
+				id: group.group.id,
+				name,
+				about,
+				type,
+				private: privated,
+				city,
+				state,
+			};
 
-		return dispatch(thunkUpdateGroup(payload))
-			.then(closeModal)
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.message === "Authentication required")
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
+			return dispatch(thunkDeleteGroup(payload))
+				.then(() => history.push("/"))
+				.then(closeModal)
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data && data.message === "Authentication required")
+						setErrors((data[errors] = [data.message]));
+					if (data && data.errors)
+						setErrors(Object.values(data.errors));
+				});
+		} else {
+			setErrors([
+				"Please type out Delete followed by group name in final textbox.",
+			]);
+		}
 	};
 
 	return (
-		<div id="create-group-container">
+		<div id="delete-group-container">
 			<div className="sign-up-container" id="create-group">
 				<div className="signup-form-image">
 					<img
@@ -78,7 +77,7 @@ const UpdateGroup = (group) => {
 						src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
 					/>
 				</div>
-				<div className="signup-header-name">Edit Group</div>
+				<div className="signup-header-name">Delete Group</div>
 			</div>
 
 			<form onSubmit={handleSubmit}>
@@ -95,8 +94,8 @@ const UpdateGroup = (group) => {
 						Name:{" "}
 						<input
 							type="text"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
+							readOnly
+							defaultValue={group.group.name}
 							required
 						/>
 					</label>
@@ -107,8 +106,8 @@ const UpdateGroup = (group) => {
 						About:{" "}
 						<input
 							type="text"
-							value={about}
-							onChange={(e) => setAbout(e.target.value)}
+							readOnly
+							defaultValue={about}
 							required
 						/>
 					</label>
@@ -120,8 +119,8 @@ const UpdateGroup = (group) => {
 						<div id="type-select">
 							<select
 								className="selected"
-								value={type}
-								onChange={(e) => setType(e.target.value)}
+								readOnly
+								defaultValue={type}
 							>
 								<option className="options">In person</option>
 								<option className="options">Online</option>
@@ -136,26 +135,20 @@ const UpdateGroup = (group) => {
 						<div id="private-select">
 							<select
 								className="selected"
-								value={privated}
-								onChange={(e) =>
-									setPrivated(
-										e.target.value === "false"
-											? false
-											: true
-									)
-								}
+								readOnly
+								defaultValue={privated}
 							>
 								<option
-									value={true}
+									readOnly
+									defaultValue={true}
 									className="options"
-									onChange={() => setPrivated(true)}
 								>
 									Yes
 								</option>
 								<option
-									value={false}
+									readOnly
+									defaultValue={false}
 									className="options"
-									onChange={() => setPrivated(false)}
 								>
 									No
 								</option>
@@ -169,8 +162,8 @@ const UpdateGroup = (group) => {
 						City:{" "}
 						<input
 							type="text"
-							value={city}
-							onChange={(e) => setCity(e.target.value)}
+							readOnly
+							defaultValue={city}
 							required
 						/>
 					</label>
@@ -181,11 +174,26 @@ const UpdateGroup = (group) => {
 						State:{" "}
 						<input
 							type="text"
-							value={state}
-							onChange={(e) =>
-								setState(e.target.value.toUpperCase())
-							}
+							readOnly
+							defaultValue={state}
 							required
+						/>
+					</label>
+				</div>
+
+				<div id="confirm-name" className="creator">
+					<label id="deleting-confirm-container">
+						<div id="confirming-delete">
+							Confirm Delete by typing out Delete followed by the
+							name of the Group:
+							<div id="check-delete-type">{`Delete ${group.group.name}.`}</div>
+						</div>
+						<input
+							type="text"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+							required
+							className="deleting-confirm"
 						/>
 					</label>
 				</div>
@@ -195,7 +203,7 @@ const UpdateGroup = (group) => {
 					type="submit"
 					className="create selected"
 				>
-					UPDATE Group
+					Delete Group
 				</button>
 			</form>
 		</div>
@@ -203,7 +211,7 @@ const UpdateGroup = (group) => {
 };
 
 //exports
-export default UpdateGroup;
+export default DeleteGroup;
 
 //structure of group prop
 // {

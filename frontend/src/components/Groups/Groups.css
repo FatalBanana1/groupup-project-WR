@@ -72,3 +72,8 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.groups-null {
+	font-size: 20px;
+	padding: 20px;
+}
