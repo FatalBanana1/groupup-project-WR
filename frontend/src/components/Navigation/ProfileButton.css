@@ -19,6 +19,7 @@
 	border-radius: 80px;
 	height: 48px;
 	width: 48px;
+	border: 1.2px solid rgb(92, 92, 92);
 }
 
 .users {

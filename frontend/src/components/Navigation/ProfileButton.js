@@ -73,7 +73,7 @@ function ProfileButton({ user }) {
 	return (
 		<>
 			<div className="button-container">
-				{showMenu ? `^` : `v`}
+				<div id="v-dropdown">{showMenu ? `^` : `v`}</div>
 				<button className="profile-button" onClick={openMenu}>
 					<i className="fas fa-user-circle" />
 					{/* <i className="fa-solid fa-person" /> */}

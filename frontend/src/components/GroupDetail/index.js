@@ -75,12 +75,19 @@ const GroupDetail = () => {
 			<div id="details-container-body">
 				<div id="about-section-container">
 					<div id="about-section-container-left">
-						<h2 id="about-section">What we're about:</h2>
-						<div id="about-section">{about}</div>
+						<h2 className="about-title-font">What we're about</h2>
+						<div className="about-details-font">{about}</div>
 					</div>
 					<div id="about-section-container-right">
-						<h2 id="organizer-details">Organizer</h2>
-						<div>{`${organizer.firstName} ${organizer.lastName}`}</div>
+						<div id="organizer-details-container">
+							<h2
+								id="organizer-details"
+								className="about-title-font"
+							>
+								Organizer
+							</h2>
+						</div>
+						<div className="about-details-font">{`${organizer.firstName} ${organizer.lastName}`}</div>
 					</div>
 				</div>
 			</div>
