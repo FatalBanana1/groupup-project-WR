@@ -10,7 +10,6 @@
 	border: solid 0.5px black;
 	box-shadow: 0 0 100px 10px rgba(0, 0, 0, 0.7);
 	border-radius: 2%;
-	background-color: white;
 	padding: 36px, 40px, 32px, 40px;
 }
 /*
@@ -21,18 +20,19 @@
 	align-items: center;
 } */
 
-.error-list-signup {
-	font-size: 18px;
+#errors-list {
+	font-size: 15px;
 	height: auto;
-	width: 480px;
+	/* width: 480px; */
 	/* background-color: gray; */
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 	color: rgb(252, 42, 42);
 	font-style: italic;
 	overflow-wrap: normal;
+	margin-left: 10px;
 }
 
 .signup {

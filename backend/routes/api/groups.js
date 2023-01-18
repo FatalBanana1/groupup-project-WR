@@ -61,6 +61,17 @@ const valid_group = async (req, res, next) => {
 
 const valid_user = async (req, res, next) => {
 	const { user } = req;
+
+	if (!user) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				memberId: "User must be signed in.",
+			},
+		});
+	}
+
 	let auth = await Membership.findOne({
 		where: { userId: user.dataValues.id },
 		include: [
@@ -75,11 +86,13 @@ const valid_user = async (req, res, next) => {
 	) {
 		next();
 	} else {
-		const err = new Error(
-			`Current User must be the organizer of the group or a member of the group with a status of co-host`
-		);
-		err.statusCode = 403;
-		throw err;
+		return res.status(403).json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+			},
+		});
 	}
 };
 

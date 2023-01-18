@@ -2,7 +2,7 @@
 
 //imports
 //hooks
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -28,7 +28,7 @@ const UpdateGroup = (group) => {
 	// 	numMembers,
 	// 	previewImage,
 	// } = group.group;
-	console.log(group.group);
+	// console.log(group.group);
 
 	const dispatch = useDispatch();
 	let history = useHistory();
@@ -47,6 +47,8 @@ const UpdateGroup = (group) => {
 		setErrors([]);
 
 		const payload = {
+			...group,
+			id: group.group.id,
 			name,
 			about,
 			type,
@@ -56,7 +58,6 @@ const UpdateGroup = (group) => {
 		};
 
 		return dispatch(thunkUpdateGroup(payload))
-			.then((data) => history.push(`/groups/${data.id}`))
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();

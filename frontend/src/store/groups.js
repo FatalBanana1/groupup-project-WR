@@ -132,28 +132,16 @@ const groupsReducer = (state = initialState, action) => {
 		}
 
 		case CREATE_GROUP: {
-			console.log(`reducer>>>>>>>>>>>>`, action.group);
-			console.log(`reducer>>>>>>>>>>>>`, state[action.group.id]);
-			console.log(`reducer>>>>>>>>>>>>`, action.group.group);
-			// if (!state[action.group.id]) {
-				const newState = {
-					...state,
-					[action.group.id]: action.group,
-				};
-			// 	const groupList = newState.list.map((id) => newState[id]);
-			// 	group.group.push(action.group);
-				return newState;
-			// }
+			const newState = {
+				...state,
+				[action.group.id]: action.group,
+			};
+			return newState;
+		}
 
-			// {
-			// ...state,
-			// [action.group.id]: {
-			// 	...state[action.pokemon.id],
-			// 	...action.pokemon,
-			// },
-			// };
-
-			// return { ...state, ...(state[action.group.id] = action.group) };
+		case UPDATE_GROUP: {
+			console.log(`reducer>>>>>>>>>>>>>`, action.group);
+			return { ...state, ...(state[action.group.id] = action.group) };
 		}
 
 		default:

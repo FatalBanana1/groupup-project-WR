@@ -58,14 +58,15 @@ function SignupFormModal() {
 			</div>
 			<form className="signup-form" onSubmit={handleSubmit}>
 				{errors.length === 0 ? null : (
-					<div id="errors">
-						<ul className="error-list-signup">
+					<div id="errors-list">
+						<ul id="errors-list-signup">
 							{errors.map((error, idx) => (
 								<li key={idx}>{error}</li>
 							))}
 						</ul>
 					</div>
 				)}
+
 				<div id="name" className="signup">
 					<label>
 						First Name:{" "}
