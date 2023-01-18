@@ -10,7 +10,6 @@
 	padding-right: 74px;
 }
 
-
 #private-container {
 	/* background-color: red; */
 	margin-right: 130px;
@@ -36,7 +35,7 @@
 
 #create-group {
 	/* background-color: blue; */
-	margin-right: 90px;
+	margin-right: 140px;
 }
 
 .create {
@@ -51,17 +50,13 @@
 }
 
 button.create {
-	margin-left: 70px;
+	margin-left: 110px;
 }
 
 #text-private,
 #text-type {
-	/* display: flex;
-	flex-direction: row; */
 	padding-right: 10px;
 	margin-left: 5px;
-	/* background-color: blue; */
-	/* justify-self: flex-start; */
 }
 
 .options {

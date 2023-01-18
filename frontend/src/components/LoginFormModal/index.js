@@ -25,7 +25,13 @@ function LoginFormModal() {
 
 	return (
 		<div id="login-container">
-			<h1>Log In</h1>
+			<div className="signup-form-image">
+				<img
+					className="signup-image-logo"
+					src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
+				/>
+			</div>
+			<div className="signup-header-name">Log In</div>
 			<form onSubmit={handleSubmit}>
 				<ul className="error-list-login">
 					{Object.values(errors).map((error, idx) => (

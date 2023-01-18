@@ -43,41 +43,44 @@ const GroupDetail = () => {
 	} = selector;
 	if (!organizer) return null;
 
-	// let details = Object.values(selector);
-	// console.log(`group ----deeets======`, details);
-	// console.log(`group ----deeets======`, groupImages);
+	let imgs = groupImages.find((el) => el.preview === true);
 
-	// if (groupImages.id) {
-	// 	let imgs = Object.values(groupImages);
-	// 	console.log(`group ----deeets======`, imgs);
-	// }
-
-	// if (imgs.length) {
-	// 	let img = imgs.find((group) => group.preview === true);
-	// }
-
-	console.log(groupImages);
+	console.log(venues);
 
 	//return
 	return (
-		<div id="other">
-			Group Detail Page
-			<div>Testing group details:</div>
-			<div id="details-container">
-				<div id="left">
-					{/* {previewImage ? <img src={previewImage} /> : "N/A"} */}
+		<div id="group-details-page">
+			<div id="details-container-header">
+				<div id="left-details-img">
+					{imgs.id >= 0 ? (
+						<img src={imgs.url} id="details-img-default" />
+					) : (
+						"N/A"
+					)}
 				</div>
-				<div id="right">
-					<div id="name">
-						<h1>{name}</h1>
+				<div id="right-details-header">
+					<div id="name-details-div">
+						<div id="right-details-header-name">{name}</div>
 					</div>
-					<div id="name">{`${city}, ${state}`}</div>
-					<div id="name">{`${numMembers} Members - ${
+					<div className="details-info">{`${city}, ${state}`}</div>
+					<div className="details-info">{`${numMembers} Members - ${
 						privated ? "Private" : "Public"
 					} group`}</div>
-					<div id="name">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
+					<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
 				</div>
-				<div id="about-section">{about}</div>
+			</div>
+
+			<div id="details-container-body">
+				<div id="about-section-container">
+					<div id="about-section-container-left">
+						<h2 id="about-section">What we're about:</h2>
+						<div id="about-section">{about}</div>
+					</div>
+					<div id="about-section-container-right">
+						<h2 id="organizer-details">Organizer</h2>
+						<div>{`${organizer.firstName} ${organizer.lastName}`}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

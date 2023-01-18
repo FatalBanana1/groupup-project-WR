@@ -49,9 +49,16 @@ const CreateGroup = () => {
 
 	return (
 		<div id="create-group-container">
-			<div id="create-group">
-				<h1>Create a Group</h1>
+			<div className="sign-up-container" id="create-group">
+				<div className="signup-form-image">
+					<img
+						className="signup-image-logo"
+						src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
+					/>
+				</div>
+				<div className="signup-header-name">Create a Group</div>
 			</div>
+
 			<form onSubmit={handleSubmit}>
 				<div id="errors-create-group">
 					<ul>

@@ -3,18 +3,23 @@
 #signup-container {
 	display: flex;
 	flex-direction: column;
-	width: 530px;
+	justify-content: center;
+	align-items: center;
+	height: 515px;
+	width: 490px;
 	border: solid 0.5px black;
 	box-shadow: 0 0 100px 10px rgba(0, 0, 0, 0.7);
 	border-radius: 4%;
+	background-color: white;
+	padding: 36px, 40px, 32px, 40px;
 }
-
-#sign-up {
+/*
+#sign-up-container {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
+} */
 
 .error-list-signup {
 	font-size: 18px;
@@ -32,7 +37,7 @@
 
 .signup {
 	/* background-color: blue; */
-	font-size: 20px;
+	font-size: 16px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -41,7 +46,7 @@
 
 .signup-button {
 	width: 100px;
-	margin-left: 215px;
+	margin-left: 160px;
 }
 
 .signup-form {
@@ -50,5 +55,22 @@
 	flex-direction: column;
 	justify-self: center;
 	padding: 5px;
-	margin-right: 150px;
+	margin-right: 110px;
+}
+
+.signup-form-image {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.signup-header-name {
+	font-size: 28px;
+	margin-bottom: 8px;
+}
+
+.signup-image-logo {
+	height: 45px;
+	width: 45px;
 }

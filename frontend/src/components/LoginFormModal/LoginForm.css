@@ -2,8 +2,8 @@
 
 #login-container {
 	background-color: white;
-	height: 220px;
-	width: 400px;
+	height: 515px;
+	width: 490px;
 	display: flex;
 	flex-direction: column;
 	padding: 30px;
@@ -11,11 +11,11 @@
 	justify-content: center;
 	border: solid 0.5px black;
 	box-shadow: 0 0 100px 10px rgba(0, 0, 0, 0.7);
-	border-radius: 4%;
+	border-radius: 1%;
 }
 
 #modal-content {
-	border-radius: 4%;
+	border-radius: 1%;
 	/* background-color: red; */
 }
 

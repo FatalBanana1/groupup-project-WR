@@ -47,8 +47,14 @@ function SignupFormModal() {
 
 	return (
 		<div id="signup-container">
-			<div id="sign-up">
-				<h1>Sign Up</h1>
+			<div className="sign-up-container">
+				<div className="signup-form-image">
+					<img
+						className="signup-image-logo"
+						src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
+					/>
+				</div>
+				<div className="signup-header-name">Sign Up</div>
 			</div>
 			<form className="signup-form" onSubmit={handleSubmit}>
 				{errors.length === 0 ? null : (
@@ -116,7 +122,7 @@ function SignupFormModal() {
 						/>
 					</label>
 				</div>
-				<div id="confirm-password" className="signup">
+				<div className="signup">
 					<label>
 						Confirm Password:{" "}
 						<input

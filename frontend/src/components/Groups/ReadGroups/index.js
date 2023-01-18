@@ -27,12 +27,16 @@ const ReadGroups = (group) => {
 	return (
 		<div id="detail-container">
 			<div id="detail-left">
-				{previewImage ? <img src={previewImage} /> : "N/A"}
+				{previewImage ? (
+					<img src={previewImage} id="read-groups-img" />
+				) : (
+					"N/A"
+				)}
 			</div>
 			<div id="detail-right">
-				<h3>{name}</h3>
+				<h3 id="detail-right-name">{name}</h3>
 				<div>{`${city}, ${state}`}</div>
-				<div>{about}</div>
+				<div className='about-section'>{about}</div>
 				<div>{`${numMembers}, ${type}`}</div>
 			</div>
 		</div>

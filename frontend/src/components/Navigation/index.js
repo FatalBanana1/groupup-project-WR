@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
 
 	return (
 		<div className="nav-container">
-			<NavLink className="title" exact to="/">
+			<NavLink className="nav-title" exact to="/">
 				Groupup
 			</NavLink>
 			{/* <NavLink to="/groups">Groups</NavLink> */}
