@@ -36,20 +36,19 @@ const UpdateGroup = (group) => {
 	let [city, setCity] = useState(group.group.city);
 	let [state, setState] = useState(group.group.state);
 	let [name, setName] = useState(group.group.name);
+	let [url, setUrl] = useState(group.group.previewImage);
+	let [preview, setPreview] = useState(false);
 	let [about, setAbout] = useState(group.group.about);
 	let [privated, setPrivated] = useState(group.group.private);
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 	const stateError = "State is required";
 
-	// useEffect(() => {}, [privated]);
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
 
 		const payload = {
-			...group,
 			id: group.group.id,
 			name,
 			about,
@@ -63,6 +62,7 @@ const UpdateGroup = (group) => {
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
+				console.log(`inside front end fetch catcher =====>>>`,data);
 				if (data && data.message === "Authentication required")
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
@@ -130,10 +130,10 @@ const UpdateGroup = (group) => {
 					</label>
 				</div>
 
-				<div id="private">
-					<label id="private-container">
-						<div id="text-private">Private:</div>
-						<div id="private-select">
+				<div className="private">
+					<label className="private-container">
+						<div className="text-private">Private:</div>
+						<div className="private-select">
 							<select
 								className="selected"
 								value={privated}
@@ -187,6 +187,37 @@ const UpdateGroup = (group) => {
 							}
 							required
 						/>
+					</label>
+				</div>
+
+				<div className="private">
+					<label className="private-container">
+						<div
+							className="text-private"
+							style={{ fontSize: "14px" }}
+						>
+							Set as Default Image:
+						</div>
+						<div className="private-select">
+							<select
+								className="selected"
+								value={preview}
+								onChange={(e) =>
+									setPreview(
+										e.target.value === "false"
+											? false
+											: true
+									)
+								}
+							>
+								<option value={true} className="options">
+									Yes
+								</option>
+								<option value={false} className="options">
+									No
+								</option>
+							</select>
+						</div>
 					</label>
 				</div>
 

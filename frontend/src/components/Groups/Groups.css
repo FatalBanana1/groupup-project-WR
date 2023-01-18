@@ -1,25 +1,37 @@
 /* groups css */
 
+.margin-groups-container {
+	margin-right: 25%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 #groups-container {
 	/* background-color: darkgoldenrod; */
 	display: flex;
 	flex-direction: column;
-	width: 100%;
-
+	width: 80vw;
+	align-items: center;
 	margin-bottom: 4rem;
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
 }
 
 #group-detail-header {
-	border-bottom: 0.1px solid gray;
+	/* border-bottom: 0.1px solid gray; */
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
 }
+#group-detail:first-of-type {
+	/* background-color: red; */
+	border-top: solid 0.3px rgba(128, 128, 128, 0.2);
+}
 
 #group-detail {
-	border-bottom: 0.1px solid gray;
+	border-bottom: solid 0.3px rgba(128, 128, 128, 0.2);
 	text-decoration: none;
 	height: 200px;
 	width: 660px;

@@ -350,7 +350,84 @@ npm run sequelize --prefix backend db:seed:all
 
 //---------------------------
 
+	let auth = await Membership.findOne({
+		where: { userId: user.dataValues.id, status: "co-host" },
+		include: [
+			{
+				model: Group,
+			},
+		],
+	});
+
+	console.log(`inside back----`, auth.status);
+
+	if (!auth) {
+		return res.status(400).json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+			},
+		});
+	} else {
+		next();
+	}
+};
+
+
+
 //---------------------------
+
+
+const valid_user = async (req, res, next) => {
+	const { user } = req;
+
+	if (!user) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				memberId: "User must be signed in.",
+			},
+		});
+	}
+
+	let auth = await Membership.findOne({
+		where: { userId: user.dataValues.id },
+		include: [
+			{
+				model: Group,
+			},
+		],
+	});
+	console.log(`inside back----`, );
+
+	if (!auth) {
+		return res.status(400).json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+			},
+		});
+	}
+
+	if (
+		user.dataValues.id &&
+		(auth.status === "co-host" || auth.Group.organizerId === user.id)
+	) {
+		next();
+	} else {
+		return res.status(403).json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+			},
+		});
+	}
+};
+
 
 //---------------------------
 

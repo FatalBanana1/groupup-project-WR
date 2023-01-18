@@ -43,7 +43,7 @@ function ProfileButton({ user }) {
 
 	const demoSignin1 = (e) => {
 		e.preventDefault();
-		let credential = "Demo-lition";
+		let credential = "heisenberg";
 		let password = "password";
 		return dispatch(sessionActions.login({ credential, password })).then(
 			closeModal

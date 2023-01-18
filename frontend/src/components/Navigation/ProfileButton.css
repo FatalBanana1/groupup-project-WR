@@ -6,7 +6,9 @@
 	position: absolute;
 	top: 52px;
 	right: 15px;
-	border: solid black;
+	border: solid 0.1px rgba(0, 0, 0, 0.1);
+	border-radius: 4%;
+	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
 	background-color: white;
 	padding: 12px 16px;
 	font-size: 14px;

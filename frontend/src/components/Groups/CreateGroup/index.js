@@ -18,6 +18,8 @@ const CreateGroup = () => {
 	const [state, setState] = useState("");
 	const [name, setName] = useState("");
 	const [about, setAbout] = useState("");
+	const [url, setUrl] = useState("");
+	const [preview, setPreview] = useState(true);
 	const [privated, setPrivated] = useState(false);
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
@@ -34,6 +36,7 @@ const CreateGroup = () => {
 			private: privated,
 			city,
 			state,
+			image: { url, preview: true },
 		};
 
 		return dispatch(thunkCreateGroups(payload))
@@ -108,10 +111,10 @@ const CreateGroup = () => {
 					</label>
 				</div>
 
-				<div id="private">
-					<label id="private-container">
-						<div id="text-private">Private:</div>
-						<div id="private-select">
+				<div className="private">
+					<label className="private-container">
+						<div className="text-private">Private:</div>
+						<div className="private-select">
 							<select
 								className="selected"
 								value={privated}
@@ -155,6 +158,18 @@ const CreateGroup = () => {
 							onChange={(e) =>
 								setState(e.target.value.toUpperCase())
 							}
+							required
+						/>
+					</label>
+				</div>
+
+				<div id="about" className="create">
+					<label>
+						Group Image:{" "}
+						<input
+							type="text"
+							value={url}
+							onChange={(e) => setUrl(e.target.value)}
 							required
 						/>
 					</label>

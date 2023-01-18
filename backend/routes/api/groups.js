@@ -2,6 +2,8 @@
 
 //imports
 const express = require("express");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth.js");
 const {
@@ -61,6 +63,7 @@ const valid_group = async (req, res, next) => {
 
 const valid_user = async (req, res, next) => {
 	const { user } = req;
+	const { groupId } = req.params;
 
 	if (!user) {
 		return res.status(400).json({
@@ -72,13 +75,13 @@ const valid_user = async (req, res, next) => {
 		});
 	}
 
+	//check if organizer or cohost
 	let auth = await Membership.findOne({
-		where: { userId: user.dataValues.id },
-		include: [
-			{
-				model: Group,
-			},
-		],
+		where: {
+			userId: user.id,
+			groupId,
+			status: { [Op.in]: ["co-host", "organizer"] },
+		},
 	});
 
 	if (!auth) {
@@ -89,23 +92,61 @@ const valid_user = async (req, res, next) => {
 				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
 			},
 		});
-	}
-
-	if (
-		user.dataValues.id &&
-		(auth.status === "co-host" || auth.Group.organizerId === user.id)
-	) {
-		next();
 	} else {
-		return res.status(403).json({
-			message: "Authentication Error",
-			statusCode: 403,
-			errors: {
-				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
-			},
-		});
+		next();
 	}
 };
+
+//----
+
+////old user validation
+// const valid_user = async (req, res, next) => {
+// 	const { user } = req;
+
+// 	if (!user) {
+// 		return res.status(400).json({
+// 			message: "Validation Error",
+// 			statusCode: 400,
+// 			errors: {
+// 				memberId: "User must be signed in.",
+// 			},
+// 		});
+// 	}
+
+// 	let auth = await Membership.findOne({
+// 		where: { userId: user.dataValues.id },
+// 		include: [
+// 			{
+// 				model: Group,
+// 			},
+// 		],
+// 	});
+
+// 	if (!auth) {
+// 		return res.status(400).json({
+// 			message: "Authentication Error",
+// 			statusCode: 403,
+// 			errors: {
+// 				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+// 			},
+// 		});
+// 	}
+
+// 	if (
+// 		user.dataValues.id &&
+// 		(auth.status === "co-host" || auth.Group.organizerId === user.id)
+// 	) {
+// 		next();
+// 	} else {
+// 		return res.status(403).json({
+// 			message: "Authentication Error",
+// 			statusCode: 403,
+// 			errors: {
+// 				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+// 			},
+// 		});
+// 	}
+// };
 
 const valid_delete = async (req, res, next) => {
 	const { user } = req;
@@ -776,13 +817,15 @@ router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
 // Create a Group
 // post -  /api/groups
 router.post("/", requireAuth, async (req, res) => {
-	let { name, about, type, private, city, state } = req.body;
+	let { name, about, type, private, city, state, image } = req.body;
 	let errors = {};
 
 	if (!name || name.length > 60)
 		errors.name = `Name must be 60 characters or less`;
 	if (!about || about.length < 50)
 		errors.about = `About must be 50 characters or more`;
+	if (!about || about.length > 350)
+		errors.about = `About must be less than 350 characters`;
 	if (!type || (type !== "Online" && type !== "In person"))
 		errors.type = `Type must be 'Online' or 'In person'`;
 	if (typeof Boolean(private) !== "boolean")
@@ -790,6 +833,7 @@ router.post("/", requireAuth, async (req, res) => {
 	if (!city || city.length < 3) errors.city = `City is required`;
 	if (!state) errors.state = `State is required`;
 	if (state.length !== 2) errors.state = `State must be 2 characters.`;
+	if (image.url.length < 2) errors.image = `Please enter correct image url.`;
 
 	if (Object.values(errors).length) {
 		return res.status(400).json({
@@ -825,7 +869,15 @@ router.post("/", requireAuth, async (req, res) => {
 	let member = await Membership.create({
 		userId: user.id,
 		groupId: group.id,
-		status: "co-host",
+		status: "organizer",
+	});
+
+	//deal with group img
+	let { url } = req.body.image;
+	let defaultImg = await GroupImage.create({
+		url,
+		preview: true,
+		groupId: group.id,
 	});
 
 	return res.json(group);
@@ -919,10 +971,16 @@ router.put(
 	valid_user,
 	requireAuth,
 	async (req, res) => {
+		console.log(`inside backend route----`);
+
 		let groupId = req.params.groupId;
 		let group = await Group.findByPk(groupId);
 
-		let { name, about, type, private, city, state } = req.body;
+		//deal with group img
+		let previewer = false;
+		let { url, preview } = req.body.image;
+
+		let { name, about, type, private, city, state, image } = req.body;
 
 		let errors = {};
 
@@ -936,6 +994,8 @@ router.put(
 			errors.private = `Private must be a boolean`;
 		if (city && city.length < 3) errors.city = `City is required`;
 		if (state && state.length !== 2) errors.state = `State is required`;
+		if (image.url.length < 2)
+			errors.image = `Please enter correct image url.`;
 
 		if (Object.values(errors).length) {
 			return res.status(400).json({
@@ -945,7 +1005,24 @@ router.put(
 			});
 		}
 
-		await Group.update(
+		//group images add and change defaults
+		if (preview) {
+			await GroupImage.update(
+				{ preview: false },
+				{
+					where: { groupId, preview: true },
+				}
+			);
+			previewer = true;
+		}
+
+		let defaultImg = await GroupImage.create({
+			url,
+			preview: previewer,
+			groupId,
+		});
+
+		group = await Group.update(
 			{
 				name,
 				about,
@@ -959,7 +1036,9 @@ router.put(
 			}
 		);
 
-		group = await Group.findByPk(groupId);
+		group["image"] = { url, preview };
+
+		console.log(group);
 
 		return res.json(group);
 	}

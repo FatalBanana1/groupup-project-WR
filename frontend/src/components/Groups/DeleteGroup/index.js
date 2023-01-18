@@ -129,10 +129,10 @@ const DeleteGroup = (group) => {
 					</label>
 				</div>
 
-				<div id="private">
-					<label id="private-container">
-						<div id="text-private">Private:</div>
-						<div id="private-select">
+				<div className="private">
+					<label className="private-container">
+						<div className="text-private">Private:</div>
+						<div className="private-select">
 							<select
 								className="selected"
 								readOnly

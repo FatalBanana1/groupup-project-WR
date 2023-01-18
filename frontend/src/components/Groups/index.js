@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkReadGroups } from "../../store/groups";
 import { NavLink } from "react-router-dom";
-import CreateModalButton from './CreateGroup/CreateModalButton'
+import CreateModalButton from "./CreateGroup/CreateModalButton";
 import OpenModalButton from "../../components/OpenModalButton";
 import * as sessionActions from "../../store/session";
 
@@ -66,41 +66,43 @@ const Groups = () => {
 
 	//return
 	return (
-		<div id="groups-container">
+		<div className="margin-groups-container">
 			<div id="group-detail-header">
 				<NavLink className="groups-page-link" exact to="/groups">
 					<h2>Groups</h2>
 				</NavLink>
 			</div>
-			<div id="group-detail-container">
-				{groups.length > 0 ? (
-					groups.map((group) => {
-						if (!group.name) {
-							return null;
-						} else {
-							return (
-								<NavLink
-									id="group-detail"
-									key={group.id}
-									to={`/groups/${group.id}`}
-									group={group}
-								>
-									<ReadGroups group={group} />
-								</NavLink>
-							);
-						}
-					})
-				) : (
-					<div>No Groups to display.</div>
-				)}
-			</div>
-			<div id="groups-link-container">
-				<CreateModalButton
-					className="create-group-button"
-					buttonText="Create Group"
-					onButtonClick={closeMenu}
-					modalComponent={<CreateGroup />}
-				/>
+			<div id="groups-container">
+				<div id="group-detail-container">
+					{groups.length > 0 ? (
+						groups.map((group) => {
+							if (!group.name) {
+								return null;
+							} else {
+								return (
+									<NavLink
+										id="group-detail"
+										key={group.id}
+										to={`/groups/${group.id}`}
+										group={group}
+									>
+										<ReadGroups group={group} />
+									</NavLink>
+								);
+							}
+						})
+					) : (
+						<div>No Groups to display.</div>
+					)}
+				</div>
+				<div id="groups-link-container">
+					<CreateModalButton
+						className="create-group-button"
+						buttonText="Create Group"
+						onButtonClick={closeMenu}
+						modalComponent={<CreateGroup />}
+					/>
+				</div>
 			</div>
 		</div>
 	);

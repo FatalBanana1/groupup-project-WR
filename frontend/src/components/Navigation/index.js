@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
 	return (
 		<div className="nav-container">
 			<NavLink className="nav-title" exact to="/">
-				<img id='groupup-logo-wr' src={logo} alt="Groupup site logo" />
+				<img id="groupup-logo-wr" src={logo} alt="Groupup site logo" />
 			</NavLink>
 			<ul id="dropdown">
 				{isLoaded && (
