@@ -13,7 +13,6 @@ function Navigation({ isLoaded }) {
 			<NavLink className="nav-title" exact to="/">
 				Groupup
 			</NavLink>
-			{/* <NavLink to="/groups">Groups</NavLink> */}
 			<ul id="dropdown">
 				{isLoaded && (
 					<div className="profile-container">

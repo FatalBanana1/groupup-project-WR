@@ -73,7 +73,23 @@ function ProfileButton({ user }) {
 	return (
 		<>
 			<div className="button-container">
-				<div id="v-dropdown">{showMenu ? `^` : `v`}</div>
+				<div id="v-dropdown">
+					{showMenu ? (
+						<img
+							onClick={openMenu}
+							className="nav-arrow"
+							src="https://cdn.icon-icons.com/icons2/936/PNG/512/up-arrow_icon-icons.com_73351.png"
+							alt="up arrow"
+						/>
+					) : (
+						<img
+							onClick={openMenu}
+							className="nav-arrow"
+							src="https://cdn.icon-icons.com/icons2/936/PNG/512/angle-arrow-down_icon-icons.com_73683.png"
+							alt="down arrow"
+						/>
+					)}
+				</div>
 				<button className="profile-button" onClick={openMenu}>
 					<i className="fas fa-user-circle" />
 					{/* <i className="fa-solid fa-person" /> */}

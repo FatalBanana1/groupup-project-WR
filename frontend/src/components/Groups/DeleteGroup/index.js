@@ -3,11 +3,11 @@
 //imports
 //hooks
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkDeleteGroup } from "../../../store/groups";
+import { thunkDeleteGroup, thunkReadGroups } from "../../../store/groups";
 import * as sessionActions from "../../../store/session";
 
 //comps
@@ -35,6 +35,18 @@ const DeleteGroup = (group) => {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
+	useEffect(() => {
+		dispatch(thunkReadGroups());
+	}, [dispatch]);
+
+	// {groups: {1:{1}, 2:{2}...} }
+	const selector = useSelector((state) => state.groups);
+	if (!selector)
+		return <div className="groups-null">No Groups to display...</div>;
+	const groups = Object.values(selector);
+
+	console.log(`refreshing deleted!!! ====`, groups);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
@@ -52,7 +64,7 @@ const DeleteGroup = (group) => {
 			};
 
 			return dispatch(thunkDeleteGroup(payload))
-				.then(() => history.push("/"))
+				.then(() => history.push("/groups"))
 				.then(closeModal)
 				.catch(async (res) => {
 					const data = await res.json();
