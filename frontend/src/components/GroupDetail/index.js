@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 
 //comps
 import { thunkReadGroupDetails } from "../../store/groups";
+import UpdateGroup from "../Groups/UpdateGroup";
 import "./GroupDetail.css";
 
 //main
@@ -17,14 +18,49 @@ const GroupDetail = () => {
 	//states
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
-	// console.log(`groupId----`, groupId);
+
+	console.log(`inside group details === groupid ====`, groupId);
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId));
 	}, []);
 
+	//-----------------
+
+	const [showMenu, setShowMenu] = useState(false);
+	const ulRef = useRef();
+
+	const openMenu = () => {
+		if (showMenu) return;
+		setShowMenu(true);
+	};
+
+	useEffect(() => {
+		if (!showMenu) return;
+
+		const closeMenu = (e) => {
+			if (!ulRef.current.contains(e.target)) {
+				setShowMenu(false);
+			}
+		};
+
+		document.addEventListener("click", closeMenu);
+
+		return () => document.removeEventListener("click", closeMenu);
+	}, [showMenu]);
+
+	const closeMenu = () => setShowMenu(false);
+
+	const logout = (e) => {
+		e.preventDefault();
+		dispatch(sessionActions.logout());
+		closeMenu();
+	};
+
+	//----------------
+
 	// {groups: {1:{1}, 2:{2}...} }
-	const selector = useSelector((state) => state.groups);
+	const group = useSelector((state) => state.groups);
 	const {
 		id,
 		organizerId,
@@ -40,22 +76,23 @@ const GroupDetail = () => {
 		Organizer: organizer,
 		Venues: venues,
 		numMembers,
-	} = selector;
+	} = group;
 	if (!organizer) return null;
 
 	let imgs = groupImages.find((el) => el.preview === true);
-
-	console.log(venues);
 
 	//return
 	return (
 		<div id="group-details-page">
 			<div id="details-container-header">
 				<div id="left-details-img">
-					{imgs.id >= 0 ? (
+					{imgs !== undefined ? (
 						<img src={imgs.url} id="details-img-default" />
 					) : (
-						"N/A"
+						<img
+							src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+							className="no-groups-img-detail"
+						/>
 					)}
 				</div>
 				<div id="right-details-header">
@@ -73,6 +110,17 @@ const GroupDetail = () => {
 			</div>
 
 			<div id="details-container-body">
+				<div id="details-nav-section">
+					<div id="update-groups-link-container">
+						<OpenModalButton
+							id="update-group-button"
+							buttonText="Edit Group"
+							onButtonClick={closeMenu}
+							modalComponent={<UpdateGroup group={group} />}
+						/>
+					</div>
+				</div>
+
 				<div id="about-section-container">
 					<div id="about-section-container-left">
 						<h2 className="about-title-font">What we're about</h2>

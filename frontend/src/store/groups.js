@@ -28,19 +28,19 @@ const actionReadGroupDetails = (group) => ({
 });
 
 //create
-const actionCreateGroups = (group) => ({
+const actionCreateGroup = (group) => ({
 	type: CREATE_GROUP,
 	group,
 });
 
 //update
-const actionUpdateGroups = (group) => ({
+const actionUpdateGroup = (group) => ({
 	type: UPDATE_GROUP,
 	group,
 });
 
 //delete
-const actionDeleteGroups = (group) => ({
+const actionDeleteGroup = (group) => ({
 	type: DELETE_GROUP,
 	group,
 });
@@ -72,7 +72,7 @@ export const thunkReadGroupDetails = (payload) => async (dispatch) => {
 	}
 };
 
-// GET: Get All Groups Route: /api/groups
+// POST: Create a Group Route: /api/groups
 export const thunkCreateGroups = (payload) => async (dispatch) => {
 	const response = await csrfFetch(`/api/groups`, {
 		method: `POST`,
@@ -82,7 +82,23 @@ export const thunkCreateGroups = (payload) => async (dispatch) => {
 
 	if (response.ok) {
 		const group = await response.json();
-		dispatch(actionCreateGroups(group));
+		dispatch(actionCreateGroup(group));
+		console.log(`group=====thunk====`, group);
+		return group;
+	}
+};
+
+// PUT: Edit a Group Route: /api/groups/:groupId
+export const thunkUpdateGroup = (payload) => async (dispatch) => {
+	const response = await csrfFetch(`/api/groups/${payload.id}`, {
+		method: `PUT`,
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+	});
+
+	if (response.ok) {
+		const group = await response.json();
+		dispatch(actionUpdateGroup(group));
 		return group;
 	}
 };
@@ -109,8 +125,6 @@ const groupsReducer = (state = initialState, action) => {
 
 		case READ_GROUP_DETAILS: {
 			action.group["privated"] = action.group.private;
-			// console.log(`reducer>>>>>>>`, action.group);
-
 			return {
 				...state,
 				...action.group,
@@ -119,22 +133,27 @@ const groupsReducer = (state = initialState, action) => {
 
 		case CREATE_GROUP: {
 			console.log(`reducer>>>>>>>>>>>>`, action.group);
+			console.log(`reducer>>>>>>>>>>>>`, state[action.group.id]);
+			console.log(`reducer>>>>>>>>>>>>`, action.group.group);
 			// if (!state[action.group.id]) {
-			// 	const newState = {
-			// 		...state,
-			// 		[action.group.id]: action.group,
-			// 	};
+				const newState = {
+					...state,
+					[action.group.id]: action.group,
+				};
 			// 	const groupList = newState.list.map((id) => newState[id]);
 			// 	group.group.push(action.group);
-			// 	return newState;
+				return newState;
 			// }
-			return {
-				// ...state,
-				// [action.group.id]: {
-				// 	...state[action.pokemon.id],
-				// 	...action.pokemon,
-				// },
-			};
+
+			// {
+			// ...state,
+			// [action.group.id]: {
+			// 	...state[action.pokemon.id],
+			// 	...action.pokemon,
+			// },
+			// };
+
+			// return { ...state, ...(state[action.group.id] = action.group) };
 		}
 
 		default:
