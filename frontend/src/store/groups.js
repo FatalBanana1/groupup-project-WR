@@ -83,7 +83,6 @@ export const thunkCreateGroups = (payload) => async (dispatch) => {
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionCreateGroup(group));
-		console.log(`group=====thunk====`, group);
 		return group;
 	}
 };
@@ -113,7 +112,7 @@ export const thunkDeleteGroup = (payload) => async (dispatch) => {
 
 	if (response.ok) {
 		const group = await response.json();
-		dispatch(actionUpdateGroup(group));
+		dispatch(actionDeleteGroup(group));
 		return group;
 	}
 };
@@ -162,7 +161,6 @@ const groupsReducer = (state = initialState, action) => {
 		}
 
 		case DELETE_GROUP: {
-			console.log(`reducer>>>>>>>>>>>>>`, action.group);
 			const newState = { ...state };
 			delete newState[action.group.id];
 			return newState;

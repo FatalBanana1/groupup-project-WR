@@ -35,17 +35,7 @@ const DeleteGroup = (group) => {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
-	useEffect(() => {
-		dispatch(thunkReadGroups());
-	}, [dispatch]);
-
-	// {groups: {1:{1}, 2:{2}...} }
-	const selector = useSelector((state) => state.groups);
-	if (!selector)
-		return <div className="groups-null">No Groups to display...</div>;
-	const groups = Object.values(selector);
-
-	console.log(`refreshing deleted!!! ====`, groups);
+	console.log(`privated`, privated);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -53,7 +43,6 @@ const DeleteGroup = (group) => {
 
 		if (name === `Delete ${group.group.name}.`) {
 			const payload = {
-				...group,
 				id: group.group.id,
 				name,
 				about,
@@ -134,8 +123,7 @@ const DeleteGroup = (group) => {
 								readOnly
 								defaultValue={type}
 							>
-								<option className="options">In person</option>
-								<option className="options">Online</option>
+								<option className="options">{type}</option>
 							</select>
 						</div>
 					</label>
@@ -148,21 +136,10 @@ const DeleteGroup = (group) => {
 							<select
 								className="selected"
 								readOnly
-								defaultValue={privated}
+								defaultValue={privated ? `Yes` : `No`}
 							>
-								<option
-									readOnly
-									defaultValue={true}
-									className="options"
-								>
-									Yes
-								</option>
-								<option
-									readOnly
-									defaultValue={false}
-									className="options"
-								>
-									No
+								<option className="options">
+									{privated ? `Yes` : `No`}
 								</option>
 							</select>
 						</div>

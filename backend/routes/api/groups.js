@@ -80,6 +80,17 @@ const valid_user = async (req, res, next) => {
 			},
 		],
 	});
+
+	if (!auth) {
+		return res.status(400).json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+			},
+		});
+	}
+
 	if (
 		user.dataValues.id &&
 		(auth.status === "co-host" || auth.Group.organizerId === user.id)
@@ -98,6 +109,7 @@ const valid_user = async (req, res, next) => {
 
 const valid_delete = async (req, res, next) => {
 	const { user } = req;
+
 	if (!user) {
 		return res.status(400).json({
 			message: "Validation Error",
@@ -109,20 +121,21 @@ const valid_delete = async (req, res, next) => {
 	}
 	const { memberId } = req.body;
 	let auth = await Membership.findOne({
-		where: { userId: user.id },
+		where: { userId: user.id, groupId: req.body.id },
 		include: [
 			{
 				model: Group,
 			},
 		],
 	});
-	if (!auth) {
+
+	if (!auth || auth === {}) {
 		res.status(400);
 		return res.json({
-			message: "Validation Error",
-			statusCode: 400,
+			message: "Authentication Error",
+			statusCode: 403,
 			errors: {
-				memberId: "User couldn't be found",
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
 			},
 		});
 	}
@@ -995,6 +1008,7 @@ router.delete("/:groupId", valid_group, valid_delete, async (req, res) => {
 	await deleted.destroy();
 
 	return res.json({
+		id: groupId,
 		message: "Successfully deleted",
 		statusCode: 200,
 	});
