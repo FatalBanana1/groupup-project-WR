@@ -8,12 +8,17 @@
 	right: 20px;
 	border: solid black;
 	background-color: white;
-	padding: 15px;
+	padding: 12px 16px;
+	font-size: 14px;
+	width: auto;
+	height: auto;
 }
 
 .profile-button {
 	/* background-color: red; */
 	border-radius: 80px;
+	height: 48px;
+	width: 48px;
 }
 
 .users {
@@ -30,4 +35,14 @@
 	background-color: white;
 	height: 30px;
 	width: 220px;
+}
+
+.nav-details {
+	padding: 4px 0;
+}
+
+#nav-details-log-out {
+	text-decoration: none;
+	background-color: white;
+	border: white 1px;
 }

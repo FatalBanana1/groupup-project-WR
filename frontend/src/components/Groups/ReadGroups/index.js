@@ -36,8 +36,12 @@ const ReadGroups = (group) => {
 			<div id="detail-right">
 				<h3 id="detail-right-name">{name}</h3>
 				<div>{`${city}, ${state}`}</div>
-				<div className='about-section'>{about}</div>
-				<div>{`${numMembers}, ${type}`}</div>
+				<div className="about-section">{about}</div>
+				<div className="li-tag-members-line">
+					{`${numMembers} members`}
+					<li className="li-tags" />
+					{`${type}`}
+				</div>
 			</div>
 		</div>
 	);

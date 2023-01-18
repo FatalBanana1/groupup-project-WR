@@ -63,9 +63,11 @@ const GroupDetail = () => {
 						<div id="right-details-header-name">{name}</div>
 					</div>
 					<div className="details-info">{`${city}, ${state}`}</div>
-					<div className="details-info">{`${numMembers} Members - ${
-						privated ? "Private" : "Public"
-					} group`}</div>
+					<div className="details-info li-tag-members-line">
+						{`${numMembers} members`}
+						<li className="li-tags" />
+						{`${privated ? "Private" : "Public"} group`}
+					</div>
 					<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
 				</div>
 			</div>

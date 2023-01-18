@@ -43,3 +43,13 @@
 	border-radius: 4%;
 	margin-bottom: 80px;
 }
+
+.li-tag-members-line {
+	display: flex;
+}
+
+.li-tags {
+	padding-left: 7px;
+	font-size: x-small;
+	padding-top: 3px;
+}

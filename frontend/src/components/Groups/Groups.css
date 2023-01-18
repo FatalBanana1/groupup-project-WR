@@ -5,26 +5,21 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin-left: 10px;
-	margin-right: 160px;
-	align-items: center;
+
+	margin-bottom: 4rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
 }
 
 #group-detail-header {
 	border-bottom: 0.1px solid gray;
-	/* margin-left: 5vw; */
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	/* background-color: darkred; */
-	/* width: 59vw; */
 }
 
 #group-detail {
 	border-bottom: 0.1px solid gray;
-	/* border-top: 0.1px solid black; */
-	/* margin-bottom: 10px; */
-	/* padding-bottom: 5px; */
 	text-decoration: none;
 	height: 200px;
 	width: 660px;
