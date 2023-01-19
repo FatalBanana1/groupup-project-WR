@@ -66,7 +66,7 @@ const Groups = ({ isLoaded }) => {
 		<div className="margin-groups-container">
 			<div id="group-detail-header">
 				<NavLink className="groups-page-link" exact to="/groups">
-					<h2>Groups</h2>
+					<h2 id="header-groups-pg">Groups</h2>
 				</NavLink>
 			</div>
 			<div id="groups-container">

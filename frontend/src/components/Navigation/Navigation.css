@@ -5,15 +5,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 /* font-family: 'Pacifico', cursive; */
 
-.nav-title {
-	text-decoration: none;
-	font-size: 40px;
-	font-family: "Caveat", cursive;
-	color: red;
-	width: 125px;
-	height: 45px;
-}
-
 .hidden {
 	display: none;
 }
@@ -22,17 +13,12 @@
 	/* background-color: purple; */
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	position: sticky;
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.2);
 	height: auto;
 	padding: 0 20px;
 	width: 100%;
-}
-
-.profile-button {
-	background-color: white;
-	font-size: 2rem;
 }
 
 .button-container {
@@ -57,9 +43,98 @@
 	padding-right: 1%;
 }
 
+#nav-left-container {
+	width: 20%;
+	display: flex;
+	flex-direction: row;
+}
+
+#nav-mid {
+	width: 50%;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: row;
+
+	/*
+	justify-content: center;
+	align-items: center; */
+}
+
+#nav-right-container {
+	width: 30%;
+}
+
+#nav-title {
+	text-decoration: none;
+	font-size: 40px;
+	font-family: "Caveat", cursive;
+	color: red;
+	width: 125px;
+	height: 45px;
+}
+
 #groupup-logo-wr {
 	width: 86%;
 	height: auto;
 	padding-top: 8%;
 	padding-left: 20%;
+}
+
+#navbar-search {
+	width: 250px;
+	max-width: 500px;
+	height: 31px;
+	text-decoration: none;
+	border: solid 0.5px rgba(128, 128, 128, 0.4);
+	border-radius: 3%;
+	padding: 10px;
+	padding-right: 10px;
+}
+
+#navbar-search:hover {
+	background-color: rgba(244, 244, 244, 0.3);
+}
+
+#nav-search-bar {
+	/* margin-top: 0.5px; */
+}
+
+#search-bar-button {
+	height: 16px;
+	width: 16px;
+	padding-left: 1px;
+	padding-bottom: 0.5px;
+	text-decoration: none;
+}
+
+.navbar-search-button {
+	background-color: rgb(247, 60, 39);
+	border: solid 1px rgba(128, 128, 128, 0.4);
+	border-left: 0;
+	border-radius: 0 10% 10% 0;
+	height: 31.5px;
+	width: 32px;
+	margin-left: -10px;
+}
+
+.navbar-search-button:hover {
+	background-color: rgb(248, 98, 81);
+}
+
+#navbar-search:focus {
+	outline: none;
+	background-color: rgba(244, 244, 244, 0.3);
+}
+
+/* ------------ media --------------- */
+
+@media screen and (max-width: 750px) {
+	#nav-mid {
+		display: none;
+	}
+
+	#nav-left-container,
+	#nav-right-container {
+		width: 50%;
+	}
 }

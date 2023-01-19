@@ -89,3 +89,147 @@
 	font-size: 20px;
 	padding: 20px;
 }
+
+/* ------------ Media --------------- */
+
+@media screen and (max-width: 880px) {
+	.margin-groups-container,
+	#group-detail-header,
+	#group-detail,
+	#detail-container {
+		width: 60vw;
+	}
+
+	#groups-container {
+		width: 85vw;
+	}
+
+	.profile-button {
+		font-size: 300%;
+		border: 0;
+		margin-right: 5px;
+	}
+
+	.nav-arrow{
+		margin-top: 10px;
+		padding-left: 4px;
+	}
+
+	#root {
+		width: 90vw;
+	}
+
+	#nav-mid{
+		margin-left: 20px;
+	}
+}
+
+@media screen and (max-width: 750px) {
+	*:not(.profile-button, .fas) {
+		font-size: 15px;
+	}
+
+	.profile-button {
+		font-size: 300%;
+		border: 0;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	* {
+		font-size: 10px;
+	}
+
+	.nav-container {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+
+	.groups-page-link {
+		text-underline-offset: 4px;
+	}
+
+	.nav-arrow {
+		border: 0.1px solid rgba(128, 128, 128, 0.1);
+		padding: 5px;
+		height: 20px;
+		width: 20px;
+	}
+
+	#groupup-logo-wr {
+		padding-left: 20vw;
+		padding-top: 8px;
+		width: 100px;
+	}
+
+	#nav-left-container {
+		width: 90%;
+	}
+
+	#nav-right-container {
+		padding: 0 0 0 10px;
+		margin: 0;
+		width: 10%;
+	}
+
+	#read-groups-img {
+		width: 80px;
+		height: 50px;
+		border-radius: 5%;
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+
+	#detail-right {
+		width: 90%;
+		height: max-content;
+		margin-right: 5px;
+	}
+	#detail-left {
+		width: 80%;
+		height: max-content;
+		margin: 0;
+	}
+
+	#v-dropdown {
+		margin-top: 10px;
+		margin-right: 10px;
+	}
+
+	.profile-button {
+		display: none;
+	}
+
+	.margin-groups-container {
+		width: 95%;
+		margin-right: 15px;
+	}
+
+	#group-detail-header {
+		width: 78vw;
+	}
+
+	#group-detail {
+		width: 80vw;
+		height: fit-content;
+	}
+
+	#detail-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		flex-wrap: nowrap;
+		justify-content: center;
+		margin: 1px;
+		padding: 1px;
+	}
+
+	#groups-container {
+		width: 95%;
+	}
+
+	#root {
+		width: 90vw;
+	}
+}
