@@ -15,7 +15,7 @@ import { NavLink } from "react-router-dom";
 import "./UpdateGroup.css";
 
 //main
-const UpdateGroup = (group) => {
+const UpdateGroup = ({ group }) => {
 	// let {
 	// 	id,
 	// 	organizerId,
@@ -27,19 +27,19 @@ const UpdateGroup = (group) => {
 	// 	state,
 	// 	numMembers,
 	// 	previewImage,
-	// } = group.group;
-	console.log(`group.group =============`, group.group.GroupImages);
+	// } = group;
+	console.log(`group =============`, group);
 
 	const dispatch = useDispatch();
 	let history = useHistory();
-	let [type, setType] = useState(group.group.type);
-	let [city, setCity] = useState(group.group.city);
-	let [state, setState] = useState(group.group.state);
-	let [name, setName] = useState(group.group.name);
-	let [url, setUrl] = useState(group.group.previewImage);
+	let [type, setType] = useState(group.type);
+	let [city, setCity] = useState(group.city);
+	let [state, setState] = useState(group.state);
+	let [name, setName] = useState(group.name);
+	let [url, setUrl] = useState("");
 	let [preview, setPreview] = useState(false);
-	let [about, setAbout] = useState(group.group.about);
-	let [privated, setPrivated] = useState(group.group.private);
+	let [about, setAbout] = useState(group.about);
+	let [privated, setPrivated] = useState(group.private);
 	let [showPreview, setShowPreview] = useState("hidden");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
@@ -50,7 +50,7 @@ const UpdateGroup = (group) => {
 		setErrors([]);
 
 		const payload = {
-			id: group.group.id,
+			id: group.id,
 			name,
 			about,
 			type,
@@ -64,9 +64,6 @@ const UpdateGroup = (group) => {
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-
-				console.log(`inside front end fetch catcher =====>>>`, data);
-
 				if (data && data.message === "Authentication required")
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));

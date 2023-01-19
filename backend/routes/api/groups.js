@@ -38,12 +38,17 @@ const router = express.Router();
 const valid_group = async (req, res, next) => {
 	let { user } = req;
 	const id = req.params.groupId;
+
 	if (id) {
 		const info = await Group.findByPk(id);
 		if (!info) {
-			const err = new Error("Group couldn't be found");
-			err.statusCode = 404;
-			throw err;
+			return res.status(404).json({
+				message: "Validation Error",
+				statusCode: 404,
+				errors: {
+					groupId: "Group couldn't be found",
+				},
+			});
 		}
 		req.group = info;
 		next();
@@ -52,9 +57,13 @@ const valid_group = async (req, res, next) => {
 			where: { organizerId: user.id },
 		});
 		if (!usersgroup) {
-			const err = new Error("Group couldn't be found");
-			err.statusCode = 404;
-			throw err;
+			return res.status(404).json({
+				message: "Validation Error",
+				statusCode: 404,
+				errors: {
+					groupId: "Group couldn't be found",
+				},
+			});
 		}
 		req.group = usersgroup;
 		next();
@@ -62,6 +71,8 @@ const valid_group = async (req, res, next) => {
 };
 
 const valid_user = async (req, res, next) => {
+	console.log(`inside edite valid user - back `, req.params);
+
 	const { user } = req;
 	const { groupId } = req.params;
 
@@ -1010,14 +1021,15 @@ router.put(
 			);
 			previewer = true;
 		}
+		if (url) {
+			let defaultImg = await GroupImage.create({
+				url,
+				preview: previewer,
+				groupId,
+			});
+		}
 
-		let defaultImg = await GroupImage.create({
-			url,
-			preview: previewer,
-			groupId,
-		});
-
-		group = await Group.update(
+		let newgroup = await Group.update(
 			{
 				name,
 				about,
@@ -1030,8 +1042,17 @@ router.put(
 				where: { id: groupId },
 			}
 		);
-		group["image"] = { url, preview };
-		return res.json(group);
+
+		return res.json({
+			id: newgroup.id,
+			name,
+			about,
+			type,
+			private,
+			city,
+			state,
+			image: { url, preview },
+		});
 	}
 );
 
