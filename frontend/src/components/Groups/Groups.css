@@ -92,8 +92,12 @@
 
 /* ------------ Media --------------- */
 
-@media screen and (max-width: 880px) {
-	.margin-groups-container,
+@media screen and (max-width: 940px) {
+	.margin-groups-container {
+		width: 95%;
+		margin-right: 5vw;
+	}
+
 	#group-detail-header,
 	#group-detail,
 	#detail-container {
@@ -110,7 +114,7 @@
 		margin-right: 5px;
 	}
 
-	.nav-arrow{
+	.nav-arrow {
 		margin-top: 10px;
 		padding-left: 4px;
 	}
@@ -119,19 +123,44 @@
 		width: 90vw;
 	}
 
-	#nav-mid{
+	.nav-container {
+		width: 110%;
+		margin-left: 5vw;
+	}
+
+	#nav-mid {
 		margin-left: 20px;
 	}
 }
 
 @media screen and (max-width: 750px) {
-	*:not(.profile-button, .fas) {
-		font-size: 15px;
+	.profile-button {
+		font-size: 290%;
+		border: 0;
 	}
 
-	.profile-button {
-		font-size: 300%;
-		border: 0;
+	#dropdown {
+		margin-bottom: 10px;
+	}
+
+	#group-detail-container {
+		width: 95%;
+	}
+
+	#detail-left {
+		width: 70%;
+	}
+
+	#detail-right {
+		width: 70%;
+	}
+
+	#group-detail {
+		width: 90%;
+	}
+
+	#detail-container {
+		width: 100%;
 	}
 }
 
