@@ -971,19 +971,16 @@ router.put(
 	valid_user,
 	requireAuth,
 	async (req, res) => {
-		console.log(`inside backend route----`);
-
 		let groupId = req.params.groupId;
 		let group = await Group.findByPk(groupId);
+		let { name, about, type, private, city, state, image } = req.body;
 
 		//deal with group img
 		let previewer = false;
-		let { url, preview } = req.body.image;
+		let { url, preview } = image;
 
-		let { name, about, type, private, city, state, image } = req.body;
-
+		//errors
 		let errors = {};
-
 		if (name && name.length > 60)
 			errors.name = `Name must be 60 characters or less`;
 		if (about && about.length < 50)
@@ -994,8 +991,6 @@ router.put(
 			errors.private = `Private must be a boolean`;
 		if (city && city.length < 3) errors.city = `City is required`;
 		if (state && state.length !== 2) errors.state = `State is required`;
-		if (image.url.length < 2)
-			errors.image = `Please enter correct image url.`;
 
 		if (Object.values(errors).length) {
 			return res.status(400).json({
@@ -1035,11 +1030,7 @@ router.put(
 				where: { id: groupId },
 			}
 		);
-
 		group["image"] = { url, preview };
-
-		console.log(group);
-
 		return res.json(group);
 	}
 );

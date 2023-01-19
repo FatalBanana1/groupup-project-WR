@@ -5,8 +5,10 @@ import * as sessionActions from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import "./ProfileButton.css";
 import { useModal } from "../../context/Modal";
+import "./ProfileButton.css";
+import upArrow from "../Groups/images/up-arrow.png";
+import downArrow from "../Groups/images/down-arrow.png";
 
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
@@ -78,14 +80,14 @@ function ProfileButton({ user }) {
 						<img
 							onClick={openMenu}
 							className="nav-arrow"
-							src="https://cdn.icon-icons.com/icons2/936/PNG/512/up-arrow_icon-icons.com_73351.png"
+							src={upArrow}
 							alt="up arrow"
 						/>
 					) : (
 						<img
 							onClick={openMenu}
 							className="nav-arrow"
-							src="https://cdn.icon-icons.com/icons2/936/PNG/512/angle-arrow-down_icon-icons.com_73683.png"
+							src={downArrow}
 							alt="down arrow"
 						/>
 					)}

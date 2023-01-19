@@ -17,20 +17,20 @@ import "./GroupDetail.css";
 import DeleteGroup from "../Groups/DeleteGroup";
 
 //main
-const GroupDetail = () => {
+const GroupDetail = ({ isLoaded }) => {
 	//states
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId));
-	}, []);
+		return () => {};
+	}, [dispatch]);
 
 	//-----------------
 
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
-
 	const openMenu = () => {
 		if (showMenu) return;
 		setShowMenu(true);
@@ -38,20 +38,16 @@ const GroupDetail = () => {
 
 	useEffect(() => {
 		if (!showMenu) return;
-
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
 				setShowMenu(false);
 			}
 		};
-
 		document.addEventListener("click", closeMenu);
-
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu]);
 
 	const closeMenu = () => setShowMenu(false);
-
 	const logout = (e) => {
 		e.preventDefault();
 		dispatch(sessionActions.logout());
@@ -115,7 +111,6 @@ const GroupDetail = () => {
 					<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
 				</div>
 			</div>
-
 			<div id="details-container-body">
 				<div id="details-nav-section">
 					<div id="update-groups-link-container">
@@ -125,7 +120,6 @@ const GroupDetail = () => {
 							onButtonClick={closeMenu}
 							modalComponent={<UpdateGroup group={group} />}
 						/>
-
 						<DeleteModalButton
 							id="delete-group-button"
 							buttonText="Delete Group"
@@ -134,7 +128,6 @@ const GroupDetail = () => {
 						/>
 					</div>
 				</div>
-
 				<div id="about-section-container">
 					<div id="about-section-container-left">
 						<h2 className="about-title-font">What we're about</h2>

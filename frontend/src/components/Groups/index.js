@@ -16,7 +16,7 @@ import CreateGroup from "./CreateGroup";
 import "./Groups.css";
 
 //main
-const Groups = () => {
+const Groups = ({ isLoaded }) => {
 	let dispatch = useDispatch();
 	// let [groups, setGroups] = useState("");
 
@@ -32,20 +32,16 @@ const Groups = () => {
 
 	useEffect(() => {
 		if (!showMenu) return;
-
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
 				setShowMenu(false);
 			}
 		};
-
 		document.addEventListener("click", closeMenu);
-
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu]);
 
 	const closeMenu = () => setShowMenu(false);
-
 	const logout = (e) => {
 		e.preventDefault();
 		dispatch(sessionActions.logout());
@@ -56,6 +52,7 @@ const Groups = () => {
 
 	useEffect(() => {
 		dispatch(thunkReadGroups());
+		return () => {};
 	}, [dispatch]);
 
 	// {groups: {1:{1}, 2:{2}...} }

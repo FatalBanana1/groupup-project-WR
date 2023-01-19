@@ -15,6 +15,7 @@ function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	useEffect(() => {
 		dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+		return () => {};
 	}, [dispatch]);
 
 	return (
@@ -29,7 +30,7 @@ function App() {
 						<Groups />
 					</Route>
 					<Route path="/groups/:groupId">
-						<GroupDetail />
+						<GroupDetail  />
 					</Route>
 					<Route>
 						<div>404: Error Not Found.</div>

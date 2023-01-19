@@ -28,7 +28,7 @@ const UpdateGroup = (group) => {
 	// 	numMembers,
 	// 	previewImage,
 	// } = group.group;
-	// console.log(group.group);
+	console.log(`group.group =============`, group.group.GroupImages);
 
 	const dispatch = useDispatch();
 	let history = useHistory();
@@ -40,6 +40,7 @@ const UpdateGroup = (group) => {
 	let [preview, setPreview] = useState(false);
 	let [about, setAbout] = useState(group.group.about);
 	let [privated, setPrivated] = useState(group.group.private);
+	let [showPreview, setShowPreview] = useState("hidden");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 	const stateError = "State is required";
@@ -56,13 +57,16 @@ const UpdateGroup = (group) => {
 			private: privated,
 			city,
 			state,
+			image: { url, preview },
 		};
 
 		return dispatch(thunkUpdateGroup(payload))
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				console.log(`inside front end fetch catcher =====>>>`,data);
+
+				console.log(`inside front end fetch catcher =====>>>`, data);
+
 				if (data && data.message === "Authentication required")
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
@@ -79,6 +83,7 @@ const UpdateGroup = (group) => {
 					/>
 				</div>
 				<div className="signup-header-name">Edit Group</div>
+				<div className="about-details-font">{`(* is required)`}</div>
 			</div>
 
 			<form onSubmit={handleSubmit}>
@@ -92,7 +97,7 @@ const UpdateGroup = (group) => {
 
 				<div id="name" className="create">
 					<label>
-						Name:{" "}
+						*Name:{" "}
 						<input
 							type="text"
 							value={name}
@@ -104,7 +109,7 @@ const UpdateGroup = (group) => {
 
 				<div id="about" className="create">
 					<label>
-						About:{" "}
+						*About:{" "}
 						<input
 							type="text"
 							value={about}
@@ -166,7 +171,7 @@ const UpdateGroup = (group) => {
 
 				<div id="city" className="create">
 					<label>
-						City:{" "}
+						*City:{" "}
 						<input
 							type="text"
 							value={city}
@@ -178,7 +183,7 @@ const UpdateGroup = (group) => {
 
 				<div id="state" className="create">
 					<label>
-						State:{" "}
+						*State:{" "}
 						<input
 							type="text"
 							value={state}
@@ -186,6 +191,17 @@ const UpdateGroup = (group) => {
 								setState(e.target.value.toUpperCase())
 							}
 							required
+						/>
+					</label>
+				</div>
+
+				<div id="about" className="create">
+					<label>
+						Group Image Url:{" "}
+						<input
+							type="text"
+							value={url}
+							onChange={(e) => setUrl(e.target.value)}
 						/>
 					</label>
 				</div>
