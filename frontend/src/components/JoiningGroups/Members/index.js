@@ -4,20 +4,23 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadGroups } from "../../store/groups";
-import { NavLink } from "react-router-dom";
-import CreateModalButton from "./CreateGroup/CreateModalButton";
-import OpenModalButton from "../../components/OpenModalButton";
-import * as sessionActions from "../../store/session";
+import { thunkReadMembers } from "../../../store/members";
+import { NavLink, useParams } from "react-router-dom";
+import OpenModalButton from "../../OpenModalButton";
+import * as sessionActions from "../../../store/session";
 
 //comps
-import ReadGroups from "./ReadGroups";
-import CreateGroup from "./CreateGroup";
-import "./Groups.css";
+import ReadMembers from "../ReadMembers";
+import CreateMembership from "../CreateMembership";
+import CreateModalButton from "../CreateMembership/CreateModalButton";
+import "./Members.css";
 
 //main
 const Members = () => {
 	let dispatch = useDispatch();
+	let { groupId } = useParams();
+
+	// console.log(`members comp props ====`, groupId);
 
 	//-----------------
 
@@ -54,37 +57,57 @@ const Members = () => {
 	//----------------
 
 	useEffect(() => {
-		dispatch(thunkReadGroups());
+		let payload = {
+			groupId,
+		};
+		dispatch(thunkReadMembers(payload));
+		return () => {};
 	}, [dispatch]);
 
-	// {groups: {1:{1}, 2:{2}...} }
-	const selector = useSelector((state) => state.groups);
+	const selector = useSelector((state) => state.members);
 	if (!selector)
-		return <div className="groups-null">No Groups to display...</div>;
+		return <div className="groups-null">No Members to display...</div>;
 	const groups = Object.values(selector);
+	// const groups = selector;
+	console.log(`members comp ====`, groups);
 
-	//return
+	//TODO: id > class group detail header
+
 	return (
 		<div id="groups-container">
-			<div id="group-detail-header">
-				<NavLink className="groups-page-link" exact to="/groups">
-					<h2>Groups</h2>
-				</NavLink>
+			<div id="member-headers">
+				<div className="group-detail-header-members">
+					<NavLink
+						className="members-page-link"
+						to={`/groups/${groupId}`}
+					>
+						<h2 id="header-groups-pg">Group</h2>
+					</NavLink>
+				</div>
+				<div className="group-detail-header-members">
+					<NavLink
+						className="members-page-link"
+						to={`/groups/${groupId}/members`}
+					>
+						<h2>Members</h2>
+					</NavLink>
+				</div>
 			</div>
+
 			<div id="group-detail-container">
 				{groups.length > 0 ? (
 					groups.map((group) => {
-						if (!group.name) {
+						if (!group.firstName) {
 							return null;
 						} else {
 							return (
 								<NavLink
 									id="group-detail"
-									key={group.id}
-									to={`/groups/${group.id}`}
+									key={groupId}
+									to={`/groups/${groupId}/members`}
 									group={group}
 								>
-									<ReadGroups group={group} />
+									<ReadMembers member={group} />
 								</NavLink>
 							);
 						}
@@ -96,29 +119,33 @@ const Members = () => {
 			<div id="groups-link-container">
 				<CreateModalButton
 					className="create-group-button"
-					buttonText="Create Group"
+					buttonText="Join Group"
 					onButtonClick={closeMenu}
-					modalComponent={<CreateGroup />}
+					modalComponent={<CreateMembership />}
 				/>
 			</div>
 		</div>
 	);
+
+	// return <div>Members Page</div>;
 };
 
-// ,name,about,type,private,city,state,numMembers,previewImage
+// {id,firstName,lastName,username,email,status}
 
-// {
-// 	id
-// 	organizerId,
-// 	name,
-// 	about,
-// 	type,
-// 	private,
-// 	city,
-// 	state
-// 	numMembers
-// 	previewImage
-// }
+/*
+{
+	"Members": [
+			{
+					"id": 1,
+					"firstName": "Walter",
+					"lastName": "White",
+					"username": "heisenberg",
+					"email": "h20@gmail.com",
+					"status": "organizer"
+			},
+		]
+	}
+*/
 
 //exports
 export default Members;

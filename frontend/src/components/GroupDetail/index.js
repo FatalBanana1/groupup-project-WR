@@ -8,13 +8,14 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteModalButton from "../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../Groups/UpdateGroup/EditModalButton.js";
 import * as sessionActions from "../../store/session";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 //comps
 import { thunkReadGroupDetails } from "../../store/groups";
 import UpdateGroup from "../Groups/UpdateGroup";
 import "./GroupDetail.css";
 import DeleteGroup from "../Groups/DeleteGroup";
+import Members from "../JoiningGroups/Members";
 
 //main
 const GroupDetail = () => {
@@ -127,6 +128,9 @@ const GroupDetail = () => {
 							onButtonClick={closeMenu}
 							modalComponent={<DeleteGroup group={group} />}
 						/>
+						<NavLink to={`/groups/${group.id}/members`}>
+							Members
+						</NavLink>
 					</div>
 				</div>
 

@@ -1,0 +1,12 @@
+/* members css */
+
+#member-headers {
+	display: flex;
+	flex-direction: row;
+	/* justify-content: center; */
+}
+
+.group-detail-header-members {
+	margin: 2px;
+	margin-right: 105px;
+}

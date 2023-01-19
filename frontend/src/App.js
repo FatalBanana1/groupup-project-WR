@@ -9,6 +9,7 @@ import { Route } from "react-router-dom";
 import Splash from "./components/Splash";
 import Groups from "./components/Groups";
 import GroupDetail from "./components/GroupDetail";
+import Members from "./components/JoiningGroups/Members";
 
 function App() {
 	const dispatch = useDispatch();
@@ -26,15 +27,23 @@ function App() {
 					<Route exact path="/">
 						<Splash />
 					</Route>
+
+					<Route path="/groups/:groupId/members">
+						<Members />
+					</Route>
+
 					<Route path="/groups/:groupId">
 						<GroupDetail />
 					</Route>
+
 					<Route path="/groups">
 						<Groups />
 					</Route>
+
 					<Route path="/groups?name=">
 						<Groups />
 					</Route>
+
 					<Route>
 						<div>404: Error Not Found.</div>
 					</Route>
