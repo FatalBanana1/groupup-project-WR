@@ -1,5 +1,9 @@
 //group detail js
 
+/*
+
+copied from "group details"
+
 //imports
 //hooks
 import { useEffect, useRef, useState } from "react";
@@ -175,3 +179,5 @@ const GroupDetail = () => {
 
 //exports
 export default GroupDetail;
+
+*/

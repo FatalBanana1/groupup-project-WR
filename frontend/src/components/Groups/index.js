@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkReadGroups } from "../../store/groups";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import CreateModalButton from "./CreateGroup/CreateModalButton";
 import OpenModalButton from "../../components/OpenModalButton";
 import * as sessionActions from "../../store/session";
@@ -16,9 +16,14 @@ import CreateGroup from "./CreateGroup";
 import "./Groups.css";
 
 //main
-const Groups = ({ isLoaded }) => {
+const Groups = (props) => {
+	let location = useLocation();
 	let dispatch = useDispatch();
-	// let [groups, setGroups] = useState("");
+	let params = useParams();
+
+	console.log(`location ===`, location);
+	console.log(`location ===`, location.props);
+	// console.log(`location ===`, location.props.query);
 
 	//-----------------
 
@@ -51,12 +56,17 @@ const Groups = ({ isLoaded }) => {
 	//----------------
 
 	useEffect(() => {
-		dispatch(thunkReadGroups());
+		location.props && location.props.query
+			? dispatch(thunkReadGroups(`?name=${location.props.query}`))
+			: dispatch(thunkReadGroups());
+
 		return () => {};
 	}, [dispatch]);
 
 	// {groups: {1:{1}, 2:{2}...} }
 	const selector = useSelector((state) => state.groups);
+	console.log(`selector>>> groups: `, selector);
+
 	if (!selector)
 		return <div className="groups-null">No Groups to display...</div>;
 	const groups = Object.values(selector);

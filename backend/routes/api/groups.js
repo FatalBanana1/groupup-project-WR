@@ -607,6 +607,69 @@ router.get("/:groupId", valid_group, async (req, res) => {
 // get all groups - WITH QUERY
 // get - /api/groups/
 router.get("/", async (req, res) => {
+	//pagination
+	let { page, size, name, type } = req.query;
+	let errors = {};
+	let queries = {};
+
+	//optional queries
+	//name
+	if (name) {
+		if (
+			typeof name === "string" &&
+			name !== " " &&
+			!(parseInt(name) < 10 ** 10)
+		) {
+			// queries.name = name;
+			//yield results with part of a name
+			queries.name = { [Op.like]: `%${name}%` };
+		} else {
+			errors.name = `Name must be a string`;
+		}
+	}
+	//type
+	if (type) {
+		if (type == "Online" || type == "In Person") {
+			queries.type = type;
+		} else {
+			errors.type = `Type must be 'Online' or 'In Person'`;
+		}
+	}
+
+	//page error handle
+	if (page < 1) {
+		errors.page = `Page must be greater than or equal to 1`;
+	} else if (page > 10) {
+		errors.page = `Page must be less than or equal to 10`;
+	}
+	//size error handle
+	if (size < 1) {
+		errors.size = `Size must be greater than or equal to 1`;
+	} else if (size > 20) {
+		errors.size = `Size must be less than or equal to 20`;
+	}
+
+	//check errors
+	if (Object.values(errors).length) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: errors,
+		});
+	}
+
+	//defaults
+	if (!page) page = 1;
+	if (!size) size = 20;
+	page = +page;
+	size = parseInt(size);
+	const pagination = {};
+	if (page >= 1 && size >= 1 && page <= 10 && size <= 20) {
+		pagination.limit = size;
+		pagination.offset = size * (page - 1);
+	}
+
+	//query
 	let groups = await Group.findAll({
 		attributes: [
 			"id",
@@ -620,6 +683,8 @@ router.get("/", async (req, res) => {
 			"createdAt",
 			"updatedAt",
 		],
+		where: { ...queries },
+		...pagination,
 	});
 
 	if (!groups.length) {
@@ -644,7 +709,7 @@ router.get("/", async (req, res) => {
 	//filter duplicates
 	let newarray = [];
 	let visited = new Set();
-	groups.forEach((el, i) => {
+	await groups.forEach((el, i) => {
 		if (!visited.has(el.id)) {
 			//add nummembers
 			for (let j in members) {
@@ -669,6 +734,10 @@ router.get("/", async (req, res) => {
 
 	return res.json({ Groups: newarray });
 });
+
+//-------------------
+
+//-------------------
 
 //----------------post-------------------------
 

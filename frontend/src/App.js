@@ -26,11 +26,14 @@ function App() {
 					<Route exact path="/">
 						<Splash />
 					</Route>
-					<Route exact path="/groups">
-						<Groups />
-					</Route>
 					<Route path="/groups/:groupId">
 						<GroupDetail />
+					</Route>
+					<Route path="/groups">
+						<Groups />
+					</Route>
+					<Route path="/groups?name=">
+						<Groups />
 					</Route>
 					<Route>
 						<div>404: Error Not Found.</div>

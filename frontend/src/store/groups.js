@@ -50,12 +50,19 @@ const actionDeleteGroup = (group) => ({
 //thunk actions
 
 // GET: Get All Groups Route: /api/groups
-export const thunkReadGroups = () => async (dispatch) => {
-	const response = await csrfFetch(`/api/groups`);
+export const thunkReadGroups = (payload) => async (dispatch) => {
+	let response;
+	console.log(`thunk>>> payload: `, payload);
+	if (payload) {
+		response = await csrfFetch(`/api/groups${payload}`);
+	} else {
+		response = await csrfFetch(`/api/groups`);
+	}
 
 	if (response.ok) {
 		const groups = await response.json();
 		dispatch(actionReadGroups(groups));
+		console.log(`thunk>>> groups: `, groups);
 		return groups;
 	}
 };
@@ -126,18 +133,16 @@ const initialState = {};
 const groupsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
-			if (action.groups.Groups) {
-				const newGroups = {};
-				action.groups.Groups.forEach((group) => {
-					newGroups[group.id] = group;
-				});
-				return {
-					...state,
-					...newGroups,
-				};
-			} else {
-				return null;
-			}
+			console.log(`reducer>>> groups: `, action.groups);
+
+			const newGroups = {};
+			action.groups.Groups.forEach((group) => {
+				newGroups[group.id] = group;
+			});
+			return {
+				...state,
+				...newGroups,
+			};
 		}
 
 		case READ_GROUP_DETAILS: {
