@@ -1,5 +1,5 @@
 // frontend/src/components/Navigation/index.js
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
@@ -8,7 +8,20 @@ import logo from "../Groups/images/groupup-logo.png";
 import searchIcon from "../Groups/images/search-icon4.png";
 
 function Navigation({ isLoaded }) {
+	let [search, setSearch] = useState("");
 	const sessionUser = useSelector((state) => state.session.user);
+
+	//search handler
+	const searchHandler = (e) => {
+		setSearch(e.target.value);
+	};
+
+	//click handler
+	const clickHandler = (e) => {
+		let newsearch = search.toString();
+		console.log(newsearch);
+		// return
+	};
 
 	return (
 		<div className="nav-container">
@@ -28,13 +41,18 @@ function Navigation({ isLoaded }) {
 						type="search"
 						id="navbar-search"
 						placeholder="Search for Groups"
-						value=""
+						value={search}
+						onChange={searchHandler}
 					/>
 				</div>
 
-				<div id="search-btn-container">
-					<button class="navbar-search-button">
-						<img id="search-bar-button" src={searchIcon} />
+				<div to={`/groups/${clickHandler}`} id="search-btn-container">
+					<button className="navbar-search-button">
+						<img
+							id="search-bar-button"
+							src={searchIcon}
+							onClick={clickHandler}
+						/>
 					</button>
 				</div>
 			</div>

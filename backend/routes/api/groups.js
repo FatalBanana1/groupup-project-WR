@@ -534,7 +534,77 @@ router.get("/:groupId", valid_group, async (req, res) => {
 	return res.json(group);
 });
 
-// get all groups
+//-------------
+
+// // get all groups
+// // get - /api/groups/
+// router.get("/", async (req, res) => {
+// 	let groups = await Group.findAll({
+// 		attributes: [
+// 			"id",
+// 			"organizerId",
+// 			"name",
+// 			"about",
+// 			"type",
+// 			"private",
+// 			"city",
+// 			"state",
+// 			"createdAt",
+// 			"updatedAt",
+// 		],
+// 	});
+
+// 	if (!groups.length) {
+// 		return res.json({ Groups: null });
+// 	}
+
+// 	let members = await Group.findAll({
+// 		attributes: ["id"],
+// 		include: [
+// 			{
+// 				model: Membership,
+// 				attributes: ["userId"],
+// 			},
+// 		],
+// 	});
+
+// 	let images = await GroupImage.findAll({
+// 		where: { preview: true },
+// 		attributes: ["groupId", "url"],
+// 	});
+
+// 	//filter duplicates
+// 	let newarray = [];
+// 	let visited = new Set();
+// 	groups.forEach((el, i) => {
+// 		if (!visited.has(el.id)) {
+// 			//add nummembers
+// 			for (let j in members) {
+// 				if (el.id === members[j].dataValues.id) {
+// 					el.dataValues.numMembers =
+// 						members[j].dataValues.Memberships.length;
+// 					break;
+// 				}
+// 				el.dataValues.previewImage = null;
+// 			}
+// 			// add preview image
+// 			for (let k = 0; k < images.length; k++) {
+// 				if (images[k].dataValues.groupId === el.id) {
+// 					el.dataValues.previewImage = images[k].dataValues.url;
+// 					break;
+// 				}
+// 			}
+// 			visited.add(el.id);
+// 			newarray.push(el);
+// 		}
+// 	});
+
+// 	return res.json({ Groups: newarray });
+// });
+
+//-------------
+
+// get all groups - WITH QUERY
 // get - /api/groups/
 router.get("/", async (req, res) => {
 	let groups = await Group.findAll({
