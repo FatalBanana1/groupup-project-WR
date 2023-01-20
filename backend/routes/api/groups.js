@@ -1225,6 +1225,8 @@ router.delete(
 
 		await deleted.destroy();
 		return res.json({
+			id: memberId,
+			groupId,
 			message: "Successfully deleted membership from group",
 		});
 	}

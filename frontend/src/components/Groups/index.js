@@ -19,10 +19,10 @@ import "./Groups.css";
 const Groups = (props) => {
 	let location = useLocation();
 	let dispatch = useDispatch();
-	let params = useParams();
 
-	console.log(`location ===`, location);
-	console.log(`location ===`, location.props);
+	// let params = useParams();
+	// console.log(`location ===`, location);
+	// console.log(`location ===`, location.props);
 	// console.log(`location ===`, location.props.query);
 
 	//-----------------

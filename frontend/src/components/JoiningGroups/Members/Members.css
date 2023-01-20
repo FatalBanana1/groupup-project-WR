@@ -10,3 +10,9 @@
 	margin: 2px;
 	margin-right: 105px;
 }
+
+.join-group {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}

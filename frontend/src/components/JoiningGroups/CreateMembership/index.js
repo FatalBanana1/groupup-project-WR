@@ -194,7 +194,7 @@ const CreateMembership = () => {
 					type="submit"
 					className="create selected"
 				>
-					Create Group
+					Join Group
 				</button>
 			</form>
 		</div>

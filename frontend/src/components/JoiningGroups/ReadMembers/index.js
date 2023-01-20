@@ -11,12 +11,14 @@ import "./ReadMembers.css";
 //main
 const ReadMembers = ({ member }) => {
 	let { id, firstName, lastName, username, email, status } = member;
+	let previewImage = false;
 
-	console.log(`inside read members comp -----`, member);
+	// console.log(`inside read members comp -----`, status);
+
 	//return
 	return (
 		<div id="detail-container">
-			{/* <div id="detail-left">
+			<div id="detail-left">
 				{previewImage ? (
 					<img src={previewImage} id="read-groups-img" />
 				) : (
@@ -25,25 +27,18 @@ const ReadMembers = ({ member }) => {
 						className="no-groups-img-read"
 					/>
 				)}
-			</div> */}
+			</div>
 
 			<div id="detail-right">
 				<h3 id="detail-right-name">
 					{firstName} {lastName}
 				</h3>
-				{/* <div>{`${city}, ${state}`}</div> */}
 				<div className="about-section">{username}</div>
 				<div className="about-section">{email}</div>
 				<div className="about-section">{status}</div>
-				{/* <div className="li-tag-members-line">
-					{`${numMembers} members`}
-					<li className="li-tags" />
-					{`${type}`} */}
-				{/* </div> */}
 			</div>
 		</div>
 	);
-	// return;
 };
 
 //exports

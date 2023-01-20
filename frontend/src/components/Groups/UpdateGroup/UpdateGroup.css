@@ -11,3 +11,8 @@
 #edit-group-button:hover {
 	background-color: rgb(248, 98, 81);
 }
+
+.small-logo {
+	height: 48px;
+	width: auto;
+}

@@ -139,9 +139,9 @@ right = 41
 
 /* ------------------------------- */
 
-@media screen and (max-width: 1120px) {
-	/*
+/* TODO: change to min-width, adjust styles */
 
+@media screen and (min-width: 1120px) {
 	#details-img-default {
 		width: 600px;
 		height: 300px;
@@ -162,7 +162,6 @@ right = 41
 	#right-details-header-name {
 		font-size: 32px;
 	}
- */
 }
 
 /* ------------------------------- */

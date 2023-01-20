@@ -110,7 +110,7 @@ export const thunkUpdateMembership = (payload) => async (dispatch) => {
 };
 
 // DELETE: Delete a Group Membership - Route: /api/groups/:groupId/membership
-export const thunkDeleteGroup = (payload) => async (dispatch) => {
+export const thunkDeleteMembership = (payload) => async (dispatch) => {
 	const response = await csrfFetch(`/api/groups/${payload.id}/membership`, {
 		method: `DELETE`,
 		headers: { "Content-Type": "application/json" },
@@ -140,7 +140,7 @@ const memberReducer = (state = initialState, action) => {
 				action.members.Members.forEach((member) => {
 					newMembers[member.id] = member;
 				});
-				console.log(`reducer>>>>>>>>>>>>>`, newMembers);
+				// console.log(`reducer>>>>>>>>>>>>>`, newMembers);
 				return {
 					...state,
 					...newMembers,
@@ -160,16 +160,16 @@ const memberReducer = (state = initialState, action) => {
 		}
 
 		case CREATE_MEMBERSHIP: {
-			// console.log(`reducer>>>>>>>>>>>>>`, action.group);
-			// const newState = {
-			// 	...state,
-			// 	[action.group.id]: action.group,
-			// };
-			// return newState;
+			const newState = {
+				...state,
+				[action.membership.id]: action.membership,
+			};
+			return newState;
 		}
 
 		case UPDATE_MEMBERSHIP: {
-			// console.log(`reducer>>>>>>>>>>>>>`, action.group);
+			console.log(`reducer>>>>>>>>>>>>>`, action);
+			console.log(`reducer>>>>>>>>>>>>>`, action.membership);
 			// return { ...state, ...(state[action.group.id] = action.group) };
 		}
 

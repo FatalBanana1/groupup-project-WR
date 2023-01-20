@@ -113,6 +113,7 @@ const GroupDetail = () => {
 					<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
 				</div>
 			</div>
+
 			<div id="details-container-body">
 				<div id="details-nav-section">
 					<div id="update-groups-link-container">
@@ -131,6 +132,16 @@ const GroupDetail = () => {
 						<NavLink to={`/groups/${group.id}/members`}>
 							Members
 						</NavLink>
+
+						<div className="join-group">
+							{/* <button
+								type="submit"
+								className="create selected"
+								onClick={joinGroupClickHandler}
+							>
+								Join Group
+							</button> */}
+						</div>
 					</div>
 				</div>
 
