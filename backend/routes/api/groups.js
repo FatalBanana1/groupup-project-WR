@@ -778,6 +778,7 @@ router.post(
 		return res.json({
 			memberId: member.userId,
 			status: member.status,
+			groupId,
 		});
 	}
 );

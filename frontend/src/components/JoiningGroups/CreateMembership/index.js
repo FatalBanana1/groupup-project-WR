@@ -91,7 +91,6 @@ const CreateMembership = () => {
 							type="text"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
-
 							disabled
 						/>
 					</label>
@@ -104,7 +103,6 @@ const CreateMembership = () => {
 							type="text"
 							value={about}
 							onChange={(e) => setAbout(e.target.value)}
-
 						/>
 					</label>
 				</div>
@@ -158,7 +156,6 @@ const CreateMembership = () => {
 							type="text"
 							value={city}
 							onChange={(e) => setCity(e.target.value)}
-
 						/>
 					</label>
 				</div>
@@ -172,7 +169,6 @@ const CreateMembership = () => {
 							onChange={(e) =>
 								setState(e.target.value.toUpperCase())
 							}
-
 						/>
 					</label>
 				</div>
@@ -184,7 +180,6 @@ const CreateMembership = () => {
 							type="text"
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
-
 						/>
 					</label>
 				</div>

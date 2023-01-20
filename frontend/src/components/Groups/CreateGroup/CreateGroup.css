@@ -1,5 +1,13 @@
 /* create group css */
 
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 5px;
+	font-size: 14px;
+}
+
 #type-container {
 	display: flex;
 	flex-direction: row;
@@ -78,10 +86,11 @@ button.create {
 }
 
 #errors-create-group {
-	font-size: 18px;
+	font-size: 14px;
 	color: rgb(252, 42, 42);
 	font-style: italic;
 	overflow-wrap: normal;
+	width: 70%;
 }
 
 #create-group-button {

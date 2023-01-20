@@ -59,11 +59,15 @@ const Members = () => {
 	//----------------
 
 	useEffect(() => {
-		setErrors([]);
 		let payload = {
 			groupId,
 		};
-		return dispatch(thunkReadMembers(payload)).catch(async (res) => {
+
+		// .then((data) => {
+		// 	console.log(`data in READ MBRs >>>>`, data);
+		// 	return history.push(`/groups/${data.id}/members`);
+		// })
+		dispatch(thunkReadMembers(payload)).catch(async (res) => {
 			const data = await res.json();
 			if (data && data.message === "Authentication required")
 				setErrors((data[errors] = [data.message]));
@@ -119,17 +123,19 @@ const Members = () => {
 		setErrors([]);
 		let payload = {
 			groupId,
+			status: "pending",
 		};
-		// .then((data) => history.push(`/groups/${data.id}/members`))
-		return dispatch(thunkCreateMembership(payload))
-			.then((data) => console.log(`data logger`, data, data.id))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.message === "Authentication required")
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
-		// if (!errors.length) setShow(2);
+		// .then((data) => {
+		// 	console.log(`data in thunk create`, data);
+		// 	return history.push(`/groups/${data.groupId}/members`);
+		// });
+		dispatch(thunkCreateMembership(payload)).catch(async (res) => {
+			console.log(`res`, res);
+			const data = await res.json();
+			if (data && data.message === "Authentication required")
+				setErrors((data[errors] = [data.message]));
+			if (data && data.errors) setErrors(Object.values(data.errors));
+		});
 	};
 
 	const deletedMemberHandler = () => {
@@ -137,9 +143,9 @@ const Members = () => {
 		let payload = {
 			groupId,
 		};
+		// .then((data) => history.push(`/groups/${data.id}/members`))
 
-		return dispatch(thunkDeleteMembership(payload))
-			.then((data) => history.push(`/groups/${data.id}/members`))
+		dispatch(thunkDeleteMembership(payload))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.message === "Authentication required")
@@ -148,8 +154,6 @@ const Members = () => {
 			});
 		// if (!errors.length) setShow(3);
 	};
-
-	console.log(`data in return from create membership 000000 `, errors);
 
 	const selector = useSelector((state) => state.members);
 	if (!selector)

@@ -11,6 +11,7 @@ const READ_GROUP_DETAILS = `group/READ`;
 const CREATE_GROUP = `groups/CREATE`;
 const UPDATE_GROUP = `groups/UPDATE`;
 const DELETE_GROUP = `groups/DELETE`;
+const RESET = "reports/resetState";
 
 //----------------------------------------------
 
@@ -43,6 +44,11 @@ const actionUpdateGroup = (group) => ({
 const actionDeleteGroup = (group) => ({
 	type: DELETE_GROUP,
 	group,
+});
+
+//reset
+export const actionResetState = () => ({
+	type: RESET,
 });
 
 //----------------------------------------------
@@ -128,17 +134,24 @@ export const thunkDeleteGroup = (payload) => async (dispatch) => {
 
 //reducer
 
-const initialState = {};
+function defaultState() {
+	const initialState = {};
+	// return action.groups.Groups.reduce((acc, group) => {
+	// 	acc[group.id] = group;
+	// 	return acc;
+	// }, {});
+	return initialState;
+}
 
-const groupsReducer = (state = initialState, action) => {
+const groupsReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
 			console.log(`reducer>>> groups: `, action.groups);
 
-			const newGroups = {};
-			action.groups.Groups.forEach((group) => {
-				newGroups[group.id] = group;
-			});
+			const newGroups = action.groups.Groups.reduce((acc, group) => {
+				acc[group.id] = group;
+				return acc;
+			}, {});
 			return {
 				...state,
 				...newGroups,
@@ -170,6 +183,9 @@ const groupsReducer = (state = initialState, action) => {
 			delete newState[action.group.id];
 			return newState;
 		}
+
+		case RESET:
+			return defaultState();
 
 		default:
 			return state;

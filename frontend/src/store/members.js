@@ -1,16 +1,17 @@
-//groups reducer
+//members reducer
 
 //imports
 import { csrfFetch } from "./csrf";
 
 //----------------------------------------------
 
-//types crud - groups
+//types crud - members
 const READ_MEMBERS = `members/READ`;
 const READ_MEMBER_DETAILS = `member/READ`;
 const CREATE_MEMBERSHIP = `member/CREATE`;
 const UPDATE_MEMBERSHIP = `member/UPDATE`;
 const DELETE_MEMBERSHIP = `member/DELETE`;
+const RESET = "reports/resetState";
 
 //----------------------------------------------
 
@@ -43,6 +44,11 @@ const actionUpdateMembership = (membership) => ({
 const actionDeleteMembership = (membership) => ({
 	type: DELETE_MEMBERSHIP,
 	membership,
+});
+
+//reset
+export const actionResetState = () => ({
+	type: RESET,
 });
 
 //----------------------------------------------
@@ -111,11 +117,15 @@ export const thunkUpdateMembership = (payload) => async (dispatch) => {
 
 // DELETE: Delete a Group Membership - Route: /api/groups/:groupId/membership
 export const thunkDeleteMembership = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/groups/${payload.id}/membership`, {
-		method: `DELETE`,
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(payload),
-	});
+	const response = await csrfFetch(
+		`/api/groups/${payload.groupId}/membership`,
+		{
+			method: `DELETE`,
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		}
+	);
+	console.log(`THUNK DELETE res`, response);
 
 	if (response.ok) {
 		const member = await response.json();
@@ -130,16 +140,29 @@ export const thunkDeleteMembership = (payload) => async (dispatch) => {
 
 const initialState = {};
 
-const memberReducer = (state = initialState, action) => {
+function defaultState() {
+	// console.log(`reducer>>>>>>>>>>>>> read`, action.members.Members);
+	const initialState = {};
+	// return action.members.Members.reduce((acc, member) => {
+	// 	acc[member.id] = member;
+	// 	return acc;
+	// }, {});
+	return initialState;
+}
+
+const memberReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_MEMBERS: {
 			// console.log(`reducer>>>>>>>>>>>>> read`, action.members.Members);
 			if (action.members.Members[0]) {
 				// const newMembers = [...action.members.Members];
-				const newMembers = {};
-				action.members.Members.forEach((member) => {
-					newMembers[member.id] = member;
-				});
+				const newMembers = action.members.Members.reduce(
+					(acc, member) => {
+						acc[member.id] = member;
+						return acc;
+					},
+					{}
+				);
 				// console.log(`reducer>>>>>>>>>>>>>`, newMembers);
 				return {
 					...state,
@@ -174,11 +197,15 @@ const memberReducer = (state = initialState, action) => {
 		}
 
 		case DELETE_MEMBERSHIP: {
-			// console.log(`reducer>>>>>>>>>>>>>`, action.group);
-			// const newState = { ...state };
-			// delete newState[action.group.id];
-			// return newState;
+			console.log(`reducer>>>>>>>>>>>>>`, action);
+			console.log(`reducer>>>>>>>>>>>>>`, action.membership);
+			const newState = { ...state };
+			delete newState[action.membership.id];
+			return newState;
 		}
+
+		case RESET:
+			return defaultState();
 
 		default:
 			return state;

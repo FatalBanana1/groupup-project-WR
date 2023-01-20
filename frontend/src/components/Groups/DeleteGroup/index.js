@@ -96,6 +96,7 @@ const DeleteGroup = (group) => {
 							readOnly
 							defaultValue={group.group.name}
 							required
+							disabled
 						/>
 					</label>
 				</div>
@@ -108,6 +109,7 @@ const DeleteGroup = (group) => {
 							readOnly
 							defaultValue={about}
 							required
+							disabled
 						/>
 					</label>
 				</div>
@@ -120,6 +122,7 @@ const DeleteGroup = (group) => {
 								className="selected"
 								readOnly
 								defaultValue={type}
+								disabled
 							>
 								<option className="options">{type}</option>
 							</select>
@@ -135,6 +138,7 @@ const DeleteGroup = (group) => {
 								className="selected"
 								readOnly
 								defaultValue={privated ? `Yes` : `No`}
+								disabled
 							>
 								<option className="options">
 									{privated ? `Yes` : `No`}
@@ -152,6 +156,7 @@ const DeleteGroup = (group) => {
 							readOnly
 							defaultValue={city}
 							required
+							disabled
 						/>
 					</label>
 				</div>
@@ -164,6 +169,7 @@ const DeleteGroup = (group) => {
 							readOnly
 							defaultValue={state}
 							required
+							disabled
 						/>
 					</label>
 				</div>

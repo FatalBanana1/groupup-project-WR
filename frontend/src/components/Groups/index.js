@@ -4,7 +4,7 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadGroups } from "../../store/groups";
+import { thunkReadGroups, actionResetState } from "../../store/groups";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import CreateModalButton from "./CreateGroup/CreateModalButton";
 import OpenModalButton from "../../components/OpenModalButton";
@@ -19,6 +19,7 @@ import "./Groups.css";
 const Groups = (props) => {
 	let location = useLocation();
 	let dispatch = useDispatch();
+	let [errors, setErrors] = useState([]);
 
 	// let params = useParams();
 	// console.log(`location ===`, location);
@@ -56,11 +57,30 @@ const Groups = (props) => {
 	//----------------
 
 	useEffect(() => {
-		location.props && location.props.query
-			? dispatch(thunkReadGroups(`?name=${location.props.query}`))
-			: dispatch(thunkReadGroups());
+		console.log(`location ====`, location);
+		if (location.props && location.props.query) {
+			let payload = JSON.parse(JSON.stringify(location));
 
-		return () => {};
+			console.log(`location ====`, location);
+			console.log(`payload====`, payload);
+
+			dispatch(
+				thunkReadGroups(`?name=${payload.location.props.query}`)
+			).catch(async (res) => {
+				const data = await res.json();
+				if (data && data.message === "Authentication required")
+					setErrors((data[errors] = [data.message]));
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+		} else {
+			console.log(`location ====`, location);
+			dispatch(thunkReadGroups()).catch(async (res) => {
+				const data = await res.json();
+				if (data && data.message === "Authentication required")
+					setErrors((data[errors] = [data.message]));
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+		}
 	}, [dispatch]);
 
 	// {groups: {1:{1}, 2:{2}...} }
@@ -70,6 +90,12 @@ const Groups = (props) => {
 	if (!selector)
 		return <div className="groups-null">No Groups to display...</div>;
 	const groups = Object.values(selector);
+
+	//resetClickHandler
+
+	const resetClickHandler = () => {
+		dispatch(actionResetState());
+	};
 
 	//return
 	return (
@@ -92,6 +118,7 @@ const Groups = (props) => {
 										key={group.id}
 										to={`/groups/${group.id}`}
 										group={group}
+										onClick={resetClickHandler}
 									>
 										<ReadGroups group={group} />
 									</NavLink>

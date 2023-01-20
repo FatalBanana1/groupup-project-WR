@@ -21,11 +21,19 @@ import Members from "../JoiningGroups/Members";
 const GroupDetail = () => {
 	//states
 	let dispatch = useDispatch();
+	let [errors, setErrors] = useState([]);
+
 	let { groupId } = useParams();
 
 	useEffect(() => {
-		dispatch(thunkReadGroupDetails(groupId));
-		return () => {};
+		dispatch(thunkReadGroupDetails(groupId))
+			.then((data) => console.log(`data logger`, data, data.id))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.message === "Authentication required")
+					setErrors((data[errors] = [data.message]));
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
 	}, [dispatch]);
 
 	//-----------------
@@ -117,22 +125,22 @@ const GroupDetail = () => {
 			<div id="details-container-body">
 				<div id="details-nav-section">
 					<div id="update-groups-link-container">
-						<EditModalButton
-							id="update-group-button"
-							buttonText="Edit Group"
-							onButtonClick={closeMenu}
-							modalComponent={<UpdateGroup group={group} />}
-						/>
-						<DeleteModalButton
-							id="delete-group-button"
-							buttonText="Delete Group"
-							onButtonClick={closeMenu}
-							modalComponent={<DeleteGroup group={group} />}
-						/>
-						<NavLink to={`/groups/${group.id}/members`}>
-							Members
-						</NavLink>
-
+						<div>
+							<EditModalButton
+								id="update-group-button"
+								buttonText="Edit Group"
+								onButtonClick={closeMenu}
+								modalComponent={<UpdateGroup group={group} />}
+							/>
+						</div>
+						<div>
+							<DeleteModalButton
+								id="delete-group-button"
+								buttonText="Delete Group"
+								onButtonClick={closeMenu}
+								modalComponent={<DeleteGroup group={group} />}
+							/>
+						</div>
 						<div className="join-group">
 							{/* <button
 								type="submit"
@@ -141,6 +149,12 @@ const GroupDetail = () => {
 							>
 								Join Group
 							</button> */}
+						</div>
+						<div className="margin-div" />
+						<div className="splash-link details-nav-section-border">
+							<NavLink to={`/groups/${group.id}/members`}>
+								Members
+							</NavLink>
 						</div>
 					</div>
 				</div>
@@ -180,7 +194,7 @@ const GroupDetail = () => {
 						</div>
 						<div className="about-details-font">{`${organizer.firstName} ${organizer.lastName}`}</div>
 						<div className="about-details-font">{`Type: ${type}`}</div>
-						<div className="about-details-font">{`Est: ${month}, ${day}, ${year}`}</div>
+						<div className="about-details-font">{`Est: ${month} ${day}, ${year}`}</div>
 					</div>
 				</div>
 			</div>
