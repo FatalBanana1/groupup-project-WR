@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
+import icon from "../Groups/images/favicon.ico";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -52,11 +53,8 @@ function SignupFormModal() {
 	return (
 		<div id="signup-container">
 			<div className="sign-up-container">
-				<div className="signup-form-image">
-					<img
-						className="signup-image-logo"
-						src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
-					/>
+				<div className="form-icon">
+					<img className="image-logo" src={icon} />
 				</div>
 				<div className="signup-header-name">Sign Up</div>
 			</div>

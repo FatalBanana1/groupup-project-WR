@@ -54,8 +54,8 @@ const CreateGroup = () => {
 	return (
 		<div id="create-group-container">
 			<div className="sign-up-container" id="create-group">
-				<div className="signup-form-image">
-					<img className="signup-image-logo" src={icon} />
+				<div className="form-icon">
+					<img className="image-logo" src={icon} />
 				</div>
 				<div className="signup-header-name">Create a Group</div>
 			</div>

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
+import icon from "../Groups/images/favicon.ico";
 
 function LoginFormModal() {
 	const dispatch = useDispatch();
@@ -29,11 +30,8 @@ function LoginFormModal() {
 
 	return (
 		<div id="login-container">
-			<div className="signup-form-image">
-				<img
-					className="signup-image-logo"
-					src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
-				/>
+			<div className="form-icon">
+				<img className="image-logo" src={icon} />
 			</div>
 			<div className="signup-header-name">Log In</div>
 			<form onSubmit={handleSubmit}>

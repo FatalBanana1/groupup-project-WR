@@ -749,7 +749,7 @@ router.use((err, _req, res, _next) => {
 	res.status(err.statusCode || 500);
 	console.error(err);
 	res.json({
-		message: err.message,
+		errors: [err.message],
 		statusCode: err.statusCode,
 	});
 });

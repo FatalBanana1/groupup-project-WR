@@ -37,6 +37,17 @@ const router = express.Router();
 
 const valid_group = async (req, res, next) => {
 	let { user } = req;
+
+	if (!user) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				memberId: "User must be signed in.",
+			},
+		});
+	}
+
 	const id = req.params.groupId;
 
 	if (id) {
@@ -1253,7 +1264,7 @@ router.use((err, _req, res, _next) => {
 	res.status(err.statusCode || 500);
 	console.error(err);
 	res.json({
-		message: err.message,
+		errors: [err.message],
 		statusCode: err.statusCode,
 	});
 });

@@ -11,119 +11,37 @@ import {
 	actionResetState,
 } from "../../../store/members";
 import { NavLink, useHistory, useParams } from "react-router-dom";
-import OpenModalButton from "../../OpenModalButton";
+// import OpenModalButton from "../../OpenModalButton";
 import * as sessionActions from "../../../store/session";
 
 //comps
 import ReadMembers from "../ReadMembers";
-import CreateMembership from "../CreateMembership";
-import CreateModalButton from "../CreateMembership/CreateModalButton";
 import "./Members.css";
 
 //main
 const Members = () => {
+	console.log(`inside MBRS comp`);
 	let history = useHistory("/groups");
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
-	let [joined, setJoined] = useState(false);
-	let [deleted, setDeleted] = useState(false);
 	let [errors, setErrors] = useState([]);
 	let [show, setShow] = useState(1);
-
-	//-----------------
-
-	const [showMenu, setShowMenu] = useState(false);
-	const ulRef = useRef();
-	console.log(`useref ----- `, ulRef);
-
-	const openMenu = () => {
-		if (showMenu) return;
-		setShowMenu(true);
-	};
-	useEffect(() => {
-		if (!showMenu) return;
-		const closeMenu = (e) => {
-			if (!ulRef.current.contains(e.target)) {
-				setShowMenu(false);
-			}
-		};
-		document.addEventListener("click", closeMenu);
-		return () => document.removeEventListener("click", closeMenu);
-	}, [showMenu]);
-	const closeMenu = () => setShowMenu(false);
-	const logout = (e) => {
-		e.preventDefault();
-		dispatch(sessionActions.logout());
-		closeMenu();
-	};
-
-	//----------------
 
 	useEffect(() => {
 		let payload = {
 			groupId,
 		};
 
-		// .then((data) => {
-		// 	console.log(`data in READ MBRs >>>>`, data);
-		// 	return history.push(`/groups/${data.id}/members`);
-		// })
-		dispatch(thunkReadMembers(payload)).catch(async (res) => {
-			const data = await res.json();
-			if (data && data.message)
-				setErrors(
-					(data[errors] = [
-						`User must be signed in.`,
-					])
-				);
-			if (data && data.errors) setErrors(Object.values(data.errors));
-			// if (data && data.message) setErrors(Object.values(data));
-		});
+		dispatch(thunkReadMembers(payload))
+			.then((data) => {
+				return history.push(`/groups/${data.id}/members`);
+			})
+			.catch(async (res) => {
+				const data = await res.json();
+
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
 	}, [dispatch]);
-
-	// useEffect(() => {
-	// 	setErrors([]);
-	// 	let payload = {
-	// 		groupId,
-	// 	};
-	// 	if (joined) {
-	// 		console.log(`create membership >>>> `, joined);
-
-	// 		dispatch(thunkCreateMembership(payload))
-	// 			.then((data) => history.push(`/groups/${data.id}/members`))
-	// 			.catch(async (res) => {
-	// 				const data = await res.json();
-
-	// 				console.log(
-	// 					`data in return from create membership 000000 `,
-	// 					data
-	// 				);
-
-	// 				if (data && data.message === "Authentication required")
-	// 					setErrors((data[errors] = [data.message]));
-	// 				if (data && data.errors)
-	// 					setErrors(Object.values(data.errors));
-	// 			});
-	// 		// if (!errors.length) setShow(2);
-	// 	} else if (deleted) {
-	// 		console.log(`delete membership >>>> `, joined);
-	// 		dispatch(thunkDeleteMembership(payload))
-	// 			.then((data) => history.push(`/groups/${data.id}`))
-	// 			.catch(async (res) => {
-	// 				const data = await res.json();
-	// 				if (data && data.message === "Authentication required")
-	// 					setErrors((data[errors] = [data.message]));
-	// 				if (data && data.errors)
-	// 					setErrors(Object.values(data.errors));
-	// 			});
-	// 		// if (!errors.length) setShow(3);
-	// 	}
-	// 	return () => {
-	// 		setJoined(false);
-	// 		setDeleted(false);
-	// 		return;
-	// 	};
-	// }, [joined, deleted]);
 
 	const joinGroupHandler = () => {
 		setErrors([]);
@@ -131,26 +49,15 @@ const Members = () => {
 			groupId,
 			status: "pending",
 		};
-		// .then((data) => {
-		// 	console.log(`data in thunk create`, data);
-		// 	return history.push(`/groups/${data.groupId}/members`);
-		// });
+
 		dispatch(thunkCreateMembership(payload)).catch(async (res) => {
-			console.log(`res`, res);
 			const data = await res.json();
-			if (data && data.message === "Authentication required")
-				setErrors(
-					(data[errors] = [
-						`User must be signed in and hold a current membership in group to leave group.`,
-					])
-				);
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		dispatch(actionResetState());
 		dispatch(thunkReadMembers(payload)).catch(async (res) => {
 			const data = await res.json();
-			if (data && data.message === "Authentication required")
-				setErrors((data[errors] = [data.message]));
+
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		history.push(`/groups/${groupId}/members`);
@@ -164,12 +71,7 @@ const Members = () => {
 
 		dispatch(thunkDeleteMembership(payload)).catch(async (res) => {
 			const data = await res.json();
-			if (data && data.message === "Authentication required")
-				setErrors(
-					(data[errors] = [
-						`User must be signed in and hold a current membership in group to leave group.`,
-					])
-				);
+
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		// if (!errors.length) setShow(3);
@@ -179,19 +81,18 @@ const Members = () => {
 		dispatch(actionResetState());
 		dispatch(thunkReadMembers(payload)).catch(async (res) => {
 			const data = await res.json();
-			if (data && data.message === "Authentication required")
-				setErrors((data[errors] = [data.message]));
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		history.push(`/groups/${groupId}/members`);
 	};
 
 	const selector = useSelector((state) => state.members);
+
+	console.log(`members comp members list ====`, selector);
+
 	if (!selector)
 		return <div className="groups-null">No Members to display...</div>;
 	const members = Object.values(selector);
-
-	console.log(`members comp members list ====`, members);
 
 	// return
 	return (
@@ -276,10 +177,10 @@ const Members = () => {
 			</div>
 			{/* <div id="groups-link-container">
 				<CreateModalButton
-					className="create-group-button"
-					buttonText="Join Group"
-					onButtonClick={closeMenu}
-					modalComponent={<CreateMembership />}
+				className="create-group-button"
+				buttonText="Join Group"
+				onButtonClick={closeMenu}
+				modalComponent={<CreateMembership />}
 				/>
 			</div> */}
 		</div>
@@ -293,17 +194,61 @@ const Members = () => {
 /*
 {
 	"Members": [
-			{
-					"id": 1,
-					"firstName": "Walter",
-					"lastName": "White",
-					"username": "heisenberg",
-					"email": "h20@gmail.com",
-					"status": "organizer"
-			},
-		]
-	}
+		{
+			"id": 1,
+			"firstName": "Walter",
+			"lastName": "White",
+			"username": "heisenberg",
+			"email": "h20@gmail.com",
+			"status": "organizer"
+		},
+	]
+}
 */
 
 //exports
 export default Members;
+
+// useEffect(() => {
+// 	setErrors([]);
+// 	let payload = {
+// 		groupId,
+// 	};
+// 	if (joined) {
+// 		console.log(`create membership >>>> `, joined);
+
+// 		dispatch(thunkCreateMembership(payload))
+// 			.then((data) => history.push(`/groups/${data.id}/members`))
+// 			.catch(async (res) => {
+// 				const data = await res.json();
+
+// 				console.log(
+// 					`data in return from create membership 000000 `,
+// 					data
+// 				);
+
+// 				if (data && data.message === "Authentication required")
+//
+// 				if (data && data.errors)
+// 					setErrors(Object.values(data.errors));
+// 			});
+// 		// if (!errors.length) setShow(2);
+// 	} else if (deleted) {
+// 		console.log(`delete membership >>>> `, joined);
+// 		dispatch(thunkDeleteMembership(payload))
+// 			.then((data) => history.push(`/groups/${data.id}`))
+// 			.catch(async (res) => {
+// 				const data = await res.json();
+// 				if (data && data.message === "Authentication required")
+// 					setErrors((data[errors] = [data.message]));
+// 				if (data && data.errors)
+// 					setErrors(Object.values(data.errors));
+// 			});
+// 		// if (!errors.length) setShow(3);
+// 	}
+// 	return () => {
+// 		setJoined(false);
+// 		setDeleted(false);
+// 		return;
+// 	};
+// }, [joined, deleted]);

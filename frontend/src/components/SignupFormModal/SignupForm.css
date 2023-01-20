@@ -63,7 +63,7 @@
 	margin-right: 110px;
 }
 
-.signup-form-image {
+.form-icon {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -75,7 +75,8 @@
 	margin-bottom: 8px;
 }
 
-.signup-image-logo {
+.image-logo {
 	height: 45px;
 	width: 45px;
 }
+

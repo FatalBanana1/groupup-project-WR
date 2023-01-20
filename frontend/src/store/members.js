@@ -11,7 +11,7 @@ const READ_MEMBER_DETAILS = `member/READ`;
 const CREATE_MEMBERSHIP = `member/CREATE`;
 const UPDATE_MEMBERSHIP = `member/UPDATE`;
 const DELETE_MEMBERSHIP = `member/DELETE`;
-const RESET = "reports/resetState";
+const RESET = "member/resetState";
 
 //----------------------------------------------
 

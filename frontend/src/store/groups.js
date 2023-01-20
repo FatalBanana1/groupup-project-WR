@@ -11,7 +11,7 @@ const READ_GROUP_DETAILS = `group/READ`;
 const CREATE_GROUP = `groups/CREATE`;
 const UPDATE_GROUP = `groups/UPDATE`;
 const DELETE_GROUP = `groups/DELETE`;
-const RESET = "reports/resetState";
+const RESET = "group/resetState";
 
 //----------------------------------------------
 

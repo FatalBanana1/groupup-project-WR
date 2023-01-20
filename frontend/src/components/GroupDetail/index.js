@@ -8,7 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteModalButton from "../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../Groups/UpdateGroup/EditModalButton.js";
 import * as sessionActions from "../../store/session";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 
 //comps
 import { thunkReadGroupDetails } from "../../store/groups";
@@ -16,12 +16,15 @@ import UpdateGroup from "../Groups/UpdateGroup";
 import "./GroupDetail.css";
 import DeleteGroup from "../Groups/DeleteGroup";
 import Members from "../JoiningGroups/Members";
+import ErrorHandler from "../ErrorHandler";
+import { actionResetState } from "../../store/groups";
 
 //main
 const GroupDetail = () => {
 	//states
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
+	let history = useHistory();
 
 	let { groupId } = useParams();
 
@@ -30,11 +33,21 @@ const GroupDetail = () => {
 			.then((data) => console.log(`data logger`, data, data.id))
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.message === "Authentication required")
-					setErrors((data[errors] = [data.message]));
+				console.log(`inside catch ===`, data);
+				console.log(`inside catch ===`, data.errors);
+				// console.log(`inside catch ===`, data)
+
+				// if (data && data.message === "Authentication required")
+				// 	setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	}, [dispatch]);
+
+	useEffect(() => {
+		console.log(`inside catch ===`, errors);
+		// dispatch(actionResetState());
+		// history.push(`/groups/${groupId}`);
+	}, [errors]);
 
 	//-----------------
 
@@ -57,11 +70,6 @@ const GroupDetail = () => {
 	}, [showMenu]);
 
 	const closeMenu = () => setShowMenu(false);
-	// const logout = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(sessionActions.logout());
-	// 	closeMenu();
-	// };
 
 	//----------------
 
@@ -94,9 +102,19 @@ const GroupDetail = () => {
 	let day = date[2];
 	let year = date[3];
 
+	console.log(`before return in GRP DEET`, errors);
+
 	//return
 	return (
 		<div id="group-details-page">
+			{errors.length > 0 ? (
+				<div className="error-handler-container">
+					{/* <ErrorHandler errors={errors} /> */}
+					RENDERING ERRORS HERE
+				</div>
+			) : (
+				<div>{errors}</div>
+			)}
 			<div id="details-container-header">
 				<div id="left-details-img">
 					{image !== undefined ? (
