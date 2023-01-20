@@ -1,7 +1,105 @@
-/* TODO Add site wide styles */
+/*
+ROOT CSS
+
+-info:
+
+left = 58
+mid = 1
+right = 41
+
+media q:
+
+NAVBAR = group details
+-base = 840++
+--with border-bot
+--padding = 20
+
+1 = 840--
+--NO border-bot
+--logo small
+--profile dropdown exists
+--padding = 18
+
+
+2 = 640--
+--groups, messages, notifications
+--NO dropdown
+--NO logo
+--ONLY LINKS
+--padding = 16
+
+
+NAVBAR = groups pg
+base = 575++
+
+1 = 575--
+--small logo
+--dropdown move to left
+--profile goes away
+
+----
+----
+
+group details
+-base = 1100++
+
+1 = 1100--
+--max width = 1100 on content
+
+2 = 840--
+--NO padding/margins = image
+--image = 100% width
+--header - below img = 16 padding only LR
+--body = 18 margin only LR
+
+----
+----
+
+groups pg
+-base = 961++ width on groups container
+
+1 = 995--
+--max width
+--padding container only = 16 LR
+--groups link container = 640px max width
+
+2 = 775--
+--groups body = padding 16px
+--width = varies
+
+3 = 575--
+--padding = 24 ONLY container LR
+--swap image and title sides
+
+--images must be rendered twice, hidden in one section, then hidden in another
+--swap classes at 575 media q from display:none to display:block
+
+*/
+
+/*
+active all: poppins - google font
+font-family: 'Poppins', sans-serif;
+Types:
+-light 300
+-regular 400
+-regular 400 - italic
+-semiBold - 600
+*/
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&family=Pacifico&family=Poppins:ital,wght@0,300;0,400;0,600;1,400&display=swap");
+
+/* non-active: nunito sans - google font
+font-family: 'Nunito Sans', sans-serif; */
+/* @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap"); */
+
+/* GLOBAL Fonts */
+
+* {
+	font-family: "Poppins", sans-serif;
+}
+
+/* GLOBAL Style */
 
 #root {
-	/* background-color: purple; */
 	margin: 0;
 	display: flex;
 	flex-direction: column;
@@ -14,9 +112,12 @@
 	padding: 0 10%;
 }
 
-/* #root :not(.nav-container) {
-	margin: 0;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-} */
+.errors-li {
+	font-size: 15px;
+	color: rgb(225, 0, 0);
+}
+.errors-h {
+	font-size: 17px;
+	color: rgb(225, 0, 0);
+	padding-bottom: 2px;
+}

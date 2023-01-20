@@ -4,7 +4,7 @@ import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import logo from "../Groups/images/groupup-logo4.png";
+import logo from "../Groups/images/groupup-logo5.png";
 import searchIcon from "../Groups/images/search-icon4.png";
 import Groups from "../Groups";
 

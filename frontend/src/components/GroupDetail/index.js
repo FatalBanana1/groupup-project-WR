@@ -102,7 +102,7 @@ const GroupDetail = () => {
 				</div>
 				<div id="right-details-header">
 					<div id="name-details-div">
-						<div id="right-details-header-name">{name}</div>
+						<h1 id="right-details-header-name">{name}</h1>
 					</div>
 					<div className="details-info">{`${city}, ${state}`}</div>
 					<div className="details-info li-tag-members-line">

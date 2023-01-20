@@ -980,10 +980,10 @@ router.post("/", requireAuth, async (req, res) => {
 		errors.type = `Type must be 'Online' or 'In person'`;
 	if (typeof Boolean(private) !== "boolean")
 		errors.private = `Private must be a boolean`;
-	if (!city || city.length < 3) errors.city = `City is required`;
+	if (!city) errors.city = `City is required`;
+	if (city.length < 2) errors.city = `City must be 2 characters or more`;
 	if (!state) errors.state = `State is required`;
 	if (state.length !== 2) errors.state = `State must be 2 characters.`;
-	if (image.url.length < 2) errors.image = `Please enter correct image url.`;
 
 	if (Object.values(errors).length) {
 		return res.status(400).json({

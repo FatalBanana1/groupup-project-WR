@@ -1,5 +1,15 @@
 /* group detail css */
 
+/*
+max w = 1100
+med q = 1120
+
+left = 58
+mid = 1
+right = 41
+
+*/
+
 #group-details-page {
 	/* background-color: gray; */
 	display: flex;
@@ -8,7 +18,7 @@
 	justify-content: center;
 	padding-top: 20px;
 	margin: 0 20vw 10vw 10vw;
-	width: 70vw;
+	max-width: 1100px;
 }
 
 #details-container-header {
@@ -17,6 +27,7 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	width: auto;
 }
 
 #details-container-body {
@@ -120,7 +131,6 @@
 	object-fit: cover;
 	border-radius: 5%;
 	margin: 10px;
-
 }
 
 /* ------------------------------- */
@@ -129,7 +139,9 @@
 
 /* ------------------------------- */
 
-@media screen and (min-width: 1140px) {
+@media screen and (max-width: 1120px) {
+	/*
+
 	#details-img-default {
 		width: 600px;
 		height: 300px;
@@ -150,6 +162,7 @@
 	#right-details-header-name {
 		font-size: 32px;
 	}
+ */
 }
 
 /* ------------------------------- */
@@ -158,6 +171,10 @@
 	#root {
 		/* margin-left: 20vw; */
 		align-items: center;
+	}
+
+	#group-details-page {
+		margin: 0;
 	}
 
 	.nav-container {
@@ -198,12 +215,9 @@
 	}
 
 	#right-details-header {
-		height: 60%;
-		width: 37%;
+		width: 100%;
 		flex-basis: 0;
 		flex-grow: 1;
-		width: auto;
-		min-width: 0;
 		padding-left: 16px;
 	}
 

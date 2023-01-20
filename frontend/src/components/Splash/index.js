@@ -20,13 +20,13 @@ const Splash = () => {
 		<div id="splash">
 			<div id="splash-container">
 				<div id="left">
-					<div id="north">
-						<h1>
+					<div className="north">
+						<h1 className="splash-font-h">
 							The people platform—Where interests become
 							friendships
 						</h1>
 					</div>
-					<div className="south">
+					<div className="south splash-font">
 						Whatever your interest, from hiking and reading to
 						networking and skill sharing, there are thousands of
 						people who share it on Meetup. Events are happening
@@ -42,7 +42,7 @@ const Splash = () => {
 				</div>
 			</div>
 			<div id="groups-link-container">
-				<NavLink id="groups-link" to="/groups">
+				<NavLink className="splash-link" to="/groups">
 					Find Groups
 				</NavLink>
 			</div>

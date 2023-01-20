@@ -350,93 +350,214 @@ npm run sequelize --prefix backend db:seed:all
 
 //---------------------------
 
-	let auth = await Membership.findOne({
-		where: { userId: user.dataValues.id, status: "co-host" },
-		include: [
-			{
-				model: Group,
-			},
-		],
-	});
+    let auth = await Membership.findOne({
+    	where: { userId: user.dataValues.id, status: "co-host" },
+    	include: [
+    		{
+    			model: Group,
+    		},
+    	],
+    });
 
-	console.log(`inside back----`, auth.status);
+    console.log(`inside back----`, auth.status);
 
-	if (!auth) {
-		return res.status(400).json({
-			message: "Authentication Error",
-			statusCode: 403,
-			errors: {
-				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
-			},
-		});
-	} else {
-		next();
-	}
+    if (!auth) {
+    	return res.status(400).json({
+    		message: "Authentication Error",
+    		statusCode: 403,
+    		errors: {
+    			memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+    		},
+    	});
+    } else {
+    	next();
+    }
+
 };
 
-
-
 //---------------------------
-
 
 const valid_user = async (req, res, next) => {
-	const { user } = req;
+const { user } = req;
 
-	if (!user) {
-		return res.status(400).json({
-			message: "Validation Error",
-			statusCode: 400,
-			errors: {
-				memberId: "User must be signed in.",
-			},
-		});
-	}
+    if (!user) {
+    	return res.status(400).json({
+    		message: "Validation Error",
+    		statusCode: 400,
+    		errors: {
+    			memberId: "User must be signed in.",
+    		},
+    	});
+    }
 
-	let auth = await Membership.findOne({
-		where: { userId: user.dataValues.id },
-		include: [
-			{
-				model: Group,
-			},
-		],
-	});
-	console.log(`inside back----`, );
+    let auth = await Membership.findOne({
+    	where: { userId: user.dataValues.id },
+    	include: [
+    		{
+    			model: Group,
+    		},
+    	],
+    });
+    console.log(`inside back----`, );
 
-	if (!auth) {
-		return res.status(400).json({
-			message: "Authentication Error",
-			statusCode: 403,
-			errors: {
-				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
-			},
-		});
-	}
+    if (!auth) {
+    	return res.status(400).json({
+    		message: "Authentication Error",
+    		statusCode: 403,
+    		errors: {
+    			memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+    		},
+    	});
+    }
 
-	if (
-		user.dataValues.id &&
-		(auth.status === "co-host" || auth.Group.organizerId === user.id)
-	) {
-		next();
-	} else {
-		return res.status(403).json({
-			message: "Authentication Error",
-			statusCode: 403,
-			errors: {
-				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
-			},
-		});
-	}
+    if (
+    	user.dataValues.id &&
+    	(auth.status === "co-host" || auth.Group.organizerId === user.id)
+    ) {
+    	next();
+    } else {
+    	return res.status(403).json({
+    		message: "Authentication Error",
+    		statusCode: 403,
+    		errors: {
+    			memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+    		},
+    	});
+    }
+
 };
 
-
 //---------------------------
 
 //---------------------------
+
+css notes:
+
+setting props with calculations
+
+ex.
+
+width: calc(100% - 100px);
 
 //---------------------------
 
 -TODO
 
+//---------------------------
+//---------------------------
+
+create group form content:
+
+display none on buttons that have rendered
+
+step 1:
+
+city, state
+
+First, set your group’s location.
+
+Meetup groups meet locally, in person and online. We'll connect you with people in your area, and more can join you online.
+
+-show next button - link to next comp
+-next = group name
+-click - hide old comps
+
+//---------------------------
+
+step 2:
+
+group name
+
+-show new next button
+
+What will your group’s name be?
+
+Choose a name that will give people a clear idea of what the group is about. Feel free to get creative! You can edit this later if you change your mind.
+
+//---------------------------
+
+step 3:
+
+about
+
+Now describe what ${Group.name} will be about.
+
+People will see this when we promote your group, but you’ll be able to add to it later, too.
+
+What's the purpose of the group?
+Who should join?
+What will you do at your events?
+
+---input field: textarea
+
+below input:
+
+lightbulb
+Here's an example:
+
+“Welcome tech lovers far and wide! We’re an online and in-person tech-enthusiast group hosting live speaking events on a range of tech topics. You can join us in person if possible or on one of our live streams. Look out for our virtual happy hours and other networking events.”
+
+//---------------------------
+
+step 4:
+
+type, private
+
+Is your group meeting online only or in person as well?
+
+options:
+online only
+In person
+
+---
+
+Can anyone join your group?
+Will your group be set to public or private?
+Private groups can only be seen by Groupup users ONLY. Groupup account will be required to view group.
+
+(check if user is signed in:
+not signed in: set groups pg to only return where type = public, conditionally render another map fxn
+signed in: all groups shown, normal map run)
+
+options:
+Public
+Private Only
+
+//---------------------------
+
+step 5:
+
+add group image = optional, can be done later
+
+//---------------------------
+
+from meetup:
+
+Almost done! Just take a minute to review our guidelines
+Meetup is all about helping people live fuller, happier lives—with the help of strong communities. This means that all groups should:
+
+Provide growth opportunities for members
+Encourage real human interactions in person or online
+Have a host present at all events
+Be transparent about the group’s intentions
+You can read more about all of this in our community guidelines.
+
+Once you submit your group, a human at Meetup will review it based on these guidelines and make sure it gets promoted to the right people.
+
+ALTER description to:
+
+Almost done!
+My name is Wasiq Rashid (full-stack developer).
+I would like to sincerely Thank You for going through my portfolio project and considering me for the position at your company. I appreciate your time and effort.
+
+Below is a link to review my resume on LinkedIn and contact info which is also found in the footer section "Contact Page". Email: wasiqnj@gmail.com
+
+-- TODO: add later...
+Once you submit your group, a prefilled form will be shown for you to email me your response to this job request.
+
+//---------------------------
+//---------------------------
+//---------------------------
 //---------------------------
 
 //---------------------------

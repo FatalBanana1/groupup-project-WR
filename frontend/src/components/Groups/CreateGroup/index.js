@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import { thunkCreateGroups } from "../../../store/groups";
 import * as sessionActions from "../../../store/session";
+import icon from "../images/favicon.ico";
 import "./CreateGroup.css";
 
 //main
@@ -54,21 +55,23 @@ const CreateGroup = () => {
 		<div id="create-group-container">
 			<div className="sign-up-container" id="create-group">
 				<div className="signup-form-image">
-					<img
-						className="signup-image-logo"
-						src="https://cdn.icon-icons.com/icons2/1703/PNG/512/basket_112184.png"
-					/>
+					<img className="signup-image-logo" src={icon} />
 				</div>
 				<div className="signup-header-name">Create a Group</div>
 			</div>
 
 			<form onSubmit={handleSubmit}>
 				<div id="errors-create-group">
-					<ul>
-						{Object.values(errors).map((error) => (
-							<li key={error}>{error}</li>
-						))}
-					</ul>
+					{Object.values(errors).length > 0 ? (
+						<ul>
+							<div className="errors-h">Errors</div>
+							{Object.values(errors).map((error) => (
+								<li className="errors-li" key={error}>
+									{error}
+								</li>
+							))}
+						</ul>
+					) : null}
 				</div>
 
 				<div id="name" className="create">
@@ -170,7 +173,6 @@ const CreateGroup = () => {
 							type="text"
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
-							required
 						/>
 					</label>
 				</div>

@@ -1,8 +1,8 @@
 /* navigation css */
 
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"); */
 /* font-family: "Caveat", cursive; */
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap"); */
 /* font-family: 'Pacifico', cursive; */
 
 .hidden {
@@ -67,7 +67,7 @@
 #nav-title {
 	text-decoration: none;
 	font-size: 40px;
-	font-family: "Caveat", cursive;
+	/* font-family: "Caveat", cursive; */
 	color: red;
 	width: 125px;
 	height: 45px;
@@ -95,10 +95,6 @@
 	background-color: rgba(244, 244, 244, 0.3);
 }
 
-#nav-search-bar {
-	/* margin-top: 0.5px; */
-}
-
 #search-bar-button {
 	height: 16px;
 	width: 16px;
@@ -107,7 +103,7 @@
 	text-decoration: none;
 }
 
-#search-btn-container{
+#search-btn-container {
 	text-decoration: none;
 	margin: 5px;
 	padding: 3.5px;
@@ -116,7 +112,6 @@
 	color: white;
 	height: 51.5px;
 	width: 68px;
-
 }
 
 .navbar-search-button {
@@ -135,7 +130,7 @@
 
 #navbar-search:focus {
 	outline: none;
-	background-color: rgba(244, 244, 244, 0.3);
+	background-color: rgba(244, 244, 244, 0.6);
 }
 
 /* ------------ media --------------- */
@@ -148,5 +143,26 @@
 	#nav-left-container,
 	#nav-right-container {
 		width: 50%;
+	}
+}
+
+@media screen and (max-width: 610px) {
+	.profile-dropdown {
+		width: 120vw;
+		height: 120vh;
+		position: absolute;
+		top: 65px;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	#splash {
+		width: 85vw;
 	}
 }

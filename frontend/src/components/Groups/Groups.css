@@ -27,15 +27,23 @@
 }
 #group-detail:first-of-type {
 	/* background-color: red; */
-	border-top: solid 0.3px rgba(128, 128, 128, 0.2);
+	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
 }
 
 #group-detail {
-	border-bottom: solid 0.3px rgba(128, 128, 128, 0.2);
+	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
 	height: 200px;
 	width: 660px;
 	color: black;
+}
+#group-detail:hover {
+	background-color: rgba(244, 244, 244, 0.4);
+}
+
+.about-section {
+	width: auto;
+	word-wrap: normal;
 }
 
 .groups-page-link {
@@ -43,7 +51,7 @@
 	text-decoration: none;
 	text-decoration-line: underline;
 	text-underline-offset: 8px;
-	color: rgb(74, 162, 217);
+	color: rgb(0, 130, 148);
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
@@ -55,7 +63,7 @@
 }
 
 #detail-right {
-	width: 400px;
+	width: 380px;
 	/* background-color: blue; */
 }
 
@@ -73,7 +81,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	/* margin-left: ; */
+	margin-right: 20px;
 }
 
 #group-detail-container {
@@ -108,17 +116,6 @@
 		width: 85vw;
 	}
 
-	.profile-button {
-		font-size: 300%;
-		border: 0;
-		margin-right: 5px;
-	}
-
-	.nav-arrow {
-		margin-top: 10px;
-		padding-left: 4px;
-	}
-
 	#root {
 		width: 90vw;
 	}
@@ -131,18 +128,13 @@
 	#nav-mid {
 		margin-left: 20px;
 	}
+
+	#detail-right {
+		width: 28vw;
+	}
 }
 
 @media screen and (max-width: 750px) {
-	.profile-button {
-		font-size: 290%;
-		border: 0;
-	}
-
-	#dropdown {
-		margin-bottom: 10px;
-	}
-
 	#group-detail-container {
 		width: 95%;
 	}
@@ -160,13 +152,44 @@
 	}
 
 	#detail-container {
-		width: 100%;
+		width: 95%;
 	}
 }
 
-@media screen and (max-width: 420px) {
-	* {
+@media screen and (max-width: 610px) {
+	/* * {
 		font-size: 10px;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-size: 12px;
+	} */
+
+	#login-container,
+	.sign-up-container {
+		width: 80vw;
+		font-size: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#login-button {
+		margin: 0;
+		margin-left: 20vw;
+	}
+
+	.users {
+		padding: 0;
+		margin: 0 0 0 10px;
+		width: fit-content;
+	}
+
+	.users-button {
+		height: 18px;
+		width: auto;
 	}
 
 	.nav-container {
@@ -179,10 +202,11 @@
 	}
 
 	.nav-arrow {
-		border: 0.1px solid rgba(128, 128, 128, 0.1);
+		border: 0.1px solid rgba(244, 244, 244, 0.5);
 		padding: 5px;
 		height: 20px;
 		width: 20px;
+		justify-self: flex-start;
 	}
 
 	#groupup-logo-wr {
@@ -221,8 +245,7 @@
 	}
 
 	#v-dropdown {
-		margin-top: 10px;
-		margin-right: 10px;
+		margin: 0;
 	}
 
 	.profile-button {
