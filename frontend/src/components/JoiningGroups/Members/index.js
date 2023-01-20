@@ -70,9 +70,14 @@ const Members = () => {
 		// })
 		dispatch(thunkReadMembers(payload)).catch(async (res) => {
 			const data = await res.json();
-			if (data && data.message === "Authentication required")
-				setErrors((data[errors] = [data.message]));
+			if (data && data.message)
+				setErrors(
+					(data[errors] = [
+						`User must be signed in.`,
+					])
+				);
 			if (data && data.errors) setErrors(Object.values(data.errors));
+			// if (data && data.message) setErrors(Object.values(data));
 		});
 	}, [dispatch]);
 
@@ -134,7 +139,11 @@ const Members = () => {
 			console.log(`res`, res);
 			const data = await res.json();
 			if (data && data.message === "Authentication required")
-				setErrors((data[errors] = [data.message]));
+				setErrors(
+					(data[errors] = [
+						`User must be signed in and hold a current membership in group to leave group.`,
+					])
+				);
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		dispatch(actionResetState());
@@ -156,10 +165,16 @@ const Members = () => {
 		dispatch(thunkDeleteMembership(payload)).catch(async (res) => {
 			const data = await res.json();
 			if (data && data.message === "Authentication required")
-				setErrors((data[errors] = [data.message]));
+				setErrors(
+					(data[errors] = [
+						`User must be signed in and hold a current membership in group to leave group.`,
+					])
+				);
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		// if (!errors.length) setShow(3);
+
+		console.log(`deleted`, payload);
 
 		dispatch(actionResetState());
 		dispatch(thunkReadMembers(payload)).catch(async (res) => {

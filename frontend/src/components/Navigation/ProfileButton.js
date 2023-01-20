@@ -9,9 +9,11 @@ import { useModal } from "../../context/Modal";
 import "./ProfileButton.css";
 import upArrow from "../Groups/images/up-arrow.png";
 import downArrow from "../Groups/images/down-arrow.png";
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
+	let history = useHistory();
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
 	const { closeModal } = useModal();
@@ -41,33 +43,34 @@ function ProfileButton({ user }) {
 		e.preventDefault();
 		dispatch(sessionActions.logout());
 		closeMenu();
+		// history.push("/");
 	};
 
 	const demoSignin1 = (e) => {
 		e.preventDefault();
 		let credential = "heisenberg";
 		let password = "password";
-		return dispatch(sessionActions.login({ credential, password })).then(
-			closeModal
-		);
+		return dispatch(sessionActions.login({ credential, password }))
+			.then(closeModal)
+			.then(() => history.push("/"));
 	};
 
 	const demoSignin2 = (e) => {
 		e.preventDefault();
 		let credential = "baggins";
 		let password = "password2";
-		return dispatch(sessionActions.login({ credential, password })).then(
-			closeModal
-		);
+		return dispatch(sessionActions.login({ credential, password }))
+			.then(closeModal)
+			.then(() => history.push("/"));
 	};
 
 	const demoSignin3 = (e) => {
 		e.preventDefault();
 		let credential = "thebaby";
 		let password = "password4";
-		return dispatch(sessionActions.login({ credential, password })).then(
-			closeModal
-		);
+		return dispatch(sessionActions.login({ credential, password }))
+			.then(closeModal)
+			.then(() => history.push("/"));
 	};
 
 	const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
