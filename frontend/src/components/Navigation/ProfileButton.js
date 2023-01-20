@@ -11,6 +11,7 @@ import upArrow from "../Groups/images/up-arrow.png";
 import downArrow from "../Groups/images/down-arrow.png";
 import { useHistory } from "react-router-dom";
 
+
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
 	let history = useHistory();
@@ -25,15 +26,12 @@ function ProfileButton({ user }) {
 
 	useEffect(() => {
 		if (!showMenu) return;
-
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
 				setShowMenu(false);
 			}
 		};
-
 		document.addEventListener("click", closeMenu);
-
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu, dispatch]);
 
@@ -43,7 +41,7 @@ function ProfileButton({ user }) {
 		e.preventDefault();
 		dispatch(sessionActions.logout());
 		closeMenu();
-		// history.push("/");
+		history.push("/");
 	};
 
 	const demoSignin1 = (e) => {

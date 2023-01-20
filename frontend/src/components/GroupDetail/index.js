@@ -57,11 +57,11 @@ const GroupDetail = () => {
 	}, [showMenu]);
 
 	const closeMenu = () => setShowMenu(false);
-	const logout = (e) => {
-		e.preventDefault();
-		dispatch(sessionActions.logout());
-		closeMenu();
-	};
+	// const logout = (e) => {
+	// 	e.preventDefault();
+	// 	dispatch(sessionActions.logout());
+	// 	closeMenu();
+	// };
 
 	//----------------
 
