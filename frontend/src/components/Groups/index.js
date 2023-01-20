@@ -57,12 +57,8 @@ const Groups = (props) => {
 	//----------------
 
 	useEffect(() => {
-		console.log(`location ====`, location);
 		if (location.props && location.props.query) {
 			let payload = JSON.parse(JSON.stringify(location));
-
-			console.log(`location ====`, location);
-			console.log(`payload====`, payload);
 
 			dispatch(
 				thunkReadGroups(`?name=${payload.location.props.query}`)
@@ -73,7 +69,6 @@ const Groups = (props) => {
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 		} else {
-			console.log(`location ====`, location);
 			dispatch(thunkReadGroups()).catch(async (res) => {
 				const data = await res.json();
 				if (data && data.message === "Authentication required")
@@ -92,16 +87,26 @@ const Groups = (props) => {
 	const groups = Object.values(selector);
 
 	//resetClickHandler
-
 	const resetClickHandler = () => {
 		dispatch(actionResetState());
+		dispatch(thunkReadGroups()).catch(async (res) => {
+			const data = await res.json();
+			if (data && data.message === "Authentication required")
+				setErrors((data[errors] = [data.message]));
+			if (data && data.errors) setErrors(Object.values(data.errors));
+		});
 	};
 
 	//return
 	return (
 		<div className="margin-groups-container">
 			<div id="group-detail-header">
-				<NavLink className="groups-page-link" exact to="/groups">
+				<NavLink
+					className="groups-page-link remove-color"
+					exact
+					to="/groups"
+					onClick={resetClickHandler}
+				>
 					<h2 id="header-groups-pg">Groups</h2>
 				</NavLink>
 			</div>

@@ -62,7 +62,7 @@ function Navigation({ isLoaded }) {
 	return (
 		<div className="nav-container">
 			<div id="nav-left-container">
-				<NavLink id="nav-title" exact to="/">
+				<NavLink id="nav-title" exact to="/" className="remove-color">
 					<img
 						id="groupup-logo-wr"
 						src={logo}

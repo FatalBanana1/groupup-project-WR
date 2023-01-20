@@ -8,6 +8,7 @@ import {
 	thunkCreateMembership,
 	thunkReadMembers,
 	thunkDeleteMembership,
+	actionResetState,
 } from "../../../store/members";
 import { NavLink, useHistory, useParams } from "react-router-dom";
 import OpenModalButton from "../../OpenModalButton";
@@ -136,6 +137,14 @@ const Members = () => {
 				setErrors((data[errors] = [data.message]));
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
+		dispatch(actionResetState());
+		dispatch(thunkReadMembers(payload)).catch(async (res) => {
+			const data = await res.json();
+			if (data && data.message === "Authentication required")
+				setErrors((data[errors] = [data.message]));
+			if (data && data.errors) setErrors(Object.values(data.errors));
+		});
+		history.push(`/groups/${groupId}/members`);
 	};
 
 	const deletedMemberHandler = () => {
@@ -143,16 +152,23 @@ const Members = () => {
 		let payload = {
 			groupId,
 		};
-		// .then((data) => history.push(`/groups/${data.id}/members`))
 
-		dispatch(thunkDeleteMembership(payload))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.message === "Authentication required")
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
+		dispatch(thunkDeleteMembership(payload)).catch(async (res) => {
+			const data = await res.json();
+			if (data && data.message === "Authentication required")
+				setErrors((data[errors] = [data.message]));
+			if (data && data.errors) setErrors(Object.values(data.errors));
+		});
 		// if (!errors.length) setShow(3);
+
+		dispatch(actionResetState());
+		dispatch(thunkReadMembers(payload)).catch(async (res) => {
+			const data = await res.json();
+			if (data && data.message === "Authentication required")
+				setErrors((data[errors] = [data.message]));
+			if (data && data.errors) setErrors(Object.values(data.errors));
+		});
+		history.push(`/groups/${groupId}/members`);
 	};
 
 	const selector = useSelector((state) => state.members);

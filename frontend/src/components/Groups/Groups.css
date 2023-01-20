@@ -58,6 +58,10 @@
 	width: 640px;
 }
 
+.remove-color:hover {
+	background-color: white;
+}
+
 #create-group-link {
 	font-size: 20px;
 }
