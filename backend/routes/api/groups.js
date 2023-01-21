@@ -1215,12 +1215,15 @@ router.put(
 router.delete(
 	"/:groupId/membership",
 	requireAuth,
-	valid_group,
-	valid_delete,
+	// valid_group,
+	// valid_delete,
 	async (req, res) => {
 		let { memberId } = req.body;
 
 		let groupId = req.params.groupId;
+
+		console.log(`backend-------------`, groupId, memberId);
+
 		let deleted = await Membership.findOne({
 			where: { userId: memberId, groupId },
 		});

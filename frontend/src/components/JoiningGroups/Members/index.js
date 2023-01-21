@@ -26,12 +26,15 @@ const Members = () => {
 	let { groupId } = useParams();
 	let [errors, setErrors] = useState([]);
 	let [show, setShow] = useState(1);
+	const user = useSelector((state) => state.session.user);
+	const memberId = useSelector((state) => state.session.user.id);
+	groupId = useSelector((state) => state.groups.id);
+	console.log("user ----", memberId, groupId);
 
 	useEffect(() => {
 		let payload = {
 			groupId,
 		};
-
 		dispatch(thunkReadMembers(payload))
 			.then((data) => {
 				return history.push(`/groups/${data.id}/members`);
@@ -57,7 +60,6 @@ const Members = () => {
 		dispatch(actionResetState());
 		dispatch(thunkReadMembers(payload)).catch(async (res) => {
 			const data = await res.json();
-
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
 		history.push(`/groups/${groupId}/members`);
@@ -65,9 +67,13 @@ const Members = () => {
 
 	const deletedMemberHandler = () => {
 		setErrors([]);
+
 		let payload = {
+			user: { ...user },
+			memberId,
 			groupId,
 		};
+		console.log("inside deleted handler");
 
 		dispatch(thunkDeleteMembership(payload)).catch(async (res) => {
 			const data = await res.json();
