@@ -8,7 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteModalButton from "../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../Groups/UpdateGroup/EditModalButton.js";
 import * as sessionActions from "../../store/session";
-import { NavLink, useHistory, useParams } from "react-router-dom";
+import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
 
 //comps
 import { thunkReadGroupDetails } from "../../store/groups";
@@ -19,6 +19,7 @@ import Members from "../JoiningGroups/Members";
 import ErrorHandler from "../ErrorHandler";
 import { actionResetState } from "../../store/members";
 import { thunkReadMembers } from "../../store/members";
+import LoginFormModal from "../LoginFormModal";
 
 //main
 const GroupDetail = () => {
@@ -106,13 +107,10 @@ const GroupDetail = () => {
 		Venues: venues,
 		numMembers,
 	} = group;
-	if (!user)
-		return (
-			<div className="mbr-signin">Must be Logged in to View Members!</div>
-		);
+	if (!organizer) return null;
 
 	console.log(`before return in GRP ID`, user);
-	if (!organizer) return null;
+
 	let image = groupImages.find((el) => el.preview === true);
 	group["image"] = image;
 
@@ -196,9 +194,23 @@ const GroupDetail = () => {
 								</div>
 								<div className="margin-div" />
 								<div className="splash-link details-nav-section-border">
-									<NavLink to={`/groups/${group.id}/members`}>
-										Members
-									</NavLink>
+									{user ? (
+										<NavLink
+											to={`/groups/${group.id}/members`}
+										>
+											Members
+										</NavLink>
+									) : (
+										<div>
+											<OpenModalButton
+												buttonText="Members"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<LoginFormModal />
+												}
+											/>
+										</div>
+									)}
 								</div>
 							</div>
 						</div>
