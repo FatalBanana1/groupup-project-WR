@@ -3,9 +3,11 @@
 //imports
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import { thunkCreateGroups } from "../../../store/groups";
+import { actionResetState } from "../../../store/members";
+import { thunkReadMembers } from "../../../store/members";
 import * as sessionActions from "../../../store/session";
 import icon from "../images/favicon.ico";
 import "./CreateGroup.css";
@@ -26,6 +28,7 @@ const CreateGroup = () => {
 	const { closeModal } = useModal();
 	const stateError = "State is required";
 
+	let groupId = useParams();
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
@@ -41,7 +44,11 @@ const CreateGroup = () => {
 		};
 
 		return dispatch(thunkCreateGroups(payload))
-			.then((data) => history.push(`/groups/${data.id}`))
+			.then((data) => {
+				dispatch(actionResetState());
+				history.push(`/groups/${data.id}`);
+			})
+			.then(() => dispatch(thunkReadMembers(groupId)))
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();

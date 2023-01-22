@@ -17,7 +17,8 @@ import "./GroupDetail.css";
 import DeleteGroup from "../Groups/DeleteGroup";
 import Members from "../JoiningGroups/Members";
 import ErrorHandler from "../ErrorHandler";
-import { actionResetState } from "../../store/groups";
+import { actionResetState } from "../../store/members";
+import { thunkReadMembers } from "../../store/members";
 
 //main
 const GroupDetail = () => {
@@ -43,7 +44,10 @@ const GroupDetail = () => {
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId))
-			.then(() => setIsLoaded(true))
+			.then(() => {
+				dispatch(actionResetState());
+				setIsLoaded(true);
+			})
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));

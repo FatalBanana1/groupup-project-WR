@@ -126,10 +126,11 @@ right = 41
 	margin-top: 15px;
 	display: flex;
 	flex-direction: row-reverse;
+	max-width: 90%;
 }
 
 .margin-div {
-	width: 100%;
+	width: 50%;
 	max-width: 650px;
 }
 
@@ -157,7 +158,7 @@ right = 41
 	#group-details-page {
 		width: auto;
 		max-width: 100%;
-		margin: 0 20px;
+		margin: 0 0 0 10vw;
 	}
 
 	#details-img-default {
@@ -198,7 +199,8 @@ right = 41
 	}
 
 	#group-details-page {
-		margin: 0;
+		margin: 0 0 0 18vw;
+		max-width: 100%;
 	}
 
 	.nav-container {
