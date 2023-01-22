@@ -44,6 +44,8 @@
 .about-section {
 	width: auto;
 	word-wrap: normal;
+	overflow-y: hidden;
+	max-height: 100px;
 }
 
 .groups-page-link {

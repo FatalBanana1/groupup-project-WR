@@ -46,7 +46,7 @@ right = 41
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin: 0 5vw 0 10vw;
+	margin: 0 0 0 120px;
 }
 
 #about-section-container-left {
@@ -158,7 +158,16 @@ right = 41
 	#group-details-page {
 		width: auto;
 		max-width: 100%;
-		margin: 0 0 0 10vw;
+		margin: 0 0 0 6vw;
+	}
+
+	#details-container-header {
+		/* background-color: blue; */
+		display: flex;
+		flex-direction: row;
+		width: 100vw;
+		max-width: 100%;
+		margin-left: 35px;
 	}
 
 	#details-img-default {
@@ -186,6 +195,10 @@ right = 41
 		padding: 0 20px;
 		width: auto;
 		max-width: 100%;
+	}
+
+	.margin-div{
+		max-width: 380px;
 	}
 }
 

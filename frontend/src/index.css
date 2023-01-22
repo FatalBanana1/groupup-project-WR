@@ -104,7 +104,7 @@ a {
 }
 
 a:hover {
-	background-color: rgba(244, 244, 244, 0.4);
+	/* background-color: rgba(244, 244, 244, 0.4); */
 	color: rgb(0, 130, 148);
 }
 

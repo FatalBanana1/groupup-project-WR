@@ -73,9 +73,9 @@ const CreateGroup = () => {
 						<ul>
 							<div className="errors-h">Errors</div>
 							{Object.values(errors).map((error) => (
-								<li className="errors-li" key={error}>
-									{error}
-								</li>
+								<div className="errors-li" key={error}>
+									{`- ${error}`}
+								</div>
 							))}
 						</ul>
 					) : null}

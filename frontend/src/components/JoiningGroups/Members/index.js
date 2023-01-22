@@ -143,13 +143,13 @@ const Members = () => {
 					</div>
 
 					{Object.values(errors).length > 0 ? (
-						<div id="errors-create-group">
+						<div id="errors-group">
 							<ul>
 								<div className="errors-h">Errors</div>
 								{Object.values(errors).map((error) => (
-									<li className="errors-li" key={error}>
-										{error}
-									</li>
+									<div className="errors-li" key={error}>
+										{`- ${error}`}
+									</div>
 								))}
 							</ul>
 						</div>

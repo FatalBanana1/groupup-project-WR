@@ -16,3 +16,16 @@
 	flex-direction: column;
 	justify-content: center;
 }
+
+#errors-group {
+	font-size: 14px;
+	color: rgb(252, 42, 42);
+	font-style: italic;
+	overflow-wrap: normal;
+	width: 30%;
+	position: absolute;
+	right: 0;
+	background-color: white;
+	border-radius: 15px;
+	border: solid 0.1px rgba(0, 0, 0, 0.1);
+}

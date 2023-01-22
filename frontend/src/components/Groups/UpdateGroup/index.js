@@ -85,7 +85,9 @@ const UpdateGroup = ({ group }) => {
 				<div id="errors-create-group">
 					<ul>
 						{Object.values(errors).map((error) => (
-							<li key={error}>{error}</li>
+							<div className="errors-li" key={error}>
+								{`- ${error}`}
+							</div>
 						))}
 					</ul>
 				</div>
