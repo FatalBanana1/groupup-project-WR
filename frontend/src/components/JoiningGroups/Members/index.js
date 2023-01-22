@@ -37,7 +37,7 @@ const Members = () => {
 		};
 		dispatch(thunkReadMembers(payload))
 			.then((data) => {
-				console.log(`DATA---------`, data);
+				// console.log(`DATA---------`, data);
 				// history.push(`/groups/${data.groupId}/members`);
 			})
 			.catch(async (res) => {
@@ -63,7 +63,7 @@ const Members = () => {
 			const data = await res.json();
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
-		history.push(`/groups/${groupId}/members`);
+		// history.push(`/groups/${groupId}/members`);
 	};
 
 	const deletedMemberHandler = () => {
@@ -90,15 +90,15 @@ const Members = () => {
 			const data = await res.json();
 			if (data && data.errors) setErrors(Object.values(data.errors));
 		});
-		history.push(`/groups/${groupId}/members`);
+		// history.push(`/groups/${groupId}/members`);
 	};
 
 	const selector = useSelector((state) => state.members);
 
 	console.log(`members comp members list ====`, selector);
 
-	if (!selector)
-		return <div className="groups-null">No Members to display...</div>;
+	// if (!selector)
+	// 	return <div className="groups-null">No Members to display...</div>;
 	const members = Object.values(selector);
 
 	// return

@@ -27,7 +27,19 @@ const GroupDetail = () => {
 	let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 
+	// let groupId = useSelector((state) => state.groups.id);
+	// if (!groupId) {
+	// 	dispatch(thunkReadGroupDetails(groupId))
+	// 		.then(() => setIsLoaded(true))
+	// 		.catch(async (res) => {
+	// 			const data = await res.json();
+	// 			if (data && data.errors) setErrors(Object.values(data.errors));
+	// 		});
+	// 	groupId = useSelector((state) => state.groups.id);
+	// }
 	let { groupId } = useParams();
+
+	console.log(`state check here in group deets`);
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId))
@@ -86,7 +98,9 @@ const GroupDetail = () => {
 		Venues: venues,
 		numMembers,
 	} = group;
-	if (!organizer) return null;
+	if (!isLoaded) return null;
+
+	// console.log(`before return in GRP ID`, group.id);
 
 	let image = groupImages.find((el) => el.preview === true);
 	group["image"] = image;
@@ -97,11 +111,9 @@ const GroupDetail = () => {
 	let day = date[2];
 	let year = date[3];
 
-	console.log(`before return in GRP ID`, group.id);
-
 	//return
 	return (
-		<>
+		<div>
 			{isLoaded && (
 				<div id="group-details-page">
 					{errors.length > 0 ? (
@@ -222,7 +234,7 @@ const GroupDetail = () => {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 };
 

@@ -118,7 +118,7 @@ const Groups = (props) => {
 										id="group-detail"
 										key={group.id}
 										to={`/groups/${group.id}`}
-										group={group}
+										// group={group}
 										// onClick={resetClickHandler}
 									>
 										<ReadGroups group={group} />

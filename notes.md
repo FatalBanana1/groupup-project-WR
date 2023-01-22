@@ -555,9 +555,15 @@ Below is a link to review my resume on LinkedIn and contact info which is also f
 -- TODO: add later...
 Once you submit your group, a prefilled form will be shown for you to email me your response to this job request.
 
+
 //---------------------------
+
 //---------------------------
+
 //---------------------------
+
 //---------------------------
+
+npm install && npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:seed:undo:all && npm run sequelize --prefix backend db:migrate:undo:all && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
 
 //---------------------------
