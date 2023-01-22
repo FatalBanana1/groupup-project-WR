@@ -28,8 +28,11 @@ const Members = () => {
 	let [show, setShow] = useState(1);
 	const user = useSelector((state) => state.session.user);
 	const memberId = useSelector((state) => state.session.user.id);
-	// let { groupId } = useParams();
+	let params = useParams();
 	let groupId = useSelector((state) => state.groups.id);
+	if (!groupId) {
+		groupId = params.groupId;
+	}
 
 	useEffect(() => {
 		let payload = {
@@ -89,6 +92,7 @@ const Members = () => {
 	// if (!selector)
 	// 	return <div className="groups-null">No Members to display...</div>;
 	const members = Object.values(selector);
+	console.log(members);
 
 	// return
 	return (

@@ -136,7 +136,7 @@ const valid_user = async (req, res, next) => {
 		where: {
 			userId: user.id,
 			groupId,
-			status: { [Op.in]: ["co-host", "organizer"] },
+			status: "co-host",
 		},
 	});
 
@@ -253,6 +253,55 @@ const valid_delete = async (req, res, next) => {
 	}
 };
 
+const valid_delete_member = async (req, res, next) => {
+	const { user } = req;
+
+	if (!user) {
+		return res.status(400).json({
+			message: "Validation Error",
+			statusCode: 400,
+			errors: {
+				memberId: "User must be signed in.",
+			},
+		});
+	}
+	const { memberId, groupId } = req.body;
+	let auth = await Membership.findOne({
+		where: { userId: user.id, groupId: groupId },
+		include: [
+			{
+				model: Group,
+			},
+		],
+	});
+
+	if (!auth || auth === {}) {
+		res.status(400);
+		return res.json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be a member of the group.`,
+			},
+		});
+	}
+	if (
+		auth.status === "co-host" ||
+		auth.Group.organizerId === user.id ||
+		user.id === memberId
+	) {
+		next();
+	} else {
+		return res.status(403).json({
+			message: "Authentication Error",
+			statusCode: 403,
+			errors: {
+				memberId: `Current User must be the organizer of the group or a member of the group with a status of co-host`,
+			},
+		});
+	}
+};
+
 const valid_dates = async (req, res, next) => {
 	const groupId = req.params.groupId;
 	const startDate = req.body.startDate;
@@ -340,12 +389,14 @@ router.get("/:groupId/members", valid_group, async (req, res) => {
 	members.forEach((el, i) => {
 		array.push(el.User);
 
-		if (
-			user.id &&
-			(auth.status === "co-host" || auth.Group.organizerId === user.id)
-		) {
-			array[i].dataValues.status = el.status;
-		}
+		array[i].dataValues.status = el.status;
+
+		// if (
+		// 	user.id &&
+		// 	(auth.status === "co-host" || auth.Group.organizerId === user.id)
+		// ) {
+		// 	array[i].dataValues.status = el.status;
+		// }
 	});
 	return res.json({ Members: array, groupId });
 });
@@ -1254,7 +1305,7 @@ router.delete(
 	"/:groupId/membership",
 	requireAuth,
 	valid_group,
-	valid_delete,
+	valid_delete_member,
 	async (req, res) => {
 		console.log(`REQ---BODY`, req.body);
 		let { memberId, groupId } = req.body;
