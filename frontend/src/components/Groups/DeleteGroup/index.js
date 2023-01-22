@@ -36,7 +36,7 @@ const DeleteGroup = (group) => {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
-	console.log(`privated`, privated);
+	console.log(`privated`, group.group);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -44,13 +44,7 @@ const DeleteGroup = (group) => {
 
 		if (name === `Delete ${group.group.name}.`) {
 			const payload = {
-				id: group.group.id,
-				name,
-				about,
-				type,
-				private: privated,
-				city,
-				state,
+				groupId: group.group.id,
 			};
 
 			return dispatch(thunkDeleteGroup(payload))

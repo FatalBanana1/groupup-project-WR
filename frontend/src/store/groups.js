@@ -117,12 +117,13 @@ export const thunkUpdateGroup = (payload) => async (dispatch) => {
 
 // DELETE: Delete a Group Route: /api/groups/:groupId
 export const thunkDeleteGroup = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/groups/${payload.id}`, {
+	const response = await csrfFetch(`/api/groups/${payload.groupId}`, {
 		method: `DELETE`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
 
+	// console.log(`group id in THUNK>>>>>>>`,response);
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionDeleteGroup(group));

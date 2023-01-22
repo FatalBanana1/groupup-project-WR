@@ -23,28 +23,23 @@ const Members = () => {
 	console.log(`inside MBRS comp`);
 	let history = useHistory();
 	let dispatch = useDispatch();
-	let { groupId } = useParams();
+	const [isLoaded, setIsLoaded] = useState(false);
 	let [errors, setErrors] = useState([]);
 	let [show, setShow] = useState(1);
 	const user = useSelector((state) => state.session.user);
 	const memberId = useSelector((state) => state.session.user.id);
-	groupId = useSelector((state) => state.groups.id);
-	console.log("user ----", memberId, groupId);
+	// let { groupId } = useParams();
+	let groupId = useSelector((state) => state.groups.id);
 
 	useEffect(() => {
 		let payload = {
 			groupId,
 		};
-		dispatch(thunkReadMembers(payload))
-			.then((data) => {
-				// console.log(`DATA---------`, data);
-				// history.push(`/groups/${data.groupId}/members`);
-			})
-			.catch(async (res) => {
-				const data = await res.json();
+		dispatch(thunkReadMembers(payload)).catch(async (res) => {
+			const data = await res.json();
 
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
+			if (data && data.errors) setErrors(Object.values(data.errors));
+		});
 	}, [dispatch]);
 
 	const joinGroupHandler = () => {
@@ -54,15 +49,16 @@ const Members = () => {
 			status: "pending",
 		};
 
-		dispatch(thunkCreateMembership(payload)).catch(async (res) => {
-			const data = await res.json();
-			if (data && data.errors) setErrors(Object.values(data.errors));
-		});
-		dispatch(actionResetState());
-		dispatch(thunkReadMembers(payload)).catch(async (res) => {
-			const data = await res.json();
-			if (data && data.errors) setErrors(Object.values(data.errors));
-		});
+		dispatch(thunkCreateMembership(payload))
+			.then(() => {
+				console.log(`PAYLOAD IN MBR C________________`, payload);
+				dispatch(thunkReadMembers(payload));
+			})
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+		// dispatch(actionResetState());
 		// history.push(`/groups/${groupId}/members`);
 	};
 
@@ -76,20 +72,13 @@ const Members = () => {
 		};
 		console.log("inside deleted handler");
 
-		dispatch(thunkDeleteMembership(payload)).catch(async (res) => {
-			const data = await res.json();
+		dispatch(thunkDeleteMembership(payload))
+			.then(() => dispatch(thunkReadMembers(payload)))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
 
-			if (data && data.errors) setErrors(Object.values(data.errors));
-		});
-		// if (!errors.length) setShow(3);
-
-		console.log(`deleted`, payload);
-
-		dispatch(actionResetState());
-		dispatch(thunkReadMembers(payload)).catch(async (res) => {
-			const data = await res.json();
-			if (data && data.errors) setErrors(Object.values(data.errors));
-		});
 		// history.push(`/groups/${groupId}/members`);
 	};
 

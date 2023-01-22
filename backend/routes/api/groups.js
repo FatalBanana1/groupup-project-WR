@@ -1285,7 +1285,7 @@ router.delete(
 // Delete a Group
 // delete - /api/groups/:groupId
 router.delete("/:groupId", valid_group, valid_delete, async (req, res) => {
-	let groupId = req.params.groupId;
+	let groupId = req.body.groupId;
 	let deleted = await Group.findByPk(groupId);
 	await deleted.destroy();
 
