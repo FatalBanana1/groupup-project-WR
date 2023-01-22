@@ -20,7 +20,7 @@ module.exports = {
 				{
 					userId: 1,
 					groupId: 1,
-					status: "organizer",
+					status: "co-host",
 				},
 				{
 					userId: 1,
@@ -45,12 +45,12 @@ module.exports = {
 				{
 					userId: 3,
 					groupId: 2,
-					status: "organizer",
+					status: "co-host",
 				},
 				{
 					userId: 3,
 					groupId: 3,
-					status: "organizer",
+					status: "co-host",
 				},
 				{
 					userId: 5,
@@ -104,7 +104,7 @@ module.exports = {
 			options,
 			{
 				id: {
-					[Op.gt]: 0,
+					[Op.gte]: 0,
 				},
 			},
 			{}

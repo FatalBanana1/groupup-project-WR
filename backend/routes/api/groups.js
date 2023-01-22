@@ -1069,7 +1069,7 @@ router.post("/", requireAuth, async (req, res) => {
 	let member = await Membership.create({
 		userId: user.id,
 		groupId: group.id,
-		status: "organizer",
+		status: "co-host",
 	});
 
 	//deal with group img
