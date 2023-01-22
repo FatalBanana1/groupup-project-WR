@@ -45,16 +45,15 @@ const CreateGroup = () => {
 
 		return dispatch(thunkCreateGroups(payload))
 			.then((data) => {
-				dispatch(actionResetState());
 				history.push(`/groups/${data.id}`);
 			})
-			.then(() => dispatch(thunkReadMembers(groupId)))
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.message === "Authentication required")
+				if (data && data.message)
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
+				console.log(`errors in create group`, errors);
 			});
 	};
 

@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkUpdateGroup } from "../../../store/groups";
+import { thunkReadGroupDetails, thunkUpdateGroup } from "../../../store/groups";
 import * as sessionActions from "../../../store/session";
 
 //comps
@@ -62,6 +62,10 @@ const UpdateGroup = ({ group }) => {
 		};
 
 		return dispatch(thunkUpdateGroup(payload))
+			.then((data) => {
+				console.log(`data returned from update`, data);
+				dispatch(thunkReadGroupDetails(data.id));
+			})
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();

@@ -20,78 +20,49 @@ const Groups = (props) => {
 	let location = useLocation();
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
-
 	const [isLoaded, setIsLoaded] = useState(false);
-
-	// let params = useParams();
-	// console.log(`location ===`, location);
-	// console.log(`location ===`, location.props);
-	// console.log(`location ===`, location.props.query);
 
 	//-----------------
 
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
 
-	// useEffect(() => {
-	// 	if (!showMenu) return;
-	// 	const closeMenu = (e) => {
-	// 		if (!ulRef.current.contains(e.target)) {
-	// 			setShowMenu(false);
-	// 		}
-	// 	};
-	// 	document.addEventListener("click", closeMenu);
-	// 	return () => document.removeEventListener("click", closeMenu);
-	// }, [showMenu]);
-
 	const closeMenu = () => setShowMenu(false);
 
 	//----------------
+	const search = useSelector((state) => state.groups.search);
+	console.log(`search search 000000----`, search);
 
 	useEffect(() => {
-		// if (location.props && location.props.query) {
-		// 	let payload = JSON.parse(JSON.stringify(location));
+		// if (search) {
+		// 	let payload = JSON.parse(JSON.stringify(search));
 
-		// 	dispatch(
-		// 		thunkReadGroups(`?name=${payload.location.props.query}`)
-		// 	).catch(async (res) => {
-		// 		const data = await res.json();
-		// 		if (data && data.message === "Authentication required")
-		// 			setErrors((data[errors] = [data.message]));
-		// 		if (data && data.errors) setErrors(Object.values(data.errors));
-		// 	});
+		// 	dispatch(thunkReadGroups(`?name=${payload}`))
+		// 		.then(() => setIsLoaded(true))
+		// 		.catch(async (res) => {
+		// 			const data = await res.json();
+		// 			if (data && data.message)
+		// 				setErrors((data[errors] = [data.message]));
+		// 			if (data && data.errors)
+		// 				setErrors(Object.values(data.errors));
+		// 		});
 		// } else {
-		// }
-
-		dispatch(thunkReadGroups())
-			.then(() => setIsLoaded(true))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.message === "Authentication required")
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
+			dispatch(thunkReadGroups())
+				.then(() => setIsLoaded(true))
+				.catch(async (res) => {
+					const data = await res.json();
+					if (data && data.message)
+						setErrors((data[errors] = [data.message]));
+					if (data && data.errors)
+						setErrors(Object.values(data.errors));
+				});
 	}, [dispatch]);
 
 	// {groups: {1:{1}, 2:{2}...} }
 	const selector = useSelector((state) => state.groups);
 	console.log(`selector>>> groups: `, selector);
 
-	// if (!selector)
-	// 	return <div className="groups-null">No Groups to display...</div>;
 	const groups = Object.values(selector);
-
-	//resetClickHandler
-	// const resetClickHandler = () => {
-	// 	dispatch(actionResetState())
-	// 		.then(() => dispatch(thunkReadGroups()))
-	// 		.catch(async (res) => {
-	// 			const data = await res.json();
-	// 			if (data && data.message === "Authentication required")
-	// 				setErrors((data[errors] = [data.message]));
-	// 			if (data && data.errors) setErrors(Object.values(data.errors));
-	// 		});
-	// };
 
 	//return
 	return (
@@ -101,7 +72,6 @@ const Groups = (props) => {
 					className="groups-page-link remove-color"
 					exact
 					to="/groups"
-					// onClick={resetClickHandler}
 				>
 					<h2 id="header-groups-pg">Groups</h2>
 				</NavLink>

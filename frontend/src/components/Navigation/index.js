@@ -1,15 +1,23 @@
 // frontend/src/components/Navigation/index.js
 import React, { useState } from "react";
-import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
+import {
+	NavLink,
+	Redirect,
+	useHistory,
+	useLocation,
+	useParams,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import logo from "../Groups/images/groupup-logo5.png";
 import searchIcon from "../Groups/images/search-icon4.png";
 import Groups from "../Groups";
+import { actionResetState } from "../../store/groups";
 
 function Navigation({ isLoaded }) {
 	let [search, setSearch] = useState("");
+	let location = useLocation();
 	const sessionUser = useSelector((state) => state.session.user);
 	let history = useHistory();
 
@@ -20,26 +28,15 @@ function Navigation({ isLoaded }) {
 		// (`/groups?name=${newsearch}`)
 	};
 
+	let searchbar = useSelector((state) => state.groups);
+
 	//click handler
 	const clickHandler = (e) => {
-		// let trimmed = "?";
-		// let newsearch = search.toLowerCase().split(" ").join("");
-
-		// //check if type
-		// if (newsearch.includes("in person")) {
-		// 	trimmed += `type=In person`;
-		// }
-		// if (newsearch.includes("online")) {
-		// 	trimmed += `type=Online`;
-		// }
-		// //check if name
-		// if (newsearch) {
-		// 	trimmed += `name=${newsearch}`;
-		// }
+		setSearch(e.target.value);
 
 		let newsearch = search.toLowerCase().split(" ").join("");
-
-		console.log(`trimmed in nav---`, newsearch);
+		setSearch("");
+		searchbar["search"] = newsearch;
 
 		return (
 			<NavLink
@@ -47,10 +44,8 @@ function Navigation({ isLoaded }) {
 					pathname: `/groups?name=${newsearch}`,
 					props: { query: newsearch },
 				}}
-				id=""
-			>
-				<Groups />
-			</NavLink>
+				id="search-bar-link"
+			></NavLink>
 		);
 
 		// console.log(`trimmed in nav---`, newsearch);
@@ -99,6 +94,8 @@ function Navigation({ isLoaded }) {
 							props: { query: search },
 						}}
 						id="search-btn-container"
+						defaultValue=""
+						onClick={clickHandler}
 					>
 						Search
 					</NavLink>

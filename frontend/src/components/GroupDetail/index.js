@@ -104,7 +104,7 @@ const GroupDetail = () => {
 	} = group;
 	if (!isLoaded) return null;
 
-	// console.log(`before return in GRP ID`, group.id);
+	console.log(`before return in GRP ID`, groupImages.length);
 
 	let image = groupImages.find((el) => el.preview === true);
 	group["image"] = image;
@@ -127,12 +127,17 @@ const GroupDetail = () => {
 					) : null}
 					<div id="details-container-header">
 						<div id="left-details-img">
-							{image !== undefined ? (
-								<img src={image.url} id="details-img-default" />
+							{image.url ? (
+								<img
+									src={image.url}
+									id="details-img-default"
+									alt="group image"
+								/>
 							) : (
 								<img
 									src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
 									className="no-groups-img-detail"
+									alt="No Group Image"
 								/>
 							)}
 						</div>
@@ -205,18 +210,23 @@ const GroupDetail = () => {
 										Group Images
 									</h2>
 									<div className="about-details-font">
-										{groupImages.length
-											? groupImages.map((image) =>
-													image.preview ? null : (
-														<img
-															className="read-group-images"
-															key={image.id}
-															src={image.url}
-															alt={`Group Image for: "${image.url}"`}
-														/>
-													)
-											  )
-											: null}
+										{groupImages.length > 1 ? (
+											groupImages.map((image) =>
+												image.preview ? null : (
+													<img
+														className="read-group-images"
+														key={image.id}
+														src={image.url}
+														alt={`Group Image for: "${image.url}"`}
+													/>
+												)
+											)
+										) : (
+											<div>
+												No Group Images... Use Edit
+												Group to add more.
+											</div>
+										)}
 									</div>
 								</div>
 							</div>

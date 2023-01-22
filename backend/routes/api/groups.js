@@ -1283,6 +1283,10 @@ router.put(
 			}
 		);
 
+		newgroup = await Group.findOne({
+			where: { name, about, type, private, city, state },
+		});
+
 		return res.json({
 			id: newgroup.id,
 			name,
