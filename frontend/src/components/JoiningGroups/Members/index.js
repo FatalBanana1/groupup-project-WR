@@ -20,8 +20,6 @@ import "./Members.css";
 
 //main
 const Members = () => {
-	console.log(`inside MBRS comp`);
-	let history = useHistory();
 	let dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
 	let [errors, setErrors] = useState([]);
@@ -55,15 +53,12 @@ const Members = () => {
 
 		dispatch(thunkCreateMembership(payload))
 			.then(() => {
-				console.log(`PAYLOAD IN MBR C________________`, payload);
 				dispatch(thunkReadMembers(payload));
 			})
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
-		// dispatch(actionResetState());
-		// history.push(`/groups/${groupId}/members`);
 	};
 
 	const deletedMemberHandler = () => {

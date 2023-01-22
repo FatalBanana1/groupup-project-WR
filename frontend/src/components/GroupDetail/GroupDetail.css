@@ -146,6 +146,11 @@ right = 41
 	margin: 10px;
 }
 
+.mbr-signin {
+	margin-top: 20px;
+	font-size: 30px;
+}
+
 /* ------------------------------- */
 
 /* -------------- media screens ----------------- */
@@ -197,8 +202,8 @@ right = 41
 		max-width: 100%;
 	}
 
-	.margin-div{
-		max-width: 380px;
+	.margin-div {
+		max-width: 530px;
 	}
 }
 

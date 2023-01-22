@@ -1,0 +1,13 @@
+/* read member css */
+
+#no-groups-img-mbrs {
+	border-radius: 800px;
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	margin-bottom: 60px;
+}
+
+#detail-right {
+	margin-top: 20px;
+}

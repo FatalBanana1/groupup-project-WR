@@ -47,15 +47,14 @@ const Groups = (props) => {
 		// 				setErrors(Object.values(data.errors));
 		// 		});
 		// } else {
-			dispatch(thunkReadGroups())
-				.then(() => setIsLoaded(true))
-				.catch(async (res) => {
-					const data = await res.json();
-					if (data && data.message)
-						setErrors((data[errors] = [data.message]));
-					if (data && data.errors)
-						setErrors(Object.values(data.errors));
-				});
+		dispatch(thunkReadGroups())
+			.then(() => setIsLoaded(true))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.message)
+					setErrors((data[errors] = [data.message]));
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
 	}, [dispatch]);
 
 	// {groups: {1:{1}, 2:{2}...} }

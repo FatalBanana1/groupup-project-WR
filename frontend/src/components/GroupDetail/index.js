@@ -48,6 +48,9 @@ const GroupDetail = () => {
 				dispatch(actionResetState());
 				setIsLoaded(true);
 			})
+			.then(() => {
+				dispatch(sessionActions.restoreUser());
+			})
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
@@ -85,6 +88,7 @@ const GroupDetail = () => {
 	//----------------
 
 	// {groups: {1:{1}, 2:{2}...} }
+	let user = useSelector((state) => state.session.user);
 	const group = useSelector((state) => state.groups);
 	const {
 		id,
@@ -102,10 +106,13 @@ const GroupDetail = () => {
 		Venues: venues,
 		numMembers,
 	} = group;
-	if (!isLoaded) return null;
+	if (!user)
+		return (
+			<div className="mbr-signin">Must be Logged in to View Members!</div>
+		);
 
-	console.log(`before return in GRP ID`, groupImages.length);
-
+	console.log(`before return in GRP ID`, user);
+	if (!organizer) return null;
 	let image = groupImages.find((el) => el.preview === true);
 	group["image"] = image;
 

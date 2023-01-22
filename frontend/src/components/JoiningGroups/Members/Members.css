@@ -22,9 +22,10 @@
 	color: rgb(252, 42, 42);
 	font-style: italic;
 	overflow-wrap: normal;
-	width: 30%;
+	width: 40%;
 	position: absolute;
-	right: 0;
+	right: 30%;
+	top: 2%;
 	background-color: white;
 	border-radius: 15px;
 	border: solid 0.1px rgba(0, 0, 0, 0.1);

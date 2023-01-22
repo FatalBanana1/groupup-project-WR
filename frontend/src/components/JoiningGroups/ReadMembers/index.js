@@ -10,10 +10,8 @@ import "./ReadMembers.css";
 
 //main
 const ReadMembers = ({ member }) => {
-	let { id, firstName, lastName, username, email, status, groupId } = member;
+	let { id, firstName, lastName, username, email, status } = member;
 	let previewImage = false;
-
-	console.log(`inside read members comp -----`, status);
 
 	//return
 	return (
@@ -25,6 +23,7 @@ const ReadMembers = ({ member }) => {
 					<img
 						src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
 						className="no-groups-img-read"
+						id="no-groups-img-mbrs"
 					/>
 				)}
 			</div>
@@ -33,9 +32,11 @@ const ReadMembers = ({ member }) => {
 				<h3 id="detail-right-name">
 					{firstName} {lastName}
 				</h3>
-				<div className="about-section">{username}</div>
-				<div className="about-section">{email}</div>
-				<div className="about-section">{status}</div>
+				<div className="about-section">{`Username: ${username}`}</div>
+				<div className="about-section">{`Email: ${email}`}</div>
+				<div className="about-section">{`Status: ${
+					status[0].toUpperCase() + status.substring(1)
+				}`}</div>
 			</div>
 		</div>
 	);

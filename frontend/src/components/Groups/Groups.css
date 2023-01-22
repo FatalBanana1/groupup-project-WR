@@ -21,9 +21,10 @@
 
 #group-detail-header {
 	/* border-bottom: 0.1px solid gray; */
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
+	/* display: flex; */
+	/* flex-direction: row;
+	justify-content: flex-start; */
+	position: sticky;
 }
 #group-detail:first-of-type {
 	/* background-color: red; */
