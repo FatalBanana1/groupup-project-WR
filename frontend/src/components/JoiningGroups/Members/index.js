@@ -21,7 +21,7 @@ import "./Members.css";
 //main
 const Members = () => {
 	console.log(`inside MBRS comp`);
-	let history = useHistory("/groups");
+	let history = useHistory();
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
 	let [errors, setErrors] = useState([]);
@@ -37,7 +37,8 @@ const Members = () => {
 		};
 		dispatch(thunkReadMembers(payload))
 			.then((data) => {
-				return history.push(`/groups/${data.id}/members`);
+				console.log(`DATA---------`, data);
+				// history.push(`/groups/${data.groupId}/members`);
 			})
 			.catch(async (res) => {
 				const data = await res.json();
@@ -166,6 +167,7 @@ const Members = () => {
 						} else {
 							if (member.id) {
 							}
+							member["groupId"] = groupId;
 							return (
 								<NavLink
 									id="group-detail"
@@ -178,7 +180,7 @@ const Members = () => {
 						}
 					})
 				) : (
-					<div>No Groups to display.</div>
+					<div>No Members to display.</div>
 				)}
 			</div>
 			{/* <div id="groups-link-container">

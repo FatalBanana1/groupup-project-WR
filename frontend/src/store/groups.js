@@ -75,8 +75,8 @@ export const thunkReadGroups = (payload) => async (dispatch) => {
 
 // GET: Get details of a Group Route: /api/groups/:groupId
 export const thunkReadGroupDetails = (payload) => async (dispatch) => {
+	console.log(`response = thunk -----------`, payload);
 	const response = await csrfFetch(`/api/groups/${payload}`);
-	// console.log(`response = thunk -----------`, response);
 
 	if (response.ok) {
 		const group = await response.json();

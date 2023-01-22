@@ -25,29 +25,24 @@ const GroupDetail = () => {
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
 	let history = useHistory();
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	let { groupId } = useParams();
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId))
-			.then((data) => console.log(`data logger`, data, data.id))
+			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
-				console.log(`inside catch ===`, data);
-				console.log(`inside catch ===`, data.errors);
-				// console.log(`inside catch ===`, data)
-
-				// if (data && data.message === "Authentication required")
-				// 	setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	}, [dispatch]);
 
-	useEffect(() => {
-		console.log(`inside catch ===`, errors);
-		// dispatch(actionResetState());
-		// history.push(`/groups/${groupId}`);
-	}, [errors]);
+	// useEffect(() => {
+	// 	console.log(`inside catch ===`, errors);
+	// 	// dispatch(actionResetState());
+	// 	// history.push(`/groups/${groupId}`);
+	// }, [errors]);
 
 	//-----------------
 
@@ -102,121 +97,132 @@ const GroupDetail = () => {
 	let day = date[2];
 	let year = date[3];
 
-	console.log(`before return in GRP DEET`, errors);
+	console.log(`before return in GRP ID`, group.id);
 
 	//return
 	return (
-		<div id="group-details-page">
-			{errors.length > 0 ? (
-				<div className="error-handler-container">
-					{/* <ErrorHandler errors={errors} /> */}
-					RENDERING ERRORS HERE
-				</div>
-			) : (
-				<div>{errors}</div>
-			)}
-			<div id="details-container-header">
-				<div id="left-details-img">
-					{image !== undefined ? (
-						<img src={image.url} id="details-img-default" />
-					) : (
-						<img
-							src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-							className="no-groups-img-detail"
-						/>
-					)}
-				</div>
-				<div id="right-details-header">
-					<div id="name-details-div">
-						<h1 id="right-details-header-name">{name}</h1>
+		<>
+			{isLoaded && (
+				<div id="group-details-page">
+					{errors.length > 0 ? (
+						<div className="error-handler-container">
+							<ErrorHandler errors={errors} />
+						</div>
+					) : null}
+					<div id="details-container-header">
+						<div id="left-details-img">
+							{image !== undefined ? (
+								<img src={image.url} id="details-img-default" />
+							) : (
+								<img
+									src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+									className="no-groups-img-detail"
+								/>
+							)}
+						</div>
+						<div id="right-details-header">
+							<div id="name-details-div">
+								<h1 id="right-details-header-name">{name}</h1>
+							</div>
+							<div className="details-info">{`${city}, ${state}`}</div>
+							<div className="details-info li-tag-members-line">
+								{`${numMembers} members`}
+								<li className="li-tags" />
+								{`${privated ? "Private" : "Public"} group`}
+							</div>
+							<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
+						</div>
 					</div>
-					<div className="details-info">{`${city}, ${state}`}</div>
-					<div className="details-info li-tag-members-line">
-						{`${numMembers} members`}
-						<li className="li-tags" />
-						{`${privated ? "Private" : "Public"} group`}
-					</div>
-					<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
-				</div>
-			</div>
 
-			<div id="details-container-body">
-				<div id="details-nav-section">
-					<div id="update-groups-link-container">
-						<div>
-							<EditModalButton
-								id="update-group-button"
-								buttonText="Edit Group"
-								onButtonClick={closeMenu}
-								modalComponent={<UpdateGroup group={group} />}
-							/>
-						</div>
-						<div>
-							<DeleteModalButton
-								id="delete-group-button"
-								buttonText="Delete Group"
-								onButtonClick={closeMenu}
-								modalComponent={<DeleteGroup group={group} />}
-							/>
-						</div>
-						<div className="join-group">
-							{/* <button
+					<div id="details-container-body">
+						<div id="details-nav-section">
+							<div id="update-groups-link-container">
+								<div>
+									<EditModalButton
+										id="update-group-button"
+										buttonText="Edit Group"
+										onButtonClick={closeMenu}
+										modalComponent={
+											<UpdateGroup group={group} />
+										}
+									/>
+								</div>
+								<div>
+									<DeleteModalButton
+										id="delete-group-button"
+										buttonText="Delete Group"
+										onButtonClick={closeMenu}
+										modalComponent={
+											<DeleteGroup group={group} />
+										}
+									/>
+								</div>
+								<div className="join-group">
+									{/* <button
 								type="submit"
 								className="create selected"
 								onClick={joinGroupClickHandler}
 							>
 								Join Group
 							</button> */}
+								</div>
+								<div className="margin-div" />
+								<div className="splash-link details-nav-section-border">
+									<NavLink to={`/groups/${group.id}/members`}>
+										Members
+									</NavLink>
+								</div>
+							</div>
 						</div>
-						<div className="margin-div" />
-						<div className="splash-link details-nav-section-border">
-							<NavLink to={`/groups/${group.id}/members`}>
-								Members
-							</NavLink>
-						</div>
-					</div>
-				</div>
 
-				<div id="about-section-container">
-					<div id="about-section-container-left">
-						<h2 className="about-title-font">What we're about</h2>
-						<div className="about-details-font">{about}</div>
+						<div id="about-section-container">
+							<div id="about-section-container-left">
+								<h2 className="about-title-font">
+									What we're about
+								</h2>
+								<div className="about-details-font">
+									{about}
+								</div>
 
-						<div id="group-detail-images">
-							<h2 className="about-title-font">Group Images</h2>
-							<div className="about-details-font">
-								{groupImages.length
-									? groupImages.map((image) =>
-											image.preview ? null : (
-												<img
-													className="read-group-images"
-													key={image.id}
-													src={image.url}
-													alt={`Group Image for: "${image.url}"`}
-												/>
-											)
-									  )
-									: null}
+								<div id="group-detail-images">
+									<h2 className="about-title-font">
+										Group Images
+									</h2>
+									<div className="about-details-font">
+										{groupImages.length
+											? groupImages.map((image) =>
+													image.preview ? null : (
+														<img
+															className="read-group-images"
+															key={image.id}
+															src={image.url}
+															alt={`Group Image for: "${image.url}"`}
+														/>
+													)
+											  )
+											: null}
+									</div>
+								</div>
+							</div>
+
+							<div id="about-section-container-right">
+								<div id="organizer-details-container">
+									<h2
+										id="organizer-details"
+										className="about-title-font"
+									>
+										Organizer
+									</h2>
+								</div>
+								<div className="about-details-font">{`${organizer.firstName} ${organizer.lastName}`}</div>
+								<div className="about-details-font">{`Type: ${type}`}</div>
+								<div className="about-details-font">{`Est: ${month} ${day}, ${year}`}</div>
 							</div>
 						</div>
 					</div>
-
-					<div id="about-section-container-right">
-						<div id="organizer-details-container">
-							<h2
-								id="organizer-details"
-								className="about-title-font"
-							>
-								Organizer
-							</h2>
-						</div>
-						<div className="about-details-font">{`${organizer.firstName} ${organizer.lastName}`}</div>
-						<div className="about-details-font">{`Type: ${type}`}</div>
-						<div className="about-details-font">{`Est: ${month} ${day}, ${year}`}</div>
-					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 

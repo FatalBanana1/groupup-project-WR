@@ -1,1 +1,5 @@
 /* error handler css */
+
+.errors-red {
+	color: red;
+}

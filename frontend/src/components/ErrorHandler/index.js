@@ -20,9 +20,6 @@ const ErrorHandler = ({ errors }) => {
 	return (
 		<div id="create-group-container">
 			<div className="sign-up-container" id="create-group">
-				<div className="form-icon">
-					<img className="image-logo" src={icon} />
-				</div>
 				<div className="signup-header-name">Errors</div>
 			</div>
 

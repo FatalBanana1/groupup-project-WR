@@ -35,6 +35,40 @@ const router = express.Router();
 // 	next();
 // };
 
+const valid_group_only = async (req, res, next) => {
+	const id = req.params.groupId;
+
+	if (id) {
+		const info = await Group.findByPk(id);
+		if (!info) {
+			return res.status(404).json({
+				message: "Validation Error",
+				statusCode: 404,
+				errors: {
+					groupId: "Group couldn't be found",
+				},
+			});
+		}
+		req.group = info;
+		next();
+	} else {
+		let usersgroup = await Group.findOne({
+			where: { organizerId: user.id },
+		});
+		if (!usersgroup) {
+			return res.status(404).json({
+				message: "Validation Error",
+				statusCode: 404,
+				errors: {
+					groupId: "Group couldn't be found",
+				},
+			});
+		}
+		req.group = usersgroup;
+		next();
+	}
+};
+
 const valid_group = async (req, res, next) => {
 	let { user } = req;
 
@@ -182,9 +216,9 @@ const valid_delete = async (req, res, next) => {
 			},
 		});
 	}
-	const { memberId } = req.body;
+	const { memberId, groupId } = req.body;
 	let auth = await Membership.findOne({
-		where: { userId: user.id, groupId: req.body.id },
+		where: { userId: user.id, groupId: groupId },
 		include: [
 			{
 				model: Group,
@@ -313,7 +347,7 @@ router.get("/:groupId/members", valid_group, async (req, res) => {
 			array[i].dataValues.status = el.status;
 		}
 	});
-	return res.json({ Members: array });
+	return res.json({ Members: array, groupId });
 });
 
 // Get all Groups joined or organized by the Current User
@@ -505,7 +539,7 @@ router.get("/:groupId/venues", valid_group, async (req, res) => {
 
 // Get details of a Group from an id
 // get - /api/groups/:groupId
-router.get("/:groupId", valid_group, async (req, res) => {
+router.get("/:groupId", valid_group_only, async (req, res) => {
 	let groupId = req.params.groupId;
 
 	let group = await Group.findOne({
@@ -771,12 +805,16 @@ router.post(
 
 		if (check && check.status === "pending") {
 			return res.json({
-				memberId: check.userId,
+				errors: {
+					memberId: check.userId,
+				},
 				status: check.status,
 			});
 		} else if (check) {
 			return res.status(400).json({
-				message: `User is already a ${check.status} of the group.`,
+				errors: {
+					message: `User is already a(n) ${check.status} of the group.`,
+				},
 				statusCode: 400,
 			});
 		}
@@ -1215,14 +1253,11 @@ router.put(
 router.delete(
 	"/:groupId/membership",
 	requireAuth,
-	// valid_group,
-	// valid_delete,
+	valid_group,
+	valid_delete,
 	async (req, res) => {
-		let { memberId } = req.body;
-
-		let groupId = req.params.groupId;
-
-		console.log(`backend-------------`, groupId, memberId);
+		console.log(`REQ---BODY`, req.body);
+		let { memberId, groupId } = req.body;
 
 		let deleted = await Membership.findOne({
 			where: { userId: memberId, groupId },

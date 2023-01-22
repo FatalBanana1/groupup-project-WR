@@ -10,7 +10,7 @@ import "./ReadMembers.css";
 
 //main
 const ReadMembers = ({ member }) => {
-	let { id, firstName, lastName, username, email, status } = member;
+	let { id, firstName, lastName, username, email, status, groupId } = member;
 	let previewImage = false;
 
 	// console.log(`inside read members comp -----`, status);
