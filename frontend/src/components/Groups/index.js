@@ -70,7 +70,7 @@ const Groups = (props) => {
 					<h2 id="header-groups-pg">Groups</h2>
 				</NavLink>
 			</div>
-			{search === `No Groups were found.` ? (
+			{isLoaded && search === `No Groups were found.` ? (
 				<div className="nothing-found">{`${search}..`}</div>
 			) : (
 				<div id="groups-container">
