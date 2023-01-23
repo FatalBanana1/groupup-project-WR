@@ -92,6 +92,12 @@
 	text-align: center;
 }
 
+.text-works {
+	width: 50%;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
 /* splash media q - mobile */
 
 @media screen and (max-width: 610px) {

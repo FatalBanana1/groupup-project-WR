@@ -61,7 +61,7 @@ const Splash = () => {
 			</div>
 			<div className="how-meetup-works">
 				<h2>How Groupup works</h2>
-				<div>{`Meet new people who share your interests through online and in-person events. It’s free to create an account.`}</div>
+				<div className="text-works">{`Meet new people who share your interests through online and in-person events. It’s free to create an account.`}</div>
 			</div>
 
 			<div id="groups-link-container">
