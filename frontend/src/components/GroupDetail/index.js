@@ -29,11 +29,11 @@ const GroupDetail = () => {
 	let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 
-	let params = useParams();
-	let groupId = useSelector((state) => state.groups.id);
-	if (!groupId) {
-		groupId = params.groupId;
-	}
+	let { groupId } = useParams();
+	// let groupId = useSelector((state) => state.groups.id);
+	// if (!groupId) {
+	// 	groupId = params.groupId;
+	// }
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId))
@@ -165,26 +165,31 @@ const GroupDetail = () => {
 
 								<div className="margin-div" />
 
-								<div className="hidden">
-									<EditModalButton
-										id="update-group-button"
-										buttonText="Edit Group"
-										onButtonClick={closeMenu}
-										modalComponent={
-											<UpdateGroup group={group} />
-										}
-									/>
-								</div>
-								<div className="hidden">
-									<DeleteModalButton
-										id="delete-group-button"
-										buttonText="Delete Group"
-										onButtonClick={closeMenu}
-										modalComponent={
-											<DeleteGroup group={group} />
-										}
-									/>
-								</div>
+								{user && user.id === organizer.id ? (
+									<div className="hiddens">
+										<EditModalButton
+											id="update-group-button"
+											buttonText="Edit Group"
+											onButtonClick={closeMenu}
+											modalComponent={
+												<UpdateGroup group={group} />
+											}
+										/>
+									</div>
+								) : null}
+
+								{user && user.id === organizer.id ? (
+									<div className="hiddens">
+										<DeleteModalButton
+											id="delete-group-button"
+											buttonText="Delete Group"
+											onButtonClick={closeMenu}
+											modalComponent={
+												<DeleteGroup group={group} />
+											}
+										/>
+									</div>
+								) : null}
 							</div>
 						</div>
 
