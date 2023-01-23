@@ -28,20 +28,47 @@ function LoginFormModal() {
 			});
 	};
 
+	const demoSignin1 = (e) => {
+		e.preventDefault();
+		let credential = "heisenberg";
+		let password = "password";
+		return dispatch(sessionActions.login({ credential, password }))
+			.then(closeModal)
+			.then(() => history.push("/"));
+	};
+
+	const demoSignin2 = (e) => {
+		e.preventDefault();
+		let credential = "baggins";
+		let password = "password2";
+		return dispatch(sessionActions.login({ credential, password }))
+			.then(closeModal)
+			.then(() => history.push("/"));
+	};
+
+	const demoSignin3 = (e) => {
+		e.preventDefault();
+		let credential = "thebaby";
+		let password = "password4";
+		return dispatch(sessionActions.login({ credential, password }))
+			.then(closeModal)
+			.then(() => history.push("/"));
+	};
+
 	return (
 		<div id="login-container">
 			<div className="form-icon">
 				<img className="image-logo" src={icon} />
 			</div>
 			<div className="signup-header-name">Log In</div>
-			<form onSubmit={handleSubmit}>
-				<ul className="error-list-login">
-					{Object.values(errors).map((error) => (
-						<div className="errors-li" key={error}>
-							{`- ${error}`}
-						</div>
-					))}
-				</ul>
+			<ul className="error-list-login">
+				{Object.values(errors).map((error) => (
+					<div className="errors-li-login" key={error}>
+						{`- ${error}`}
+					</div>
+				))}
+			</ul>
+			<form className="login-form-container" onSubmit={handleSubmit}>
 				<div id="username">
 					<label>
 						Username or Email:{" "}
@@ -68,6 +95,34 @@ function LoginFormModal() {
 					Log In
 				</button>
 			</form>
+
+			<div className="users">
+				<button
+					className="users-button dropdown-buttons"
+					id="login-form-buttons"
+					onClick={demoSignin1}
+				>
+					Demo User (Admin)
+				</button>
+			</div>
+			<div className="users">
+				<button
+					className="users-button dropdown-buttons"
+					id="login-form-buttons"
+					onClick={demoSignin2}
+				>
+					Demo User (Member)
+				</button>
+			</div>
+			<div className="users">
+				<button
+					className="users-button dropdown-buttons"
+					id="login-form-buttons"
+					onClick={demoSignin3}
+				>
+					Demo User (Non-member)
+				</button>
+			</div>
 		</div>
 	);
 }

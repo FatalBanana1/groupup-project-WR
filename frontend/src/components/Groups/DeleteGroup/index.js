@@ -73,17 +73,17 @@ const DeleteGroup = (group) => {
 				<div className="signup-header-name">Delete Group</div>
 			</div>
 
-			<form onSubmit={handleSubmit}>
-				<div id="errors-create-group">
-					<ul>
-						{Object.values(errors).map((error) => (
-							<div className="errors-li" key={error}>
-								{`- ${error}`}
-							</div>
-						))}
-					</ul>
-				</div>
+			<div id="errors-create-group">
+				<ul>
+					{Object.values(errors).map((error) => (
+						<div className="errors-li" key={error}>
+							{`- ${error}`}
+						</div>
+					))}
+				</ul>
+			</div>
 
+			<form className="delete-form" onSubmit={handleSubmit}>
 				<div id="name" className="create">
 					<label>
 						Name:{" "}

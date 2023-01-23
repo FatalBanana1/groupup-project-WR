@@ -66,20 +66,20 @@ const CreateGroup = () => {
 				<div className="signup-header-name">Create a Group</div>
 			</div>
 
-			<form onSubmit={handleSubmit}>
-				<div id="errors-create-group">
-					{Object.values(errors).length > 0 ? (
-						<ul>
-							<div className="errors-h">Errors</div>
-							{Object.values(errors).map((error) => (
-								<div className="errors-li" key={error}>
-									{`- ${error}`}
-								</div>
-							))}
-						</ul>
-					) : null}
-				</div>
+			<div id="errors-create-group">
+				{Object.values(errors).length > 0 ? (
+					<ul>
+						{/* <div className="errors-h">Errors</div> */}
+						{Object.values(errors).map((error) => (
+							<div className="errors-li" key={error}>
+								{`- ${error}`}
+							</div>
+						))}
+					</ul>
+				) : null}
+			</div>
 
+			<form className="create-group-form" onSubmit={handleSubmit}>
 				<div id="name" className="create">
 					<label>
 						Name:{" "}

@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
@@ -10,7 +10,6 @@ import "./ProfileButton.css";
 import upArrow from "../Groups/images/up-arrow.png";
 import downArrow from "../Groups/images/down-arrow.png";
 import { useHistory } from "react-router-dom";
-
 
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
@@ -75,29 +74,55 @@ function ProfileButton({ user }) {
 
 	return (
 		<>
-			<div className="button-container">
-				<div id="v-dropdown">
-					{showMenu ? (
-						<img
-							onClick={openMenu}
-							className="nav-arrow"
-							src={upArrow}
-							alt="up arrow"
-						/>
-					) : (
-						<img
-							onClick={openMenu}
-							className="nav-arrow"
-							src={downArrow}
-							alt="down arrow"
-						/>
-					)}
+			{user ? (
+				<div className="button-container">
+					<div id="v-dropdown">
+						{showMenu ? (
+							<img
+								onClick={openMenu}
+								className="nav-arrow"
+								src={upArrow}
+								alt="up arrow"
+							/>
+						) : (
+							<img
+								onClick={openMenu}
+								className="nav-arrow"
+								src={downArrow}
+								alt="down arrow"
+							/>
+						)}
+					</div>
+					<button className="profile-button" onClick={openMenu}>
+						<i className="fas fa-user-circle" />
+						{/* <i className="fa-solid fa-person" /> */}
+					</button>
 				</div>
-				<button className="profile-button" onClick={openMenu}>
-					<i className="fas fa-user-circle" />
-					{/* <i className="fa-solid fa-person" /> */}
-				</button>
-			</div>
+			) : (
+				<div className="no-user-container">
+					<div className="no-user">
+						<div className="users">
+							<OpenModalButton
+								className="users-button dropdown-buttons"
+								buttonText="Log In"
+								onButtonClick={closeMenu}
+								modalComponent={<LoginFormModal />}
+							/>
+						</div>
+					</div>
+					<div className="no-user">
+						<div className="users">
+							<OpenModalButton
+								className="users-button dropdown-buttons"
+								buttonText="Sign Up"
+								onButtonClick={closeMenu}
+								modalComponent={<SignupFormModal />}
+							/>
+						</div>
+					</div>
+				</div>
+			)}
+
 			<ul className={ulClassName} ref={ulRef}>
 				{user ? (
 					<>

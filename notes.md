@@ -568,3 +568,55 @@ npm install && npm run render-postbuild && npm run build && npm run sequelize --
 
 //---------------------------
 npm install && npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
+
+npm install && npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
+
+//---------------------------
+//---------------------------
+//---------------------------
+//---------------------------
+
+									{user ? (
+										<NavLink
+											to={`/groups/${group.id}/members`}
+										>
+											Members
+										</NavLink>
+									) : (
+										<div>
+											<OpenModalButton
+												buttonText="Members"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<LoginFormModal />
+												}
+											/>
+										</div>
+									)}
+								</div>
+
+								<div className="margin-div" />
+
+								<div className="hidden">
+									<DeleteModalButton
+										id="delete-group-button"
+										buttonText="Delete Group"
+										onButtonClick={closeMenu}
+										modalComponent={
+											<DeleteGroup group={group} />
+										}
+									/>
+								</div>
+
+								<div className="hidden">
+									<EditModalButton
+										id="update-group-button"
+										buttonText="Edit Group"
+										onButtonClick={closeMenu}
+										modalComponent={
+											<UpdateGroup group={group} />
+										}
+									/>
+								</div>
+							</div>
+						</div>

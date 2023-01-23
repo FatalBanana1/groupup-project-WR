@@ -8,6 +8,8 @@ import Groups from "../Groups";
 import { Redirect, Route } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "./Splash.css";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 //main
 const Splash = () => {
@@ -29,7 +31,7 @@ const Splash = () => {
 					<div className="south splash-font">
 						Whatever your interest, from hiking and reading to
 						networking and skill sharing, there are thousands of
-						people who share it on Meetup. Events are happening
+						people who share it on Groupup. Events are happening
 						every day—log in to join the fun.
 					</div>
 				</div>

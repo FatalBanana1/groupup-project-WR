@@ -109,9 +109,9 @@ router.post("/", validateLogin, async (req, res, next) => {
 	//checking email/pass
 	if (Object.values(errors).length) {
 		return res.status(400).json({
-			message: "Validation error",
+			message: ["Validation error"],
 			statusCode: 400,
-			errors: errors,
+			errors: { errors },
 		});
 	}
 

@@ -27,8 +27,9 @@
 
 .users {
 	/* background-color: purple; */
-	margin: 0 0 7px 0;
-	padding: 3px;
+	margin: 0 0 1px 0;
+	padding: 1px;
+	font-size: 9px;
 }
 
 #v-dropdown {
@@ -57,6 +58,7 @@
 .dropdown-buttons {
 	background-color: white;
 	border: 0;
+	font-size: 11px;
 }
 
 #nav-details-log-out:hover,
@@ -81,4 +83,11 @@
 	display: flex;
 	flex-direction: row-reverse;
 	align-items: center;
+}
+
+.no-user-container {
+	display: flex;
+	flex-direction: row;
+	/* margin: 0 5px; */
+	/* margin-top: 10px; */
 }

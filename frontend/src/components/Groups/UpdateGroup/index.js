@@ -82,20 +82,20 @@ const UpdateGroup = ({ group }) => {
 					<img className="image-logo" src={icon} />
 				</div>
 				<div className="signup-header-name">Edit Group</div>
-				<div className="about-details-font">{`(* is required)`}</div>
+				<div className="edit-group-req">(* is required)</div>
 			</div>
 
-			<form onSubmit={handleSubmit}>
-				<div id="errors-create-group">
-					<ul>
-						{Object.values(errors).map((error) => (
-							<div className="errors-li" key={error}>
-								{`- ${error}`}
-							</div>
-						))}
-					</ul>
-				</div>
+			<div id="errors-create-group">
+				<ul>
+					{Object.values(errors).map((error) => (
+						<div className="errors-li" key={error}>
+							{`- ${error}`}
+						</div>
+					))}
+				</ul>
+			</div>
 
+			<form className="edit-group-form" onSubmit={handleSubmit}>
 				<div id="name" className="create">
 					<label>
 						*Name:{" "}
@@ -138,7 +138,7 @@ const UpdateGroup = ({ group }) => {
 
 				<div className="private">
 					<label className="private-container">
-						<div className="text-private">Private:</div>
+						<div className="privated">Private:</div>
 						<div className="private-select">
 							<select
 								className="selected"
@@ -207,12 +207,9 @@ const UpdateGroup = ({ group }) => {
 					</label>
 				</div>
 
-				<div className="private">
+				<div className="private" id="private-edit">
 					<label className="private-container">
-						<div
-							className="text-private"
-							style={{ fontSize: "14px" }}
-						>
+						<div className="text-private">
 							Set as Default Image:
 						</div>
 						<div className="private-select">

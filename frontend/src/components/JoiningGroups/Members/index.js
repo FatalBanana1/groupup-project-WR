@@ -69,7 +69,6 @@ const Members = () => {
 			memberId,
 			groupId,
 		};
-		console.log("inside deleted handler");
 
 		dispatch(thunkDeleteMembership(payload))
 			.then(() => dispatch(thunkReadMembers(payload)))
@@ -77,18 +76,11 @@ const Members = () => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
-
-		// history.push(`/groups/${groupId}/members`);
 	};
-
 	const selector = useSelector((state) => state.members);
-
-	console.log(`members comp members list ====`, selector);
-
-	// if (!selector)
-	// 	return <div className="groups-null">No Members to display...</div>;
 	const members = Object.values(selector);
-	console.log(members);
+
+	const loggedin = members.filter((el) => el.id === user.id);
 
 	// return
 	return (
@@ -112,26 +104,26 @@ const Members = () => {
 								<h2>Members</h2>
 							</NavLink>
 						</div>
-						{show == 2 ? null : (
+						{loggedin.length ? (
 							<div className="join-group">
 								<button
 									type="submit"
-									className="selected"
-									// className="create-group-button"
-									onClick={joinGroupHandler}
-								>
-									Join Group
-								</button>
-							</div>
-						)}
-						{show == 3 ? null : (
-							<div className="join-group">
-								<button
-									type="submit"
-									className="selected"
+									className="users-button"
+									id="create-group-button"
 									onClick={deletedMemberHandler}
 								>
 									Leave Group
+								</button>
+							</div>
+						) : (
+							<div className="join-group">
+								<button
+									type="submit"
+									className="users-button"
+									id="create-group-button"
+									onClick={joinGroupHandler}
+								>
+									Join Group
 								</button>
 							</div>
 						)}

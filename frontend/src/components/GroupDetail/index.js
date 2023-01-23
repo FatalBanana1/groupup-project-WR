@@ -8,7 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteModalButton from "../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../Groups/UpdateGroup/EditModalButton.js";
 import * as sessionActions from "../../store/session";
-import { NavLink, Redirect, useHistory, useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 
 //comps
 import { thunkReadGroupDetails } from "../../store/groups";
@@ -19,7 +19,6 @@ import Members from "../JoiningGroups/Members";
 import ErrorHandler from "../ErrorHandler";
 import { actionResetState } from "../../store/members";
 import { thunkReadMembers } from "../../store/members";
-import LoginFormModal from "../LoginFormModal";
 
 //main
 const GroupDetail = () => {
@@ -29,16 +28,6 @@ const GroupDetail = () => {
 	let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 
-	// let groupId = useSelector((state) => state.groups.id);
-	// if (!groupId) {
-	// 	dispatch(thunkReadGroupDetails(groupId))
-	// 		.then(() => setIsLoaded(true))
-	// 		.catch(async (res) => {
-	// 			const data = await res.json();
-	// 			if (data && data.errors) setErrors(Object.values(data.errors));
-	// 		});
-	// 	groupId = useSelector((state) => state.groups.id);
-	// }
 	let { groupId } = useParams();
 
 	console.log(`state check here in group deets`);
@@ -57,12 +46,6 @@ const GroupDetail = () => {
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	}, [dispatch]);
-
-	// useEffect(() => {
-	// 	console.log(`inside catch ===`, errors);
-	// 	// dispatch(actionResetState());
-	// 	// history.push(`/groups/${groupId}`);
-	// }, [errors]);
 
 	//-----------------
 
@@ -163,6 +146,25 @@ const GroupDetail = () => {
 					<div id="details-container-body">
 						<div id="details-nav-section">
 							<div id="update-groups-link-container">
+								<div className="members-link details-nav-section-border">
+									<NavLink
+										to={`/groups/${group.id}/members`}
+										onClick={() => {
+											if (!user)
+												return (
+													<div className="members-link details-nav-section-border">
+														Must be Logged in to
+														View Members!
+													</div>
+												);
+										}}
+									>
+										Members
+									</NavLink>
+								</div>
+
+								<div className="margin-div" />
+
 								<div>
 									<EditModalButton
 										id="update-group-button"
@@ -182,35 +184,6 @@ const GroupDetail = () => {
 											<DeleteGroup group={group} />
 										}
 									/>
-								</div>
-								<div className="join-group">
-									{/* <button
-								type="submit"
-								className="create selected"
-								onClick={joinGroupClickHandler}
-							>
-								Join Group
-							</button> */}
-								</div>
-								<div className="margin-div" />
-								<div className="splash-link details-nav-section-border">
-									{user ? (
-										<NavLink
-											to={`/groups/${group.id}/members`}
-										>
-											Members
-										</NavLink>
-									) : (
-										<div>
-											<OpenModalButton
-												buttonText="Members"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<LoginFormModal />
-												}
-											/>
-										</div>
-									)}
 								</div>
 							</div>
 						</div>

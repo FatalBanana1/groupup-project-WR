@@ -21,13 +21,6 @@ function Navigation({ isLoaded }) {
 	const sessionUser = useSelector((state) => state.session.user);
 	let history = useHistory();
 
-	//search handler
-	const searchHandler = (e) => {
-		setSearch(e.target.value);
-
-		// (`/groups?name=${newsearch}`)
-	};
-
 	let searchbar = useSelector((state) => state.groups);
 
 	//click handler
