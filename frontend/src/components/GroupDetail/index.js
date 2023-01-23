@@ -147,20 +147,23 @@ const GroupDetail = () => {
 						<div id="details-nav-section">
 							<div id="update-groups-link-container">
 								<div className="members-link details-nav-section-border">
-									<NavLink
-										to={`/groups/${group.id}/members`}
-										onClick={() => {
-											if (!user)
-												return (
-													<div className="members-link details-nav-section-border">
-														Must be Logged in to
-														View Members!
-													</div>
-												);
-										}}
-									>
-										Members
-									</NavLink>
+									{user ? (
+										<NavLink
+											to={`/groups/${group.id}/members`}
+										>
+											Members
+										</NavLink>
+									) : (
+										<div>
+											<OpenModalButton
+												buttonText="Members"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<LoginFormModal />
+												}
+											/>
+										</div>
+									)}
 								</div>
 
 								<div className="margin-div" />
