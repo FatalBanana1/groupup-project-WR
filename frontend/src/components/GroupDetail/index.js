@@ -50,6 +50,18 @@ const GroupDetail = () => {
 			});
 	}, [dispatch]);
 
+	useEffect(() => {
+		let payload = {
+			groupId,
+		};
+		dispatch(thunkReadMembers(payload))
+			.then(() => setIsLoaded(true))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+	}, [dispatch]);
+
 	//-----------------
 
 	const [showMenu, setShowMenu] = useState(false);
@@ -77,6 +89,7 @@ const GroupDetail = () => {
 	// {groups: {1:{1}, 2:{2}...} }
 	let user = useSelector((state) => state.session.user);
 	const group = useSelector((state) => state.groups);
+	let members = useSelector((state) => state.members);
 	const {
 		id,
 		organizerId,
@@ -103,6 +116,12 @@ const GroupDetail = () => {
 	let month = date[1];
 	let day = date[2];
 	let year = date[3];
+
+	let host = Object.values(members).filter(
+		(el) => el.id === user.id && el.status === "co-host"
+	);
+
+	console.log(`host>>>>>>----`, host);
 
 	//return
 	return (
@@ -165,8 +184,8 @@ const GroupDetail = () => {
 
 								<div className="margin-div" />
 
-								{user && user.id === organizer.id ? (
-									<div className="hiddens">
+								{host.length ? (
+									<div>
 										<EditModalButton
 											id="update-group-button"
 											buttonText="Edit Group"
@@ -178,8 +197,8 @@ const GroupDetail = () => {
 									</div>
 								) : null}
 
-								{user && user.id === organizer.id ? (
-									<div className="hiddens">
+								{host.length ? (
+									<div>
 										<DeleteModalButton
 											id="delete-group-button"
 											buttonText="Delete Group"

@@ -56,7 +56,7 @@ const ReadMembers = ({ member }) => {
 	let organizer = Object.values(members).filter(
 		(el) => el.id === user.id && el.status === "co-host"
 	);
-	console.log(`organizer ====`, organizer);
+
 
 	//return
 	return (
