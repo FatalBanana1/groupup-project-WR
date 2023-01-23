@@ -23,11 +23,11 @@ const Searchbar = () => {
 		setSearch("");
 		searchbar["search"] = newsearch;
 
-		dispatch(thunkSearch(search));
+		dispatch(thunkSearch(newsearch));
 
 		return (
 			<NavLink
-				to={`/groups?name=${search}`}
+				to={`/groups?name=${newsearch}`}
 				id="search-bar-link"
 			></NavLink>
 		);
