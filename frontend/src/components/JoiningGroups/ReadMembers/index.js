@@ -4,14 +4,59 @@
 //hooks
 
 //comps
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import GroupDetail from "../../GroupDetail";
 import "./ReadMembers.css";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import EditModalButton from "../UpdateMembership/EditModalButton";
+import UpdateMembership from "../UpdateMembership";
+import { thunkReadGroupDetails } from "../../../store/groups";
 
 //main
 const ReadMembers = ({ member }) => {
 	let { id, firstName, lastName, username, email, status } = member;
+	let dispatch = useDispatch();
 	let previewImage = false;
+	let params = useParams();
+	let groupId = useSelector((state) => state.groups.id);
+	if (!groupId) {
+		groupId = params.groupId;
+	}
+	const user = useSelector((state) => state.session.user);
+
+	useEffect(() => {
+		dispatch(thunkReadGroupDetails(groupId));
+	}, [dispatch]);
+
+	//---------
+
+	const [showMenu, setShowMenu] = useState(false);
+	const ulRef = useRef();
+	const openMenu = () => {
+		if (showMenu) return;
+		setShowMenu(true);
+	};
+
+	useEffect(() => {
+		if (!showMenu) return;
+		const closeMenu = (e) => {
+			if (!ulRef.current.contains(e.target)) {
+				setShowMenu(false);
+			}
+		};
+		document.addEventListener("click", closeMenu);
+		return () => document.removeEventListener("click", closeMenu);
+	}, [showMenu]);
+
+	const closeMenu = () => setShowMenu(false);
+
+	//---------
+	let members = useSelector((state) => state.members);
+	let organizer = Object.values(members).filter(
+		(el) => el.id === user.id && el.status === "co-host"
+	);
+	console.log(`organizer ====`, organizer);
 
 	//return
 	return (
@@ -37,6 +82,18 @@ const ReadMembers = ({ member }) => {
 				<div className="about-section">{`Status: ${
 					status[0].toUpperCase() + status.substring(1)
 				}`}</div>
+				{organizer.length ? (
+					<div className="hiddens">
+						<EditModalButton
+							id="update-group-button"
+							buttonText="Edit Status"
+							onButtonClick={closeMenu}
+							modalComponent={
+								<UpdateMembership member={member} />
+							}
+						/>
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

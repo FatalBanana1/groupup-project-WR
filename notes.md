@@ -569,8 +569,6 @@ npm install && npm run render-postbuild && npm run build && npm run sequelize --
 //---------------------------
 npm install && npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
 
-npm install && npm run render-postbuild && npm run build && npm run sequelize --prefix backend db:migrate && npm run sequelize --prefix backend db:seed:all
-
 //---------------------------
 //---------------------------
 //---------------------------
@@ -1237,4 +1235,3 @@ Delete a membership to a group specified by id.
       "statusCode": 404
     }
     ```
-

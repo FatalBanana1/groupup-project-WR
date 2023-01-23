@@ -193,7 +193,10 @@ const memberReducer = (state = defaultState(), action) => {
 		case UPDATE_MEMBERSHIP: {
 			console.log(`reducer>>>>>>>>>>>>>`, action);
 			console.log(`reducer>>>>>>>>>>>>>`, action.membership);
-			// return { ...state, ...(state[action.group.id] = action.group) };
+			return {
+				...state,
+				...(state[action.membership.memberId] = action.membership),
+			};
 		}
 
 		case DELETE_MEMBERSHIP: {

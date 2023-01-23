@@ -14,6 +14,7 @@ import { NavLink, useHistory, useParams } from "react-router-dom";
 // import OpenModalButton from "../../OpenModalButton";
 import * as sessionActions from "../../../store/session";
 
+
 //comps
 import ReadMembers from "../ReadMembers";
 import "./Members.css";
@@ -27,6 +28,7 @@ const Members = () => {
 	const user = useSelector((state) => state.session.user);
 	const memberId = useSelector((state) => state.session.user.id);
 	let params = useParams();
+
 	let groupId = useSelector((state) => state.groups.id);
 	if (!groupId) {
 		groupId = params.groupId;
@@ -43,6 +45,7 @@ const Members = () => {
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	}, [dispatch]);
+
 
 	const joinGroupHandler = () => {
 		setErrors([]);
@@ -77,6 +80,7 @@ const Members = () => {
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	};
+
 	const selector = useSelector((state) => state.members);
 	const members = Object.values(selector);
 
@@ -178,8 +182,6 @@ const Members = () => {
 			)}
 		</div>
 	);
-
-	// return <div>Members Page</div>;
 };
 
 // {id,firstName,lastName,username,email,status}

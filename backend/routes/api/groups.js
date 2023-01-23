@@ -1186,17 +1186,17 @@ router.put(
 			});
 		}
 
-		// only organizer can change to co-host
-		let group = await Group.findByPk(groupId);
-		if (user.id !== group.organizerId && status === "co-host") {
-			return res.status(400).json({
-				message: "Validations Error",
-				statusCode: 400,
-				errors: {
-					status: `Only organizers can change a membership status to co-host`,
-				},
-			});
-		}
+		// // only organizer can change to co-host
+		// let group = await Group.findByPk(groupId);
+		// if (user.id !== group.organizerId && status === "co-host") {
+		// 	return res.status(400).json({
+		// 		message: "Validations Error",
+		// 		statusCode: 400,
+		// 		errors: {
+		// 			status: `Only organizers can change a membership status to co-host`,
+		// 		},
+		// 	});
+		// }
 
 		let updated = await Membership.update(
 			{
@@ -1311,7 +1311,6 @@ router.delete(
 	valid_group,
 	valid_delete_member,
 	async (req, res) => {
-		console.log(`REQ---BODY`, req.body);
 		let { memberId, groupId } = req.body;
 
 		let deleted = await Membership.findOne({

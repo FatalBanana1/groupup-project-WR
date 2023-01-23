@@ -1,0 +1,36 @@
+/* update group css */
+
+.edit-group-form {
+	width: 100px;
+	font-size: 9px;
+}
+
+#edit-group-button {
+	width: 100px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+}
+
+#edit-group-button:hover {
+	background-color: rgb(248, 98, 81);
+}
+
+.small-logo {
+	height: 48px;
+	width: auto;
+}
+
+.privated {
+	margin-right: 5px;
+}
+
+#private-edit {
+	margin: 3px 0;
+}
+
+.edit-group-req {
+	font-size: 9px;
+	margin-left: 10px;
+}
