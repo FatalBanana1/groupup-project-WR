@@ -176,7 +176,7 @@ const CreateGroup = () => {
 					<label>
 						Group Image:{" "}
 						<input
-							type="text"
+							type="url"
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
 						/>

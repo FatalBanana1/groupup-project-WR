@@ -576,47 +576,665 @@ npm install && npm run render-postbuild && npm run build && npm run sequelize --
 //---------------------------
 //---------------------------
 
-									{user ? (
-										<NavLink
-											to={`/groups/${group.id}/members`}
-										>
-											Members
-										</NavLink>
-									) : (
-										<div>
-											<OpenModalButton
-												buttonText="Members"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<LoginFormModal />
-												}
-											/>
-										</div>
-									)}
-								</div>
+## API Documentation
 
-								<div className="margin-div" />
+## USER AUTHENTICATION/AUTHORIZATION
 
-								<div className="hidden">
-									<DeleteModalButton
-										id="delete-group-button"
-										buttonText="Delete Group"
-										onButtonClick={closeMenu}
-										modalComponent={
-											<DeleteGroup group={group} />
-										}
-									/>
-								</div>
+### All endpoints that require authentication
 
-								<div className="hidden">
-									<EditModalButton
-										id="update-group-button"
-										buttonText="Edit Group"
-										onButtonClick={closeMenu}
-										modalComponent={
-											<UpdateGroup group={group} />
-										}
-									/>
-								</div>
-							</div>
-						</div>
+All endpoints that require a current user to be logged in.
+
+* Request: endpoints that require authentication
+* Error Response: Require authentication
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Authentication required",
+      "statusCode": 401
+    }
+    ```
+
+### All endpoints that require proper authorization
+
+All endpoints that require authentication and the current user does not have the
+correct role(s) or permission(s).
+
+* Request: endpoints that require proper authorization
+* Error Response: Require proper authorization
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Forbidden",
+      "statusCode": 403
+    }
+    ```
+
+<!-- START -->
+<!-- START -->
+<!-- START -->
+
+### Get the Current User
+
+Returns the information about the current user that is logged in.
+
+* Require Authentication: true
+* Request
+  * Method: GET
+  * URL: /api/session
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "user": {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@gmail.com",
+        "username": "JohnSmith"
+      }
+    }
+    ```
+
+### Log In a User
+
+Logs in a current user with valid credentials and returns the current user's
+information.
+
+* Require Authentication: false
+* Request
+  * Method: POST
+  * URL: /api/session
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "email": "john.smith@gmail.com",
+      "password": "secret password"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "user": {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@gmail.com",
+        "username": "JohnSmith"
+      }
+    }
+    ```
+
+* Error Response: Invalid credentials
+  * Status Code: 401
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Invalid credentials",
+      "statusCode": 401
+    }
+    ```
+
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "email": "Email is required",
+        "password": "Password is required"
+      }
+    }
+    ```
+
+### Sign Up a User
+
+Creates a new user, logs them in as the current user, and returns the current
+user's information.
+
+* Require Authentication: false
+* Request
+  * Method: POST
+  * URL: /api/users
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "password": "secret password"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "token": ""
+    }
+    ```
+
+* Error response: User already exists with the specified email
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "User already exists",
+      "statusCode": 403,
+      "errors": {
+        "email": "User with that email already exists"
+      }
+    }
+    ```
+
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "email": "Invalid email",
+        "firstName": "First Name is required",
+        "lastName": "Last Name is required"
+      }
+    }
+    ```
+
+## GROUPS
+
+### Get all Groups
+
+Returns all the groups.
+
+* Require Authentication: false
+* Request
+  * Method: GET
+  * URL: /api/groups
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Groups":[
+        {
+          "id": 1,
+          "organizerId": 1,
+          "name": "Evening Tennis on the Water",
+          "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          "type": "In person",
+          "private": true,
+          "city": "New York",
+          "state": "NY",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "numMembers": 10,
+          "previewImage": "image url",
+        }
+      ]
+    }
+    ```
+
+### Create a Group
+
+Creates and returns a new group.
+
+* Require Authentication: true
+* Request
+  * Method: POST
+  * URL: /api/groups
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": "Evening Tennis on the Water",
+      "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+      "type": "In person",
+      "private": true,
+      "city": "New York",
+      "state": "NY",
+    }
+    ```
+
+* Successful Response
+  * Status Code: 201
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "organizerId": 1,
+      "name": "Evening Tennis on the Water",
+      "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+      "type": "In person",
+      "private": true,
+      "city": "New York",
+      "state": "NY",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "name": "Name must be 60 characters or less",
+        "about": "About must be 50 characters or more",
+        "type": "Type must be 'Online' or 'In person'",
+        "private": "Private must be a boolean",
+        "city": "City is required",
+        "state": "State is required",
+      }
+    }
+    ```
+
+### Edit a Group
+
+Updates and returns an existing group.
+
+* Require Authentication: true
+* Require proper authorization: Group must belong to the current user
+* Request
+  * Method: PUT
+  * URL: /api/groups/:groupId
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "name": "Evening Tennis on the Water",
+      "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+      "type": "In person",
+      "private": true,
+      "city": "New York",
+      "state": "NY",
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "organizerId": 1,
+      "name": "Evening Tennis on the Water",
+      "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+      "type": "In person",
+      "private": true,
+      "city": "New York",
+      "state": "NY",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-20 10:06:40"
+    }
+    ```
+
+* Error Response: Body validation error
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "name": "Name must be 60 characters or less",
+        "about": "About must be 50 characters or more",
+        "type": "Type must be 'Online' or 'In person'",
+        "private": "Private must be a boolean",
+        "city": "City is required",
+        "state": "State is required",
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Group with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Group couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+### Delete a Group
+
+Deletes an existing group.
+
+* Require Authentication: true
+* Require proper authorization: Group must belong to the current user
+* Request
+  * Method: DELETE
+  * URL: /api/groups/:groupId
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted",
+      "statusCode": 200
+    }
+    ```
+
+* Error response: Couldn't find a Group with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Group couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+### Request a Membership for a Group based on the Group's id
+
+Request a new membership for a group specified by id.
+
+* Require Authentication: true
+* Request
+  * Method: POST
+  * URL: /api/groups/:groupId/membership
+  * Headers:
+    * Content-Type: application/json
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "memberId": 2,
+      "status": "pending"
+    }
+    ```
+
+* Error response: Couldn't find a Group with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Group couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+* Error response: Current User already has a pending membership
+  for the group
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Membership has already been requested",
+      "statusCode": 400
+    }
+    ```
+
+* Error response: Current User is already an accepted member of the group
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "User is already a member of the group",
+      "statusCode": 400
+    }
+    ```
+### Get all Members of a Group specified by its id
+
+Returns the members of a group specified by its id.
+
+* Require Authentication: false
+* Request
+  * Method: GET
+  * URL: /api/groups/:groupId/members
+  * Body: none
+
+* Successful Response: If you ARE the organizer or a co-host of the group. Shows
+  all members and their statuses.
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Members": [
+        {
+          "id": 2,
+          "firstName": "Clark",
+          "lastName": "Adams",
+          "Membership": {
+            "status": "co-host"
+          },
+        },
+        {
+          "id": 3,
+          "firstName": "John",
+          "lastName": "Smith",
+          "Membership": {
+            "status": "member"
+          },
+        },
+        {
+          "id": 4,
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "Membership": {
+            "status": "pending"
+          },
+        },
+      ]
+    }
+    ```
+
+* Successful Response: If you ARE NOT the organizer of the group. Shows only
+  members that don't have a status of "pending".
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Members": [
+        {
+          "id": 2,
+          "firstName": "Clark",
+          "lastName": "Adams",
+          "Membership": {
+            "status": "co-host"
+          },
+        },
+        {
+          "id": 3,
+          "firstName": "John",
+          "lastName": "Smith",
+          "Membership": {
+            "status": "member"
+          },
+        },
+      ]
+    }
+    ```
+
+* Error response: Couldn't find a Group with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Group couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+### Delete membership to a group specified by id
+
+Delete a membership to a group specified by id.
+
+* Require Authentication: true
+* Require proper authorization: Current User must be the host of the group, or
+  the user whose membership is being deleted
+* Request
+  * Method: DELETE
+  * URL: /api/groups/:groupId/membership
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "memberId": 1
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Successfully deleted membership from group"
+    }
+    ```
+
+* Error response: Couldn't find a User with the specified memberId
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation Error",
+      "statusCode": 400,
+      "errors": {
+        "memberId": "User couldn't be found"
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Group with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Group couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+* Error response: Membership does not exist for this User
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Membership does not exist for this User",
+      "statusCode": 404
+    }
+    ```
+

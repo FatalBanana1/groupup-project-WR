@@ -13,6 +13,7 @@ import * as sessionActions from "../../store/session";
 //comps
 import ReadGroups from "./ReadGroups";
 import CreateGroup from "./CreateGroup";
+import LoginFormModal from "../LoginFormModal";
 import "./Groups.css";
 
 //main
@@ -30,7 +31,7 @@ const Groups = (props) => {
 	const closeMenu = () => setShowMenu(false);
 
 	//----------------
-	const search = useSelector((state) => state.groups.search);
+	const user = useSelector((state) => state.session.user);
 	// console.log(`search search 000000----`, search);
 
 	useEffect(() => {
@@ -96,13 +97,26 @@ const Groups = (props) => {
 							}
 						})}
 				</div>
-				<div id="groups-link-container">
-					<CreateModalButton
-						className="create-group-button"
-						buttonText="Create Group"
-						onButtonClick={closeMenu}
-						modalComponent={<CreateGroup />}
-					/>
+				<div>
+					{user ? (
+						<div className="groups-link-container-signin">
+							<CreateModalButton
+								className="splash-link join-group"
+								buttonText="Create a group"
+								id="create-splash"
+								onButtonClick={closeMenu}
+								modalComponent={<CreateGroup />}
+							/>
+						</div>
+					) : (
+						<div className="groups-link-container">
+							<OpenModalButton
+								buttonText="Create a group"
+								onButtonClick={closeMenu}
+								modalComponent={<LoginFormModal />}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

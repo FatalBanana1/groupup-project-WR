@@ -200,7 +200,7 @@ const UpdateGroup = ({ group }) => {
 					<label>
 						Group Image Url:{" "}
 						<input
-							type="text"
+							type="url"
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
 						/>

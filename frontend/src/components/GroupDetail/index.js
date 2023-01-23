@@ -219,10 +219,7 @@ const GroupDetail = () => {
 												)
 											)
 										) : (
-											<div>
-												No Group Images... Use Edit
-												Group to add more.
-											</div>
+											<div>No Group Images...</div>
 										)}
 									</div>
 								</div>

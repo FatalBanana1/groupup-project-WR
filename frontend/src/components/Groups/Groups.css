@@ -105,6 +105,20 @@
 	padding: 20px;
 }
 
+.groups-link-container {
+	margin-top: 35px;
+	width: 120px;
+	height: 30px;
+	background-color: white;
+	color: white;
+	border-radius: 6px;
+	border: 0.5px solid gray;
+}
+
+.groups-link-container-signin {
+	margin-top: 35px;
+}
+
 /* ------------ Media --------------- */
 
 @media screen and (max-width: 940px) {
