@@ -8,14 +8,30 @@ import Groups from "../Groups";
 import { Redirect, Route } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "./Splash.css";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import joinGroup from "../Groups/images/join-group.png";
+import startGroup from "../Groups/images/start-group.png";
+import CreateModalButton from "../Groups/CreateGroup/CreateModalButton";
+import CreateGroup from "../Groups/CreateGroup";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 
 //main
 const Splash = () => {
 	//states
 
-	//handler
+	let dispatch = useDispatch();
+	let [errors, setErrors] = useState([]);
+	const [isLoaded, setIsLoaded] = useState(false);
+
+	const [showMenu, setShowMenu] = useState(false);
+	const ulRef = useRef();
+
+	const closeMenu = () => setShowMenu(false);
+
+	const user = useSelector((state) => state.session.user);
+	console.log(`user ---`, user);
 
 	//return
 	return (
@@ -43,10 +59,53 @@ const Splash = () => {
 					/>
 				</div>
 			</div>
+			<div className="how-meetup-works">
+				<h2>How Groupup works</h2>
+				<div>{`Meet new people who share your interests through online and in-person events. It’s free to create an account.`}</div>
+			</div>
+
 			<div id="groups-link-container">
-				<NavLink className="splash-link" to="/groups">
-					Find Groups
-				</NavLink>
+				<div className="join-group">
+					<img className="splash-imgs" src={joinGroup} />
+					{user ? (
+						<NavLink id="start-group-button" to="/groups">
+							Join a group
+						</NavLink>
+					) : (
+						<NavLink id="splash-login-join" to="/groups">
+							Join a group
+						</NavLink>
+					)}
+
+					<div className="splash-after-link">
+						Do what you love, meet others who love it, find your
+						community. The rest is history!
+					</div>
+				</div>
+
+				<div className="join-group">
+					<img className="splash-imgs" src={startGroup} />
+
+					{user ? (
+						<CreateModalButton
+							className="splash-link join-group"
+							buttonText="Start a group"
+							id="create-splash"
+							onButtonClick={closeMenu}
+							modalComponent={<CreateGroup />}
+						/>
+					) : (
+						<OpenModalButton
+							buttonText="Start a group"
+							onButtonClick={closeMenu}
+							modalComponent={<LoginFormModal />}
+						/>
+					)}
+					<div className="splash-after-link">
+						{`You don’t have to be an expert to gather people together and
+					explore shared interests.`}
+					</div>
+				</div>
 			</div>
 		</div>
 	);
