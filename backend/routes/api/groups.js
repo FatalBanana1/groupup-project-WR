@@ -718,7 +718,7 @@ router.get("/", async (req, res) => {
 		) {
 			// queries.name = name;
 			//yield results with part of a name
-			queries.name = { [Op.like]: `%${name}%` };
+			queries.name = { [Op.iLike]: `%${name}%` };
 		} else {
 			errors.name = `Name must be a string`;
 		}
