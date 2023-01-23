@@ -43,7 +43,7 @@ const ReadGroups = (group) => {
 				<div className="li-tag-members-line">
 					{`${numMembers} members`}
 					<li className="li-tags" />
-					{`${type}`}
+					{`${privated ? `Private` : `Public`}`}
 				</div>
 			</div>
 		</div>
