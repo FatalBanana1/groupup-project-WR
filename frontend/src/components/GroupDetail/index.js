@@ -19,6 +19,7 @@ import Members from "../JoiningGroups/Members";
 import ErrorHandler from "../ErrorHandler";
 import { actionResetState } from "../../store/members";
 import { thunkReadMembers } from "../../store/members";
+import LoginFormModal from "../LoginFormModal";
 
 //main
 const GroupDetail = () => {
@@ -28,9 +29,11 @@ const GroupDetail = () => {
 	let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 
-	let { groupId } = useParams();
-
-	console.log(`state check here in group deets`);
+	let params = useParams();
+	let groupId = useSelector((state) => state.groups.id);
+	if (!groupId) {
+		groupId = params.groupId;
+	}
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId))
@@ -92,8 +95,6 @@ const GroupDetail = () => {
 	} = group;
 	if (!organizer) return null;
 
-	console.log(`before return in GRP ID`, user);
-
 	let image = groupImages.find((el) => el.preview === true);
 	group["image"] = image;
 
@@ -154,21 +155,17 @@ const GroupDetail = () => {
 											Members
 										</NavLink>
 									) : (
-										<div>
-											<OpenModalButton
-												buttonText="Members"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<LoginFormModal />
-												}
-											/>
-										</div>
+										<OpenModalButton
+											buttonText="Members"
+											onButtonClick={closeMenu}
+											modalComponent={<LoginFormModal />}
+										/>
 									)}
 								</div>
 
 								<div className="margin-div" />
 
-								<div>
+								<div className="hidden">
 									<EditModalButton
 										id="update-group-button"
 										buttonText="Edit Group"
@@ -178,7 +175,7 @@ const GroupDetail = () => {
 										}
 									/>
 								</div>
-								<div>
+								<div className="hidden">
 									<DeleteModalButton
 										id="delete-group-button"
 										buttonText="Delete Group"
