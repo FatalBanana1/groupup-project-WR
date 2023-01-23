@@ -15,6 +15,7 @@ import ReadGroups from "./ReadGroups";
 import CreateGroup from "./CreateGroup";
 import LoginFormModal from "../LoginFormModal";
 import "./Groups.css";
+import { removeSearch } from "../../store/search";
 
 //main
 const Groups = (props) => {
@@ -32,22 +33,9 @@ const Groups = (props) => {
 
 	//----------------
 	const user = useSelector((state) => state.session.user);
-	// console.log(`search search 000000----`, search);
+	const search = useSelector((state) => state.search.search);
 
 	useEffect(() => {
-		// if (search) {
-		// 	let payload = JSON.parse(JSON.stringify(search));
-
-		// 	dispatch(thunkReadGroups(`?name=${payload}`))
-		// 		.then(() => setIsLoaded(true))
-		// 		.catch(async (res) => {
-		// 			const data = await res.json();
-		// 			if (data && data.message)
-		// 				setErrors((data[errors] = [data.message]));
-		// 			if (data && data.errors)
-		// 				setErrors(Object.values(data.errors));
-		// 		});
-		// } else {
 		dispatch(thunkReadGroups())
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
@@ -58,10 +46,15 @@ const Groups = (props) => {
 			});
 	}, [dispatch]);
 
-	// {groups: {1:{1}, 2:{2}...} }
-	const selector = useSelector((state) => state.groups);
-	// console.log(`selector>>> groups: `, selector);
+	const resetGroupsHandler = () => {
+		dispatch(removeSearch());
+	};
 
+	let selector = useSelector((state) => state.groups);
+
+	if (search) {
+		selector = search;
+	}
 	const groups = Object.values(selector);
 
 	//return
@@ -72,53 +65,56 @@ const Groups = (props) => {
 					className="groups-page-link remove-color"
 					exact
 					to="/groups"
+					onClick={resetGroupsHandler}
 				>
 					<h2 id="header-groups-pg">Groups</h2>
 				</NavLink>
 			</div>
-			<div id="groups-container">
-				<div id="group-detail-container">
-					{isLoaded &&
-						groups.map((group) => {
-							if (!group.name) {
-								return null;
-							} else {
-								return (
-									<NavLink
-										id="group-detail"
-										key={group.id}
-										to={`/groups/${group.id}`}
-										// group={group}
-										// onClick={resetClickHandler}
-									>
-										<ReadGroups group={group} />
-									</NavLink>
-								);
-							}
-						})}
+			{search === `No Groups were found.` ? (
+				<div className="nothing-found">{`${search}..`}</div>
+			) : (
+				<div id="groups-container">
+					<div id="group-detail-container">
+						{isLoaded &&
+							groups.map((group) => {
+								if (!group.name) {
+									return null;
+								} else {
+									return (
+										<NavLink
+											id="group-detail"
+											key={group.id}
+											to={`/groups/${group.id}`}
+										>
+											<ReadGroups group={group} />
+										</NavLink>
+									);
+								}
+							})}
+					</div>
+					<div>
+						{user ? (
+							<div className="groups-link-container-signin">
+								<CreateModalButton
+									className="splash-link join-group"
+									buttonText="Create a group"
+									id="create-splash"
+									onButtonClick={closeMenu}
+									modalComponent={<CreateGroup />}
+								/>
+							</div>
+						) : (
+							<div className="groups-link-container">
+								<OpenModalButton
+									buttonText="Create a group"
+									onButtonClick={closeMenu}
+									modalComponent={<LoginFormModal />}
+								/>
+							</div>
+						)}
+					</div>
 				</div>
-				<div>
-					{user ? (
-						<div className="groups-link-container-signin">
-							<CreateModalButton
-								className="splash-link join-group"
-								buttonText="Create a group"
-								id="create-splash"
-								onButtonClick={closeMenu}
-								modalComponent={<CreateGroup />}
-							/>
-						</div>
-					) : (
-						<div className="groups-link-container">
-							<OpenModalButton
-								buttonText="Create a group"
-								onButtonClick={closeMenu}
-								modalComponent={<LoginFormModal />}
-							/>
-						</div>
-					)}
-				</div>
-			</div>
+			)}
 		</div>
 	);
 };

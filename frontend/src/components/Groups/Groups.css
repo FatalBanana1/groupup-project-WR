@@ -119,6 +119,11 @@
 	margin-top: 35px;
 }
 
+.nothing-found {
+	margin-top: 20px;
+	font-size: 22px;
+}
+
 /* ------------ Media --------------- */
 
 @media screen and (max-width: 940px) {

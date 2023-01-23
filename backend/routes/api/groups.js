@@ -784,7 +784,7 @@ router.get("/", async (req, res) => {
 	});
 
 	if (!groups.length) {
-		return res.json({ Groups: null });
+		return res.json({ Groups: `No Groups were found.` });
 	}
 
 	let members = await Group.findAll({

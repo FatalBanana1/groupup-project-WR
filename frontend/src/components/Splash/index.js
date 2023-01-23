@@ -1,9 +1,6 @@
 //home js
 
 //imports
-//hooks
-
-//comps
 import Groups from "../Groups";
 import { Redirect, Route } from "react-router-dom";
 import { NavLink } from "react-router-dom";
@@ -16,11 +13,13 @@ import CreateModalButton from "../Groups/CreateGroup/CreateModalButton";
 import CreateGroup from "../Groups/CreateGroup";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
+import Searchbar from "../Searchbar";
+import { actionResetState, thunkReadGroups } from "../../store/groups";
+import { removeSearch } from "../../store/search";
 
 //main
 const Splash = () => {
 	//states
-
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -28,10 +27,15 @@ const Splash = () => {
 	const [showMenu, setShowMenu] = useState(false);
 	const ulRef = useRef();
 
+	useEffect(() => {
+		dispatch(removeSearch());
+	}, [dispatch]);
+
+	const clickHandler = () => {};
+
 	const closeMenu = () => setShowMenu(false);
 
 	const user = useSelector((state) => state.session.user);
-	console.log(`user ---`, user);
 
 	//return
 	return (
@@ -68,11 +72,19 @@ const Splash = () => {
 				<div className="join-group">
 					<img className="splash-imgs" src={joinGroup} />
 					{user ? (
-						<NavLink id="start-group-button" to="/groups">
+						<NavLink
+							id="start-group-button"
+							to="/groups"
+							onClick={clickHandler}
+						>
 							Join a group
 						</NavLink>
 					) : (
-						<NavLink id="splash-login-join" to="/groups">
+						<NavLink
+							id="splash-login-join"
+							to="/groups"
+							onClick={clickHandler}
+						>
 							Join a group
 						</NavLink>
 					)}
