@@ -58,7 +58,7 @@ export const actionResetState = () => ({
 // GET: Get All Groups Route: /api/groups
 export const thunkReadGroups = (payload) => async (dispatch) => {
 	let response;
-	console.log(`thunk>>> payload: `, payload);
+	// console.log(`thunk>>> payload: `, payload);
 	if (payload) {
 		response = await csrfFetch(`/api/groups${payload}`);
 	} else {
@@ -68,14 +68,14 @@ export const thunkReadGroups = (payload) => async (dispatch) => {
 	if (response.ok) {
 		const groups = await response.json();
 		dispatch(actionReadGroups(groups));
-		console.log(`thunk>>> groups: `, groups);
+		// console.log(`thunk>>> groups: `, groups);
 		return groups;
 	}
 };
 
 // GET: Get details of a Group Route: /api/groups/:groupId
 export const thunkReadGroupDetails = (payload) => async (dispatch) => {
-	console.log(`response = thunk -----------`, payload);
+	// console.log(`response = thunk -----------`, payload);
 	const response = await csrfFetch(`/api/groups/${payload}`);
 
 	if (response.ok) {
@@ -147,7 +147,7 @@ function defaultState() {
 const groupsReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
-			console.log(`reducer>>> groups: `, action.groups);
+			// console.log(`reducer>>> groups: `, action.groups);
 
 			const newGroups = action.groups.Groups.reduce((acc, group) => {
 				acc[group.id] = group;

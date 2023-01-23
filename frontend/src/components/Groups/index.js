@@ -31,7 +31,7 @@ const Groups = (props) => {
 
 	//----------------
 	const search = useSelector((state) => state.groups.search);
-	console.log(`search search 000000----`, search);
+	// console.log(`search search 000000----`, search);
 
 	useEffect(() => {
 		// if (search) {
@@ -59,7 +59,7 @@ const Groups = (props) => {
 
 	// {groups: {1:{1}, 2:{2}...} }
 	const selector = useSelector((state) => state.groups);
-	console.log(`selector>>> groups: `, selector);
+	// console.log(`selector>>> groups: `, selector);
 
 	const groups = Object.values(selector);
 

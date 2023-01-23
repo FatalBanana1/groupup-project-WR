@@ -49,6 +49,15 @@ module.exports = {
 					city: "NYC",
 					state: "NY",
 				},
+				{
+					organizerId: "1",
+					name: "Classy Cars",
+					about: "Defining the age of a classic car is more complex than you might imagine. The three classifications for older car models are classic, antique, and vintage, and the qualifiers for each type of car vary based on who or what organization you are talking to.",
+					type: "Online",
+					private: false,
+					city: "NYC",
+					state: "NY",
+				},
 			],
 			{}
 		);

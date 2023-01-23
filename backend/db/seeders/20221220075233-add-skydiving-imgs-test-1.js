@@ -67,6 +67,11 @@ module.exports = {
 					url: "https://thedali.org/wp-content/uploads/2020/08/1200x500-James-Family-Wing-Groups.jpg",
 					preview: true,
 				},
+				{
+					groupId: "4",
+					url: "https://www.carcovers.com/media/carcover/resource/classiccar.jpg",
+					preview: true,
+				},
 			],
 			{}
 		);
@@ -79,7 +84,7 @@ module.exports = {
 			options,
 			{
 				id: {
-					[Op.in]: [1, 2, 3, 4, 5],
+					[Op.gte]: 0,
 				},
 			},
 			{}
