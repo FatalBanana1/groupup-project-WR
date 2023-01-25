@@ -14,7 +14,6 @@ import { NavLink, useHistory, useParams } from "react-router-dom";
 // import OpenModalButton from "../../OpenModalButton";
 import * as sessionActions from "../../../store/session";
 
-
 //comps
 import ReadMembers from "../ReadMembers";
 import "./Members.css";
@@ -45,7 +44,6 @@ const Members = () => {
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 	}, [dispatch]);
-
 
 	const joinGroupHandler = () => {
 		setErrors([]);
@@ -86,6 +84,10 @@ const Members = () => {
 
 	const loggedin = members.filter((el) => el.id === user.id);
 
+	const organizer = useSelector((state) => state.groups.organizerId);
+
+	// console.log(`MEMBERS comp - organizer`, organizer, loggedin[0].id);
+
 	// return
 	return (
 		<div>
@@ -108,7 +110,7 @@ const Members = () => {
 								<h2>Members</h2>
 							</NavLink>
 						</div>
-						{loggedin.length ? (
+						{loggedin.length && organizer !== loggedin[0].id ? (
 							<div className="join-group">
 								<button
 									type="submit"
@@ -118,6 +120,18 @@ const Members = () => {
 								>
 									Leave Group
 								</button>
+							</div>
+						) : organizer === loggedin[0].id ? (
+							<div
+								className="join-group not-button"
+								id="create-group-button"
+								onClick={() =>
+									alert(
+										`Current organizer must transfer "Organizer" role to another member first, in order to leave group.`
+									)
+								}
+							>
+								Leave Group
 							</div>
 						) : (
 							<div className="join-group">
@@ -170,14 +184,6 @@ const Members = () => {
 							<div>No Members to display.</div>
 						)}
 					</div>
-					{/* <div id="groups-link-container">
-				<CreateModalButton
-				className="create-group-button"
-				buttonText="Join Group"
-				onButtonClick={closeMenu}
-				modalComponent={<CreateMembership />}
-				/>
-			</div> */}
 				</div>
 			)}
 		</div>

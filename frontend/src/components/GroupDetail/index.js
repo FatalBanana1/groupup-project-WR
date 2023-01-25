@@ -90,6 +90,7 @@ const GroupDetail = () => {
 	let user = useSelector((state) => state.session.user);
 	const group = useSelector((state) => state.groups);
 	let members = useSelector((state) => state.members);
+
 	const {
 		id,
 		organizerId,
@@ -117,11 +118,12 @@ const GroupDetail = () => {
 	let day = date[2];
 	let year = date[3];
 
-	let host = Object.values(members).filter(
-		(el) => el.id === user.id && el.status === "co-host"
-	);
-
-	console.log(`host>>>>>>----`, host);
+	let host;
+	if (user) {
+		host = Object.values(members).filter(
+			(el) => el.id === user.id && el.status === "co-host"
+		);
+	}
 
 	//return
 	return (
@@ -184,7 +186,7 @@ const GroupDetail = () => {
 
 								<div className="margin-div" />
 
-								{host.length ? (
+								{host && host.length ? (
 									<div>
 										<EditModalButton
 											id="update-group-button"
@@ -197,7 +199,7 @@ const GroupDetail = () => {
 									</div>
 								) : null}
 
-								{host.length ? (
+								{host && host.length ? (
 									<div>
 										<DeleteModalButton
 											id="delete-group-button"

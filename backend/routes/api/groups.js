@@ -363,7 +363,7 @@ const valid_dates = async (req, res, next) => {
 // memberships
 // Get all Members of a Group specified by its id
 // get - /groupid/members
-router.get("/:groupId/members", valid_group, async (req, res) => {
+router.get("/:groupId/members", async (req, res) => {
 	let groupId = req.params.groupId;
 	let members = await Membership.scope(["defaultScope"]).findAll({
 		attributes: ["status"],
@@ -375,15 +375,15 @@ router.get("/:groupId/members", valid_group, async (req, res) => {
 		],
 	});
 
-	const { user } = req;
-	let auth = await Membership.findOne({
-		where: { userId: user.id },
-		include: [
-			{
-				model: Group,
-			},
-		],
-	});
+	// const { user } = req;
+	// let auth = await Membership.findOne({
+	// 	where: { userId: user.id },
+	// 	include: [
+	// 		{
+	// 			model: Group,
+	// 		},
+	// 	],
+	// });
 
 	array = [];
 	members.forEach((el, i) => {

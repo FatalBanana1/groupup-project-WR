@@ -17,6 +17,10 @@
 	justify-content: center;
 }
 
+.not-button{
+	margin-top: 40px;
+}
+
 #errors-group {
 	font-size: 14px;
 	color: rgb(252, 42, 42);
