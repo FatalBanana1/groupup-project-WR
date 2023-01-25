@@ -15,13 +15,16 @@ import {
 	thunkDeleteMembership,
 	thunkReadMembers,
 	thunkUpdateMembership,
+	actionResetMember,
 } from "../../../store/members";
 
 //main
 const UpdateMembership = ({ member }) => {
-	let { id, firstName, lastName, username, email } = member;
+	let { id, firstName, lastName, username, email, organizerId, hidden } =
+		member;
 	// states
 	const dispatch = useDispatch();
+	let history = useHistory();
 	let params = useParams();
 	const [status, setStatus] = useState(member.status);
 	const [errors, setErrors] = useState([]);
@@ -53,6 +56,7 @@ const UpdateMembership = ({ member }) => {
 		} else {
 			return dispatch(thunkUpdateMembership(payload))
 				.then((data) => {
+					dispatch(actionResetMember());
 					dispatch(thunkReadMembers(data));
 				})
 				.then(closeModal)
@@ -89,23 +93,29 @@ const UpdateMembership = ({ member }) => {
 			<form className="edit-group-form" onSubmit={handleSubmit}>
 				<div id="name" className="create">
 					<label>
-						*Username:{" "}
+						Name:{" "}
 						<input
 							type="text"
-							value={username}
-							// onChange={(e) => setUsername(e.target.value)}
+							value={`${firstName} ${lastName}`}
 							required
 							disabled
 						/>
 					</label>
 				</div>
 
-				<div className="private">
+				<div id="name" className="create">
+					<label>
+						Username:{" "}
+						<input type="text" value={username} required disabled />
+					</label>
+				</div>
+
+				<div className="private status">
 					<label className="private-container">
 						<div className="privated">*Status:</div>
 						<div className="private-select">
 							<select
-								className="selected"
+								className="selected status"
 								value={status}
 								onChange={(e) => setStatus(e.target.value)}
 							>
@@ -122,6 +132,13 @@ const UpdateMembership = ({ member }) => {
 									onChange={() => setStatus("co-host")}
 								>
 									Co-host
+								</option>
+								<option
+									value={"organizer"}
+									className={`options ${hidden}`}
+									onChange={() => setStatus("organizer")}
+								>
+									Organizer
 								</option>
 
 								<option

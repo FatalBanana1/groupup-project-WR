@@ -17,7 +17,7 @@ import "./GroupDetail.css";
 import DeleteGroup from "../Groups/DeleteGroup";
 import Members from "../JoiningGroups/Members";
 import ErrorHandler from "../ErrorHandler";
-import { actionResetState } from "../../store/members";
+import { actionResetMember } from "../../store/members";
 import { thunkReadMembers } from "../../store/members";
 import LoginFormModal from "../LoginFormModal";
 
@@ -41,7 +41,7 @@ const GroupDetail = () => {
 		};
 		dispatch(thunkReadGroupDetails(groupId))
 			.then(() => {
-				dispatch(actionResetState());
+				dispatch(actionResetMember());
 				dispatch(thunkReadMembers(payload));
 				setIsLoaded(true);
 			})

@@ -1161,7 +1161,6 @@ router.put(
 			return res.status(400).json({ extraUserId: memberId });
 		}
 
-		let { user } = req;
 		let member = await User.findByPk(memberId);
 
 		if (!member) {
@@ -1179,25 +1178,36 @@ router.put(
 			where: { userId: memberId, groupId },
 		});
 		if (!checked) {
-			return res.status(400).json({
-				message:
-					"Membership between the user and the group does not exist",
+			return res.status(404).json({
 				statusCode: 404,
+				errors: {
+					message:
+						"Membership between the user and the group does not exist",
+				},
 			});
 		}
 
-		// // only organizer can change to co-host
-		// let group = await Group.findByPk(groupId);
-		// if (user.id !== group.organizerId && status === "co-host") {
-		// 	return res.status(400).json({
-		// 		message: "Validations Error",
-		// 		statusCode: 400,
-		// 		errors: {
-		// 			status: `Only organizers can change a membership status to co-host`,
-		// 		},
-		// 	});
-		// }
+		// change organizers
+		let { user } = req;
+		let group = await Group.findByPk(groupId);
+		if (user.id !== group.organizerId && status === "organizer") {
+			return res.status(400).json({
+				statusCode: 400,
+				errors: {
+					message:
+						"Only the current group Organizer can change status of a member to Organizer",
+				},
+			});
+		}
+		if (user.id === group.organizerId && status === "organizer") {
+			await Group.update(
+				{ organizerId: memberId },
+				{ where: { id: groupId } }
+			);
+			status = "co-host";
+		}
 
+		//change membership status
 		let updated = await Membership.update(
 			{
 				status,

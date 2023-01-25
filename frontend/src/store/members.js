@@ -47,7 +47,7 @@ const actionDeleteMembership = (membership) => ({
 });
 
 //reset
-export const actionResetState = () => ({
+export const actionResetMember = () => ({
 	type: RESET,
 });
 
@@ -58,7 +58,6 @@ export const actionResetState = () => ({
 // GET: Get All Members of a Group - Route: /api/groups/:groupId/members
 export const thunkReadMembers = (payload) => async (dispatch) => {
 	const response = await csrfFetch(`/api/groups/${payload.groupId}/members`);
-	// console.log(`response = thunk -----------`, response);
 
 	if (response.ok) {
 		const members = await response.json();
@@ -141,19 +140,13 @@ export const thunkDeleteMembership = (payload) => async (dispatch) => {
 const initialState = {};
 
 function defaultState() {
-	// console.log(`reducer>>>>>>>>>>>>> read`, action.members.Members);
 	const initialState = {};
-	// return action.members.Members.reduce((acc, member) => {
-	// 	acc[member.id] = member;
-	// 	return acc;
-	// }, {});
 	return initialState;
 }
 
 const memberReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_MEMBERS: {
-			// console.log(`reducer>>>>>>>>>>>>> read`, action.members.Members);
 			if (action.members.Members[0]) {
 				// const newMembers = [...action.members.Members];
 				const newMembers = action.members.Members.reduce(
@@ -163,7 +156,6 @@ const memberReducer = (state = defaultState(), action) => {
 					},
 					{}
 				);
-				// console.log(`reducer>>>>>>>>>>>>>`, newMembers);
 				return {
 					...state,
 					...newMembers,
@@ -191,8 +183,6 @@ const memberReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_MEMBERSHIP: {
-			console.log(`reducer>>>>>>>>>>>>>`, action);
-			console.log(`reducer>>>>>>>>>>>>>`, action.membership);
 			return {
 				...state,
 				...(state[action.membership.memberId] = action.membership),
@@ -200,8 +190,6 @@ const memberReducer = (state = defaultState(), action) => {
 		}
 
 		case DELETE_MEMBERSHIP: {
-			console.log(`reducer>>>>>>>>>>>>>`, action);
-			console.log(`reducer>>>>>>>>>>>>>`, action.membership);
 			const newState = { ...state };
 			delete newState[action.membership.id];
 			return newState;

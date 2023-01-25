@@ -168,8 +168,8 @@ const Members = () => {
 								if (!member.firstName) {
 									return null;
 								} else {
-									if (member.id) {
-									}
+									member["organizerId"] = organizer;
+									member["logId"] = logId;
 									member["groupId"] = groupId;
 									return (
 										<NavLink

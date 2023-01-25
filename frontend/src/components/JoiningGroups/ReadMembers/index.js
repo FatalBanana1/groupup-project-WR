@@ -15,8 +15,19 @@ import { thunkReadGroupDetails } from "../../../store/groups";
 
 //main
 const ReadMembers = ({ member }) => {
-	let { id, firstName, lastName, username, email, status } = member;
+	let {
+		id,
+		firstName,
+		lastName,
+		username,
+		email,
+		status,
+		organizerId,
+		logId,
+	} = member;
+
 	let dispatch = useDispatch();
+	let [hidden, setHidden] = useState("hidden");
 	let previewImage = false;
 	let params = useParams();
 	let groupId = useSelector((state) => state.groups.id);
@@ -27,7 +38,7 @@ const ReadMembers = ({ member }) => {
 
 	useEffect(() => {
 		dispatch(thunkReadGroupDetails(groupId));
-	}, [dispatch]);
+	}, [dispatch, hidden]);
 
 	//---------
 
@@ -57,6 +68,8 @@ const ReadMembers = ({ member }) => {
 		(el) => el.id === user.id && el.status === "co-host"
 	);
 
+	//hide organizer option if not organizer
+	if (organizerId !== user.id) member["hidden"] = hidden;
 
 	//return
 	return (
@@ -80,9 +93,11 @@ const ReadMembers = ({ member }) => {
 				<div className="about-section">{`Username: ${username}`}</div>
 				<div className="about-section">{`Email: ${email}`}</div>
 				<div className="about-section">{`Status: ${
-					status[0].toUpperCase() + status.substring(1)
+					organizerId === id
+						? `Organizer`
+						: status[0].toUpperCase() + status.substring(1)
 				}`}</div>
-				{organizer.length ? (
+				{organizer.length && organizerId !== id ? (
 					<div className="hiddens">
 						<EditModalButton
 							id="update-group-button"
