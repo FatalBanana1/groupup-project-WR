@@ -17,6 +17,7 @@ import * as sessionActions from "../../../store/session";
 //comps
 import ReadMembers from "../ReadMembers";
 import "./Members.css";
+import { thunkReadGroupDetails } from "../../../store/groups";
 
 //main
 const Members = () => {
@@ -51,10 +52,11 @@ const Members = () => {
 			groupId,
 			status: "pending",
 		};
-
 		dispatch(thunkCreateMembership(payload))
-			.then(() => {
+			.then((data) => {
+				console.log(`EFFECT data ======`, data);
 				dispatch(thunkReadMembers(payload));
+				dispatch(thunkReadGroupDetails(payload.groupId));
 			})
 			.catch(async (res) => {
 				const data = await res.json();
@@ -83,10 +85,10 @@ const Members = () => {
 	const members = Object.values(selector);
 
 	const loggedin = members.filter((el) => el.id === user.id);
+	let logId;
+	if (loggedin.length) logId = loggedin[0].id;
 
 	const organizer = useSelector((state) => state.groups.organizerId);
-
-	// console.log(`MEMBERS comp - organizer`, organizer, loggedin[0].id);
 
 	// return
 	return (
@@ -121,7 +123,7 @@ const Members = () => {
 									Leave Group
 								</button>
 							</div>
-						) : organizer === loggedin[0].id ? (
+						) : organizer === logId ? (
 							<div
 								className="join-group not-button"
 								id="create-group-button"

@@ -36,9 +36,13 @@ const GroupDetail = () => {
 	// }
 
 	useEffect(() => {
+		let payload = {
+			groupId,
+		};
 		dispatch(thunkReadGroupDetails(groupId))
 			.then(() => {
 				dispatch(actionResetState());
+				dispatch(thunkReadMembers(payload));
 				setIsLoaded(true);
 			})
 			.then(() => {
@@ -50,17 +54,7 @@ const GroupDetail = () => {
 			});
 	}, [dispatch]);
 
-	useEffect(() => {
-		let payload = {
-			groupId,
-		};
-		dispatch(thunkReadMembers(payload))
-			.then(() => setIsLoaded(true))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
-	}, [dispatch]);
+	useEffect(() => {}, [dispatch]);
 
 	//-----------------
 
