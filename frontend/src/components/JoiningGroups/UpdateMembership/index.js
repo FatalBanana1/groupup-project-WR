@@ -39,7 +39,7 @@ const UpdateMembership = ({ member }) => {
 		e.preventDefault();
 		setErrors([]);
 
-		const payload = {
+		let payload = {
 			groupId,
 			memberId: member.id,
 			status,
@@ -54,6 +54,7 @@ const UpdateMembership = ({ member }) => {
 						setErrors(Object.values(data.errors));
 				});
 		} else {
+			if (payload.status === "pending") payload.status = "member";
 			return dispatch(thunkUpdateMembership(payload))
 				.then((data) => {
 					dispatch(actionResetMember());
