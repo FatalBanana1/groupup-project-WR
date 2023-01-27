@@ -131,7 +131,7 @@ const GroupDetail = () => {
 					) : null}
 					<div id="details-container-header">
 						<div id="left-details-img">
-							{image.url ? (
+							{image && image.url ? (
 								<img
 									src={image.url}
 									id="details-img-default"

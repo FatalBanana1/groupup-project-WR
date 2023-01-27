@@ -98,9 +98,114 @@ module.exports = {
 					status: "co-host",
 				},
 				{
+					userId: 1,
+					groupId: 5,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 6,
+					status: "co-host",
+				},
+				{
 					userId: 2,
 					groupId: 4,
 					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 3,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 5,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 6,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 7,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 8,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 9,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 10,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 11,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 12,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 13,
+					status: "member",
+				},
+				{
+					userId: 2,
+					groupId: 14,
+					status: "member",
+				},
+				{
+					userId: 1,
+					groupId: 7,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 8,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 9,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 10,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 11,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 12,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 13,
+					status: "co-host",
+				},
+				{
+					userId: 1,
+					groupId: 14,
+					status: "co-host",
 				},
 			],
 			{}

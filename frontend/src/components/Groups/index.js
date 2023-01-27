@@ -75,22 +75,21 @@ const Groups = (props) => {
 			) : (
 				<div id="groups-container">
 					<div id="group-detail-container">
-						{isLoaded &&
-							groups.map((group) => {
-								if (!group.name) {
-									return null;
-								} else {
-									return (
-										<NavLink
-											id="group-detail"
-											key={group.id}
-											to={`/groups/${group.id}`}
-										>
-											<ReadGroups group={group} />
-										</NavLink>
-									);
-								}
-							})}
+						{groups.map((group) => {
+							if (!group || !group.id) {
+								return null;
+							} else {
+								return (
+									<NavLink
+										id="group-detail"
+										key={group.id}
+										to={`/groups/${group.id}`}
+									>
+										<ReadGroups group={group} />
+									</NavLink>
+								);
+							}
+						})}
 					</div>
 					<div>
 						{user ? (
