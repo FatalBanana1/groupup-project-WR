@@ -76,9 +76,9 @@ const Groups = (props) => {
 				<div id="groups-container">
 					<div id="group-detail-container">
 						{groups.map((group) => {
-							if (!group || !group.id) {
-								return null;
-							} else {
+							if (group && group.id) {
+								// 	return null;
+								// } else {
 								return (
 									<NavLink
 										id="group-detail"
