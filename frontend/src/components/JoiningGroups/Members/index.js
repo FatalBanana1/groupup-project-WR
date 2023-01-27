@@ -124,7 +124,7 @@ const Members = () => {
 								</button>
 							</div>
 						) : organizer === logId ? (
-							<div
+							<button
 								className="join-group not-button"
 								id="create-group-button"
 								onClick={() =>
@@ -134,7 +134,7 @@ const Members = () => {
 								}
 							>
 								Leave Group
-							</div>
+							</button>
 						) : (
 							<div className="join-group">
 								<button
