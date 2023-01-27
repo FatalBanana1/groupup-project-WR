@@ -132,3 +132,7 @@ a:hover {
 	color: rgb(225, 0, 0);
 	padding-bottom: 2px;
 }
+
+button {
+	cursor: pointer;
+}
