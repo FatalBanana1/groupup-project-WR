@@ -18,7 +18,8 @@ function OpenModalButton({
 	};
 
 	return (
-		<button className="users-button dropdown-buttons" onClick={onClick}>
+		// <button className="users-button dropdown-buttons" onClick={onClick}>
+		<button className="" id="start-group-button" onClick={onClick}>
 			{buttonText}
 		</button>
 	);

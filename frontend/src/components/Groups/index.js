@@ -72,13 +72,11 @@ const Groups = (props) => {
 			</div>
 			{isLoaded && search === `No Groups were found.` ? (
 				<div className="nothing-found">{`${search}..`}</div>
-			) : (
+			) : isLoaded ? (
 				<div id="groups-container">
 					<div id="group-detail-container">
 						{groups.map((group) => {
-							if (group && group.id) {
-								// 	return null;
-								// } else {
+							if (group && group.id >= 0) {
 								return (
 									<NavLink
 										id="group-detail"
@@ -113,7 +111,7 @@ const Groups = (props) => {
 						)}
 					</div>
 				</div>
-			)}
+			): null}
 		</div>
 	);
 };

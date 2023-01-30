@@ -16,6 +16,7 @@ import LoginFormModal from "../LoginFormModal";
 import Searchbar from "../Searchbar";
 import { actionResetState, thunkReadGroups } from "../../store/groups";
 import { removeSearch } from "../../store/search";
+import SplashModalButton from "./SplashModalButton";
 
 //main
 const Splash = () => {
@@ -59,7 +60,6 @@ const Splash = () => {
 					<img
 						id="splash-img-right"
 						src="/images/splash-transp-ppl-1.png"
-						// src="https://i.pinimg.com/564x/11/cd/2c/11cd2ce3a8f1faa87632f7f8a7080647.jpg"
 					/>
 				</div>
 			</div>
@@ -71,23 +71,14 @@ const Splash = () => {
 			<div id="groups-link-container">
 				<div className="join-group">
 					<img className="splash-imgs" src={joinGroup} />
-					{user ? (
-						<NavLink
-							id="start-group-button"
-							to="/groups"
-							onClick={clickHandler}
-						>
-							Join a group
-						</NavLink>
-					) : (
-						<NavLink
-							id="splash-login-join"
-							to="/groups"
-							onClick={clickHandler}
-						>
-							Join a group
-						</NavLink>
-					)}
+
+					<NavLink
+						className="splash-group-button"
+						to="/groups"
+						onClick={clickHandler}
+					>
+						Join a group
+					</NavLink>
 
 					<div className="splash-after-link">
 						Do what you love, meet others who love it, find your
@@ -100,14 +91,13 @@ const Splash = () => {
 
 					{user ? (
 						<CreateModalButton
-							className="splash-link join-group"
 							buttonText="Start a group"
-							id="create-splash"
 							onButtonClick={closeMenu}
 							modalComponent={<CreateGroup />}
 						/>
+
 					) : (
-						<OpenModalButton
+						<SplashModalButton
 							buttonText="Start a group"
 							onButtonClick={closeMenu}
 							modalComponent={<LoginFormModal />}

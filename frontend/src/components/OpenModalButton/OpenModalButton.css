@@ -1,2 +1,10 @@
 /*  open modal css */
+#start-group-button {
+	text-decoration: none;
+	/* border: 0; */
+}
 
+a#start-group-button {
+	text-decoration: none;
+	padding: 1px 6px;
+}

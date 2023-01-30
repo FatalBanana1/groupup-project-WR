@@ -19,7 +19,7 @@ function CreateModalButton({
 
 	return (
 		<button
-			className="users-button"
+			className="splash-group-button"
 			id="create-group-button"
 			onClick={onClick}
 		>

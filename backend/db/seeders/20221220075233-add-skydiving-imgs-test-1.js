@@ -219,7 +219,7 @@ module.exports = {
 				},
 				{
 					groupId: "14",
-					url: "http://jciquebec2016.com/wp-content/uploads/2019/01/businesspeople-playing-table-tennis-in-office-562451311-5924a9563df78cbe7ed1f7a8.jpg",
+					url: "https://www.brttc.org/img/IMG_0756.jpeg",
 					preview: true,
 				},
 				{
