@@ -54,6 +54,13 @@
 	margin-bottom: 5px;
 }
 
+.splash-imgs-event {
+	height: auto;
+	width: 115px;
+	object-fit: cover;
+	margin-bottom: 8px;
+}
+
 .join-group {
 	display: flex;
 	flex-direction: column;

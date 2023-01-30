@@ -5,10 +5,12 @@ import sessionReducer from "./session";
 import groupsReducer from "./groups";
 import memberReducer from "./members";
 import searchReducer from "./search";
+import eventsReducer from "./events";
 
 const rootReducer = combineReducers({
 	session: sessionReducer,
 	groups: groupsReducer,
+	events: eventsReducer,
 	members: memberReducer,
 	search: searchReducer,
 });

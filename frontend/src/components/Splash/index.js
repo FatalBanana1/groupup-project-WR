@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import joinGroup from "../Groups/images/join-group.png";
 import startGroup from "../Groups/images/start-group.png";
+import tickets from "../Groups/images/tickets2.png";
 import CreateModalButton from "../Groups/CreateGroup/CreateModalButton";
 import CreateGroup from "../Groups/CreateGroup";
 import OpenModalButton from "../OpenModalButton";
@@ -87,6 +88,23 @@ const Splash = () => {
 				</div>
 
 				<div className="join-group">
+					<img className="splash-imgs-event" src={tickets} />
+
+					<NavLink
+						className="splash-group-button"
+						to="/events"
+						onClick={clickHandler}
+					>
+						Find an Event
+					</NavLink>
+
+					<div className="splash-after-link">
+						Events are happening on just about any topic you can
+						think of, from online gaming to yoga.
+					</div>
+				</div>
+
+				<div className="join-group">
 					<img className="splash-imgs" src={startGroup} />
 
 					{user ? (
@@ -95,7 +113,6 @@ const Splash = () => {
 							onButtonClick={closeMenu}
 							modalComponent={<CreateGroup />}
 						/>
-
 					) : (
 						<SplashModalButton
 							buttonText="Start a group"

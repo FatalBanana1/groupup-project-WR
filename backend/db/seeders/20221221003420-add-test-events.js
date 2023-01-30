@@ -36,7 +36,7 @@ module.exports = {
 					type: "In person",
 					capacity: 550,
 					price: 150,
-					startDate: new Date(2023, 1, 10, 12, 10, 10),
+					startDate: new Date(2023, 1, 10, 4, 10, 10),
 					endDate: new Date(2023, 1, 10, 15, 10, 10),
 				},
 				{

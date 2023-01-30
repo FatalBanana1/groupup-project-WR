@@ -4,21 +4,21 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadGroups, actionResetState } from "../../store/groups";
+import { thunkReadEvents, actionResetStateEvent } from "../../../store/events";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import CreateModalButton from "./CreateGroup/CreateModalButton";
-import OpenModalButton from "../../components/OpenModalButton";
-import * as sessionActions from "../../store/session";
+import CreateEventModalButton from "./../CreateEvent/CreateEventModalButton";
+import OpenModalButton from "../../../components/OpenModalButton";
+import * as sessionActions from "../../../store/session";
 
 //comps
-import ReadGroups from "./ReadGroups";
-import CreateGroup from "./CreateGroup";
-import LoginFormModal from "../LoginFormModal";
-import "./Groups.css";
-import { removeSearch } from "../../store/search";
+import Event from "./Event";
+import CreateEvent from "../CreateEvent";
+import LoginFormModal from "../../LoginFormModal";
+import { removeSearch } from "../../../store/search";
+import "./ReadEvents.css";
 
 //main
-const Groups = (props) => {
+const ReadEvents = (props) => {
 	let location = useLocation();
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
@@ -36,7 +36,7 @@ const Groups = (props) => {
 	const search = useSelector((state) => state.search.search);
 
 	useEffect(() => {
-		dispatch(thunkReadGroups())
+		dispatch(thunkReadEvents())
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
@@ -50,8 +50,8 @@ const Groups = (props) => {
 		dispatch(removeSearch());
 	};
 
-	let selector = useSelector((state) => state.groups);
-
+	let selector = useSelector((state) => state.events);
+	console.log(`events index js >>>>`, selector)
 	if (search) {
 		selector = search;
 	}
@@ -64,7 +64,7 @@ const Groups = (props) => {
 				<NavLink
 					className="groups-page-link remove-color"
 					exact
-					to="/events"
+					to="/groups"
 					onClick={resetGroupsHandler}
 				>
 					<h2 id="header-groups-pg">Events</h2>
@@ -84,15 +84,15 @@ const Groups = (props) => {
 			) : isLoaded ? (
 				<div id="groups-container">
 					<div id="group-detail-container">
-						{groups.map((group) => {
-							if (group && group.id >= 0) {
+						{groups.map((event) => {
+							if (event && event.id >= 0) {
 								return (
 									<NavLink
-										id="group-detail"
-										key={group.id}
-										to={`/groups/${group.id}`}
+										id="event-detail"
+										key={event.id}
+										to={`/events/${event.id}`}
 									>
-										<ReadGroups group={group} />
+										<Event event={event} />
 									</NavLink>
 								);
 							}
@@ -101,12 +101,12 @@ const Groups = (props) => {
 					<div>
 						{user ? (
 							<div className="groups-link-container-signin">
-								<CreateModalButton
+								<CreateEventModalButton
 									className="splash-link join-group"
 									buttonText="Create a group"
 									id="create-splash"
 									onButtonClick={closeMenu}
-									modalComponent={<CreateGroup />}
+									modalComponent={<CreateEvent />}
 								/>
 							</div>
 						) : (
@@ -125,20 +125,21 @@ const Groups = (props) => {
 	);
 };
 
-// ,name,about,type,private,city,state,numMembers,previewImage
-
 // {
 // 	id
-// 	organizerId,
 // 	name,
-// 	about,
+// 	description,
 // 	type,
-// 	private,
-// 	city,
-// 	state
-// 	numMembers
-// 	previewImage
+// 	numAttending,
+// 	previewImage,
+// 	price,
+// 	capacity,
+// 	startDate,
+// 	venueId,
+// 	type,
+// 	Group,
+// 	Venue,
 // }
 
 //exports
-export default Groups;
+export default ReadEvents;
