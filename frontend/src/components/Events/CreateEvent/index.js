@@ -63,7 +63,7 @@ const CreateEvent = () => {
 				<div className="form-icon">
 					<img className="image-logo" src={icon} />
 				</div>
-				<div className="signup-header-name">Create a Group</div>
+				<div className="signup-header-name">Create an Event</div>
 			</div>
 
 			<div id="errors-create-group">
@@ -94,7 +94,7 @@ const CreateEvent = () => {
 
 				<div id="about" className="create">
 					<label>
-						About:{" "}
+						Description:{" "}
 						<input
 							type="text"
 							value={about}
@@ -174,7 +174,7 @@ const CreateEvent = () => {
 
 				<div id="about" className="create">
 					<label>
-						Group Image:{" "}
+						Event Image:{" "}
 						<input
 							type="url"
 							value={url}
@@ -188,7 +188,7 @@ const CreateEvent = () => {
 					type="submit"
 					className="create selected"
 				>
-					Create Group
+					Create Event
 				</button>
 			</form>
 		</div>

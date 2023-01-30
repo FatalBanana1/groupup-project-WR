@@ -103,7 +103,7 @@ const ReadEvents = (props) => {
 							<div className="groups-link-container-signin">
 								<CreateEventModalButton
 									className="splash-link join-group"
-									buttonText="Create a group"
+									buttonText="Create an Event"
 									id="create-splash"
 									onButtonClick={closeMenu}
 									modalComponent={<CreateEvent />}
