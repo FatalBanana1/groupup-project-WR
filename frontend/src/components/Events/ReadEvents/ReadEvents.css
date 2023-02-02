@@ -2,6 +2,7 @@
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
 	color: black;
+	height: fit-content;
 }
 #event-detail:hover {
 	background-color: rgba(32, 34, 33, 0.4);

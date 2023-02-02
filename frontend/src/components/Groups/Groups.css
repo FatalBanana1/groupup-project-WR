@@ -12,8 +12,6 @@
 	/* background-color: darkgoldenrod; */
 	display: flex;
 	flex-direction: column;
-	width: 80vw;
-	align-items: center;
 	margin-bottom: 4rem;
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
@@ -23,7 +21,6 @@
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-
 }
 #group-detail:first-of-type {
 	/* background-color: red; */
@@ -33,7 +30,7 @@
 #group-detail {
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
-	height: 200px;
+	height: fit-content;
 	width: 660px;
 	color: black;
 }
@@ -132,17 +129,26 @@
 	font-size: 22px;
 }
 
-.groups-margin-div{
+.groups-margin-div {
 	width: 30vw;
 	max-width: 480px;
 }
 
 /* ------------ Media --------------- */
+@media screen and (min-width: 750px) {
+	#groups-container {
+		width: 80vw;
+		align-items: center;
+	}
+}
 
 @media screen and (max-width: 940px) {
 	.margin-groups-container {
 		width: 95%;
 		margin-right: 5vw;
+	}
+	.li-tag-members-line {
+		padding-top: 0px;
 	}
 
 	#group-detail-header,
@@ -154,7 +160,6 @@
 	#groups-container {
 		width: 85vw;
 	}
-
 
 	#nav-mid {
 		margin-left: 20px;
@@ -176,6 +181,7 @@
 
 	#detail-right {
 		width: 70%;
+		margin-top: 0px;
 	}
 
 	#group-detail {

@@ -41,9 +41,9 @@ const ReadGroups = (group) => {
 				<div>{`${city}, ${state}`}</div>
 				<div className="about-section">{about}</div>
 				<div className="li-tag-members-line">
-					{`${numMembers} members`}
-					<li className="li-tags" />
-					{`${privated ? `Private` : `Public`}`}
+					{`${numMembers} members • ${
+						privated ? `Private` : `Public`
+					}`}
 				</div>
 			</div>
 		</div>

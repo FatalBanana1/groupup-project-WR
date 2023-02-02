@@ -42,6 +42,7 @@
 
 .li-tag-members-line {
 	font-size: 14px;
+	padding-top: 2vw;
 }
 
 .li-tag-events-line {
@@ -50,8 +51,8 @@
 	flex-direction: row;
 	justify-content: space-between;
 	max-width: 90%;
-	margin-top: 23%;
-	padding-left: 10px;
+	margin-top: 6vw;
+	padding-left: 15px;
 }
 
 .events-last-icons-container {
@@ -71,4 +72,16 @@
 .no-groups-img-read {
 	height: auto;
 	width: 130px;
+}
+
+@media screen and (min-width: 1450px) {
+	.li-tag-events-line {
+		margin-top: 3vw;
+	}
+}
+
+@media screen and (min-width: 2050px) {
+	.li-tag-events-line {
+		margin-top: 2vw;
+	}
 }

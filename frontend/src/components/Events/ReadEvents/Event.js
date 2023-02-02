@@ -54,7 +54,7 @@ const Event = ({ event }) => {
 				<div className="about-section">{`${weekday}, ${month} ${day} ${time}`}</div>
 				<h3 id="detail-right-name">{name}</h3>
 				{/* <div className="about-section">{description}</div> */}
-				<div className="li-tag-members-line">
+				<div className="li-tag-group-name-line">
 					{`${Group.name} attendees • ${Group.city}, ${Group.state}`}
 				</div>
 				<div className="li-tag-events-line">
