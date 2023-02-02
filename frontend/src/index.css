@@ -123,3 +123,8 @@ a:hover {
 button {
 	cursor: pointer;
 }
+
+.small-icons {
+	height: 20px;
+	width: 20px;
+}

@@ -111,7 +111,7 @@ const ReadEvents = (props) => {
 						) : (
 							<div className="groups-link-container">
 								<OpenModalButton
-									buttonText="Create a group"
+									buttonText="Create an Event"
 									onButtonClick={closeMenu}
 									modalComponent={<LoginFormModal />}
 								/>

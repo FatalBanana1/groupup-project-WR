@@ -1,6 +1,9 @@
 //read group detail
 
 //imports
+import star from "../../Groups/images/star-icon.png";
+import share from "../../Groups/images/share-icon.png";
+
 import "./ReadEvents.css";
 
 //main
@@ -52,12 +55,27 @@ const Event = ({ event }) => {
 				<h3 id="detail-right-name">{name}</h3>
 				{/* <div className="about-section">{description}</div> */}
 				<div className="li-tag-members-line">
-					{`${Group.name} attendees`}
-					<li className="li-tags" />
-					{`${Group.city}, ${Group.state}`}
+					{`${Group.name} attendees • ${Group.city}, ${Group.state}`}
 				</div>
-				<div className="li-tag-members-line">
+				<div className="li-tag-events-line">
 					{`${numAttending} attendees`}
+
+					<div className="events-last-icons-container">
+						<div className="events-last-share-icon">
+							<img
+								src={share}
+								className="small-icons"
+								alt="share icon"
+							/>
+						</div>
+						<div>
+							<img
+								src={star}
+								className="small-icons"
+								alt="share icon"
+							/>
+						</div>
+					</div>
 					{/* <li className="li-tags" /> */}
 					{/* {`${price ? `Private` : `Public`}`} */}
 				</div>
