@@ -62,7 +62,7 @@ const Groups = (props) => {
 		<div className="margin-groups-container">
 			<div id="group-detail-header">
 				<NavLink
-					className="groups-page-link remove-color"
+					className="other-page-link remove-color"
 					exact
 					to="/events"
 					onClick={resetGroupsHandler}

@@ -54,7 +54,6 @@ const Members = () => {
 		};
 		dispatch(thunkCreateMembership(payload))
 			.then((data) => {
-				console.log(`EFFECT data ======`, data);
 				dispatch(thunkReadMembers(payload));
 				dispatch(thunkReadGroupDetails(payload.groupId));
 			})

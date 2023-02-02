@@ -154,7 +154,6 @@ const groupsReducer = (state = defaultState(), action) => {
 				return acc;
 			}, {});
 			return {
-				...state,
 				...newGroups,
 			};
 		}

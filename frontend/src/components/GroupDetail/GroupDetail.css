@@ -173,12 +173,6 @@ right = 41
 /* TODO: change to min-width, adjust styles */
 
 @media screen and (max-width: 1120px) {
-	#group-details-page {
-		width: auto;
-		max-width: 100%;
-		margin: 0 0 50px 6vw;
-	}
-
 	#details-container-header {
 		/* background-color: blue; */
 		display: flex;
@@ -229,15 +223,6 @@ right = 41
 		align-items: center;
 	}
 
-	#group-details-page {
-		margin: 0 0 0 18vw;
-		max-width: 100%;
-	}
-
-	.nav-container {
-		width: 100%;
-	}
-
 	.margin-div {
 		width: 45vw;
 	}
@@ -273,7 +258,7 @@ right = 41
 		width: 100vw;
 		height: 420px;
 		object-fit: cover;
-		border-radius: 0%;
+		border-radius: 2px;
 		margin: 0;
 		padding: 0;
 	}

@@ -20,9 +20,7 @@
 	justify-content: space-evenly;
 	position: sticky;
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.2);
-	height: auto;
-	padding: 0 20px;
-	width: 100%;
+
 }
 
 .button-container {
@@ -88,7 +86,7 @@
 	height: 31px;
 	text-decoration: none;
 	border: solid 0.5px rgba(128, 128, 128, 0.4);
-	border-radius: 3%;
+	border-radius: 3px;
 	padding: 10px;
 	padding-right: 10px;
 }
@@ -112,7 +110,7 @@
 	padding: 3.5px;
 	padding-top: 6px;
 	padding-right: 6px;
-	padding-bottom: 2px;
+	padding-bottom: 3px;
 	background-color: rgb(247, 60, 39);
 	border: solid 0.1px rgba(128, 128, 128, 0.4);
 	height: 52px;

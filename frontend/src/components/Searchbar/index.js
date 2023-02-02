@@ -33,6 +33,20 @@ const Searchbar = () => {
 		);
 	};
 
+	const handleKeyDown = (e) => {
+		if (e.keycode === 13) {
+			setSearch(e.target.value);
+			dispatch(thunkSearch(search));
+			setSearch("");
+			return (
+				<NavLink
+					to={`/groups?name=${search}`}
+					id="search-bar-link"
+				></NavLink>
+			);
+		}
+	};
+
 	//return
 	return (
 		<div id="nav-mid">
@@ -43,6 +57,7 @@ const Searchbar = () => {
 					placeholder="Search for Groups"
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
+					onKeyDown={handleKeyDown}
 				/>
 			</div>
 

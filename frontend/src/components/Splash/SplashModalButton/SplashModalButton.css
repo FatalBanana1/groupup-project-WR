@@ -1,7 +1,20 @@
 /*  open modal css */
 
-#start-group-btn{
-	width: 134px;
-	height: 45px;
+#start-group-btn {
 	padding: 0 5px;
+	text-decoration-color: initial;
+	color: rgb(240, 235, 226);
+	border-color: initial;
+	text-decoration: none;
+	width: fit-content;
+	height: 40px;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 4px;
+	border: 0;
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+}
+#start-group-btn:hover {
+	color: rgb(0, 130, 148);
 }

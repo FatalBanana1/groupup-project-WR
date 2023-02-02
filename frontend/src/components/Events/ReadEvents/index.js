@@ -70,7 +70,7 @@ const ReadEvents = (props) => {
 					<h2 id="header-groups-pg">Events</h2>
 				</NavLink>
 				<NavLink
-					className="groups-page-link remove-color"
+					className="other-page-link remove-color"
 					exact
 					to="/groups"
 					onClick={resetGroupsHandler}

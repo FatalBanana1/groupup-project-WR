@@ -149,7 +149,6 @@ const eventsReducer = (state = defaultState(), action) => {
 				return acc;
 			}, {});
 			return {
-				...state,
 				...newEvents,
 			};
 		}

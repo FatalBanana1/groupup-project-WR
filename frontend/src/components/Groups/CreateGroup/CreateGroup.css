@@ -99,7 +99,8 @@ button.create {
 }
 
 #create-group-button {
-	width: 130px;
+	width: auto;
+	max-width: fit-content;
 	height: 43px;
 	background-color: rgb(247, 60, 39);
 	color: white;
@@ -108,5 +109,5 @@ button.create {
 }
 
 #create-group-button:hover {
-	background-color: rgb(248, 98, 81);
+	color: rgb(0, 130, 148);
 }

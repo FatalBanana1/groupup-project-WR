@@ -1,9 +1,10 @@
 #event-detail {
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
-	height: 180px;
-	width: 660px;
 	color: black;
+}
+#event-detail:hover {
+	background-color: rgba(32, 34, 33, 0.4);
 }
 
 #event-detail:first-of-type {
