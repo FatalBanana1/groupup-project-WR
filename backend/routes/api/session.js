@@ -70,7 +70,7 @@ router.get("/", restoreUser, async (req, res) => {
 		});
 	}
 	if (user.id) {
-		user = await User.scope(["defaultScope"]).findOne({
+		user = await User.findOne({
 			where: { id: user.id },
 		});
 		return res.json({
@@ -117,24 +117,18 @@ router.post("/", validateLogin, async (req, res, next) => {
 
 	if (!user.id) {
 		return res.status(401).json({
-			message: `Invalid Credentials`,
+			errors: { message: `Invalid Credentials` },
 			statusCode: 401,
 		});
 	}
 
-	user = await User.scope(["defaultScope"]).findOne({
+	user = await User.findOne({
 		where: { id: user.id },
 	});
 	await setTokenCookie(res, user);
 
 	return res.json({
-		user: {
-			id: user.id,
-			firstName: user.firstName,
-			lastName: user.lastName,
-			email: credential,
-			username: user.username,
-		},
+		user,
 	});
 });
 

@@ -5,7 +5,7 @@
 	height: fit-content;
 }
 #event-detail:hover {
-	background-color: rgba(32, 34, 33, 0.4);
+	background-color: rgba(244, 244, 244, 0.4);
 }
 
 #event-detail:first-of-type {

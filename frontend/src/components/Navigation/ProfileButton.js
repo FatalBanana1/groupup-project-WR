@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
@@ -33,10 +33,6 @@ function ProfileButton({ user }) {
 		document.addEventListener("click", closeMenu);
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu, dispatch]);
-
-	// useEffect(() => {
-	// 	dispatch(sessionActions.restoreUser());
-	// }, [dispatch]);
 
 	const closeMenu = () => setShowMenu(false);
 
