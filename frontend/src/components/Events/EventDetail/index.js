@@ -157,7 +157,7 @@ const EventDetail = () => {
 								<div className="members-link details-nav-section-border">
 									{user ? (
 										<NavLink
-											to={`/events/${event.id}/attendees`}
+											to={`/events/${eventId}/attendees`}
 										>
 											Attendees
 										</NavLink>

@@ -35,6 +35,7 @@ const { Op } = require("sequelize");
 const valid_event = async (req, res, next) => {
 	const id = req.params.eventId;
 	const info = await Event.findByPk(id);
+	req.event = info;
 	if (!info) {
 		const err = new Error("Event couldn't be found");
 		err.statusCode = 404;
@@ -198,78 +199,78 @@ const valid_member = async (req, res, next) => {
 //TODO:
 // Get all Attendees of an Event specified by its id
 // get - /api/events/:eventId/attendees
-router.get(
-	"/:eventId/attendees",
-	requireAuth,
-	valid_event,
-	async (req, res) => {
-		let eventId = req.params.eventId;
+router.get("/:eventId/attendees", valid_event, async (req, res) => {
+	let eventId = req.params.eventId;
 
-		const { user } = req;
-		let auth = await Membership.findOne({
-			where: { userId: user.id },
-			include: [
-				{
-					model: Group,
-				},
-			],
-		});
-		let users;
-		let attends;
+	const { user, event } = req;
+	// let auth = await Membership.findOne({
+	// 	where: { userId: user.id },
+	// 	include: [
+	// 		{
+	// 			model: Group,
+	// 		},
+	// 	],
+	// });
+	// let users;
+	// let attends;
 
-		if (
-			user.id &&
-			(auth.status === "co-host" || auth.Group.organizerId === user.id)
-		) {
-			users = await User.scope(["defaultScope"]).findAll({
-				attributes: ["id", "firstName", "lastName"],
-				include: [
-					{
-						model: Attendance,
-						where: {
-							eventId,
-						},
-						attributes: [],
-					},
-				],
-			});
-
-			attends = await Attendance.findAll({
+	// if (
+	// 	user.id &&
+	// 	(auth.status === "co-host" || auth.Group.organizerId === user.id)
+	// ) {
+	let users = await User.scope(["defaultScope"]).findAll({
+		attributes: ["id", "firstName", "lastName", "avatar", "username"],
+		include: [
+			{
+				model: Attendance,
 				where: {
 					eventId,
 				},
-				attributes: ["status"],
-			});
-		} else {
-			users = await User.scope(["defaultScope"]).findAll({
-				attributes: ["id", "firstName", "lastName"],
-				include: [
-					{
-						model: Attendance,
-						where: {
-							eventId,
-							status: { [Op.or]: ["waitlist", "member"] },
-						},
-						attributes: [],
-					},
-				],
-			});
+				attributes: ["userId", "status", "createdAt"],
+			},
+			{
+				model: Membership,
+				where: { status: { [Op.in]: ["member", "co-host"] } },
+				attributes: ["groupId", "status", "createdAt"],
+			},
+		],
+	});
 
-			attends = await Attendance.findAll({
-				where: {
-					eventId,
-					status: { [Op.or]: ["waitlist", "member"] },
-				},
-				attributes: ["status"],
-			});
-		}
+	// 	// attends = await Attendance.findAll({
+	// 	// 	where: {
+	// 	// 		eventId,
+	// 	// 	},
+	// 	// 	attributes: ["status", "createdAt"],
+	// 	// });
+	// } else {
+	// 	users = await User.scope(["defaultScope"]).findAll({
+	// 		attributes: ["id", "firstName", "lastName"],
+	// 		include: [
+	// 			{
+	// 				model: Attendance,
+	// 				where: {
+	// 					eventId,
+	// 					status: { [Op.or]: ["waitlist", "attending"] },
+	// 				},
+	// 				attributes: [],
+	// 			},
+	// 		],
+	// 	});
 
-		users.forEach((el, i) => {
-			el.dataValues.Attendance = attends[i];
-		});
-		return res.json({ Attendees: users });
-	}
-);
+	// 	attends = await Attendance.findAll({
+	// 		where: {
+	// 			eventId,
+	// 			status: { [Op.or]: ["waitlist", "pending"] },
+	// 		},
+	// 		attributes: ["status"],
+	// 	});
+	// }
+
+	// users.forEach((el, i) => {
+	// 	el.dataValues.Attendance = attends[i];
+	// });
+	return res.json({ Attendees: users });
+});
 
 // Get details of an Event specified by its id
 // get - api/events/:eventId
