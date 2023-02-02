@@ -6,6 +6,7 @@ import groupsReducer from "./groups";
 import memberReducer from "./members";
 import searchReducer from "./search";
 import eventsReducer from "./events";
+import rsvpsReducer from "./rsvps";
 
 const rootReducer = combineReducers({
 	session: sessionReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	events: eventsReducer,
 	members: memberReducer,
 	search: searchReducer,
+	rsvps: rsvpsReducer,
 });
 
 let enhancer;

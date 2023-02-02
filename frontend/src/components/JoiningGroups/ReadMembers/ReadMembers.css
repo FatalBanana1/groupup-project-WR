@@ -11,3 +11,11 @@
 #detail-right {
 	margin-top: 20px;
 }
+
+#read-members-img {
+	width: 110px;
+	height: 110px;
+	object-fit: cover;
+	border-radius: 100px;
+	margin-bottom: 80px;
+}

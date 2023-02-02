@@ -280,7 +280,19 @@ router.get("/:eventId", valid_event, async (req, res) => {
 		include: [
 			{
 				model: Group,
-				attributes: ["id", "name", "private", "city", "state"],
+				attributes: ["id", "organizerId", "name", "private"],
+				include: [
+					{
+						model: User,
+						as: "Organizer",
+						attributes: ["id", "firstName", "lastName"],
+					},
+					{
+						model: Membership,
+						where: { status: "co-host" },
+						attributes: ["userId", "status"],
+					},
+				],
 			},
 			{
 				model: Venue,

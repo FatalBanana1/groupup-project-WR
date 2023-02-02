@@ -154,15 +154,17 @@ const groupsReducer = (state = defaultState(), action) => {
 				return acc;
 			}, {});
 			return {
+				...state,
 				...newGroups,
 			};
 		}
 
 		case READ_GROUP_DETAILS: {
 			action.group["privated"] = action.group.private;
+			const newState = { ...action.group };
 			return {
 				...state,
-				...action.group,
+				[action.group.id]: newState,
 			};
 		}
 

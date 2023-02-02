@@ -119,7 +119,7 @@
 	background-color: white;
 	color: white;
 	border-radius: 6px;
-	border: 0.5px solid gray;
+	/* border: 0.5px solid gray; */
 }
 
 .groups-link-container-signin {

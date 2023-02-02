@@ -12,7 +12,6 @@ import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import logo from "../Groups/images/groupup-logo5.png";
 import Groups from "../Groups";
-import { actionResetState } from "../../store/groups";
 import Searchbar from "../Searchbar";
 
 function Navigation({ isLoaded }) {

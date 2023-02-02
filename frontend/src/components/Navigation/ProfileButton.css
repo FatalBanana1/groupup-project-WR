@@ -92,3 +92,10 @@
 	/* margin: 0 5px; */
 	margin-top: 15px;
 }
+
+#nav-members-img {
+	height: 50px;
+	width: 50px;
+	object-fit: cover;
+	border-radius: 100px;
+}

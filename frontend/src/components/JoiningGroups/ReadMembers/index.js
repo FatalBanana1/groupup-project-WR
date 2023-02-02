@@ -24,11 +24,11 @@ const ReadMembers = ({ member }) => {
 		status,
 		organizerId,
 		logId,
+		avatar,
 	} = member;
 
 	let dispatch = useDispatch();
 	let [hidden, setHidden] = useState("hidden");
-	let previewImage = false;
 	let params = useParams();
 	let groupId = useSelector((state) => state.groups.id);
 	if (!groupId) {
@@ -75,8 +75,8 @@ const ReadMembers = ({ member }) => {
 	return (
 		<div id="detail-container">
 			<div id="detail-left">
-				{previewImage ? (
-					<img src={previewImage} id="read-groups-img" />
+				{avatar ? (
+					<img src={avatar} id="read-members-img" />
 				) : (
 					<img
 						src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
@@ -128,7 +128,8 @@ export default ReadMembers;
 					"lastName": "White",
 					"username": "heisenberg",
 					"email": "h20@gmail.com",
-					"status": "organizer"
+					"status": "organizer",
+					avatar
 			},
 		]
 	}

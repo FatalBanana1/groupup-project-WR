@@ -60,7 +60,7 @@ export const thunkReadEvents = (payload) => async (dispatch) => {
 	let response;
 	// console.log(`thunk>>> payload: `, payload);
 	if (payload) {
-		response = await csrfFetch(`/api/events${payload}`);
+		response = await csrfFetch(`/api/events`);
 	} else {
 		response = await csrfFetch(`/api/events`);
 	}
@@ -69,6 +69,18 @@ export const thunkReadEvents = (payload) => async (dispatch) => {
 		const events = await response.json();
 		dispatch(actionReadEvents(events));
 		// console.log(`thunk>>> events: `, events);
+		return events;
+	}
+};
+
+// GET: Get all Events by groupId Route: /api/groups/:groupId/events
+export const thunkReadEventsbyGroup = (payload) => async (dispatch) => {
+	// console.log(`response = thunk -----------`, payload);
+	const response = await csrfFetch(`/api/groups/${payload.groupId}/events`);
+
+	if (response.ok) {
+		const events = await response.json();
+		dispatch(actionReadEvents(events));
 		return events;
 	}
 };
@@ -102,7 +114,7 @@ export const thunkCreateEvent = (payload) => async (dispatch) => {
 
 // PUT: Edit Event Route: /api/event/:eventId
 export const thunkUpdateEvent = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload.id}`, {
+	const response = await csrfFetch(`/api/events/${payload}`, {
 		method: `PUT`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
@@ -117,7 +129,7 @@ export const thunkUpdateEvent = (payload) => async (dispatch) => {
 
 // DELETE: Delete Event Route: /api/events/:eventId
 export const thunkDeleteEvent = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload.eventId}`, {
+	const response = await csrfFetch(`/api/events/${payload}`, {
 		method: `DELETE`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
@@ -149,14 +161,16 @@ const eventsReducer = (state = defaultState(), action) => {
 				return acc;
 			}, {});
 			return {
+				...state,
 				...newEvents,
 			};
 		}
 
 		case READ_EVENT_DETAILS: {
+			const newState = { ...action.event };
 			return {
 				...state,
-				...action.group,
+				[action.event.id]: newState,
 			};
 		}
 

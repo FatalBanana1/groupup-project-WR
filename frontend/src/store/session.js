@@ -8,6 +8,7 @@ import { csrfFetch } from "./csrf";
 //types
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
+const RESET_SESSION = "session/resetUser";
 
 //-------------------------------------------
 
@@ -75,6 +76,10 @@ export const logout = () => async (dispatch) => {
 	return response;
 };
 
+export const actionResetUser = () => ({
+	type: RESET_SESSION,
+});
+
 //-------------------------------------------
 
 //reducer
@@ -90,6 +95,9 @@ const sessionReducer = (state = initialState, action) => {
 		case REMOVE_USER:
 			newState.user = null;
 			return newState;
+
+		case RESET_SESSION:
+			return initialState;
 
 		default:
 			return state;

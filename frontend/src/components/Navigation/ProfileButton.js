@@ -34,6 +34,10 @@ function ProfileButton({ user }) {
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu, dispatch]);
 
+	// useEffect(() => {
+	// 	dispatch(sessionActions.restoreUser());
+	// }, [dispatch]);
+
 	const closeMenu = () => setShowMenu(false);
 
 	const logout = (e) => {
@@ -94,7 +98,12 @@ function ProfileButton({ user }) {
 						)}
 					</div>
 					<button className="profile-button" onClick={openMenu}>
-						<i className="fas fa-user-circle" />
+						{user.avatar ? (
+							<img src={user.avatar} id="nav-members-img" />
+						) : (
+							<i className="fas fa-user-circle" />
+						)}
+
 						{/* <i className="fa-solid fa-person" /> */}
 					</button>
 				</div>

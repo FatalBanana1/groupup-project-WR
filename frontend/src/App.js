@@ -11,6 +11,7 @@ import Groups from "./components/Groups";
 import GroupDetail from "./components/GroupDetail";
 import Members from "./components/JoiningGroups/Members";
 import ReadEvents from "./components/Events/ReadEvents";
+import EventDetail from "./components/Events/EventDetail";
 
 function App() {
 	const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function App() {
 						<GroupDetail />
 					</Route>
 
-					<Route path="/groups">
+					<Route exact path="/groups">
 						<Groups />
 					</Route>
 
@@ -44,11 +45,15 @@ function App() {
 						<Groups />
 					</Route>
 
-					<Route path="/events?name=">
-						<ReadEvents />
+					<Route exact path="/events/:eventId">
+						<EventDetail />
 					</Route>
 
 					<Route exact path="/events">
+						<ReadEvents />
+					</Route>
+
+					<Route path="/events?name=">
 						<ReadEvents />
 					</Route>
 

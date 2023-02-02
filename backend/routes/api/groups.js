@@ -359,10 +359,9 @@ const valid_dates = async (req, res, next) => {
 
 //-----------------get----------------------
 
-//TODO: remove the attr associated through membership table down to just 'status'
 // memberships
 // Get all Members of a Group specified by its id
-// get - /groupid/members
+// get - /:groupid/members
 router.get("/:groupId/members", async (req, res) => {
 	let groupId = req.params.groupId;
 	let members = await Membership.scope(["defaultScope"]).findAll({

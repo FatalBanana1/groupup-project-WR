@@ -51,7 +51,6 @@ const ReadEvents = (props) => {
 	};
 
 	let selector = useSelector((state) => state.events);
-	console.log(`events index js >>>>`, selector)
 	if (search) {
 		selector = search;
 	}

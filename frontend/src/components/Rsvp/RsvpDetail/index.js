@@ -22,7 +22,7 @@ import { thunkReadMembers } from "../../../store/members";
 import LoginFormModal from "../../LoginFormModal";
 
 //main
-const EventDetail = () => {
+const RsvpDetail = () => {
 	//states
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
@@ -252,7 +252,7 @@ const EventDetail = () => {
 };
 
 //exports
-export default EventDetail;
+export default RsvpDetail;
 
 /*
 

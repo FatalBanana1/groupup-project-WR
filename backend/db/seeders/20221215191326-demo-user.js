@@ -22,6 +22,7 @@ module.exports = {
 					hashedPassword: bcrypt.hashSync("password"),
 					firstName: "Walter",
 					lastName: "White",
+					avatar: "https://www.sosyncd.com/wp-content/uploads/2022/06/139.png",
 				},
 
 				{
@@ -30,6 +31,7 @@ module.exports = {
 					hashedPassword: bcrypt.hashSync("password2"),
 					firstName: "Bilbo",
 					lastName: "Baggins",
+					avatar: "https://cdn.costumewall.com/wp-content/uploads/2018/10/bilbo-baggins.jpg",
 				},
 
 				{
@@ -38,6 +40,7 @@ module.exports = {
 					hashedPassword: bcrypt.hashSync("password3"),
 					firstName: "Patrick",
 					lastName: "Star",
+					avatar: "https://cdn.shopify.com/s/files/1/0054/4371/5170/products/PatrickStar_466pin.png?v=1627414160",
 				},
 
 				{
@@ -46,6 +49,7 @@ module.exports = {
 					hashedPassword: bcrypt.hashSync("password4"),
 					firstName: "Stewie",
 					lastName: "Griffin",
+					avatar: "https://static1.personality-database.com/profile_images/e3fd4b52eeb84065943f77e7de75f374.png",
 				},
 
 				{
@@ -54,6 +58,7 @@ module.exports = {
 					email: "globalwarming@aol.com",
 					username: "goremania",
 					hashedPassword: bcrypt.hashSync("password5"),
+					avatar: "https://media.wired.com/photos/5c9cdd00d4c40803eec4451a/2:1/w_2000,h_1000,c_limit/Backchannel-AL-Gore-h_00000220423456.jpg",
 				},
 
 				{
@@ -62,6 +67,7 @@ module.exports = {
 					email: "hulkamania@wwe.com",
 					username: "hulkamania",
 					hashedPassword: bcrypt.hashSync("password6"),
+					avatar: "https://static1.straitstimes.com.sg/s3fs-public/styles/large30x20/public/articles/2023/01/31/achogan310123_2.jpg?VersionId=UmIj8HI7Poyq0xqxMTV7tKB6s43SDcyt",
 				},
 
 				{

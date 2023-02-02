@@ -110,6 +110,13 @@
 }
 
 /* splash media q - mobile */
+@media screen and (min-width: 650px) {
+	#left{
+		margin-left: 5px;
+	}
+}
+
+
 @media screen and (max-width: 650px) {
 	#groups-link-container {
 		margin: 5px;
