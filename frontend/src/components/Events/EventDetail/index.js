@@ -133,6 +133,12 @@ const EventDetail = () => {
 		if (user) {
 			host = Group.Memberships.find((el) => el.userId === user.id);
 		}
+
+		if (Venue.city === "N/A" || !Venue.city) {
+			Venue.city = "Online";
+			Venue.state = "";
+		}
+
 		//return
 		return (
 			<>
@@ -188,7 +194,11 @@ const EventDetail = () => {
 									</div>
 									<div className="event-venue-details-header">
 										<div className="event-venue-details-info">{`${Venue.address}`}</div>
-										<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+										{Venue.state ? (
+											<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+										) : (
+											<div className="event-venue-details-info gray-text">{`${Venue.city} Only`}</div>
+										)}
 									</div>
 								</div>
 

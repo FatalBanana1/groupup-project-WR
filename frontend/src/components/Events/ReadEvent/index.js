@@ -43,6 +43,17 @@ const ReadEvent = (props) => {
 	}
 	let weekday = date[0];
 
+	if (Venues) {
+		Venue = Venues.find((el) => el.id === venueId);
+	}
+
+	if (Venue.city === "N/A" || !Venue.city) {
+		Venue.city = "Online";
+		Venue.state = "Only";
+	}
+
+	// console.log(`venue>>>>`, Venue);
+
 	//return
 	return (
 		<div id="detail-container">
@@ -70,10 +81,41 @@ const ReadEvent = (props) => {
 				<div className="about-section">{`${weekday}, ${month} ${day} ${time}`}</div>
 				<h3 id="detail-right-name">{name}</h3>
 				{/* <div className="about-section">{description}</div> */}
-				{Group ? (
+				{Group && Venue.city === "Online" ? (
 					<>
 						<div className="li-tag-group-name-line">
-							{`${Group.name} • ${Group.city}, ${Group.state}`}
+							{`${Group.name} • ${Venue.city}`}
+						</div>
+
+						<div className="online-only">{`${Venue.city} ${Venue.state}`}</div>
+
+						<div className="li-tag-events-line">
+							{`${numAttending} attendees`}
+
+							<div className="events-last-icons-container">
+								<div className="events-last-share-icon">
+									<img
+										src={share}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+								<div>
+									<img
+										src={star}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+							</div>
+							{/* <li className="li-tags" /> */}
+							{/* {`${price ? `Private` : `Public`}`} */}
+						</div>
+					</>
+				) : Group && Venue ? (
+					<>
+						<div className="li-tag-group-name-line">
+							{`${Group.name} • ${Venue.city}, ${Venue.state}`}
 						</div>
 
 						<div className="li-tag-events-line">

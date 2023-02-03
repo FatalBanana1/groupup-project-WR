@@ -142,7 +142,10 @@ const GroupDetail = () => {
 		let status;
 		if (curr && curr[0]) {
 			status = curr[0].status;
-			if (status === "co-host") {
+
+			if (user.id === organizerId) {
+				status = "You're the Organizer!";
+			} else if (status === "co-host") {
 				status = "You're a Co-host!";
 			} else if (status === "pending") {
 				status = "You're invite is pending";

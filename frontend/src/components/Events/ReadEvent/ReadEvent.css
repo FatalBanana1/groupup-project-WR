@@ -17,3 +17,13 @@
 	margin: auto;
 	margin-top: 15px;
 }
+
+.online-only {
+	position: relative;
+	top: 7px;
+	right: 0px;
+	background-color: rgba(128, 128, 128, 0.3);
+	width: 120px;
+	padding-left: 20px;
+	border-radius: 5px;
+}
