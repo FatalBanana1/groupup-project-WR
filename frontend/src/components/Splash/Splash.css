@@ -29,6 +29,7 @@
 	flex-direction: row;
 	max-width: 1120px;
 	align-items: center;
+	padding-left: 15px;
 }
 
 #splash-img-right {
@@ -111,13 +112,12 @@
 
 /* splash media q - mobile */
 @media screen and (min-width: 650px) {
-	#left{
+	#left {
 		margin-left: 5px;
 	}
 }
 
-
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 780px) {
 	#groups-link-container {
 		margin: 5px;
 		display: flex;
@@ -126,6 +126,12 @@
 	}
 	.join-group {
 		margin: 15px 0px;
+	}
+}
+
+@media screen and (max-width: 345px) {
+	#splash {
+		margin-left: 25px;
 	}
 }
 

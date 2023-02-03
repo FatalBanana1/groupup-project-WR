@@ -6,7 +6,9 @@
 
 #details-container-header {
 	display: flex;
-	align-items: center;
+	flex-direction: row;
+	width: auto;
+	max-width: 100%;
 }
 
 #details-container-body {
@@ -149,6 +151,27 @@
 /* -------------- media screens ----------------- */
 
 /* ------------------------------- */
+
+@media screen and (min-width: 993px) {
+	#group-details-page {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#left-details-img {
+		max-width: 42rem;
+	}
+
+	.details-img-default {
+		border-radius: 5px;
+	}
+
+	#details-container-body {
+		max-width: 660px;
+	}
+}
 
 @media screen and (max-width: 1120px) {
 	#details-nav-section {

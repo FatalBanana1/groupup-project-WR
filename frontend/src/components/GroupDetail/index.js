@@ -41,6 +41,10 @@ const GroupDetail = () => {
 	// 	groupId = params.groupId;
 	// }
 
+	let user = useSelector((state) => state.session.user);
+	const group = useSelector((state) => state.groups);
+	let members = useSelector((state) => state.members);
+
 	useEffect(() => {
 		let payload = {
 			groupId,
@@ -51,6 +55,8 @@ const GroupDetail = () => {
 			})
 			.then(() => {
 				dispatch(sessionActions.restoreUser());
+			})
+			.then(() => {
 				setIsLoaded(true);
 			})
 			.catch(async (res) => {
@@ -83,10 +89,6 @@ const GroupDetail = () => {
 
 	//----------------
 
-	let user = useSelector((state) => state.session.user);
-	const group = useSelector((state) => state.groups);
-	let members = useSelector((state) => state.members);
-
 	if (isLoaded) {
 		const {
 			id,
@@ -113,14 +115,15 @@ const GroupDetail = () => {
 		let year = date[3];
 
 		let host;
+		let curr;
 		if (user) {
 			host = Object.values(members).filter(
 				(el) => el.id === user.id && el.status === "co-host"
 			);
+			curr = Object.values(members).filter((el) => el.id === user.id);
 		}
-		let curr = Object.values(members).filter((el) => el.id === user.id);
 		let status;
-		if (curr[0]) {
+		if (curr) {
 			status = curr[0].status;
 			if (status === "co-host") status = "You're a Co-host!";
 			if (status === "pending") status = "You're invite is pending.";

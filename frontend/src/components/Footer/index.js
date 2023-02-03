@@ -1,7 +1,7 @@
 // footer
 
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./Footer.css";
 
@@ -22,7 +22,7 @@ function Footer({ isLoaded }) {
 
 					<div className="footer-col">
 						<div className="footer-title">Groupup</div>
-						<NavLink exact to="/groups" id="footer-links">
+						<NavLink exact to="../groups" id="footer-links">
 							Groups
 						</NavLink>
 						<NavLink exact to="/events" id="footer-links">
@@ -40,6 +40,13 @@ function Footer({ isLoaded }) {
 							Wasiq Rashid
 						</a>
 						<a
+							id="footer-links"
+							href="https://www.linkedin.com/in/wasiq-rashid-3164b2258/"
+							target="_blank"
+						>
+							Linkedin
+						</a>
+						<a
 							href="https://github.com/FatalBanana1"
 							id="footer-links"
 							target="_blank"
@@ -52,11 +59,20 @@ function Footer({ isLoaded }) {
 				<div className="footer-end-container">
 					<div className="spacer-footer">2023 Groupup</div>
 
-					<div className="spacer-footer">Made By Wasiq Rashid</div>
+					<div className="last-footer-line">
+						<a
+							href="https://github.com/FatalBanana1"
+							id="footer-links-wr"
+							className="spacer-footer"
+							target="_blank"
+						>
+							Made By Wasiq Rashid
+						</a>
 
-					<div className="spacer-footer">
-						PERN Stack Project • Postgres • Express • React •
-						Node.js •
+						<div className="spacer-footer">
+							PERN Stack Project • PostgreSQL • Express • React •
+							Node.js
+						</div>
 					</div>
 				</div>
 			</div>
