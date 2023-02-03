@@ -89,64 +89,64 @@ const Members = () => {
 	const organizer = useSelector((state) => state.groups.organizerId);
 
 	// return
-	return (
-		<div>
-			{isLoaded && (
-				<div id="groups-container">
-					<div id="member-headers">
-						<div className="group-detail-header-members">
-							<NavLink
-								className="members-page-link"
-								to={`/groups/${groupId}`}
-							>
-								<h2 id="header-groups-pg">Group</h2>
-							</NavLink>
-						</div>
-						<div className="group-detail-header-members">
-							<NavLink
-								className="members-page-link"
-								to={`/groups/${groupId}/members`}
-							>
-								<h2>Members</h2>
-							</NavLink>
-						</div>
-						{loggedin.length && organizer !== loggedin[0].id ? (
-							<div className="join-group">
-								<button
-									type="submit"
-									className="users-button"
-									id="create-group-button"
-									onClick={deletedMemberHandler}
-								>
-									Leave Group
-								</button>
-							</div>
-						) : organizer === logId ? (
+	if (isLoaded) {
+		return (
+			<>
+				<div id="member-headers">
+					<div className="group-detail-header-members">
+						<NavLink
+							className="members-page-link"
+							to={`/groups/${groupId}`}
+						>
+							<h2 id="header-groups-pg">Group</h2>
+						</NavLink>
+					</div>
+					<div className="group-detail-header-members">
+						<NavLink
+							className="members-page-link"
+							to={`/groups/${groupId}/members`}
+						>
+							<h2>Members</h2>
+						</NavLink>
+					</div>
+					{loggedin.length && organizer !== loggedin[0].id ? (
+						<div className="join-group">
 							<button
-								className="join-group not-button"
+								type="submit"
+								className="users-button"
 								id="create-group-button"
-								onClick={() =>
-									alert(
-										`Current organizer must transfer "Organizer" role to another member first, in order to leave group.`
-									)
-								}
+								onClick={deletedMemberHandler}
 							>
 								Leave Group
 							</button>
-						) : (
-							<div className="join-group">
-								<button
-									type="submit"
-									className="users-button"
-									id="create-group-button"
-									onClick={joinGroupHandler}
-								>
-									Join Group
-								</button>
-							</div>
-						)}
-					</div>
+						</div>
+					) : organizer === logId ? (
+						<button
+							className="join-group not-button"
+							id="create-group-button"
+							onClick={() =>
+								alert(
+									`Current organizer must transfer "Organizer" role to another member first, in order to leave group.`
+								)
+							}
+						>
+							Leave Group
+						</button>
+					) : (
+						<div className="join-group">
+							<button
+								type="submit"
+								className="users-button"
+								id="create-group-button"
+								onClick={joinGroupHandler}
+							>
+								Join Group
+							</button>
+						</div>
+					)}
+				</div>
 
+				<div id="groups-container">
 					{Object.values(errors).length > 0 ? (
 						<div id="errors-group">
 							<ul>
@@ -185,9 +185,9 @@ const Members = () => {
 						)}
 					</div>
 				</div>
-			)}
-		</div>
-	);
+			</>
+		);
+	} else return null;
 };
 
 // {id,firstName,lastName,username,email,status}

@@ -15,7 +15,7 @@ import { thunkReadGroupDetails } from "../../../store/groups";
 import UpdateGroup from "../UpdateGroup";
 import "./GroupDetail.css";
 import DeleteGroup from "../DeleteGroup";
-import Members from "../../JoiningGroups/Members";
+import Members from "../../Memberships/Members";
 import ErrorHandler from "../../ErrorHandler";
 import { actionResetMember } from "../../../store/members";
 import { thunkReadMembers } from "../../../store/members";

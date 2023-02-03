@@ -9,7 +9,7 @@ import { Route } from "react-router-dom";
 import Splash from "./components/Splash";
 import Groups from "./components/Groups/GroupsIndex";
 import GroupDetail from "./components/Groups/GroupDetail";
-import Members from "./components/JoiningGroups/Members";
+import Members from "./components/Memberships/Members";
 import EventDetail from "./components/Events/EventDetail";
 import RsvpIndex from "./components/Rsvp/RsvpIndex";
 import EventIndex from "./components/Events/EventIndex";

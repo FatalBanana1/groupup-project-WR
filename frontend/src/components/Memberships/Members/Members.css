@@ -3,12 +3,10 @@
 #member-headers {
 	display: flex;
 	flex-direction: row;
-	/* justify-content: center; */
-}
-
-.group-detail-header-members {
-	margin: 2px;
-	margin-right: 105px;
+	justify-content: space-around;
+	width: auto;
+	max-width: 660px;
+	margin: auto;
 }
 
 .join-group {
@@ -17,7 +15,7 @@
 	justify-content: center;
 }
 
-.not-button{
+.not-button {
 	margin-top: 40px;
 }
 

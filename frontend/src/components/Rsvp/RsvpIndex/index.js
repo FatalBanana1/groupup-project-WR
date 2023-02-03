@@ -14,7 +14,7 @@ import { NavLink, useHistory, useParams } from "react-router-dom";
 import * as sessionActions from "../../../store/session";
 
 //comps
-import ReadMembers from "../../JoiningGroups/ReadMembers";
+import ReadMembers from "../../Memberships/ReadMembers";
 import { thunkReadRsvps } from "../../../store/rsvps";
 import ReadRsvp from "../ReadRsvp";
 
