@@ -5,7 +5,7 @@ import star from "../../Groups/images/star-icon.png";
 import share from "../../Groups/images/share-icon.png";
 
 //main
-const ReadEvent = ({ event }) => {
+const ReadEvent = (props) => {
 	let {
 		id,
 		name,
@@ -19,7 +19,9 @@ const ReadEvent = ({ event }) => {
 		venueId,
 		Group,
 		Venue,
-	} = event;
+		Venues,
+		EventImages,
+	} = props.event;
 
 	//dates
 	let date = new Date(startDate).toString().split(" ");
@@ -46,7 +48,17 @@ const ReadEvent = ({ event }) => {
 		<div id="detail-container">
 			<div id="detail-left">
 				{previewImage ? (
-					<img src={previewImage} id="read-groups-img" />
+					<img
+						src={previewImage}
+						id="read-groups-img"
+						alt="event image"
+					/>
+				) : EventImages && EventImages[0] ? (
+					<img
+						src={EventImages[0].url}
+						id="read-groups-img"
+						alt="event image"
+					/>
 				) : (
 					<img
 						src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
@@ -58,31 +70,40 @@ const ReadEvent = ({ event }) => {
 				<div className="about-section">{`${weekday}, ${month} ${day} ${time}`}</div>
 				<h3 id="detail-right-name">{name}</h3>
 				{/* <div className="about-section">{description}</div> */}
-				<div className="li-tag-group-name-line">
-					{`${Group.name} attendees • ${Group.city}, ${Group.state}`}
-				</div>
-				<div className="li-tag-events-line">
-					{`${numAttending} attendees`}
+				{Group ? (
+					<>
+						<div className="li-tag-group-name-line">
+							{`${Group.name} • ${Group.city}, ${Group.state}`}
+						</div>
 
-					<div className="events-last-icons-container">
-						<div className="events-last-share-icon">
-							<img
-								src={share}
-								className="small-icons"
-								alt="share icon"
-							/>
+						<div className="li-tag-events-line">
+							{`${numAttending} attendees`}
+
+							<div className="events-last-icons-container">
+								<div className="events-last-share-icon">
+									<img
+										src={share}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+								<div>
+									<img
+										src={star}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+							</div>
+							{/* <li className="li-tags" /> */}
+							{/* {`${price ? `Private` : `Public`}`} */}
 						</div>
-						<div>
-							<img
-								src={star}
-								className="small-icons"
-								alt="share icon"
-							/>
-						</div>
+					</>
+				) : Venue ? (
+					<div className="li-tag-group-name-line">
+						{`${Venue.city}, ${Venue.state}`}
 					</div>
-					{/* <li className="li-tags" /> */}
-					{/* {`${price ? `Private` : `Public`}`} */}
-				</div>
+				) : null}
 			</div>
 		</div>
 	);

@@ -375,18 +375,6 @@ const EventDetail = () => {
 										</div>
 									</div>
 								</div>
-
-								<div id="organizer-details-container">
-									<h2
-										id="organizer-details"
-										className="about-title-font"
-									>
-										Organizer
-									</h2>
-								</div>
-								{/* <div className="about-details-font">{`${organizer.firstName} ${organizer.lastName}`}</div> */}
-								<div className="about-details-font">{`Type: ${type}`}</div>
-								<div className="about-details-font">{`Est: ${month} ${day}, ${year}`}</div>
 							</div>
 						</div>
 					</div>

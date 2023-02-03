@@ -1,7 +1,7 @@
 /* group detail css */
 
 #group-details-page {
-	margin-bottom: 60px;
+	padding-bottom: 60px;
 }
 
 #details-container-header {
@@ -9,6 +9,8 @@
 	flex-direction: row;
 	width: auto;
 	max-width: 100%;
+	padding-bottom: 20px;
+	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 }
 
 #details-container-body {
@@ -47,7 +49,6 @@
 
 #details-nav-section {
 	margin-top: 25px;
-	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
 }
 
 .details-nav-section-border {
@@ -105,9 +106,11 @@
 }
 
 #update-groups-link-container {
-	margin-top: 15px;
+	margin-bottom: 30px;
+	width: inherit;
 	display: flex;
 	flex-direction: row;
+	overflow-x: hidden;
 }
 
 .members-link {

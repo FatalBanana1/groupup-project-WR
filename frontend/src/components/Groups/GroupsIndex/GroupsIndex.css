@@ -89,7 +89,6 @@
 }
 
 #detail-container {
-	/* background-color: darkolivegreen; */
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -97,8 +96,7 @@
 }
 
 #group-detail-container {
-	/* background-color: yellowgreen; */
-	width: max-content;
+	width: inherit;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -171,10 +169,6 @@
 }
 
 @media screen and (max-width: 750px) {
-	#group-detail-container {
-		width: 95%;
-	}
-
 	#detail-left {
 		width: 70%;
 	}

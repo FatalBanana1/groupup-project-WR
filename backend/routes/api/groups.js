@@ -611,6 +611,17 @@ router.get("/:groupId", valid_group_only, async (req, res) => {
 			},
 			{
 				model: Event,
+				include: [
+					{
+						model: EventImage,
+						where: { preview: true },
+						attributes: ["url"],
+					},
+					{
+						model: Venue,
+						attributes: ["city", "state"],
+					},
+				],
 			},
 		],
 	});

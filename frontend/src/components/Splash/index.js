@@ -18,6 +18,7 @@ import Searchbar from "../Searchbar";
 import { actionResetState, thunkReadGroups } from "../../store/groups";
 import { removeSearch } from "../../store/search";
 import SplashModalButton from "./SplashModalButton";
+import hand from "../Groups/images/hand-cropped.png";
 
 //main
 const Splash = () => {
@@ -33,15 +34,19 @@ const Splash = () => {
 		dispatch(removeSearch());
 	}, [dispatch]);
 
-	const clickHandler = () => {};
-
 	const closeMenu = () => setShowMenu(false);
 
-	const user = useSelector((state) => state.session.user);
+	let user = useSelector((state) => state.session.user);
 
 	//return
 	return (
 		<div id="splash">
+			{user ? (
+				<h2 className="welcome-user-splash">
+					{`Welcome, ${user.firstName}  `}{" "}
+					<img className="small-icons wave-hand spin" src={hand} />{" "}
+				</h2>
+			) : null}
 			<div id="splash-container">
 				<div id="left">
 					<div className="north">
@@ -73,11 +78,7 @@ const Splash = () => {
 				<div className="join-group">
 					<img className="splash-imgs" src={joinGroup} />
 
-					<NavLink
-						className="splash-group-button"
-						to="/groups"
-						onClick={clickHandler}
-					>
+					<NavLink className="splash-group-button" to="/groups">
 						Join a group
 					</NavLink>
 
@@ -90,11 +91,7 @@ const Splash = () => {
 				<div className="join-group">
 					<img className="splash-imgs-event" src={tickets} />
 
-					<NavLink
-						className="splash-group-button"
-						to="/events"
-						onClick={clickHandler}
-					>
+					<NavLink className="splash-group-button" to="/events">
 						Find an Event
 					</NavLink>
 

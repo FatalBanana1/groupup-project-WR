@@ -2,12 +2,18 @@
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
 	color: black;
-	height: fit-content;
+	width: inherit;
 }
+
 #event-detail:hover {
 	background-color: rgba(244, 244, 244, 0.4);
 }
 
 #event-detail:first-of-type {
 	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
+}
+
+.no-display {
+	margin: auto;
+	margin-top: 15px;
 }

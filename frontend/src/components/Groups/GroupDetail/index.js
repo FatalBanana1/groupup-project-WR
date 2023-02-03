@@ -28,6 +28,7 @@ import share1 from "../images/share-icon.png";
 import share2 from "../images/share2.png";
 import { thunkReadEventsbyGroup } from "../../../store/events";
 import AboutGroup from "../AboutGroup/AboutGroup";
+import EventsByGroup from "../../Events/EventsByGroup";
 
 //main
 const GroupDetail = () => {
@@ -37,6 +38,7 @@ const GroupDetail = () => {
 	let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 	let [isAbout, setIsAbout] = useState(true);
+	let [isEvents, setIsEvents] = useState(false);
 
 	let { groupId } = useParams();
 	// let groupId = useSelector((state) => state.groups.id);
@@ -44,9 +46,17 @@ const GroupDetail = () => {
 	// 	groupId = params.groupId;
 	// }
 
-	let eventsClickHandler = (e) => {
-		setIsAbout(false);
+	let aboutClickHandler = () => {
+		setIsAbout(true);
+		setIsEvents(false);
 	};
+
+	let eventsClickHandler = () => {
+		setIsAbout(false);
+		setIsEvents(true);
+	};
+
+	//-----------------
 
 	let user = useSelector((state) => state.session.user);
 	const group = useSelector((state) => state.groups);
@@ -110,6 +120,7 @@ const GroupDetail = () => {
 			Organizer: organizer,
 			Venues: venues,
 			numMembers,
+			Events,
 		} = group[groupId];
 		let image = groupImages.find((el) => el.preview === true);
 
@@ -251,6 +262,15 @@ const GroupDetail = () => {
 							<div id="details-nav-section">
 								<div id="update-groups-link-container">
 									<div className="members-link details-nav-section-border">
+										<div
+											onClick={aboutClickHandler}
+											className="clicker"
+										>
+											About
+										</div>
+									</div>
+
+									<div className="members-link details-nav-section-border">
 										{user ? (
 											<NavLink
 												to={`/groups/${id}/members`}
@@ -313,6 +333,8 @@ const GroupDetail = () => {
 
 							{isAbout ? (
 								<AboutGroup group={group[groupId]} />
+							) : isEvents ? (
+								<EventsByGroup events={Events} />
 							) : null}
 						</div>
 					</div>
