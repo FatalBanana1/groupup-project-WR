@@ -5,7 +5,7 @@
 
 //comps
 import { NavLink } from "react-router-dom";
-import GroupDetail from "../../GroupDetail";
+import GroupDetail from "../GroupDetail";
 import "./ReadGroups.css";
 
 //main

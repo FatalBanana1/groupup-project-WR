@@ -1,7 +1,7 @@
 //home js
 
 //imports
-import Groups from "../Groups";
+import Groups from "../Groups/GroupsIndex";
 import { Redirect, Route } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "./Splash.css";

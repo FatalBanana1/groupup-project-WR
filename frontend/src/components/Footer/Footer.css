@@ -23,6 +23,7 @@
 .footer-col {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 }
 
 .footer-title {

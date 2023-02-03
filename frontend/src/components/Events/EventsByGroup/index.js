@@ -4,7 +4,7 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadEvents } from "../../../store/events";
+import { thunkReadEvents, thunkReadEventsbyGroup } from "../../../store/events";
 import { NavLink, useParams } from "react-router-dom";
 import CreateEventModalButton from "../CreateEvent/CreateEventModalButton";
 import OpenModalButton from "../../OpenModalButton";
@@ -16,65 +16,35 @@ import { removeSearch } from "../../../store/search";
 import "../ReadEvent/ReadEvent.css";
 
 //main
-const EventIndex = () => {
+const EventsByGroup = ({ events }) => {
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
 
-	//-----------------
+	// //-----------------
 
-	const [showMenu, setShowMenu] = useState(false);
-	const ulRef = useRef();
+	// const [showMenu, setShowMenu] = useState(false);
+	// const ulRef = useRef();
 
-	const closeMenu = () => setShowMenu(false);
+	// const closeMenu = () => setShowMenu(false);
 
-	//----------------
+	// //----------------
 	const user = useSelector((state) => state.session.user);
-	const search = useSelector((state) => state.search.search);
 
-	useEffect(() => {
-		dispatch(thunkReadEvents())
-			.then(() => setIsLoaded(true))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.message)
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
-	}, [dispatch]);
-
-	const resetGroupsHandler = () => {
-		dispatch(removeSearch());
-	};
-
-	let selector = useSelector((state) => state.events);
-	if (search) {
-		selector = search;
-	}
-	const events = Object.values(selector);
+	// useEffect(() => {
+	// 	dispatch(thunkReadEventsbyGroup())
+	// 		.then(() => setIsLoaded(true))
+	// 		.catch(async (res) => {
+	// 			const data = await res.json();
+	// 			if (data && data.message)
+	// 				setErrors((data[errors] = [data.message]));
+	// 			if (data && data.errors) setErrors(Object.values(data.errors));
+	// 		});
+	// }, [dispatch]);
 
 	//return
 	return (
 		<div className="margin-groups-container">
-			<div id="group-detail-header">
-				<NavLink
-					className="groups-page-link remove-color"
-					exact
-					to="/groups"
-					onClick={resetGroupsHandler}
-				>
-					<h2 id="header-groups-pg">Events</h2>
-				</NavLink>
-				<NavLink
-					className="other-page-link remove-color"
-					exact
-					to="/groups"
-					onClick={resetGroupsHandler}
-				>
-					<h2 id="header-groups-pg">Groups</h2>
-				</NavLink>
-				<div className="groups-margin-div" />
-			</div>
 			{isLoaded && search === `No Groups were found.` ? (
 				<div className="nothing-found">{`${search}..`}</div>
 			) : isLoaded ? (
@@ -138,4 +108,4 @@ const EventIndex = () => {
 // }
 
 //exports
-export default EventIndex;
+export default EventsByGroup;

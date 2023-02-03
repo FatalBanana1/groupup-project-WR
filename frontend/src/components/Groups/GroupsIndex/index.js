@@ -4,21 +4,21 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadGroups, actionResetState } from "../../store/groups";
+import { thunkReadGroups, actionResetState } from "../../../store/groups";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import CreateModalButton from "./CreateGroup/CreateModalButton";
-import OpenModalButton from "../../components/OpenModalButton";
-import * as sessionActions from "../../store/session";
+import CreateModalButton from "../CreateGroup/CreateModalButton";
+import OpenModalButton from "../../OpenModalButton";
+import * as sessionActions from "../../../store/session";
 
 //comps
-import ReadGroups from "./ReadGroups";
-import CreateGroup from "./CreateGroup";
-import LoginFormModal from "../LoginFormModal";
-import "./Groups.css";
-import { removeSearch } from "../../store/search";
+import ReadGroups from "../ReadGroups";
+import CreateGroup from "../CreateGroup";
+import LoginFormModal from "../../LoginFormModal";
+import "./GroupsIndex.css";
+import { removeSearch } from "../../../store/search";
 
 //main
-const Groups = (props) => {
+const GroupsIndex = (props) => {
 	let location = useLocation();
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
@@ -142,4 +142,4 @@ const Groups = (props) => {
 // }
 
 //exports
-export default Groups;
+export default GroupsIndex;

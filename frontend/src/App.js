@@ -7,8 +7,8 @@ import Navigation from "./components/Navigation";
 //imports
 import { Route } from "react-router-dom";
 import Splash from "./components/Splash";
-import Groups from "./components/Groups";
-import GroupDetail from "./components/GroupDetail";
+import Groups from "./components/Groups/GroupsIndex";
+import GroupDetail from "./components/Groups/GroupDetail";
 import Members from "./components/JoiningGroups/Members";
 import EventDetail from "./components/Events/EventDetail";
 import RsvpIndex from "./components/Rsvp/RsvpIndex";

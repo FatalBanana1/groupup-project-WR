@@ -108,7 +108,6 @@ a {
 }
 
 a:hover {
-	/* background-color: rgba(244, 244, 244, 0.4); */
 	color: rgb(0, 130, 148);
 }
 
@@ -124,8 +123,13 @@ a:hover {
 	padding-bottom: 2px;
 }
 
-button {
+button,
+.clicker {
 	cursor: pointer;
+}
+
+.clicker:hover {
+	color: rgb(127, 234, 244);
 }
 
 .small-icons {

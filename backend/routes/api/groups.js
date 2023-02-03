@@ -609,6 +609,9 @@ router.get("/:groupId", valid_group_only, async (req, res) => {
 				as: "Venues",
 				attributes: ["id", "groupId", "city", "state", "lat", "lng"],
 			},
+			{
+				model: Event,
+			},
 		],
 	});
 

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import logo from "../Groups/images/groupup-logo5.png";
-import Groups from "../Groups";
+import Groups from "../Groups/GroupsIndex";
 import Searchbar from "../Searchbar";
 
 function Navigation({ isLoaded }) {

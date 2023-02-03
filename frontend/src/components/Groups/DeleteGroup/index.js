@@ -12,7 +12,7 @@ import * as sessionActions from "../../../store/session";
 
 //comps
 import { NavLink } from "react-router-dom";
-import Groups from "..";
+import Groups from "../GroupsIndex";
 import "./DeleteGroup.css";
 import icon from "../images/favicon.ico";
 

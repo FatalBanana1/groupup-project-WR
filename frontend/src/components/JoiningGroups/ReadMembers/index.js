@@ -5,7 +5,7 @@
 
 //comps
 import { NavLink, useParams } from "react-router-dom";
-import GroupDetail from "../../GroupDetail";
+import GroupDetail from "../../Groups/GroupDetail";
 import "./ReadMembers.css";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
