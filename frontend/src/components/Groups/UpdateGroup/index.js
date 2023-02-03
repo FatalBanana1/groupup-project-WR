@@ -14,6 +14,7 @@ import * as sessionActions from "../../../store/session";
 import { NavLink } from "react-router-dom";
 import "./UpdateGroup.css";
 import icon from "../images/favicon.ico";
+import apple from "../images/apple1.png";
 
 //main
 const UpdateGroup = ({ group }) => {
@@ -79,7 +80,8 @@ const UpdateGroup = ({ group }) => {
 		<div id="create-group-container">
 			<div className="sign-up-container" id="create-group">
 				<div className="form-icon">
-					<img className="image-logo" src={icon} />
+					<img className="image-logo fall" src={apple} />
+					<img className="image-logo spins" src={icon} />
 				</div>
 				<div className="signup-header-name">Edit Group</div>
 				<div className="edit-group-req">(* is required)</div>

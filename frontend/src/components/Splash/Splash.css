@@ -126,7 +126,37 @@
 	animation: rotate 1.3s ease-in-out alternate infinite;
 	/* -webkit-animation: rotate 2s linear infinite; */
 }
+
+.spins {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border-top-color: #fff;
+	transform: translate3d(30%, 0%, 0);
+	animation: rotate 4s ease-in-out alternate infinite;
+	/* -webkit-animation: rotate 2s linear infinite; */
+}
+
 @keyframes rotate {
+	to {
+		transform: rotate(-30deg);
+	}
+}
+
+.fall {
+	display: inline-block;
+	width: 10px;
+	position: relative;
+	top: 20px;
+	right: -5px;
+	height: 10px;
+	border-top-color: #fff;
+	transform: translate3d(0%, -4180%, 0);
+	animation: rotater 8s ease-in infinite;
+	/* -webkit-animation: rotate 2s linear infinite; */
+}
+
+@keyframes rotater {
 	to {
 		transform: rotate(-30deg);
 	}

@@ -15,6 +15,7 @@ import { NavLink } from "react-router-dom";
 import Groups from "../GroupsIndex";
 import "./DeleteGroup.css";
 import icon from "../images/favicon.ico";
+import apple from "../images/apple1.png";
 
 //main
 const DeleteGroup = (group) => {
@@ -68,7 +69,8 @@ const DeleteGroup = (group) => {
 		<div id="delete-group-container">
 			<div className="sign-up-container" id="create-group">
 				<div className="form-icon">
-					<img className="image-logo" src={icon} />
+					<img className="image-logo fall" src={apple} />
+					<img className="image-logo spins" src={icon} />
 				</div>
 				<div className="signup-header-name">Delete Group</div>
 			</div>

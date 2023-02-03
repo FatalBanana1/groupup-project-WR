@@ -11,6 +11,7 @@ import * as sessionActions from "../../../store/session";
 import { NavLink } from "react-router-dom";
 import "./UpdateGroup.css";
 import icon from "../../Groups/images/favicon.ico";
+import apple from "../../Groups/images/apple1.png";
 import {
 	thunkDeleteMembership,
 	thunkReadMembers,
@@ -76,7 +77,8 @@ const UpdateMembership = ({ member }) => {
 		<div id="create-group-container">
 			<div className="sign-up-container" id="create-group">
 				<div className="form-icon">
-					<img className="image-logo" src={icon} />
+					<img className="image-logo fall" src={apple} />
+					<img className="image-logo spins" src={icon} />
 				</div>
 				<div className="signup-header-name">Edit Membership</div>
 				<div className="edit-group-req">(* is required)</div>

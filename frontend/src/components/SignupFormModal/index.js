@@ -6,6 +6,7 @@ import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
 import icon from "../Groups/images/favicon.ico";
+import apple from "../Groups/images/apple1.png";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -54,7 +55,8 @@ function SignupFormModal() {
 		<div id="signup-container">
 			<div className="sign-up-container">
 				<div className="form-icon">
-					<img className="image-logo" src={icon} />
+					<img className="image-logo fall" src={apple} />
+					<img className="image-logo spins" src={icon} />
 				</div>
 				<div className="signup-header-name">Sign Up</div>
 			</div>

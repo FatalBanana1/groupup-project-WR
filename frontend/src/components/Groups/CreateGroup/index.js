@@ -10,6 +10,7 @@ import { actionResetState } from "../../../store/members";
 import { thunkReadMembers } from "../../../store/members";
 import * as sessionActions from "../../../store/session";
 import icon from "../images/favicon.ico";
+import apple from "../images/apple1.png";
 import "./CreateGroup.css";
 
 //main
@@ -61,7 +62,8 @@ const CreateGroup = () => {
 		<div id="create-group-container">
 			<div className="sign-up-container" id="create-group">
 				<div className="form-icon">
-					<img className="image-logo" src={icon} />
+					<img className="image-logo fall" src={apple} />
+					<img className="image-logo spins" src={icon} />
 				</div>
 				<div className="signup-header-name">Create a Group</div>
 			</div>

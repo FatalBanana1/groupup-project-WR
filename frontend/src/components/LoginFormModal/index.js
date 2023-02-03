@@ -6,6 +6,7 @@ import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
 import icon from "../Groups/images/favicon.ico";
+import apple from "../Groups/images/apple1.png";
 
 function LoginFormModal() {
 	const dispatch = useDispatch();
@@ -58,7 +59,8 @@ function LoginFormModal() {
 	return (
 		<div id="login-container">
 			<div className="form-icon">
-				<img className="image-logo" src={icon} />
+				<img className="image-logo fall" src={apple} />
+				<img className="image-logo spins" src={icon} />
 			</div>
 			<div className="signup-header-name">Log In</div>
 			<ul className="error-list-login">
