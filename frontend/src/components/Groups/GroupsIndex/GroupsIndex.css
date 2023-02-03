@@ -31,8 +31,9 @@
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
 	height: fit-content;
-	width: 660px;
 	color: black;
+	width: inherit;
+	max-width: 660px;
 }
 #group-detail:hover {
 	background-color: rgba(244, 244, 244, 0.4);

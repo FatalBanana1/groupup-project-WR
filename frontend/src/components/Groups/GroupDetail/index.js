@@ -142,7 +142,6 @@ const GroupDetail = () => {
 		let status;
 		if (curr && curr[0]) {
 			status = curr[0].status;
-
 			if (user.id === organizerId) {
 				status = "You're the Organizer!";
 			} else if (status === "co-host") {
@@ -152,8 +151,11 @@ const GroupDetail = () => {
 			} else if (status === "member") {
 				status = "You're a Member!";
 			}
+		} else if (!curr) {
+			status = "You're not signed in!";
+		} else {
+			status = "You're not a member yet";
 		}
-		if (!curr) status = "You're not signed in!";
 
 		//return
 		return (

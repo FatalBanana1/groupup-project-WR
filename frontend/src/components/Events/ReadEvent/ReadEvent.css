@@ -3,6 +3,7 @@
 	text-decoration: none;
 	color: black;
 	width: inherit;
+	max-width: 660px;
 }
 
 #event-detail:hover {
