@@ -28,7 +28,14 @@ const Members = () => {
 	const memberId = useSelector((state) => state.session.user.id);
 	let params = useParams();
 
-	let groupId = useSelector((state) => state.groups.id);
+	let curr = useSelector((state) => state.groups);
+	let attd = useSelector((state) => state.rsvps);
+	let groupId = curr.groupId;
+	if (!groupId && attd && attd.Attendees) {
+		console.log(`from attend to members----to groups`, groupId);
+		console.log(`from attend to members----to groups`, attd.Attendees);
+		groupId = attd.Attendees[0].Attendances[0].Event.groupId;
+	}
 	if (!groupId) {
 		groupId = params.groupId;
 	}
@@ -86,7 +93,11 @@ const Members = () => {
 	let logId;
 	if (loggedin.length) logId = loggedin[0].id;
 
-	const organizer = useSelector((state) => state.groups[groupId].organizerId);
+	let organizer = useSelector((state) => state.groups[groupId]);
+
+	if (organizer) {
+		organizer = organizer.organizerId;
+	}
 
 	// return
 	if (isLoaded) {
@@ -96,19 +107,20 @@ const Members = () => {
 					<div className="group-detail-header-members">
 						<NavLink
 							className="members-page-link"
-							to={`/groups/${groupId}`}
+							to={`/groups/${groupId}/members`}
 						>
-							<h2 id="header-groups-pg">Group</h2>
+							<h2 className="curr-link">Members</h2>
 						</NavLink>
 					</div>
 					<div className="group-detail-header-members">
 						<NavLink
 							className="members-page-link"
-							to={`/groups/${groupId}/members`}
+							to={`/groups/${groupId}`}
 						>
-							<h2>Members</h2>
+							<h2 id="header-groups-pg">Group</h2>
 						</NavLink>
 					</div>
+
 					{loggedin.length && organizer !== loggedin[0].id ? (
 						<div className="join-group">
 							<button

@@ -51,8 +51,9 @@
 	flex-direction: row;
 	justify-content: space-between;
 	max-width: 90%;
-	margin-top: 6vw;
 	padding-left: 15px;
+	padding-top: 40px;
+	padding-bottom: 10px;
 }
 
 .events-last-icons-container {

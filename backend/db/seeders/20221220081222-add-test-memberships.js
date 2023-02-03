@@ -207,6 +207,56 @@ module.exports = {
 					groupId: 14,
 					status: "co-host",
 				},
+				{
+					userId: 8,
+					groupId: 7,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 3,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 9,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 10,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 11,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 12,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 13,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 14,
+					status: "co-host",
+				},
+				{
+					userId: 8,
+					groupId: 1,
+					status: "member",
+				},
+				{
+					userId: 8,
+					groupId: 2,
+					status: "member",
+				},
 			],
 			{}
 		);

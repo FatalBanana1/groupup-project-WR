@@ -129,10 +129,21 @@ button,
 }
 
 .clicker:hover {
-	color: rgb(127, 234, 244);
+	color: rgb(0, 130, 148);
 }
 
 .small-icons {
 	height: 20px;
 	width: 20px;
+}
+
+.curr-link {
+	text-decoration: none;
+	text-decoration-line: underline;
+	text-underline-offset: 8px;
+	color: rgb(0, 130, 148);
+}
+
+.curr-link:hover {
+	color: rgba(0, 131, 148, 0.884);
 }

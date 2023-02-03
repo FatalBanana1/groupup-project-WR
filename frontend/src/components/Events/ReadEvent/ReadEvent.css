@@ -4,6 +4,12 @@
 	color: black;
 	width: inherit;
 	max-width: 660px;
+	height: max-content;
+	padding-bottom: 5px;
+}
+
+#event-detail:last-of-type{
+	padding-bottom: 30px;
 }
 
 #event-detail:hover {

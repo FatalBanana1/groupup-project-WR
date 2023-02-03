@@ -33,13 +33,19 @@ const RsvpIndex = () => {
 
 	let rsvps = Object.values(allRsvps);
 
-	console.log(`inside RSVP Index comp====`, rsvps);
-
 	if (isLoaded) {
 		//return
 		return (
 			<div id="groups-container">
 				<div id="member-headers">
+					<div className="group-detail-header-members">
+						<NavLink
+							className="members-page-link curr-link"
+							to={`/events/${eventId}/attendees`}
+						>
+							<h2>Attendees</h2>
+						</NavLink>
+					</div>
 					<div className="group-detail-header-members">
 						<NavLink
 							className="members-page-link"
@@ -52,20 +58,22 @@ const RsvpIndex = () => {
 						<div className="group-detail-header-members">
 							<NavLink
 								className="members-page-link"
-								to={`/groups/${rsvps[0].Memberships[0].groupId}/members`}
+								to={`/groups/${rsvps[0].Attendances[0].Event.groupId}`}
+							>
+								<h2>Group</h2>
+							</NavLink>
+						</div>
+					) : null}
+					{rsvps.length ? (
+						<div className="group-detail-header-members">
+							<NavLink
+								className="members-page-link"
+								to={`/groups/${rsvps[0].Attendances[0].Event.groupId}/members`}
 							>
 								<h2>Members</h2>
 							</NavLink>
 						</div>
 					) : null}
-					<div className="group-detail-header-members">
-						<NavLink
-							className="members-page-link"
-							to={`/events/${eventId}/attendees`}
-						>
-							<h2>Attendees</h2>
-						</NavLink>
-					</div>
 				</div>
 
 				<div id="group-detail-container">
@@ -103,7 +111,19 @@ export default RsvpIndex;
 	id,
 	firstName,
 	lastName,
-	Attendance: [{userId, status, createdAt}]
+	Attendances: [{userId, status, createdAt, Event: {
+			groupId,
+			id,
+			venueId,
+			name,
+			description,
+			type,
+			capacity,
+			price,
+			startDate,
+			endDate,
+		}
+	}]
 	Memberships: [{groupId, status, createdAt}]
 
 }

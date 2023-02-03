@@ -24,14 +24,13 @@ module.exports = {
 					lastName: "White",
 					avatar: "https://www.sosyncd.com/wp-content/uploads/2022/06/139.png",
 				},
-
 				{
-					email: "billyb1@gmail.com",
-					username: "baggins",
+					email: "kramer@user.io",
+					username: "kramer",
 					hashedPassword: bcrypt.hashSync("password2"),
-					firstName: "Bilbo",
-					lastName: "Baggins",
-					avatar: "https://cdn.costumewall.com/wp-content/uploads/2018/10/bilbo-baggins.jpg",
+					firstName: "Cosmo",
+					lastName: "Kramer",
+					avatar: "https://thenexus.one/storage/2022/05/Kramer-Seinfeld-How-Afford-Apartment.jpg",
 				},
 
 				{
@@ -40,7 +39,7 @@ module.exports = {
 					hashedPassword: bcrypt.hashSync("password3"),
 					firstName: "Patrick",
 					lastName: "Star",
-					avatar: "https://cdn.shopify.com/s/files/1/0054/4371/5170/products/PatrickStar_466pin.png?v=1627414160",
+					avatar: "https://i.pinimg.com/736x/55/0c/fe/550cfee9bad61f60c124d5ee340dbdb5.jpg",
 				},
 
 				{
@@ -77,6 +76,14 @@ module.exports = {
 					firstName: "Roger",
 					lastName: "Rabbit",
 				},
+				{
+					email: "billyb1@gmail.com",
+					username: "baggins",
+					hashedPassword: bcrypt.hashSync("password8"),
+					firstName: "Bilbo",
+					lastName: "Baggins",
+					avatar: "https://cdn.costumewall.com/wp-content/uploads/2018/10/bilbo-baggins.jpg",
+				},
 			],
 			{}
 		);
@@ -97,6 +104,7 @@ module.exports = {
 						"thebaby",
 						"goremania",
 						"hulkamania",
+						"kramer",
 					],
 				},
 			},

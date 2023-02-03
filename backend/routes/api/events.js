@@ -227,6 +227,10 @@ router.get("/:eventId/attendees", valid_event, async (req, res) => {
 					eventId,
 				},
 				attributes: ["userId", "status", "createdAt"],
+				include: {
+					model: Event,
+					where: { id: eventId },
+				},
 			},
 			{
 				model: Membership,

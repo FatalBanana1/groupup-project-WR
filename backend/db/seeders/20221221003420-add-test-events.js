@@ -105,6 +105,29 @@ module.exports = {
 					startDate: new Date(2023, 4, 3, 16, 10, 10),
 					endDate: new Date(2023, 4, 3, 18, 10, 10),
 				},
+				{
+					venueId: 2,
+					groupId: 1,
+					name: "International Conference on Extreme Tourism ICET",
+					description: `Extreme tourism
+					Dangerous places
+					Extreme tourism hospitality and management
+					Sustainable extreme tourism
+					Mountains, jungles, deserts, caves, canyons
+					Dangerous events
+					Extreme sports and adrenaline rush
+					Trekking, hiking, via ferrata
+					Canyoning, river trekking
+					Paragliding, bungee jumping, skydiving, base jumping
+					Canoeing, rafting, scuba diving, snorkeling, boating
+					Mountaineering, skiing, snowboarding, speed riding
+					Storm chasing`,
+					type: "Online",
+					capacity: 20,
+					price: 10,
+					startDate: new Date(2023, 6, 3, 21, 10, 10),
+					endDate: new Date(2023, 6, 4, 22, 10, 10),
+				},
 			],
 			{}
 		);

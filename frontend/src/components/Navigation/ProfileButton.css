@@ -1,10 +1,8 @@
 /* profile button css */
 
 .profile-dropdown {
-	/* display: flex;
-	flex-direction: row; */
 	position: absolute;
-	top: 62px;
+	top: 82px;
 	right: 30px;
 	border: solid 0.1px rgba(0, 0, 0, 0.1);
 	border-radius: 4%;

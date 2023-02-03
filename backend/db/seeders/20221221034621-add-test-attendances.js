@@ -125,6 +125,31 @@ module.exports = {
 					userId: 1,
 					status: "attending",
 				},
+				{
+					eventId: 9,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 9,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 9,
+					userId: 6,
+					status: "attending",
+				},
+				{
+					eventId: 9,
+					userId: 7,
+					status: "attending",
+				},
+				{
+					eventId: 9,
+					userId: 8,
+					status: "pending",
+				},
 			],
 			{}
 		);

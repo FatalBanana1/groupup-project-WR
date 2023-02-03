@@ -10,7 +10,6 @@ import { actionResetState } from "../../../store/members";
 import { thunkReadMembers } from "../../../store/members";
 import * as sessionActions from "../../../store/session";
 import icon from "../../Groups/images/favicon.ico";
-import "./CreateEvent.css";
 
 //main
 const CreateEvent = () => {

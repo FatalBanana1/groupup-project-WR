@@ -20,7 +20,7 @@ module.exports = {
 				{
 					groupId: "1",
 					url: "https://skydivemonroe.com/wp-content/uploads/3-Way-Formation-Skydive.jpg",
-					preview: true,
+					preview: false,
 				},
 				{
 					groupId: "1",
@@ -31,6 +31,16 @@ module.exports = {
 					groupId: "1",
 					url: "https://www.thrillophilia.com/blog/wp-content/uploads/2017/05/Cornwall-skydiving-1024x577.jpg",
 					preview: false,
+				},
+				{
+					groupId: "1",
+					url: "https://static.wixstatic.com/media/a8e8b9_ffd9d712de72408099945789892797e5~mv2.jpg/v1/fill/w_612,h_452,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/269910305_10161376699397802_3844166828997318200_n.jpg",
+					preview: false,
+				},
+				{
+					groupId: "1",
+					url: "https://images.squarespace-cdn.com/content/v1/5518d75fe4b0570dfe22f389/1430072696320-XS83EPN0BVB7WSLI7HT6/IMG_0484.JPG?format=1500w",
+					preview: true,
 				},
 				{
 					groupId: "2",

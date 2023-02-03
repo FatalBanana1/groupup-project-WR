@@ -24,6 +24,14 @@ module.exports = {
 					lng: 0,
 				},
 				{
+					groupId: 1,
+					address: "39th St",
+					city: `New York City`,
+					state: `NY`,
+					lat: 237.69,
+					lng: 359.6,
+				},
+				{
 					groupId: 2,
 					address: "1681 Broadway",
 					city: "New York City",

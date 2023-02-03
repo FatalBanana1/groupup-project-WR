@@ -21,15 +21,14 @@
 }
 
 .you-are-here {
-	box-shadow: 0 0 60px 5px rgba(255, 68, 68, 0.4);
-	/* border: 1px dotted red; */
+	box-shadow: 0 0 25px 5px gray;
+	/* border: 4px double gray; */
+	border: 4px darkgray inset;
 }
 .you-are-here2 {
 	color: rgba(255, 68, 68, 1);
-
-	/* border: 1px dotted red; */
+	font-weight: 550;
 }
 
 .you-are-here:hover {
-	border: 1px solid red;
 }

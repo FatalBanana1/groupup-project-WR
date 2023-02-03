@@ -40,7 +40,7 @@ function LoginFormModal() {
 
 	const demoSignin2 = (e) => {
 		e.preventDefault();
-		let credential = "baggins";
+		let credential = "kramer";
 		let password = "password2";
 		return dispatch(sessionActions.login({ credential, password }))
 			.then(closeModal)

@@ -55,11 +55,6 @@ module.exports = {
 					url: "https://upload.wikimedia.org/wikipedia/en/3/3f/Cavalcade_film_poster.jpg",
 					preview: true,
 				},
-				// {
-				// 	eventId: 4,
-				// 	url: "",
-				// 	preview: false,
-				// },
 				{
 					eventId: 1,
 					url: "https://thesmithcenter.com/media/xmrg2mrb/lion-king-for-blog.png",
@@ -80,6 +75,26 @@ module.exports = {
 					url: "https://bloximages.newyork1.vip.townnews.com/postandcourier.com/content/tncms/assets/v3/editorial/0/66/066bb674-9e4f-11ec-a3ae-3b2215e564a3/622660a6e3840.image.jpg?resize=1200%2C801",
 					preview: false,
 				},
+				{
+					eventId: 9,
+					url: "https://www.skydivemag.com/new/wp-content/uploads/2019/02//02e41c2c-be45-4afe-815f-b468b0257a4a.jpg",
+					preview: true,
+				},
+				{
+					eventId: 9,
+					url: "https://teamfastrax.com/wp-content/uploads/2013/07/MG_3246.jpg",
+					preview: false,
+				},
+				{
+					eventId: 9,
+					url: "https://www.usairnet.com/wp-content/uploads/2012/11/3645-A.jpg",
+					preview: false,
+				},
+				// {
+				// 	eventId: 4,
+				// 	url: "",
+				// 	preview: false,
+				// },
 			],
 			{}
 		);

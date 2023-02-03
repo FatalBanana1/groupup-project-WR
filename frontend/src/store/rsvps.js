@@ -119,7 +119,7 @@ function defaultState() {
 const rsvpsReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_RSVPS: {
-			console.log(`reducer>>> rsvps: `, action.rsvps);
+			// console.log(`reducer>>> rsvps: `, action.rsvps);
 			const newState = action.rsvps.Attendees.reduce((acc, rsvp) => {
 				acc[rsvp.id] = rsvp;
 				return acc;
