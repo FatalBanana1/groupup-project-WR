@@ -13,6 +13,7 @@ import Members from "./components/JoiningGroups/Members";
 import EventDetail from "./components/Events/EventDetail";
 import RsvpIndex from "./components/Rsvp/RsvpIndex";
 import EventIndex from "./components/Events/EventIndex";
+import Footer from "./components/Footer";
 
 function App() {
 	const dispatch = useDispatch();
@@ -67,6 +68,7 @@ function App() {
 					</Route>
 				</Switch>
 			)}
+			<Footer isLoaded={isLoaded} />
 		</>
 	);
 }

@@ -20,6 +20,12 @@ import ErrorHandler from "../ErrorHandler";
 import { actionResetMember } from "../../store/members";
 import { thunkReadMembers } from "../../store/members";
 import LoginFormModal from "../LoginFormModal";
+import location from "../Groups/images/location2.png";
+import people from "../Groups/images/people1.png";
+import person from "../Groups/images/person1.png";
+import email from "../Groups/images/email1.png";
+import share1 from "../Groups/images/share-icon.png";
+import share2 from "../Groups/images/share2.png";
 
 //main
 const GroupDetail = () => {
@@ -42,10 +48,10 @@ const GroupDetail = () => {
 		dispatch(thunkReadGroupDetails(groupId))
 			.then(() => {
 				dispatch(thunkReadMembers(payload));
-				setIsLoaded(true);
 			})
 			.then(() => {
 				dispatch(sessionActions.restoreUser());
+				setIsLoaded(true);
 			})
 			.catch(async (res) => {
 				const data = await res.json();
@@ -112,6 +118,14 @@ const GroupDetail = () => {
 				(el) => el.id === user.id && el.status === "co-host"
 			);
 		}
+		let curr = Object.values(members).filter((el) => el.id === user.id);
+		let status;
+		if (curr[0]) {
+			status = curr[0].status;
+			if (status === "co-host") status = "You're a Co-host!";
+			if (status === "pending") status = "You're invite is pending.";
+			if (status === "member") status = "You're a member!";
+		}
 
 		//return
 		return (
@@ -145,13 +159,45 @@ const GroupDetail = () => {
 										{name}
 									</h1>
 								</div>
-								<div className="details-info">{`${city}, ${state}`}</div>
-								<div className="details-info">
-									{`${numMembers} members • ${
-										privated ? `Private` : `Public`
-									}`}
+
+								<div className="groups-icon-container margin-groups-icon-first">
+									<div className="icons">
+										<img
+											src={location}
+											className="small-icons"
+											alt="share icon"
+										/>
+									</div>
+									<div className="details-info">{`${city}, ${state}`}</div>
 								</div>
-								<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
+
+								<div className="groups-icon-container">
+									<div className="details-info">
+										{`${numMembers} members • ${
+											privated
+												? `Private group`
+												: `Public group`
+										}`}
+									</div>
+								</div>
+
+								<div className="groups-icon-container">
+									<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
+								</div>
+
+								<div className="groups-icon-container  margin-groups-icon-last">
+									<div className="share-icon-header">
+										Share:
+									</div>
+									<div className="small-icons"></div>
+								</div>
+
+								<div className="groups-icon-container  margin-groups-icon-last">
+									<div className="status-drop-header">
+										{status}
+									</div>
+									<div className="small-icons"></div>
+								</div>
 							</div>
 						</div>
 

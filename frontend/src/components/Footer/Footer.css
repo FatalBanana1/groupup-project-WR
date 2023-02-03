@@ -1,0 +1,40 @@
+/* footer css */
+
+.footer-container {
+	padding-top: 50px;
+	background-color: rgb(53, 62, 72);
+	color: white;
+}
+
+.footer-end-container {
+	margin-top: 80px;
+	padding-left: 35px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: rgb(47, 54, 63);
+}
+
+.footer-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.footer-col {
+	display: flex;
+	flex-direction: column;
+}
+
+.footer-title {
+	font-weight: 520;
+	margin-bottom: 25px;
+}
+
+#footer-links {
+	color: rgb(166, 172, 179);
+	padding-bottom: 20px;
+}
+
+.spacer-footer {
+	padding: 3px 0px;
+}

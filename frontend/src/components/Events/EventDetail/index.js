@@ -167,7 +167,7 @@ const EventDetail = () => {
 							</div>
 
 							<div className="event-info-header">
-								<div class="event-details-info-container icons-container">
+								<div className="event-details-info-container icons-container">
 									<div className="icons">
 										<img
 											src={clock}
@@ -178,7 +178,7 @@ const EventDetail = () => {
 									<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
 								</div>
 
-								<div class="event-details-info-container icons-container">
+								<div className="event-details-info-container icons-container">
 									<div className="icons">
 										<img
 											src={location}
@@ -192,7 +192,7 @@ const EventDetail = () => {
 									</div>
 								</div>
 
-								<div class="event-details-info-container icons-container">
+								<div className="event-details-info-container icons-container">
 									<NavLink
 										to={`/groups/${groupId}`}
 										className="icons"
@@ -327,7 +327,7 @@ const EventDetail = () => {
 							</div>
 
 							<div id="about-section-container-right">
-								<div class="event-details-info-container icons-container">
+								<div className="event-details-info-container icons-container">
 									<NavLink
 										to={`/groups/${groupId}`}
 										className="icons"
@@ -351,7 +351,7 @@ const EventDetail = () => {
 								</div>
 
 								<div className="events-side-panel">
-									<div class="event-details-info-container icons-container">
+									<div className="event-details-info-container icons-container">
 										<div className="icons">
 											<img
 												src={clock}
@@ -361,7 +361,7 @@ const EventDetail = () => {
 										</div>
 										<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
 									</div>
-									<div class="event-details-info-container icons-container">
+									<div className="event-details-info-container icons-container">
 										<div className="icons">
 											<img
 												src={location}
