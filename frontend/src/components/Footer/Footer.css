@@ -37,10 +37,13 @@
 }
 
 #footer-links-wr {
-	color: rgb(225, 226, 229);
 	padding-bottom: 20px;
+	color: #efeedaf3;
 }
-#footer-links-wr:hover,
+#footer-links-wr:hover {
+	color: rgb(255, 230, 129);
+}
+
 #footer-links:hover {
 	color: rgb(203, 206, 211);
 }

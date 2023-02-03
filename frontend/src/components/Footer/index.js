@@ -33,7 +33,7 @@ function Footer({ isLoaded }) {
 					<div className="footer-col">
 						<div className="footer-title">Discover</div>
 						<a
-							id="footer-links"
+							id="footer-links-wr"
 							href="https://www.linkedin.com/in/wasiq-rashid-3164b2258/"
 							target="_blank"
 						>

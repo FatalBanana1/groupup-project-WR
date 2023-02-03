@@ -42,7 +42,7 @@ const EventsByGroup = ({ events }) => {
 	// 		});
 	// }, [dispatch]);
 
-	console.log(`events BY group =====`, events);
+	// console.log(`events BY group =====`, events);
 
 	if (!events.length) {
 		return <div className="no-display">No Events to Display...</div>;

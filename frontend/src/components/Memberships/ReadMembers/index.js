@@ -75,7 +75,13 @@ const ReadMembers = ({ member }) => {
 	return (
 		<div id="detail-container">
 			<div id="detail-left">
-				{avatar ? (
+				{avatar && user.id === id ? (
+					<img
+						src={avatar}
+						id="read-members-img"
+						className="you-are-here"
+					/>
+				) : avatar ? (
 					<img src={avatar} id="read-members-img" />
 				) : (
 					<img
@@ -90,7 +96,11 @@ const ReadMembers = ({ member }) => {
 				<h3 id="detail-right-name">
 					{firstName} {lastName}
 				</h3>
-				<div className="about-section">{`Username: ${username}`}</div>
+				{user.id === id ? (
+					<div className="about-section you-are-here2">{`Username: ${username}`}</div>
+				) : (
+					<div className="about-section">{`Username: ${username}`}</div>
+				)}
 				<div className="about-section">{`Email: ${email}`}</div>
 				<div className="about-section">{`Status: ${
 					organizerId === id

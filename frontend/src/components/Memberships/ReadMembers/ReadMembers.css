@@ -19,3 +19,17 @@
 	border-radius: 100px;
 	margin-bottom: 80px;
 }
+
+.you-are-here {
+	box-shadow: 0 0 60px 5px rgba(255, 68, 68, 0.7);
+	/* border: 1px dotted red; */
+}
+.you-are-here2 {
+	color: rgba(255, 68, 68, 1);
+
+	/* border: 1px dotted red; */
+}
+
+.you-are-here:hover {
+	border: 1px solid red;
+}

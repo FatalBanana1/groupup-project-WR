@@ -86,7 +86,7 @@ const Members = () => {
 	let logId;
 	if (loggedin.length) logId = loggedin[0].id;
 
-	const organizer = useSelector((state) => state.groups.organizerId);
+	const organizer = useSelector((state) => state.groups[groupId].organizerId);
 
 	// return
 	if (isLoaded) {
@@ -126,7 +126,7 @@ const Members = () => {
 							id="create-group-button"
 							onClick={() =>
 								alert(
-									`Current organizer must transfer "Organizer" role to another member first, in order to leave group.`
+									`Current organizer must either: transfer "Organizer" role to another member first, in order to leave group OR may delete the group.`
 								)
 							}
 						>
