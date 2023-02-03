@@ -32,7 +32,7 @@ module.exports = {
 					state: "PA",
 				},
 				{
-					organizerId: "3",
+					organizerId: "1",
 					name: "Broadway Watchers",
 					about: "Watching a Broadway show is an experience like no other, fun guaranteed.",
 					type: "In person",

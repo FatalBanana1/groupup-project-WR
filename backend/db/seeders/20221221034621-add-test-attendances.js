@@ -95,6 +95,36 @@ module.exports = {
 					userId: 4,
 					status: "attending",
 				},
+				{
+					eventId: 7,
+					userId: 3,
+					status: "attending",
+				},
+				{
+					eventId: 8,
+					userId: 3,
+					status: "attending",
+				},
+				{
+					eventId: 7,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 8,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 2,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 3,
+					userId: 1,
+					status: "attending",
+				},
 			],
 			{}
 		);

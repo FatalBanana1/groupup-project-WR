@@ -4,22 +4,19 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadEvents, actionResetStateEvent } from "../../../store/events";
-import { NavLink, useLocation, useParams } from "react-router-dom";
-import CreateEventModalButton from "./../CreateEvent/CreateEventModalButton";
-import OpenModalButton from "../../../components/OpenModalButton";
+import { thunkReadEvents } from "../../../store/events";
+import { NavLink, useParams } from "react-router-dom";
+import CreateEventModalButton from "../CreateEvent/CreateEventModalButton";
+import OpenModalButton from "../../OpenModalButton";
 import * as sessionActions from "../../../store/session";
-
-//comps
-import Event from "./Event";
+import ReadEvent from "../ReadEvent";
 import CreateEvent from "../CreateEvent";
 import LoginFormModal from "../../LoginFormModal";
 import { removeSearch } from "../../../store/search";
-import "./ReadEvents.css";
+import "../ReadEvent/ReadEvent.css";
 
 //main
-const ReadEvents = (props) => {
-	let location = useLocation();
+const EventIndex = () => {
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -91,7 +88,7 @@ const ReadEvents = (props) => {
 										key={event.id}
 										to={`/events/${event.id}`}
 									>
-										<Event event={event} />
+										<ReadEvent event={event} />
 									</NavLink>
 								);
 							}
@@ -141,4 +138,4 @@ const ReadEvents = (props) => {
 // }
 
 //exports
-export default ReadEvents;
+export default EventIndex;

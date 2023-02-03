@@ -286,12 +286,17 @@ router.get("/:eventId", valid_event, async (req, res) => {
 					{
 						model: User,
 						as: "Organizer",
-						attributes: ["id", "firstName", "lastName"],
+						attributes: ["id", "firstName", "lastName", "avatar"],
 					},
 					{
 						model: Membership,
 						where: { status: "co-host" },
 						attributes: ["userId", "status"],
+					},
+					{
+						model: GroupImage,
+						attributes: ["url"],
+						where: { preview: true },
 					},
 				],
 			},
@@ -341,8 +346,6 @@ router.get("/:eventId", valid_event, async (req, res) => {
 	return res.json(event);
 });
 
-//TODO: add numattending + previewimage attrs
-//		--add venues t
 // events - get all events
 // get - /events
 router.get("/", async (req, res) => {

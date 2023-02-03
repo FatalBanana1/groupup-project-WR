@@ -15,11 +15,11 @@ import { thunkReadEventDetails } from "../../../store/events";
 import UpdateGroup from "../../Groups/UpdateGroup";
 import "./EventDetail.css";
 import DeleteGroup from "../../Groups/DeleteGroup";
-// import Members from "../JoiningGroups/Members";
 import ErrorHandler from "../../ErrorHandler";
-import { actionResetMember } from "../../../store/members";
-import { thunkReadMembers } from "../../../store/members";
+// import { thunkReadMembers } from "../../../store/members";
 import LoginFormModal from "../../LoginFormModal";
+import clock from "../../Groups/images/clock-icon.png";
+import location from "../../Groups/images/location-icon.png";
 
 //main
 const EventDetail = () => {
@@ -30,10 +30,6 @@ const EventDetail = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	let { eventId } = useParams();
-	// let groupId = useSelector((state) => state.groups.id);
-	// if (!groupId) {
-	// 	groupId = params.groupId;
-	// }
 	let state = useSelector((state) => state);
 	let user = state.session.user;
 	const event = state.events;
@@ -99,6 +95,39 @@ const EventDetail = () => {
 		let month = date[1];
 		let day = date[2];
 		let year = date[3];
+		let time = date[4].split(":").splice(0, 2).join(":");
+		let ampm = Number(time.slice(0, 2));
+		if (ampm > 12) {
+			if (ampm > 21) {
+				time = ampm - 12 + time.slice(2) + " PM";
+			} else {
+				time = ampm - 12 + time.slice(2) + " PM";
+			}
+		} else if (ampm === 12) {
+			time += " PM";
+		} else {
+			time += " AM";
+		}
+		let weekday = date[0];
+
+		let date2 = new Date(endDate).toString().split(" ");
+		let month2 = date2[1];
+		let day2 = date2[2];
+		let year2 = date2[3];
+		let time2 = date2[4].split(":").splice(0, 2).join(":");
+		let ampm2 = Number(time2.slice(0, 2));
+		if (ampm2 > 12) {
+			if (ampm2 > 21) {
+				time2 = ampm2 - 12 + time2.slice(2) + " PM EST";
+			} else {
+				time2 = ampm2 - 12 + time2.slice(2) + " PM EST";
+			}
+		} else if (ampm2 === 12) {
+			time2 += " PM EST";
+		} else {
+			time2 += " AM EST";
+		}
+		let weekday2 = date2[0];
 
 		let host;
 		if (user) {
@@ -106,7 +135,7 @@ const EventDetail = () => {
 		}
 		//return
 		return (
-			<div>
+			<>
 				<div className="event-details-page">
 					{errors.length > 0 ? (
 						<div className="error-handler-container">
@@ -116,21 +145,75 @@ const EventDetail = () => {
 					<div className="event-details-container-header">
 						<div id="event-right-details-header">
 							<div id="event-name-details-div">
-								<h1 id="right-details-header-name">{name}</h1>
+								<h1 className="event-details-header-name">
+									{name}
+								</h1>
 							</div>
 
-							<div className="details-info">{`Hosted By`}</div>
-							<div>
-								{`${Group.Organizer.firstName} ${Group.Organizer.lastName}`}
+							<div className="hosted-by-events">
+								<div className="left-events-hosted">
+									<img
+										className="events-small-avatar-icon"
+										src={Group.Organizer.avatar}
+									/>
+								</div>
+
+								<div className="right-events-hosted">
+									<div>{`Hosted By`}</div>
+									<div className="event-details-info-bold">
+										{`${Group.Organizer.firstName} ${Group.Organizer.lastName}`}
+									</div>
+								</div>
 							</div>
 
-							<div className="details-info">{`${Venue.city}, ${Venue.state}`}</div>
-							<div className="details-info li-tag-members-line">
-								{`${numAttending} Attending`}
-								<li className="li-tags" />
-								{`${
-									Group.private ? "Private" : "Public"
-								} event`}
+							<div className="event-info-header">
+								<div class="event-details-info-container icons-container">
+									<div className="icons">
+										<img
+											src={clock}
+											className="small-icons"
+											alt="share icon"
+										/>
+									</div>
+									<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
+								</div>
+
+								<div class="event-details-info-container icons-container">
+									<div className="icons">
+										<img
+											src={location}
+											className="small-icons"
+											alt="share icon"
+										/>
+									</div>
+									<div className="event-venue-details-header">
+										<div className="event-venue-details-info">{`${Venue.address}`}</div>
+										<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+									</div>
+								</div>
+
+								<div class="event-details-info-container icons-container">
+									<NavLink
+										to={`/groups/${groupId}`}
+										className="icons"
+									>
+										<img
+											src={Group.GroupImages[0].url}
+											className="small-group-image"
+											alt="share icon"
+										/>
+									</NavLink>
+									<NavLink to={`/groups/${groupId}`}>
+										<div className="event-venue-details-info">{`${Group.name}`}</div>
+										<div className="event-venue-details-info gray-text">
+											{`${
+												Group.private
+													? "Private"
+													: "Public"
+											} group`}
+										</div>
+									</NavLink>
+								</div>
 							</div>
 						</div>
 
@@ -138,7 +221,7 @@ const EventDetail = () => {
 							{image ? (
 								<img
 									src={image}
-									id="details-img-default"
+									className="event-details-img-default"
 									alt="event image"
 								/>
 							) : (
@@ -149,15 +232,14 @@ const EventDetail = () => {
 								/>
 							)}
 						</div>
-					</div>
 
-					<div id="details-container-body">
 						<div id="details-nav-section">
 							<div id="update-groups-link-container">
-								<div className="members-link details-nav-section-border">
+								<div className="members-link">
 									{user ? (
 										<NavLink
 											to={`/events/${eventId}/attendees`}
+											className="details-nav-section-border"
 										>
 											Attendees
 										</NavLink>
@@ -168,6 +250,14 @@ const EventDetail = () => {
 											modalComponent={<LoginFormModal />}
 										/>
 									)}
+								</div>
+								<div className="members-link">
+									<NavLink
+										to={`/groups/${groupId}`}
+										className="details-nav-section-border"
+									>
+										Group
+									</NavLink>
 								</div>
 
 								<div className="margin-div" />
@@ -199,7 +289,9 @@ const EventDetail = () => {
 								) : null}
 							</div>
 						</div>
+					</div>
 
+					<div id="details-container-body">
 						<div id="about-section-container">
 							<div id="about-section-container-left">
 								<h2 className="about-title-font">Details</h2>
@@ -209,7 +301,11 @@ const EventDetail = () => {
 
 								<div id="group-detail-images">
 									<h2 className="about-title-font">
-										Event Images
+										{`Photos (${
+											EventImages.length > 1
+												? EventImages.length - 1
+												: 0
+										})`}
 									</h2>
 									<div className="about-details-font">
 										{EventImages.length > 1 ? (
@@ -231,6 +327,55 @@ const EventDetail = () => {
 							</div>
 
 							<div id="about-section-container-right">
+								<div class="event-details-info-container icons-container">
+									<NavLink
+										to={`/groups/${groupId}`}
+										className="icons"
+									>
+										<img
+											src={Group.GroupImages[0].url}
+											className="small-group-image"
+											alt="share icon"
+										/>
+									</NavLink>
+									<NavLink to={`/groups/${groupId}`}>
+										<div className="event-venue-details-info">{`${Group.name}`}</div>
+										<div className="event-venue-details-info gray-text">
+											{`${
+												Group.private
+													? "Private"
+													: "Public"
+											} group`}
+										</div>
+									</NavLink>
+								</div>
+
+								<div className="events-side-panel">
+									<div class="event-details-info-container icons-container">
+										<div className="icons">
+											<img
+												src={clock}
+												className="small-icons"
+												alt="share icon"
+											/>
+										</div>
+										<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
+									</div>
+									<div class="event-details-info-container icons-container">
+										<div className="icons">
+											<img
+												src={location}
+												className="small-icons"
+												alt="share icon"
+											/>
+										</div>
+										<div className="event-venue-details-header">
+											<div className="event-venue-details-info">{`${Venue.address}`}</div>
+											<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+										</div>
+									</div>
+								</div>
+
 								<div id="organizer-details-container">
 									<h2
 										id="organizer-details"
@@ -246,7 +391,7 @@ const EventDetail = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</>
 		);
 	} else return null;
 };
@@ -276,6 +421,7 @@ export default EventDetail;
 			id,
 			firstName,
 			lastName,
+			avatar,
 		},
 		Memberships:[
 			{

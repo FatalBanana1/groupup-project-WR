@@ -30,7 +30,8 @@ const UpdateMembership = ({ member }) => {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
-	let groupId = useSelector((state) => state.groups.id);
+	let groupId = useSelector((state) => state.groups);
+	groupId = Object.keys(groupId)[0];
 	if (!groupId) {
 		groupId = params.groupId;
 	}
@@ -77,7 +78,7 @@ const UpdateMembership = ({ member }) => {
 				<div className="form-icon">
 					<img className="image-logo" src={icon} />
 				</div>
-				<div className="signup-header-name">Edit Group</div>
+				<div className="signup-header-name">Edit Membership</div>
 				<div className="edit-group-req">(* is required)</div>
 			</div>
 

@@ -14,7 +14,7 @@ const ReadRsvp = ({ rsvp }) => {
 		Memberships,
 	} = rsvp;
 
-	console.log(` read rsvp >---`, rsvp);
+	// console.log(` read rsvp >---`, rsvp);
 
 	//dates
 	let date = new Date(Attendances[0].createdAt).toString().split(" ");
@@ -35,7 +35,11 @@ const ReadRsvp = ({ rsvp }) => {
 		<div id="detail-container">
 			<div id="detail-left">
 				{avatar ? (
-					<img src={avatar} id="read-members-img" alt="avatar image" />
+					<img
+						src={avatar}
+						id="read-members-img"
+						alt="avatar image"
+					/>
 				) : (
 					<img
 						src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
@@ -55,7 +59,6 @@ const ReadRsvp = ({ rsvp }) => {
 						Attendances[0].status[0].toUpperCase() +
 						Attendances[0].status.substring(1)
 					}`}
-
 				</div>
 			</div>
 		</div>

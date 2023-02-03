@@ -4,10 +4,8 @@
 import star from "../../Groups/images/star-icon.png";
 import share from "../../Groups/images/share-icon.png";
 
-import "./ReadEvents.css";
-
 //main
-const Event = ({ event }) => {
+const ReadEvent = ({ event }) => {
 	let {
 		id,
 		name,
@@ -30,7 +28,13 @@ const Event = ({ event }) => {
 	let year = date[3];
 	let time = date[4].split(":").splice(0, 2).join(":");
 	let ampm = Number(time.slice(0, 2));
-	if (ampm > 11) {
+	if (ampm > 12) {
+		if (ampm > 21) {
+			time = ampm - 12 + time.slice(2) + " PM EST";
+		} else {
+			time = ampm - 12 + time.slice(2) + " PM EST";
+		}
+	} else if (ampm === 12) {
 		time += " PM EST";
 	} else {
 		time += " AM EST";
@@ -85,7 +89,7 @@ const Event = ({ event }) => {
 };
 
 //exports
-export default Event;
+export default ReadEvent;
 
 //structure of group prop
 // {

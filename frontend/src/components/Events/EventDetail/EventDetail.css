@@ -1,1 +1,90 @@
 /* event detail css */
+
+#event-right-details-header {
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+}
+
+.event-left-details-img {
+	width: 100%;
+}
+
+.event-details-header-name {
+	font-weight: 700;
+	font-size: 1.875rem;
+}
+
+.hosted-by-events {
+	display: flex;
+	flex-direction: row;
+}
+
+.right-events-hosted {
+	margin-left: 1.5rem;
+}
+
+.event-details-info-bold {
+	font-weight: 600;
+}
+
+.events-small-avatar-icon {
+	height: 48px;
+	width: 48px;
+	border-radius: 9999px;
+	object-fit: cover;
+}
+
+.event-info-header {
+	padding: 0.75rem 1.25rem 1.125rem 0px;
+	border-top: solid 0.3px rgba(128, 128, 128, 0.2);
+	border-bottom: solid 0.3px rgba(128, 128, 128, 0.2);
+	margin-bottom: 1.125rem;
+	margin-top: 1.125rem;
+}
+
+.event-details-info-container {
+	margin-top: 1.25rem;
+}
+
+.event-details-info {
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	padding-left: 1.125rem;
+}
+
+.event-venue-details-header {
+	padding-left: 1.125rem;
+}
+
+.event-venue-details-info {
+	line-height: 1.25rem;
+	font-size: 0.875rem;
+}
+
+.gray-text {
+	color: rgb(162, 153, 139);
+}
+
+.icons-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.small-group-image {
+	width: 56px;
+	height: 56px;
+	object-fit: cover;
+	border-radius: 8px;
+	margin-right: 1rem;
+}
+
+.event-details-img-default {
+	display: block;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 100%;
+	max-height: 100%;
+	object-fit: cover;
+	border-radius: 3px;
+}

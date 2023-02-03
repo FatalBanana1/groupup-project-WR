@@ -24,7 +24,6 @@ const Members = () => {
 	let dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
 	let [errors, setErrors] = useState([]);
-	let [show, setShow] = useState(1);
 	const user = useSelector((state) => state.session.user);
 	const memberId = useSelector((state) => state.session.user.id);
 	let params = useParams();
@@ -53,7 +52,7 @@ const Members = () => {
 			status: "pending",
 		};
 		dispatch(thunkCreateMembership(payload))
-			.then((data) => {
+			.then(() => {
 				dispatch(thunkReadMembers(payload));
 				dispatch(thunkReadGroupDetails(payload.groupId));
 			})

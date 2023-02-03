@@ -892,6 +892,7 @@ router.post(
 	valid_user,
 	async (req, res) => {
 		let groupId = req.params.groupId;
+		let { user } = req;
 
 		let {
 			venueId,
@@ -948,6 +949,16 @@ router.post(
 				startDate,
 				endDate,
 				groupId,
+			});
+
+			let event = await Event.findOne({
+				where: { name, startDate, endDate, description, groupId },
+			});
+
+			let attending = await Attendance.create({
+				eventId: event.id,
+				userId: user.id,
+				status: "attending",
 			});
 
 			return res.json(newevent);

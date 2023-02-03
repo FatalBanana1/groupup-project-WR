@@ -115,7 +115,7 @@ const GroupDetail = () => {
 
 		//return
 		return (
-			<div>
+			<>
 				{isLoaded && (
 					<div id="group-details-page">
 						{errors.length > 0 ? (
@@ -128,7 +128,7 @@ const GroupDetail = () => {
 								{image && image.url ? (
 									<img
 										src={image.url}
-										id="details-img-default"
+										className="details-img-default"
 										alt="group image"
 									/>
 								) : (
@@ -146,10 +146,10 @@ const GroupDetail = () => {
 									</h1>
 								</div>
 								<div className="details-info">{`${city}, ${state}`}</div>
-								<div className="details-info li-tag-members-line">
-									{`${numMembers} members`}
-									<li className="li-tags" />
-									{`${privated ? "Private" : "Public"} group`}
+								<div className="details-info">
+									{`${numMembers} members • ${
+										privated ? `Private` : `Public`
+									}`}
 								</div>
 								<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
 							</div>
@@ -221,7 +221,11 @@ const GroupDetail = () => {
 
 									<div id="group-detail-images">
 										<h2 className="about-title-font">
-											Group Images
+											{`Photos (${
+												groupImages.length > 1
+													? groupImages.length - 1
+													: 0
+											})`}
 										</h2>
 										<div className="about-details-font">
 											{groupImages.length > 1 ? (
@@ -259,7 +263,7 @@ const GroupDetail = () => {
 						</div>
 					</div>
 				)}
-			</div>
+			</>
 		);
 	} else return null;
 };

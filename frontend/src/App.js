@@ -10,9 +10,9 @@ import Splash from "./components/Splash";
 import Groups from "./components/Groups";
 import GroupDetail from "./components/GroupDetail";
 import Members from "./components/JoiningGroups/Members";
-import ReadEvents from "./components/Events/ReadEvents";
 import EventDetail from "./components/Events/EventDetail";
 import RsvpIndex from "./components/Rsvp/RsvpIndex";
+import EventIndex from "./components/Events/EventIndex";
 
 function App() {
 	const dispatch = useDispatch();
@@ -55,11 +55,11 @@ function App() {
 					</Route>
 
 					<Route exact path="/events">
-						<ReadEvents />
+						<EventIndex />
 					</Route>
 
 					<Route path="/events?name=">
-						<ReadEvents />
+						<EventIndex />
 					</Route>
 
 					<Route>

@@ -1,38 +1,15 @@
 /* group detail css */
 
-/*
-max w = 1100
-med q = 1120
-
-left = 58
-mid = 1
-right = 41
-
-*/
-
 #group-details-page {
-	/* background-color: gray; */
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding-top: 20px;
-	margin: 0 20vw 10vw 10vw;
-	max-width: 1100px;
+	margin-bottom: 60px;
 }
 
 #details-container-header {
-	/* background-color: blue; */
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
 	align-items: center;
-	width: auto;
-	max-width: 100%;
 }
 
 #details-container-body {
-	/* background-color: blue; */
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -46,48 +23,29 @@ right = 41
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin: 0 0 0 120px;
 }
 
 #about-section-container-left {
-	/* background-color: blue; */
-	width: 50vw;
-	height: auto;
-	overflow-wrap: break-word;
 	margin: 0 20px;
-	padding-top: 20px;
 }
 
-#about-section-container-right {
-	width: 40vw;
-	padding-left: 20px;
-}
-
-#left-details-img {
-	width: 52vw;
-	max-width: 59%;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-}
-
-#details-img-default {
-	width: 50vw;
-	max-width: 600px;
-	height: 260px;
-	object-fit: cover;
-	border-radius: 4px;
+.details-img-default {
+	display: block;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 100%;
+	max-height: 100%;
 }
 
 #right-details-header {
 	height: 260px;
 	width: auto;
-	padding-left: 2vw;
+	padding-left: 30px;
 }
 
 #details-nav-section {
-	margin-top: 12px;
+	margin-top: 25px;
+	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
 }
 
 .details-nav-section-border {
@@ -96,15 +54,13 @@ right = 41
 
 .details-info {
 	font-size: 14px;
+	line-height: 1.6;
 }
 
 #right-details-header-name {
 	margin-bottom: 10px;
 	width: 100%;
-}
-
-#organizer-details-container {
-	padding-top: 20px;
+	font-size: 24px;
 }
 
 .about-details-font {
@@ -126,8 +82,6 @@ right = 41
 	margin-top: 15px;
 	display: flex;
 	flex-direction: row;
-	max-width: 90%;
-	margin-left: 45px;
 }
 
 .members-link {
@@ -170,39 +124,7 @@ right = 41
 
 /* ------------------------------- */
 
-/* TODO: change to min-width, adjust styles */
-
 @media screen and (max-width: 1120px) {
-	#details-container-header {
-		/* background-color: blue; */
-		display: flex;
-		flex-direction: row;
-		width: 100vw;
-		max-width: 100%;
-		margin-left: 35px;
-	}
-
-	#details-img-default {
-		width: 100%;
-		height: 300px;
-		object-fit: cover;
-		border-radius: 2%;
-	}
-
-	#right-details-header {
-		height: 300px;
-		width: 40%;
-		flex-basis: 0;
-		flex-grow: 1;
-		width: auto;
-		min-width: 0;
-		padding-left: 16px;
-	}
-
-	#right-details-header-name {
-		font-size: 32px;
-	}
-
 	#details-nav-section {
 		padding: 0 20px;
 		width: auto;
@@ -231,42 +153,16 @@ right = 41
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-top: 10px;
+		/* margin-top: 10px; */
 	}
 
 	#details-container-header {
-		/* background-color: blue; */
-		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-	}
-
-	#about-section-container-left {
-		width: 60%;
-		height: 200px;
-		overflow-wrap: break-word;
-	}
-
-	#about-section-container-right {
-		width: 40%;
-		padding-left: 20px;
-	}
-
-	#details-img-default {
-		width: 100vw;
-		height: 420px;
-		object-fit: cover;
-		border-radius: 2px;
-		margin: 0;
-		padding: 0;
 	}
 
 	#right-details-header {
 		width: 100%;
 		height: auto;
-		/* margin-left: 12vw; */
 	}
 
 	#name-details-div {
@@ -275,41 +171,8 @@ right = 41
 	}
 
 	#right-details-header-name {
-		font-size: 22px;
 		margin-bottom: 4px;
 		margin-top: 18px;
-	}
-
-	.details-info {
-		font-size: 10px;
-	}
-
-	#details-container-body {
-		font-size: 2vw;
-		width: 100%;
-		height: auto;
-		margin: 0 18px;
-		padding-top: 36px;
-	}
-
-	#about-section-container-left {
-		/* background-color: blue; */
-		width: 100%;
-		height: auto;
-		padding-top: 36px;
-		overflow-wrap: break-word;
-	}
-
-	#about-section-container-right {
-		width: 100%;
-		padding-left: 0px;
-		padding-top: 36px;
-		padding-bottom: 36px;
-	}
-
-	#left-details-img {
-		width: 100%;
-		height: 420px;
 	}
 
 	.no-groups-img-detail {

@@ -59,7 +59,10 @@ const RsvpIndex = () => {
 						</div>
 					) : null}
 					<div className="group-detail-header-members">
-						<NavLink className="members-page-link" to={`/`}>
+						<NavLink
+							className="members-page-link"
+							to={`/events/${eventId}/attendees`}
+						>
 							<h2>Attendees</h2>
 						</NavLink>
 					</div>
@@ -75,7 +78,7 @@ const RsvpIndex = () => {
 									<NavLink
 										id="group-detail"
 										key={rsvp.id}
-										to={`/`}
+										to={`/events/${eventId}/attendees`}
 									>
 										<ReadRsvp rsvp={rsvp} />
 									</NavLink>

@@ -10,22 +10,18 @@
 }
 
 .nav-container {
-	/* background-color: purple; */
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
-	position: sticky;
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.2);
 }
 
 .button-container {
-	/* background-color: red; */
 	display: flex;
 	flex-direction: row-reverse;
 }
 
 .profile-container {
-	/* background-color: gray; */
 	display: flex;
 	flex-direction: column;
 	margin-top: 0;
@@ -35,7 +31,6 @@
 #dropdown {
 	display: flex;
 	flex-direction: row-reverse;
-	margin-top: 0;
 	padding-top: 0;
 	padding-right: 1%;
 }
@@ -45,11 +40,12 @@
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 5px;
+	margin-top: 12px;
 }
 
 #nav-mid {
 	width: 50%;
-	margin-top: 6px;
+	margin-top: 12px;
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 8px;
