@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 			about: {
-				type: DataTypes.STRING(500),
+				type: DataTypes.STRING(1000),
 				allowNull: false,
 				validate: {
 					min: 50,
