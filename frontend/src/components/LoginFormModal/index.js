@@ -8,13 +8,18 @@ import { useHistory } from "react-router-dom";
 import icon from "../Groups/images/favicon.ico";
 import apple from "../Groups/images/apple1.png";
 
-function LoginFormModal() {
+function LoginFormModal(props) {
 	const dispatch = useDispatch();
 	const [credential, setCredential] = useState("");
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 	let history = useHistory();
+	let propClass;
+
+	if (props && props.link) {
+		propClass = `id = "start-grp-button"`;
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -55,6 +60,8 @@ function LoginFormModal() {
 			.then(closeModal)
 			.then(() => history.push("/"));
 	};
+
+
 
 	return (
 		<div id="login-container">

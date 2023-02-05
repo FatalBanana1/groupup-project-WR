@@ -1,7 +1,7 @@
 /* groups css */
 
 .margin-groups-container {
-	margin-right: 25%;
+	margin-right: 5%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -21,9 +21,9 @@
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+	width: inherit;
 }
 #group-detail:first-of-type {
-	/* background-color: red; */
 	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
 }
 

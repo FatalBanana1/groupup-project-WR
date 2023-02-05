@@ -53,6 +53,13 @@ function Footer({ isLoaded }) {
 						>
 							GitHub
 						</a>
+						<a
+							href="https://www.youtube.com/@leetwh"
+							id="footer-links"
+							target="_blank"
+						>
+							Youtube
+						</a>
 					</div>
 				</div>
 

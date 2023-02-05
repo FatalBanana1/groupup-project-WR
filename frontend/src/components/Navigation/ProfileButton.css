@@ -97,3 +97,19 @@
 	object-fit: cover;
 	border-radius: 100px;
 }
+
+.small-drop {
+	padding: 3px;
+}
+
+@media screen and (max-width: 610px) {
+	.no-user {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 611px) {
+	.no-login-hide {
+		display: none;
+	}
+}

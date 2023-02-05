@@ -114,7 +114,7 @@ const Splash = () => {
 						<SplashModalButton
 							buttonText="Start a group"
 							onButtonClick={closeMenu}
-							modalComponent={<LoginFormModal />}
+							modalComponent={<LoginFormModal props="splash" />}
 						/>
 					)}
 					<div className="splash-after-link">

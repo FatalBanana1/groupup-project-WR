@@ -42,7 +42,7 @@
 
 .li-tag-members-line {
 	font-size: 14px;
-	padding-top: 2vw;
+	padding-top: 50px;
 }
 
 .li-tag-events-line {
@@ -73,16 +73,4 @@
 .no-groups-img-read {
 	height: auto;
 	width: 130px;
-}
-
-@media screen and (min-width: 1450px) {
-	.li-tag-events-line {
-		margin-top: 3vw;
-	}
-}
-
-@media screen and (min-width: 2050px) {
-	.li-tag-events-line {
-		margin-top: 2vw;
-	}
 }

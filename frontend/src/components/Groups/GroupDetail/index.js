@@ -29,6 +29,7 @@ import share2 from "../images/share2.png";
 import { thunkReadEventsbyGroup } from "../../../store/events";
 import AboutGroup from "../AboutGroup/AboutGroup";
 import EventsByGroup from "../../Events/EventsByGroup";
+import Loading from "../../Loading";
 
 //main
 const GroupDetail = () => {
@@ -263,7 +264,7 @@ const GroupDetail = () => {
 							</div>
 						</div>
 
-						<div id="details-container-body">
+						<div className="details-container-body">
 							<div id="details-nav-section">
 								<div id="update-groups-link-container">
 									<div className="members-link details-nav-section-border">
@@ -284,6 +285,7 @@ const GroupDetail = () => {
 											</NavLink>
 										) : (
 											<OpenModalButton
+												props="link-buttons"
 												buttonText="Members"
 												onButtonClick={closeMenu}
 												modalComponent={
@@ -346,7 +348,7 @@ const GroupDetail = () => {
 				)}
 			</>
 		);
-	} else return null;
+	} else return <Loading />;
 };
 
 //exports

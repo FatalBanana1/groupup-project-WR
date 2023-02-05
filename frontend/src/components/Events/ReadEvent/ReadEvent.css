@@ -8,10 +8,6 @@
 	padding-bottom: 5px;
 }
 
-#event-detail:last-of-type{
-	padding-bottom: 30px;
-}
-
 #event-detail:hover {
 	background-color: rgba(244, 244, 244, 0.4);
 }

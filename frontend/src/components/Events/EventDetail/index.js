@@ -20,6 +20,7 @@ import ErrorHandler from "../../ErrorHandler";
 import LoginFormModal from "../../LoginFormModal";
 import clock from "../../Groups/images/clock-icon.png";
 import location from "../../Groups/images/location-icon.png";
+import Loading from "../../Loading";
 
 //main
 const EventDetail = () => {
@@ -142,7 +143,7 @@ const EventDetail = () => {
 		//return
 		return (
 			<>
-				<div className="event-details-page">
+				<div id="group-details-page">
 					{errors.length > 0 ? (
 						<div className="error-handler-container">
 							<ErrorHandler errors={errors} />
@@ -243,65 +244,71 @@ const EventDetail = () => {
 							)}
 						</div>
 
-						<div id="details-nav-section">
-							<div id="update-groups-link-container">
-								<div className="members-link">
-									{user ? (
-										<NavLink
-											to={`/events/${eventId}/attendees`}
-											className="details-nav-section-border"
-										>
-											Attendees
+						<div className="details-container-body">
+							<div id="details-nav-section">
+								<div id="update-groups-link-container">
+									<div className="members-link details-nav-section-border">
+										{user ? (
+											<NavLink
+												to={`/events/${eventId}/attendees`}
+												className="details-nav-section-border"
+											>
+												Attendees
+											</NavLink>
+										) : (
+											<OpenModalButton
+												props="link-buttons"
+												buttonText="Attendees"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<LoginFormModal />
+												}
+											/>
+										)}
+									</div>
+									<div className="members-link details-nav-section-border">
+										<NavLink to={`/groups/${groupId}`}>
+											Group
 										</NavLink>
-									) : (
-										<OpenModalButton
-											buttonText="Attendees"
-											onButtonClick={closeMenu}
-											modalComponent={<LoginFormModal />}
-										/>
-									)}
-								</div>
-								<div className="members-link">
-									<NavLink
-										to={`/groups/${groupId}`}
-										className="details-nav-section-border"
-									>
-										Group
-									</NavLink>
-								</div>
-
-								<div className="margin-div" />
-
-								{host && host.length ? (
-									<div>
-										<EditModalButton
-											id="update-group-button"
-											buttonText="Edit Event"
-											onButtonClick={closeMenu}
-											modalComponent={
-												<UpdateGroup event={event} />
-											}
-										/>
 									</div>
-								) : null}
 
-								{host && host.length ? (
-									<div>
-										<DeleteModalButton
-											id="delete-group-button"
-											buttonText="Delete Event"
-											onButtonClick={closeMenu}
-											modalComponent={
-												<DeleteGroup event={event} />
-											}
-										/>
-									</div>
-								) : null}
+									<div className="margin-div" />
+
+									{host && host.length ? (
+										<div>
+											<EditModalButton
+												id="update-group-button"
+												buttonText="Edit Event"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<UpdateGroup
+														event={event}
+													/>
+												}
+											/>
+										</div>
+									) : null}
+
+									{host && host.length ? (
+										<div>
+											<DeleteModalButton
+												id="delete-group-button"
+												buttonText="Delete Event"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<DeleteGroup
+														event={event}
+													/>
+												}
+											/>
+										</div>
+									) : null}
+								</div>
 							</div>
 						</div>
 					</div>
 
-					<div id="details-container-body">
+					<div className="details-container-body">
 						<div id="about-section-container">
 							<div id="about-section-container-left">
 								<h2 className="about-title-font">Details</h2>
@@ -391,7 +398,7 @@ const EventDetail = () => {
 				</div>
 			</>
 		);
-	} else return null;
+	} else return <Loading />;
 };
 
 //exports

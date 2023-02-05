@@ -123,6 +123,24 @@ function ProfileButton({ user }) {
 							/>
 						</div>
 					</div>
+
+					<div id="v-dropdown" className="no-login-hide">
+						{showMenu ? (
+							<img
+								onClick={openMenu}
+								className="nav-arrow"
+								src={upArrow}
+								alt="up arrow"
+							/>
+						) : (
+							<img
+								onClick={openMenu}
+								className="nav-arrow"
+								src={downArrow}
+								alt="down arrow"
+							/>
+						)}
+					</div>
 				</div>
 			)}
 
@@ -144,7 +162,7 @@ function ProfileButton({ user }) {
 					<>
 						<div className="users">
 							<OpenModalButton
-								className="users-button dropdown-buttons"
+								props="login-btns small-drop"
 								buttonText="Log In"
 								onButtonClick={closeMenu}
 								modalComponent={<LoginFormModal />}
@@ -152,7 +170,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<OpenModalButton
-								className="users-button dropdown-buttons"
+								props="login-btns small-drop"
 								buttonText="Sign Up"
 								onButtonClick={closeMenu}
 								modalComponent={<SignupFormModal />}
@@ -160,7 +178,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<button
-								className="users-button dropdown-buttons"
+								className="login-btns small-drop"
 								onClick={demoSignin1}
 							>
 								Demo User (Admin)
@@ -168,7 +186,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<button
-								className="users-button dropdown-buttons"
+								className="login-btns small-drop"
 								onClick={demoSignin2}
 							>
 								Demo User (Member)
@@ -176,7 +194,7 @@ function ProfileButton({ user }) {
 						</div>
 						<div className="users">
 							<button
-								className="users-button dropdown-buttons"
+								className="login-btns small-drop"
 								onClick={demoSignin3}
 							>
 								Demo User (Non-member)

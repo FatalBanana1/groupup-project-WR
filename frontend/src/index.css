@@ -107,10 +107,6 @@ a {
 	padding: 1px 5px;
 }
 
-a:hover {
-	color: rgb(0, 130, 148);
-}
-
 /* GLOBAL Style */
 
 .errors-li {
@@ -128,8 +124,14 @@ button,
 	cursor: pointer;
 }
 
-.clicker:hover {
+.clicker:hover,
+a:hover,
+.link-buttons:hover {
 	color: rgb(0, 130, 148);
+}
+
+.border {
+	border: 1px solid black;
 }
 
 .small-icons {

@@ -16,6 +16,7 @@ import CreateGroup from "../CreateGroup";
 import LoginFormModal from "../../LoginFormModal";
 import "./GroupsIndex.css";
 import { removeSearch } from "../../../store/search";
+import Loading from "../../Loading";
 
 //main
 const GroupsIndex = (props) => {
@@ -112,6 +113,7 @@ const GroupsIndex = (props) => {
 							) : (
 								<div className="groups-link-container">
 									<OpenModalButton
+										props="link-buttons border"
 										buttonText="Create a group"
 										onButtonClick={closeMenu}
 										modalComponent={<LoginFormModal />}
@@ -123,7 +125,7 @@ const GroupsIndex = (props) => {
 				) : null}
 			</div>
 		);
-	} else return null;
+	} else return <Loading />;
 };
 
 // ,name,about,type,private,city,state,numMembers,previewImage
