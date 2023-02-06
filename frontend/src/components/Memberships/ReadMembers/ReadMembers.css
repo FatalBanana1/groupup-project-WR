@@ -8,10 +8,6 @@
 	margin-bottom: 60px;
 }
 
-#detail-right {
-	margin-top: 20px;
-}
-
 #read-members-img {
 	width: 110px;
 	height: 110px;
@@ -20,11 +16,21 @@
 	margin-bottom: 80px;
 }
 
+.detail-right-members {
+	width: 380px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	border: 0;
+	height: auto;
+	max-height: 100%;
+}
+
 .you-are-here {
 	box-shadow: 0 0 25px 1px gray;
-	/* border: 4px double gray; */
-	/* border: 4px darkgray inset; */
 }
+
 .you-are-here2 {
 	color: rgba(255, 68, 68, 1);
 	font-weight: 550;

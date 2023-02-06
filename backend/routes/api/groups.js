@@ -621,6 +621,9 @@ router.get("/:groupId", valid_group_only, async (req, res) => {
 						model: Venue,
 						attributes: ["city", "state"],
 					},
+					{
+						model: Attendance,
+					},
 				],
 			},
 		],
@@ -754,8 +757,8 @@ router.get("/", async (req, res) => {
 	//size error handle
 	if (size < 1) {
 		errors.size = `Size must be greater than or equal to 1`;
-	} else if (size > 20) {
-		errors.size = `Size must be less than or equal to 20`;
+	} else if (size > 10) {
+		errors.size = `Size must be less than or equal to 10`;
 	}
 
 	//check errors
@@ -769,11 +772,11 @@ router.get("/", async (req, res) => {
 
 	//defaults
 	if (!page) page = 1;
-	if (!size) size = 20;
+	if (!size) size = 10;
 	page = +page;
 	size = parseInt(size);
 	const pagination = {};
-	if (page >= 1 && size >= 1 && page <= 10 && size <= 20) {
+	if (page >= 1 && size >= 1 && page <= 10 && size <= 10) {
 		pagination.limit = size;
 		pagination.offset = size * (page - 1);
 	}

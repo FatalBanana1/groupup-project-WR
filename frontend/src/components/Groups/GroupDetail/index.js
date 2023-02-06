@@ -265,76 +265,76 @@ const GroupDetail = () => {
 						</div>
 
 						<div className="details-container-body">
-							<div id="details-nav-section">
-								<div id="update-groups-link-container">
-									<div className="members-link details-nav-section-border">
-										<div
-											onClick={aboutClickHandler}
-											className="clicker"
-										>
-											About
-										</div>
-									</div>
-
-									<div className="members-link details-nav-section-border">
-										{user ? (
-											<NavLink
-												to={`/groups/${id}/members`}
+							<div className="borders sticky-deets">
+								<div id="details-nav-section">
+									<div id="update-groups-link-container">
+										<div className="members-link details-nav-section-border">
+											<div
+												onClick={aboutClickHandler}
+												className="clicker"
 											>
-												Members
-											</NavLink>
-										) : (
-											<OpenModalButton
-												props="link-buttons"
-												buttonText="Members"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<LoginFormModal />
-												}
-											/>
-										)}
+												About
+											</div>
+										</div>
+
+										<div className="members-link details-nav-section-border">
+											<div
+												onClick={eventsClickHandler}
+												className="clicker"
+											>
+												Events
+											</div>
+										</div>
+
+										<div className="members-link details-nav-section-border">
+											{user ? (
+												<NavLink
+													to={`/groups/${id}/members`}
+												>
+													Members
+												</NavLink>
+											) : (
+												<OpenModalButton
+													props="link-buttons"
+													buttonText="Members"
+													onButtonClick={closeMenu}
+													modalComponent={
+														<LoginFormModal />
+													}
+												/>
+											)}
+										</div>
+
+										{host && host.length ? (
+											<div className="crud-btns">
+												<EditModalButton
+													id="update-group-button"
+													buttonText="Edit Group"
+													onButtonClick={closeMenu}
+													modalComponent={
+														<UpdateGroup
+															group={
+																group[groupId]
+															}
+														/>
+													}
+												/>
+
+												<DeleteModalButton
+													id="delete-group-button"
+													buttonText="Delete Group"
+													onButtonClick={closeMenu}
+													modalComponent={
+														<DeleteGroup
+															group={
+																group[groupId]
+															}
+														/>
+													}
+												/>
+											</div>
+										) : null}
 									</div>
-
-									<div className="members-link details-nav-section-border">
-										<div
-											onClick={eventsClickHandler}
-											className="clicker"
-										>
-											Events
-										</div>
-									</div>
-
-									<div className="margin-div" />
-
-									{host && host.length ? (
-										<div>
-											<EditModalButton
-												id="update-group-button"
-												buttonText="Edit Group"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<UpdateGroup
-														group={group[groupId]}
-													/>
-												}
-											/>
-										</div>
-									) : null}
-
-									{host && host.length ? (
-										<div>
-											<DeleteModalButton
-												id="delete-group-button"
-												buttonText="Delete Group"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<DeleteGroup
-														group={group[groupId]}
-													/>
-												}
-											/>
-										</div>
-									) : null}
 								</div>
 							</div>
 

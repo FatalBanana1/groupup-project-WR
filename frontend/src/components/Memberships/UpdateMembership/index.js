@@ -23,6 +23,7 @@ import {
 const UpdateMembership = ({ member }) => {
 	let { id, firstName, lastName, username, email, organizerId, hidden } =
 		member;
+
 	// states
 	const dispatch = useDispatch();
 	let history = useHistory();

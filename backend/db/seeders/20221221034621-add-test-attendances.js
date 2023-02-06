@@ -150,6 +150,56 @@ module.exports = {
 					userId: 8,
 					status: "pending",
 				},
+				{
+					eventId: 10,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 10,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 10,
+					userId: 6,
+					status: "attending",
+				},
+				{
+					eventId: 10,
+					userId: 7,
+					status: "attending",
+				},
+				{
+					eventId: 10,
+					userId: 8,
+					status: "pending",
+				},
+				{
+					eventId: 11,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 11,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 11,
+					userId: 6,
+					status: "attending",
+				},
+				{
+					eventId: 11,
+					userId: 7,
+					status: "attending",
+				},
+				{
+					eventId: 11,
+					userId: 8,
+					status: "pending",
+				},
 			],
 			{}
 		);

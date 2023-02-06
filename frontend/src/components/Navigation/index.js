@@ -1,17 +1,10 @@
 // frontend/src/components/Navigation/index.js
-import React, { useState } from "react";
-import {
-	NavLink,
-	Redirect,
-	useHistory,
-	useLocation,
-	useParams,
-} from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import logo from "../Groups/images/groupup-logo5.png";
-import Groups from "../Groups/GroupsIndex";
 import Searchbar from "../Searchbar";
 
 function Navigation({ isLoaded }) {

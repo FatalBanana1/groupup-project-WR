@@ -218,7 +218,7 @@ router.get("/:eventId/attendees", valid_event, async (req, res) => {
 	// 	user.id &&
 	// 	(auth.status === "co-host" || auth.Group.organizerId === user.id)
 	// ) {
-	let users = await User.scope(["defaultScope"]).findAll({
+	let users = await User.findAll({
 		attributes: ["id", "firstName", "lastName", "avatar", "username"],
 		include: [
 			{
@@ -316,7 +316,7 @@ router.get("/:eventId", valid_event, async (req, res) => {
 	});
 
 	//add numattending
-	let member = await Event.scope(["defaultScope"]).findByPk(eventId, {
+	let member = await Event.findByPk(eventId, {
 		attributes: ["id"],
 		include: [
 			{
@@ -397,8 +397,8 @@ router.get("/", async (req, res) => {
 	//size error handle
 	if (size < 1) {
 		errors.size = `Size must be greater than or equal to 1`;
-	} else if (size > 20) {
-		errors.size = `Size must be less than or equal to 20`;
+	} else if (size > 10) {
+		errors.size = `Size must be less than or equal to 10`;
 	}
 	//check errors
 	if (Object.values(errors).length) {
@@ -410,17 +410,19 @@ router.get("/", async (req, res) => {
 	}
 	//defaults
 	if (!page) page = 1;
-	if (!size) size = 20;
+	if (!size) size = 10;
 	page = +page;
 	size = parseInt(size);
 	const pagination = {};
-	if (page >= 1 && size >= 1 && page <= 10 && size <= 20) {
+	if (page >= 1 && size >= 1 && page <= 10 && size <= 10) {
 		pagination.limit = size;
 		pagination.offset = size * (page - 1);
 	}
 
+	date = new Date();
+
 	//query
-	let events = await Event.scope(["defaultScope"]).findAll({
+	let events = await Event.findAll({
 		include: [
 			{
 				model: Group,
@@ -431,6 +433,8 @@ router.get("/", async (req, res) => {
 				attributes: ["id", "city", "state"],
 			},
 		],
+		where: { startDate: { [Op.gte]: date } },
+		order: [["startDate", "DESC"]],
 		where: { ...queries },
 		...pagination,
 	});
@@ -440,7 +444,7 @@ router.get("/", async (req, res) => {
 		);
 	}
 	//add numattending
-	let members = await Event.scope(["defaultScope"]).findAll({
+	let members = await Event.findAll({
 		attributes: ["id"],
 		include: [
 			{
@@ -458,7 +462,7 @@ router.get("/", async (req, res) => {
 	// filter duplicate events
 	let newarray = [];
 	let visited = new Set();
-	events.forEach((el, i) => {
+	events.forEach((el) => {
 		if (!visited.has(el.id)) {
 			//add numattending
 			for (let j in members) {

@@ -43,7 +43,7 @@ function App() {
 						<Groups />
 					</Route>
 
-					<Route path="/groups?name=">
+					<Route path="/groups?">
 						<Groups />
 					</Route>
 

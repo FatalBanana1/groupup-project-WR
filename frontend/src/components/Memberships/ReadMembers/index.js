@@ -69,7 +69,11 @@ const ReadMembers = ({ member }) => {
 	);
 
 	//hide organizer option if not organizer
-	if (organizerId !== user.id) member["hidden"] = hidden;
+	if (organizerId !== user.id) {
+		member["hidden"] = hidden;
+	} else {
+		member["hidden"] = "";
+	}
 
 	//return
 	return (
@@ -92,7 +96,7 @@ const ReadMembers = ({ member }) => {
 				)}
 			</div>
 
-			<div id="detail-right">
+			<div className="detail-right-members">
 				<h3 id="detail-right-name">
 					{firstName} {lastName}
 				</h3>

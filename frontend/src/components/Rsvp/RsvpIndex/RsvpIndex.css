@@ -1,0 +1,23 @@
+.rsvp-detail-container {
+	width: 600px;
+	max-width: 900px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 80px;
+}
+
+.rsvp-detail-right {
+	width: 100%;
+	height: inherit;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	border: 0;
+	height: auto;
+	max-height: 100%;
+}

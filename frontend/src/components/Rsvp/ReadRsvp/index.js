@@ -49,7 +49,7 @@ const ReadRsvp = ({ rsvp }) => {
 				)}
 			</div>
 
-			<div id="detail-right">
+			<div className="rsvp-detail-right">
 				<h3 id="detail-right-name">
 					{firstName} {lastName}
 				</h3>

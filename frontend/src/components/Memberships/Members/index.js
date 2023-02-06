@@ -158,7 +158,7 @@ const Members = () => {
 					)}
 				</div>
 
-				<div id="groups-container">
+				<div className="members-container">
 					{Object.values(errors).length > 0 ? (
 						<div id="errors-group">
 							<ul>

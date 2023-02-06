@@ -1,5 +1,23 @@
 /* members css */
 
+.members-container {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 4rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	width: inherit;
+}
+
+#member-detail-container {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 4rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	width: inherit;
+}
+
 #member-headers {
 	display: flex;
 	flex-direction: row;

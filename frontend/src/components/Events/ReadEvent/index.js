@@ -3,6 +3,7 @@
 //imports
 import star from "../../Groups/images/star-icon.png";
 import share from "../../Groups/images/share-icon.png";
+import location from "../../Groups/images/location-icon.png";
 
 //main
 const ReadEvent = (props) => {
@@ -21,6 +22,7 @@ const ReadEvent = (props) => {
 		Venue,
 		Venues,
 		EventImages,
+		Attendances,
 	} = props.event;
 
 	//dates
@@ -78,7 +80,7 @@ const ReadEvent = (props) => {
 				)}
 			</div>
 			<div id="detail-right">
-				<div className="about-section">{`${weekday}, ${month} ${day} ${time}`}</div>
+				<div className="about-section brown-text-small">{`${weekday}, ${month} ${day}, ${year} ${time}`}</div>
 				<h3 id="detail-right-name">{name}</h3>
 				{/* <div className="about-section">{description}</div> */}
 				{Group && Venue.city === "Online" ? (
@@ -87,22 +89,15 @@ const ReadEvent = (props) => {
 							{`${Group.name} • ${Venue.city}`}
 						</div>
 
-						<div className="online-only">{`${Venue.city} ${Venue.state}`}</div>
+						<div className="online-only text-align small-index-font">{`${Venue.city} ${Venue.state}`}</div>
 
-						<div className="li-tag-events-line">
+						<div className="li-tag-events-line small-index-font">
 							{`${numAttending} attendees`}
 
 							<div className="events-last-icons-container">
 								<div className="events-last-share-icon">
 									<img
 										src={share}
-										className="small-icons"
-										alt="share icon"
-									/>
-								</div>
-								<div>
-									<img
-										src={star}
 										className="small-icons"
 										alt="share icon"
 									/>
@@ -114,11 +109,11 @@ const ReadEvent = (props) => {
 					</>
 				) : Group && Venue ? (
 					<>
-						<div className="li-tag-group-name-line">
+						<div className="li-tag-group-name-line small-index-font">
 							{`${Group.name} • ${Venue.city}, ${Venue.state}`}
 						</div>
 
-						<div className="li-tag-events-line">
+						<div className="li-tag-events-line small-index-font">
 							{`${numAttending} attendees`}
 
 							<div className="events-last-icons-container">
@@ -129,9 +124,30 @@ const ReadEvent = (props) => {
 										alt="share icon"
 									/>
 								</div>
-								<div>
+							</div>
+							{/* <li className="li-tags" /> */}
+							{/* {`${price ? `Private` : `Public`}`} */}
+						</div>
+					</>
+				) : Venue ? (
+					<>
+						<div className="li-tag-group-name-line small-index-font">
+							<img
+								src={location}
+								className="small-icons margin-img-left"
+								alt="share icon"
+							/>
+
+							{`${Venue.city}, ${Venue.state}`}
+						</div>
+
+						<div className="li-tag-events-line small-index-font">
+							{`${Attendances.length} attendees`}
+
+							<div className="events-last-icons-container">
+								<div className="events-last-share-icon">
 									<img
-										src={star}
+										src={share}
 										className="small-icons"
 										alt="share icon"
 									/>
@@ -141,10 +157,6 @@ const ReadEvent = (props) => {
 							{/* {`${price ? `Private` : `Public`}`} */}
 						</div>
 					</>
-				) : Venue ? (
-					<div className="li-tag-group-name-line">
-						{`${Venue.city}, ${Venue.state}`}
-					</div>
 				) : null}
 			</div>
 		</div>

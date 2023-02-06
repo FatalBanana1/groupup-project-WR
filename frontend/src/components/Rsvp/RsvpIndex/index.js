@@ -17,6 +17,7 @@ import * as sessionActions from "../../../store/session";
 import ReadMembers from "../../Memberships/ReadMembers";
 import { thunkReadRsvps } from "../../../store/rsvps";
 import ReadRsvp from "../ReadRsvp";
+import "./RsvpIndex.css";
 
 //main
 const RsvpIndex = () => {
@@ -36,7 +37,7 @@ const RsvpIndex = () => {
 	if (isLoaded) {
 		//return
 		return (
-			<div id="groups-container">
+			<div id="member-container">
 				<div id="member-headers">
 					<div className="group-detail-header-members">
 						<NavLink
@@ -76,7 +77,7 @@ const RsvpIndex = () => {
 					) : null}
 				</div>
 
-				<div id="group-detail-container">
+				<div className="rsvp-detail-container">
 					{rsvps ? (
 						rsvps.map((rsvp) => {
 							if (!rsvp.firstName) {

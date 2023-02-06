@@ -63,6 +63,22 @@ module.exports = {
 					lat: 662.39,
 					lng: 413.296,
 				},
+				{
+					groupId: 4,
+					address: "356 Springfield Ave",
+					city: "Summit",
+					state: "NJ",
+					lat: 122.39,
+					lng: 313.296,
+				},
+				{
+					groupId: 5,
+					address: " 589 Palisade Ave",
+					city: "Springfield",
+					state: "NJ",
+					lat: 552.39,
+					lng: 310.296,
+				},
 			],
 			{}
 		);

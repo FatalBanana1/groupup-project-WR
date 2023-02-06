@@ -243,15 +243,16 @@ const EventDetail = () => {
 								/>
 							)}
 						</div>
+					</div>
 
-						<div className="details-container-body">
+					<div className="details-container-body">
+						<div className="borders sticky-deets">
 							<div id="details-nav-section">
 								<div id="update-groups-link-container">
 									<div className="members-link details-nav-section-border">
 										{user ? (
 											<NavLink
 												to={`/events/${eventId}/attendees`}
-												className="details-nav-section-border"
 											>
 												Attendees
 											</NavLink>
@@ -271,8 +272,6 @@ const EventDetail = () => {
 											Group
 										</NavLink>
 									</div>
-
-									<div className="margin-div" />
 
 									{host && host.length ? (
 										<div>
@@ -306,94 +305,100 @@ const EventDetail = () => {
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="details-container-body">
-						<div id="about-section-container">
-							<div id="about-section-container-left">
-								<h2 className="about-title-font">Details</h2>
-								<div className="about-details-font">
-									{description}
-								</div>
-
-								<div id="group-detail-images">
+						<>
+							<div id="about-section-container">
+								<div id="about-section-container-left">
 									<h2 className="about-title-font">
-										{`Photos (${
-											EventImages.length > 1
-												? EventImages.length - 1
-												: 0
-										})`}
+										Details
 									</h2>
 									<div className="about-details-font">
-										{EventImages.length > 1 ? (
-											EventImages.map((image) =>
-												image.preview ? null : (
-													<img
-														className="read-group-images"
-														key={image.id}
-														src={image.url}
-														alt={`Event Image for: "${image.url}"`}
-													/>
+										{description}
+									</div>
+
+									<div id="group-detail-images">
+										<h2 className="about-title-font">
+											{`Photos (${
+												EventImages.length > 1
+													? EventImages.length - 1
+													: 0
+											})`}
+										</h2>
+										<div className="about-details-font">
+											{EventImages.length > 1 ? (
+												EventImages.map((image) =>
+													image.preview ? null : (
+														<img
+															className="read-group-images"
+															key={image.id}
+															src={image.url}
+															alt={`Event Image for: "${image.url}"`}
+														/>
+													)
 												)
-											)
-										) : (
-											<div>No Event Images...</div>
-										)}
+											) : (
+												<div>No Event Images...</div>
+											)}
+										</div>
+									</div>
+								</div>
+
+								<div id="about-section-container-right">
+									<div className="events-sticky">
+										<NavLink
+											to={`/groups/${groupId}`}
+											className="events-side-panel events-link-side icons-container"
+										>
+											<div className="icons">
+												<img
+													src={
+														Group.GroupImages[0].url
+													}
+													className="small-group-image"
+													alt="share icon"
+												/>
+											</div>
+											<div>
+												<div className="event-venue-details-info">{`${Group.name}`}</div>
+												<div className="event-venue-details-info gray-text">
+													{`${
+														Group.private
+															? "Private"
+															: "Public"
+													} group`}
+												</div>
+											</div>
+										</NavLink>
+
+										<div className="events-side-panel">
+											<div className="event-details-info-container icons-container">
+												<div className="icons">
+													<img
+														src={clock}
+														className="small-icons"
+														alt="share icon"
+													/>
+												</div>
+												<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
+											</div>
+											<div className="event-details-info-container icons-container">
+												<div className="icons">
+													<img
+														src={location}
+														className="small-icons"
+														alt="share icon"
+													/>
+												</div>
+												<div className="event-venue-details-header">
+													<div className="event-venue-details-info">{`${Venue.address}`}</div>
+													<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-
-							<div id="about-section-container-right">
-								<div className="event-details-info-container icons-container">
-									<NavLink
-										to={`/groups/${groupId}`}
-										className="icons"
-									>
-										<img
-											src={Group.GroupImages[0].url}
-											className="small-group-image"
-											alt="share icon"
-										/>
-									</NavLink>
-									<NavLink to={`/groups/${groupId}`}>
-										<div className="event-venue-details-info">{`${Group.name}`}</div>
-										<div className="event-venue-details-info gray-text">
-											{`${
-												Group.private
-													? "Private"
-													: "Public"
-											} group`}
-										</div>
-									</NavLink>
-								</div>
-
-								<div className="events-side-panel">
-									<div className="event-details-info-container icons-container">
-										<div className="icons">
-											<img
-												src={clock}
-												className="small-icons"
-												alt="share icon"
-											/>
-										</div>
-										<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
-									</div>
-									<div className="event-details-info-container icons-container">
-										<div className="icons">
-											<img
-												src={location}
-												className="small-icons"
-												alt="share icon"
-											/>
-										</div>
-										<div className="event-venue-details-header">
-											<div className="event-venue-details-info">{`${Venue.address}`}</div>
-											<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						</>
 					</div>
 				</div>
 			</>

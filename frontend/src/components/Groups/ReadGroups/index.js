@@ -7,6 +7,7 @@
 import { NavLink } from "react-router-dom";
 import GroupDetail from "../GroupDetail";
 import "./ReadGroups.css";
+import location from "../images/location-icon.png";
 
 //main
 const ReadGroups = (group) => {
@@ -38,9 +39,20 @@ const ReadGroups = (group) => {
 			</div>
 			<div id="detail-right">
 				<h3 id="detail-right-name">{name}</h3>
-				<div>{`${city}, ${state}`}</div>
-				<div className="about-section">{about}</div>
-				<div className="li-tag-members-line">
+
+				<div className="groups-icon-container">
+					<div className="icons">
+						<img
+							src={location}
+							className="small-icons margin-img-left"
+							alt="share icon"
+						/>
+					</div>
+					<div className="brown-text-small">{`${city}, ${state}`}</div>
+				</div>
+
+				<div className="about-section small-index-font">{about}</div>
+				<div className="li-tag-members-line small-index-font">
 					{`${numMembers} members • ${
 						privated ? `Private` : `Public`
 					}`}

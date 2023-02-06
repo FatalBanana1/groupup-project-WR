@@ -2,8 +2,7 @@
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 	text-decoration: none;
 	color: black;
-	width: inherit;
-	max-width: 660px;
+	width: 660px;
 	height: max-content;
 	padding-bottom: 5px;
 }
@@ -12,8 +11,8 @@
 	background-color: rgba(244, 244, 244, 0.4);
 }
 
-#event-detail:first-of-type {
-	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
+.text-align {
+	text-align: center;
 }
 
 .no-display {

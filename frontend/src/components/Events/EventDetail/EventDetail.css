@@ -47,6 +47,10 @@
 	margin-bottom: 1.125rem;
 }
 
+.event-details-container-header {
+	padding-bottom: 20px;
+}
+
 .event-details-info-container {
 	margin-top: 1.25rem;
 }
@@ -92,6 +96,29 @@
 	max-height: 400px;
 	object-fit: cover;
 	border-radius: 3px;
+}
+
+.events-sticky {
+	margin-top: 10px;
+	width: max-content;
+	max-width: 250px;
+	position: sticky;
+	top: 60px;
+	z-index: 5;
+}
+
+.events-side-panel {
+	border: 1px solid white;
+	padding: 10px;
+	border-radius: 15px;
+	--tw-bg-opacity: 1;
+	background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+	margin-bottom: 10px;
+}
+
+.events-link-side:hover {
+	box-shadow: 0 0 20px 5px rgba(128, 128, 128, 0.2);
+	cursor: pointer;
 }
 
 @media screen and (min-width: 940px) {

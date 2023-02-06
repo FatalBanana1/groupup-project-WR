@@ -1,13 +1,11 @@
 /* read group detail css */
 
 #detail-container {
-	/* background-color: rgb(83, 0, 83); */
 	display: flex;
 	flex-direction: row;
 	margin-top: 8px;
 	margin-left: 15px;
 	margin-bottom: 8px;
-	height: 220px;
 }
 
 #detail-left {
@@ -18,11 +16,9 @@
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: flex-start;
-	/* background-color: red; */
 }
 
 #detail-right {
-	/* background-color: green; */
 	height: 180px;
 	width: 450px;
 }
@@ -42,7 +38,6 @@
 
 .li-tag-members-line {
 	font-size: 14px;
-	padding-top: 50px;
 }
 
 .li-tag-events-line {
@@ -73,4 +68,28 @@
 .no-groups-img-read {
 	height: auto;
 	width: 130px;
+}
+
+.brown-text-small {
+	--tw-text-opacity: 1;
+	color: rgb(135 116 87 / var(--tw-text-opacity));
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	padding-bottom: 0.125rem;
+}
+
+.small-index-font {
+	max-height: 2.8em;
+	overflow: hidden;
+	-webkit-box-orient: vertical;
+	--tw-text-opacity: 1;
+	color: rgb(117 117 117 / var(--tw-text-opacity));
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	padding-bottom: 0.25rem;
+	text-overflow: ellipsis;
+	font-weight: 500;
+	padding: 5px;
 }

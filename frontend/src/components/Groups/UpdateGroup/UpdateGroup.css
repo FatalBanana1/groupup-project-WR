@@ -6,7 +6,8 @@
 }
 
 #edit-group-button {
-	width: 100px;
+	width: inherit;
+	height: inherit;
 	background-color: rgb(247, 60, 39);
 	color: white;
 	border-radius: 6px;
