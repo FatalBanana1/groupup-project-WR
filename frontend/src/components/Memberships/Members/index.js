@@ -48,24 +48,24 @@ const Members = () => {
 			groupId,
 		};
 		dispatch(thunkReadMembers(payload))
+			.then(() => {
+				dispatch(thunkReadGroupDetails(payload.groupId));
+			})
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
-	}, [dispatch, isLoaded]);
+	}, [isLoaded]);
 
 	const joinGroupHandler = () => {
+		setIsLoaded(false);
 		setErrors([]);
 		let payload = {
 			groupId,
 			status: "pending",
 		};
 		dispatch(thunkCreateMembership(payload))
-			.then(() => {
-				dispatch(thunkReadMembers(payload));
-				dispatch(thunkReadGroupDetails(payload.groupId));
-			})
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
@@ -83,7 +83,6 @@ const Members = () => {
 		};
 
 		dispatch(thunkDeleteMembership(payload))
-			.then(() => dispatch(thunkReadMembers(payload)))
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
@@ -177,7 +176,7 @@ const Members = () => {
 				</div>
 
 				<div id="group-detail-container">
-					{members.length > 0 ? (
+					{isLoaded && members.length > 0 ? (
 						members.map((member) => {
 							if (!member.firstName) {
 								return null;

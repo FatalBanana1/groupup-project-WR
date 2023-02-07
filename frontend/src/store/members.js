@@ -116,6 +116,8 @@ export const thunkUpdateMembership = (payload) => async (dispatch) => {
 
 // DELETE: Delete a Group Membership - Route: /api/groups/:groupId/membership
 export const thunkDeleteMembership = (payload) => async (dispatch) => {
+	console.log(`THUNK DELETE res`, payload);
+
 	const response = await csrfFetch(
 		`/api/groups/${payload.groupId}/membership`,
 		{
@@ -136,8 +138,6 @@ export const thunkDeleteMembership = (payload) => async (dispatch) => {
 //----------------------------------------------
 
 //reducer
-
-const initialState = {};
 
 function defaultState() {
 	const initialState = {};

@@ -773,7 +773,9 @@ router.use((err, _req, res, _next) => {
 	res.status(err.statusCode || 500);
 	console.error(err);
 	res.json({
-		errors: [err.message],
+		errors: {
+			error: err.message,
+		},
 		statusCode: err.statusCode,
 	});
 });

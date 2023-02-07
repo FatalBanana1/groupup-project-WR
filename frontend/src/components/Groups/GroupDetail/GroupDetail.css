@@ -5,7 +5,6 @@
 	flex-direction: row;
 	width: inherit;
 	padding-bottom: 20px;
-	/* border-bottom: solid 0.3px rgba(128, 128, 128, 0.4); */
 }
 
 .details-container-body {
@@ -128,9 +127,10 @@
 }
 
 .no-groups-img-detail {
-	width: 150px;
-	padding: 20px;
-	margin-right: 200px;
+	width: auto;
+	max-width: 300px;
+	margin: auto;
+	object-fit: cover;
 }
 
 #update-groups-link-container {
@@ -293,11 +293,5 @@
 	#right-details-header-name {
 		margin-bottom: 4px;
 		margin-top: 18px;
-	}
-
-	.no-groups-img-detail {
-		width: 30vw;
-		padding: 20vw;
-		margin-left: 40vw;
 	}
 }

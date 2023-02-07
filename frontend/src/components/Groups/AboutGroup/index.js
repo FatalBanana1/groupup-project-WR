@@ -30,7 +30,7 @@ const AboutGroup = (props) => {
 
 	// useEffect(() => {}, [dispatch]);
 
-	console.log(`props . group ====`, Members);
+	// console.log(`props . group ====`, Members);
 
 	//dates
 	let date = new Date(createdAt).toString().split(" ");
@@ -48,23 +48,19 @@ const AboutGroup = (props) => {
 					<div id="group-detail-images">
 						<h2 className="about-title-font">
 							{`Photos (${
-								groupImages.length > 1
-									? groupImages.length - 1
-									: 0
+								groupImages.length > 0 ? groupImages.length : 0
 							})`}
 						</h2>
 						<div className="about-details-font">
-							{groupImages.length > 1 ? (
-								groupImages.map((image) =>
-									image.preview ? null : (
-										<img
-											className="read-group-images"
-											key={image.id}
-											src={image.url}
-											alt={`Group Image for: "${image.url}"`}
-										/>
-									)
-								)
+							{groupImages.length >= 1 ? (
+								groupImages.map((image) => (
+									<img
+										className="read-group-images"
+										key={image.id}
+										src={image.url}
+										alt={`Group Image`}
+									/>
+								))
 							) : (
 								<div>No Group Images...</div>
 							)}

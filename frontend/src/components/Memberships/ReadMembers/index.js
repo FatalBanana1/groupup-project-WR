@@ -40,10 +40,6 @@ const ReadMembers = ({ member }) => {
 
 	// console.log(`groupId ----`, groupId, params);
 
-	useEffect(() => {
-		dispatch(thunkReadGroupDetails(groupId)).then(() => setIsLoaded(true));
-	}, [dispatch, hidden]);
-
 	//---------
 
 	const [showMenu, setShowMenu] = useState(false);
@@ -72,66 +68,64 @@ const ReadMembers = ({ member }) => {
 		(el) => el.id === user.id && el.status === "co-host"
 	);
 
-	if (isLoaded) {
-		//hide organizer option if not organizer
-		if (organizerId !== user.id) {
-			member["hidden"] = hidden;
-		} else {
-			member["hidden"] = "";
-		}
+	//hide organizer option if not organizer
+	if (organizerId !== user.id) {
+		member["hidden"] = hidden;
+	} else {
+		member["hidden"] = "";
+	}
 
-		//return
-		return (
-			<div id="detail-container">
-				<div id="detail-left">
-					{avatar && user.id === id ? (
-						<img
-							src={avatar}
-							id="read-members-img"
-							className="you-are-here"
-						/>
-					) : avatar ? (
-						<img src={avatar} id="read-members-img" />
-					) : (
-						<img
-							src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-							className="no-groups-img-read"
-							id="read-members-img"
-						/>
-					)}
-				</div>
-
-				<div className="detail-right-members">
-					<h3 id="detail-right-name">
-						{firstName} {lastName}
-					</h3>
-					{user.id === id ? (
-						<div className="about-section you-are-here2">{`Username: ${username}`}</div>
-					) : (
-						<div className="about-section">{`Username: ${username}`}</div>
-					)}
-					<div className="about-section">{`Email: ${email}`}</div>
-					<div className="about-section">{`Status: ${
-						organizerId === id
-							? `Organizer`
-							: status[0].toUpperCase() + status.substring(1)
-					}`}</div>
-					{organizer.length && organizerId !== id ? (
-						<div className="hiddens">
-							<EditModalButton
-								id="update-group-button"
-								buttonText="Edit Status"
-								onButtonClick={closeMenu}
-								modalComponent={
-									<UpdateMembership member={member} />
-								}
-							/>
-						</div>
-					) : null}
-				</div>
+	//return
+	return (
+		<div id="detail-container">
+			<div id="detail-left">
+				{avatar && user.id === id ? (
+					<img
+						src={avatar}
+						id="read-members-img"
+						className="you-are-here"
+					/>
+				) : avatar ? (
+					<img src={avatar} id="read-members-img" />
+				) : (
+					<img
+						src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+						className="no-groups-img-read"
+						id="read-members-img"
+					/>
+				)}
 			</div>
-		);
-	} else return <Loading />;
+
+			<div className="detail-right-members">
+				<h3 id="detail-right-name">
+					{firstName} {lastName}
+				</h3>
+				{user.id === id ? (
+					<div className="about-section you-are-here2">{`Username: ${username}`}</div>
+				) : (
+					<div className="about-section">{`Username: ${username}`}</div>
+				)}
+				<div className="about-section">{`Email: ${email}`}</div>
+				<div className="about-section">{`Status: ${
+					organizerId === id
+						? `Organizer`
+						: status[0].toUpperCase() + status.substring(1)
+				}`}</div>
+				{organizer.length && organizerId !== id ? (
+					<div className="hiddens">
+						<EditModalButton
+							id="update-group-button"
+							buttonText="Edit Status"
+							onButtonClick={closeMenu}
+							modalComponent={
+								<UpdateMembership member={member} />
+							}
+						/>
+					</div>
+				) : null}
+			</div>
+		</div>
+	);
 };
 
 //exports

@@ -30,7 +30,7 @@ const UpdateGroup = ({ group }) => {
 	// 	numMembers,
 	// 	previewImage,
 	// } = group;
-	console.log(`group =============`, group);
+	// console.log(`group =============`, group);
 
 	const dispatch = useDispatch();
 	let history = useHistory();
@@ -64,13 +64,12 @@ const UpdateGroup = ({ group }) => {
 
 		return dispatch(thunkUpdateGroup(payload))
 			.then((data) => {
-				console.log(`data returned from update`, data);
 				dispatch(thunkReadGroupDetails(data.id));
 			})
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.message === "Authentication required")
+				if (data && data.message)
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});

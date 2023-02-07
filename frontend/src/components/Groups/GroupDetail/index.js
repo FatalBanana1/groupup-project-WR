@@ -11,7 +11,7 @@ import * as sessionActions from "../../../store/session";
 import { NavLink, useHistory, useParams } from "react-router-dom";
 
 //comps
-import { thunkReadGroupDetails } from "../../../store/groups";
+import { actionResetState, thunkReadGroupDetails } from "../../../store/groups";
 import UpdateGroup from "../UpdateGroup";
 import "./GroupDetail.css";
 import DeleteGroup from "../DeleteGroup";
@@ -100,7 +100,7 @@ const GroupDetail = () => {
 		};
 		document.addEventListener("click", closeMenu);
 		return () => document.removeEventListener("click", closeMenu);
-	}, [dispatch, showMenu, isLoaded]);
+	}, [showMenu, isLoaded]);
 
 	if (isLoaded) {
 		const {

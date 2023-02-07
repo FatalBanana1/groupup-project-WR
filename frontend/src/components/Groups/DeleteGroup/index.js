@@ -2,17 +2,21 @@
 
 //imports
 //hooks
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkDeleteGroup, thunkReadGroups } from "../../../store/groups";
-import * as sessionActions from "../../../store/session";
+import {
+	actionResetState,
+	thunkDeleteGroup,
+	thunkReadGroups,
+} from "../../../store/groups";
+// import * as sessionActions from "../../../store/session";
 
 //comps
-import { NavLink } from "react-router-dom";
-import Groups from "../GroupsIndex";
+// import { NavLink } from "react-router-dom";
+// import Groups from "../GroupsIndex";
 import "./DeleteGroup.css";
 import icon from "../images/favicon.ico";
 import apple from "../images/apple1.png";
@@ -37,7 +41,7 @@ const DeleteGroup = (group) => {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
-	console.log(`privated`, group.group);
+	// console.log(`privated`, group.group);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -49,11 +53,12 @@ const DeleteGroup = (group) => {
 			};
 
 			return dispatch(thunkDeleteGroup(payload))
-				.then(() => history.push("/groups"))
+				.then(() => dispatch(thunkReadGroups()))
+				.then(history.push("/groups"))
 				.then(closeModal)
 				.catch(async (res) => {
 					const data = await res.json();
-					if (data && data.message === "Authentication required")
+					if (data && data.message)
 						setErrors((data[errors] = [data.message]));
 					if (data && data.errors)
 						setErrors(Object.values(data.errors));

@@ -64,6 +64,7 @@
 
 .about-section {
 	width: auto;
+	max-width: fit-content;
 	word-wrap: normal;
 	overflow-y: hidden;
 	max-height: 75px;

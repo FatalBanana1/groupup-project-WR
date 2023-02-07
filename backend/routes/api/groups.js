@@ -972,6 +972,14 @@ router.post(
 				where: { name, startDate, endDate, description, groupId },
 			});
 
+			if (req.body.image.url) {
+				await EventImage.create({
+					url: req.body.image.url,
+					preview: true,
+					eventId: event.id,
+				});
+			}
+
 			let attending = await Attendance.create({
 				eventId: event.id,
 				userId: user.id,
@@ -1102,8 +1110,8 @@ router.post("/", requireAuth, async (req, res) => {
 		errors.name = `Name must be 60 characters or less`;
 	if (!about || about.length < 50)
 		errors.about = `About must be 50 characters or more`;
-	if (!about || about.length > 350)
-		errors.about = `About must be less than 350 characters`;
+	if (!about || about.length > 1000)
+		errors.about = `About must be less than 1000 characters`;
 	if (!type || (type !== "Online" && type !== "In person"))
 		errors.type = `Type must be 'Online' or 'In person'`;
 	if (typeof Boolean(private) !== "boolean")
@@ -1152,11 +1160,14 @@ router.post("/", requireAuth, async (req, res) => {
 
 	//deal with group img
 	let { url } = req.body.image;
-	let defaultImg = await GroupImage.create({
-		url,
-		preview: true,
-		groupId: group.id,
-	});
+
+	if (url) {
+		await GroupImage.create({
+			url,
+			preview: true,
+			groupId: group.id,
+		});
+	}
 
 	return res.json(group);
 });
@@ -1260,7 +1271,12 @@ router.put(
 	requireAuth,
 	async (req, res) => {
 		let groupId = req.params.groupId;
-		let group = await Group.findByPk(groupId);
+		let defaultImage = await GroupImage.findOne({
+			where: {
+				groupId,
+				url: req.body.image.url,
+			},
+		});
 		let { name, about, type, private, city, state, image } = req.body;
 
 		//deal with group img
@@ -1273,12 +1289,15 @@ router.put(
 			errors.name = `Name must be 60 characters or less`;
 		if (about && about.length < 50)
 			errors.about = `About must be 50 characters or more`;
+		if (about && about.length > 1000)
+			errors.about = `About must be less than 1000 characters`;
 		if (type && type !== "Online" && type !== "In person")
 			errors.type = `Type must be 'Online' or 'In person'`;
 		if (private && typeof Boolean(private) !== "boolean")
 			errors.private = `Private must be a boolean`;
 		if (city && city.length < 3) errors.city = `City is required`;
 		if (state && state.length !== 2) errors.state = `State is required`;
+		if (defaultImage) errors.image = `Group Image already exists`;
 
 		if (Object.values(errors).length) {
 			return res.status(400).json({
@@ -1288,8 +1307,10 @@ router.put(
 			});
 		}
 
+		//check add image
+
 		//group images add and change defaults
-		if (preview) {
+		if (preview && url) {
 			await GroupImage.update(
 				{ preview: false },
 				{
@@ -1299,7 +1320,7 @@ router.put(
 			previewer = true;
 		}
 		if (url) {
-			let defaultImg = await GroupImage.create({
+			await GroupImage.create({
 				url,
 				preview: previewer,
 				groupId,
@@ -1324,16 +1345,7 @@ router.put(
 			where: { name, about, type, private, city, state },
 		});
 
-		return res.json({
-			id: newgroup.id,
-			name,
-			about,
-			type,
-			private,
-			city,
-			state,
-			image: { url, preview },
-		});
+		return res.json(newgroup);
 	}
 );
 
@@ -1351,8 +1363,10 @@ router.delete(
 		let { memberId, groupId } = req.body;
 
 		let deleted = await Membership.findOne({
-			where: { userId: memberId, groupId },
+			where: { userId: memberId, groupId: +groupId },
 		});
+
+		console.log(`deleted BACKEND =============`, req.body, groupId, deleted);
 
 		if (!deleted) {
 			return res.status(400).json({
@@ -1393,7 +1407,9 @@ router.use((err, _req, res, _next) => {
 	res.status(err.statusCode || 500);
 	console.error(err);
 	res.json({
-		errors: [err.message],
+		errors: {
+			error: err.message,
+		},
 		statusCode: err.statusCode,
 	});
 });

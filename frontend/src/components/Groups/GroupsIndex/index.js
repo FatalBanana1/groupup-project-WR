@@ -70,7 +70,7 @@ const GroupsIndex = () => {
 		setSearch(search2 + 1);
 		dispatch(thunkSearchPage(search2 + 1))
 			// .then(() => dispatch(thunkReadGroups()))
-			.then(() => setIsLoaded(true));
+
 	};
 
 	const previousPageHandler = () => {
@@ -78,7 +78,7 @@ const GroupsIndex = () => {
 		setSearch(search2 - 1);
 		dispatch(thunkSearchPage(search2 - 1))
 			// .then(() => dispatch(thunkReadGroups()))
-			.then(() => setIsLoaded(true));
+		
 	};
 
 	if (isLoaded) {

@@ -38,18 +38,23 @@ const UpdateMembership = ({ member }) => {
 		groupId = params.groupId;
 	}
 
+	// console.log(`member id delete -----`, member);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors([]);
 
 		let payload = {
-			groupId,
+			groupId: +groupId,
 			memberId: member.id,
 			status,
 		};
 		if (status === "remove") {
 			dispatch(thunkDeleteMembership(payload))
-				.then(() => dispatch(thunkReadMembers(payload)))
+				.then((data) => {
+					dispatch(actionResetMember());
+					dispatch(thunkReadMembers(data));
+				})
 				.then(closeModal)
 				.catch(async (res) => {
 					const data = await res.json();

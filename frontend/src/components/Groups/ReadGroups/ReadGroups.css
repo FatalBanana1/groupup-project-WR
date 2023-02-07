@@ -66,8 +66,8 @@
 }
 
 .no-groups-img-read {
-	height: auto;
-	width: 130px;
+	width: 190px;
+	object-fit: cover;
 }
 
 .brown-text-small {
