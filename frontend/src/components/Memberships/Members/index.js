@@ -8,16 +8,16 @@ import {
 	thunkCreateMembership,
 	thunkReadMembers,
 	thunkDeleteMembership,
-	actionResetState,
 } from "../../../store/members";
-import { NavLink, useHistory, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 // import OpenModalButton from "../../OpenModalButton";
-import * as sessionActions from "../../../store/session";
+// import * as sessionActions from "../../../store/session";
 
 //comps
 import ReadMembers from "../ReadMembers";
 import "./Members.css";
 import { thunkReadGroupDetails } from "../../../store/groups";
+import Loading from "../../Loading";
 
 //main
 const Members = () => {
@@ -30,15 +30,18 @@ const Members = () => {
 
 	let curr = useSelector((state) => state.groups);
 	let attd = useSelector((state) => state.rsvps);
+
 	let groupId = curr.groupId;
 	if (!groupId && attd && attd.Attendees) {
-		console.log(`from attend to members----to groups`, groupId);
 		console.log(`from attend to members----to groups`, attd.Attendees);
+
 		groupId = attd.Attendees[0].Attendances[0].Event.groupId;
 	}
 	if (!groupId) {
 		groupId = params.groupId;
 	}
+
+	// console.log(`from attend to members----to groups`, groupId);
 
 	useEffect(() => {
 		let payload = {
@@ -50,7 +53,7 @@ const Members = () => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
-	}, [dispatch]);
+	}, [dispatch, isLoaded]);
 
 	const joinGroupHandler = () => {
 		setErrors([]);
@@ -63,6 +66,7 @@ const Members = () => {
 				dispatch(thunkReadMembers(payload));
 				dispatch(thunkReadGroupDetails(payload.groupId));
 			})
+			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
@@ -80,6 +84,7 @@ const Members = () => {
 
 		dispatch(thunkDeleteMembership(payload))
 			.then(() => dispatch(thunkReadMembers(payload)))
+			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
@@ -102,7 +107,20 @@ const Members = () => {
 	// return
 	if (isLoaded) {
 		return (
-			<>
+			<div id="member-container">
+				{Object.values(errors).length > 0 ? (
+					<div id="errors-group">
+						<ul>
+							<div className="errors-h">Errors</div>
+							{Object.values(errors).map((error) => (
+								<div className="errors-li" key={error}>
+									{`- ${error}`}
+								</div>
+							))}
+						</ul>
+					</div>
+				) : null}
+
 				<div id="member-headers">
 					<div className="group-detail-header-members">
 						<NavLink
@@ -158,48 +176,34 @@ const Members = () => {
 					)}
 				</div>
 
-				<div className="members-container">
-					{Object.values(errors).length > 0 ? (
-						<div id="errors-group">
-							<ul>
-								<div className="errors-h">Errors</div>
-								{Object.values(errors).map((error) => (
-									<div className="errors-li" key={error}>
-										{`- ${error}`}
-									</div>
-								))}
-							</ul>
-						</div>
-					) : null}
-
-					<div id="group-detail-container">
-						{members.length > 0 ? (
-							members.map((member) => {
-								if (!member.firstName) {
-									return null;
-								} else {
-									member["organizerId"] = organizer;
-									member["logId"] = logId;
-									member["groupId"] = groupId;
-									return (
-										<NavLink
-											id="group-detail"
-											key={member.id}
-											to={`/groups/${groupId}/members`}
-										>
-											<ReadMembers member={member} />
-										</NavLink>
-									);
-								}
-							})
-						) : (
-							<div>No Members to display.</div>
-						)}
-					</div>
+				<div id="group-detail-container">
+					{members.length > 0 ? (
+						members.map((member) => {
+							if (!member.firstName) {
+								return null;
+							} else {
+								member["organizerId"] = organizer;
+								member["logId"] = logId;
+								member["groupId"] = groupId;
+								return (
+									<NavLink
+										id="group-detail"
+										className="group-detail-first"
+										key={member.id}
+										to={`/groups/${groupId}/members`}
+									>
+										<ReadMembers member={member} />
+									</NavLink>
+								);
+							}
+						})
+					) : (
+						<div>No Members to display.</div>
+					)}
 				</div>
-			</>
+			</div>
 		);
-	} else return null;
+	} else return <Loading />;
 };
 
 // {id,firstName,lastName,username,email,status}

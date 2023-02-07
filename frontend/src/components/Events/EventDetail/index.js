@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteModalButton from "../../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../../Groups/UpdateGroup/EditModalButton.js";
-import * as sessionActions from "../../../store/session";
+// import * as sessionActions from "../../../store/session";
 import { NavLink, useHistory, useParams } from "react-router-dom";
 
 //comps
@@ -27,26 +27,13 @@ const EventDetail = () => {
 	//states
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
-	let history = useHistory();
+	// let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	let { eventId } = useParams();
 	let state = useSelector((state) => state);
 	let user = state.session.user;
 	const event = state.events;
-	// let members = state.members;
-
-	useEffect(() => {
-		// let payload = {
-		// 	groupId: event[eventId].groupId,
-		// };
-		dispatch(thunkReadEventDetails(eventId))
-			.then(() => setIsLoaded(true))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
-	}, [dispatch]);
 
 	//-----------------
 
@@ -58,6 +45,13 @@ const EventDetail = () => {
 	};
 
 	useEffect(() => {
+		dispatch(thunkReadEventDetails(eventId))
+			.then(() => setIsLoaded(true))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+
 		if (!showMenu) return;
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
@@ -66,7 +60,7 @@ const EventDetail = () => {
 		};
 		document.addEventListener("click", closeMenu);
 		return () => document.removeEventListener("click", closeMenu);
-	}, [showMenu]);
+	}, [showMenu, dispatch, isLoaded]);
 
 	const closeMenu = () => setShowMenu(false);
 
@@ -149,6 +143,7 @@ const EventDetail = () => {
 							<ErrorHandler errors={errors} />
 						</div>
 					) : null}
+
 					<div className="event-details-container-header">
 						<div id="event-right-details-header">
 							<div id="event-name-details-div">

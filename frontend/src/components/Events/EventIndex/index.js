@@ -5,10 +5,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkReadEvents } from "../../../store/events";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CreateEventModalButton from "../CreateEvent/CreateEventModalButton";
 import OpenModalButton from "../../OpenModalButton";
-import * as sessionActions from "../../../store/session";
+// import * as sessionActions from "../../../store/session";
 import ReadEvent from "../ReadEvent";
 import CreateEvent from "../CreateEvent";
 import LoginFormModal from "../../LoginFormModal";
@@ -104,9 +104,9 @@ const EventIndex = () => {
 						</div>
 					</div>
 
-					{isLoaded && search === `No Groups were found.` ? (
+					{search === `No Groups were found.` ? (
 						<div className="nothing-found">{`${search}..`}</div>
-					) : isLoaded ? (
+					) : (
 						<div id="groups-container">
 							<div id="group-detail-container">
 								{events.map((event) => {
@@ -168,7 +168,7 @@ const EventIndex = () => {
 								)}
 							</div>
 						</div>
-					) : null}
+					)}
 				</div>
 			</div>
 		);

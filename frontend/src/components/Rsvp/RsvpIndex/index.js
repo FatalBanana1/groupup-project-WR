@@ -86,6 +86,7 @@ const RsvpIndex = () => {
 								return (
 									<NavLink
 										id="group-detail"
+										className="group-detail-first"
 										key={rsvp.id}
 										to={`/events/${eventId}/attendees`}
 									>

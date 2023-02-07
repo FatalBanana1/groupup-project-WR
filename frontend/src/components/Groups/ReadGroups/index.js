@@ -4,8 +4,6 @@
 //hooks
 
 //comps
-import { NavLink } from "react-router-dom";
-import GroupDetail from "../GroupDetail";
 import "./ReadGroups.css";
 import location from "../images/location-icon.png";
 

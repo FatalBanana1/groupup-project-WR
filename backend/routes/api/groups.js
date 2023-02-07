@@ -602,7 +602,7 @@ router.get("/:groupId", valid_group_only, async (req, res) => {
 			{
 				model: User,
 				as: "Organizer",
-				attributes: ["id", "firstName", "lastName"],
+				attributes: ["id", "firstName", "lastName", "avatar"],
 			},
 			{
 				model: Venue,

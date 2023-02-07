@@ -2,13 +2,27 @@
 
 import { useState } from "react";
 import { NavLink, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Footer.css";
+import { actionResetState } from "../../store/groups";
+import { actionResetStateEvent } from "../../store/events";
+import { removeSearch } from "../../store/search";
+import Loading from "../Loading";
 
 function Footer({ isLoaded }) {
 	// const sessionUser = useSelector((state) => state.session.user);
 
 	//return
+
+	let dispatch = useDispatch();
+
+	const clickHandlerGroups = () => {
+		dispatch(removeSearch());
+	};
+	const clickHandlerEvents = () => {
+		dispatch(removeSearch());
+	};
+
 	if (isLoaded) {
 		return (
 			<div className="footer-container">
@@ -22,10 +36,20 @@ function Footer({ isLoaded }) {
 
 					<div className="footer-col">
 						<div className="footer-title">Groupup</div>
-						<NavLink exact to="../groups" id="footer-links">
+						<NavLink
+							exact
+							to="/groups"
+							id="footer-links"
+							onClick={clickHandlerGroups}
+						>
 							Groups
 						</NavLink>
-						<NavLink exact to="/events" id="footer-links">
+						<NavLink
+							exact
+							to="/events"
+							id="footer-links"
+							onClick={clickHandlerEvents}
+						>
 							Events
 						</NavLink>
 					</div>
@@ -84,7 +108,7 @@ function Footer({ isLoaded }) {
 				</div>
 			</div>
 		);
-	}
+	} else return <Loading />;
 }
 
 export default Footer;

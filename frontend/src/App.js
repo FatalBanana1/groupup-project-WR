@@ -14,6 +14,7 @@ import EventDetail from "./components/Events/EventDetail";
 import RsvpIndex from "./components/Rsvp/RsvpIndex";
 import EventIndex from "./components/Events/EventIndex";
 import Footer from "./components/Footer";
+import Scroller from "./components/Navigation/Scroller";
 
 function App() {
 	const dispatch = useDispatch();
@@ -26,47 +27,40 @@ function App() {
 		<>
 			<Navigation isLoaded={isLoaded} />
 			{isLoaded && (
-				<Switch>
-					<Route exact path="/">
-						<Splash />
-					</Route>
-
-					<Route path="/groups/:groupId/members">
-						<Members />
-					</Route>
-
-					<Route path="/groups/:groupId">
-						<GroupDetail />
-					</Route>
-
-					<Route exact path="/groups">
-						<Groups />
-					</Route>
-
-					<Route path="/groups?">
-						<Groups />
-					</Route>
-
-					<Route path="/events/:eventId/attendees">
-						<RsvpIndex />
-					</Route>
-
-					<Route path="/events/:eventId">
-						<EventDetail />
-					</Route>
-
-					<Route exact path="/events">
-						<EventIndex />
-					</Route>
-
-					<Route path="/events?name=">
-						<EventIndex />
-					</Route>
-
-					<Route>
-						<div>404: Error Not Found.</div>
-					</Route>
-				</Switch>
+				<Scroller>
+					<Switch>
+						<Route exact path="/">
+							<Splash />
+						</Route>
+						<Route path="/groups/:groupId/members">
+							<Members />
+						</Route>
+						<Route path="/groups/:groupId">
+							<GroupDetail />
+						</Route>
+						<Route exact path="/groups">
+							<Groups />
+						</Route>
+						<Route path="/groups?">
+							<Groups />
+						</Route>
+						<Route path="/events/:eventId/attendees">
+							<RsvpIndex />
+						</Route>
+						<Route path="/events/:eventId">
+							<EventDetail />
+						</Route>
+						<Route exact path="/events">
+							<EventIndex />
+						</Route>
+						<Route path="/events?name=">
+							<EventIndex />
+						</Route>
+						<Route>
+							<div>404: Error Not Found.</div>
+						</Route>
+					</Switch>
+				</Scroller>
 			)}
 			<Footer isLoaded={isLoaded} />
 		</>

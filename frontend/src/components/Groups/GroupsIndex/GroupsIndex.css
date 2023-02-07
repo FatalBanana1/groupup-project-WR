@@ -16,7 +16,7 @@
 
 .sticky-groups {
 	position: sticky;
-	top: 0px;
+	top: -1px;
 	z-index: 10;
 	--tw-bg-opacity: 1;
 	background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -56,6 +56,10 @@
 }
 #group-detail:hover {
 	background-color: rgba(244, 244, 244, 0.4);
+}
+
+.group-detail-first:first-child {
+	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
 }
 
 .about-section {

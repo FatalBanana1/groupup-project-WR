@@ -27,7 +27,7 @@ import email from "../images/email1.png";
 import share1 from "../images/share-icon.png";
 import share2 from "../images/share2.png";
 import { thunkReadEventsbyGroup } from "../../../store/events";
-import AboutGroup from "../AboutGroup/AboutGroup";
+import AboutGroup from "../AboutGroup";
 import EventsByGroup from "../../Events/EventsByGroup";
 import Loading from "../../Loading";
 
@@ -62,25 +62,7 @@ const GroupDetail = () => {
 	let user = useSelector((state) => state.session.user);
 	const group = useSelector((state) => state.groups);
 	let members = useSelector((state) => state.members);
-
-	useEffect(() => {
-		let payload = {
-			groupId,
-		};
-		dispatch(thunkReadGroupDetails(groupId))
-			.then(() => {
-				dispatch(thunkReadMembers(payload));
-			})
-			.then(() => {
-				dispatch(sessionActions.restoreUser());
-			})
-			.then(() => setIsLoaded(true))
-			.catch(async (res) => {
-				const data = await res.json();
-				if (data && data.errors) setErrors(Object.values(data.errors));
-			});
-	}, [dispatch]);
-
+	let newmembers = Object.values(members);
 	//-----------------
 
 	const [showMenu, setShowMenu] = useState(false);
@@ -90,7 +72,26 @@ const GroupDetail = () => {
 		setShowMenu(true);
 	};
 
+	const closeMenu = () => setShowMenu(false);
+
+	//----------------
+
 	useEffect(() => {
+		let payload = {
+			groupId,
+		};
+		dispatch(actionResetMember());
+		dispatch(thunkReadGroupDetails(groupId))
+			.then(() => {
+				dispatch(thunkReadMembers(payload));
+				dispatch(sessionActions.restoreUser());
+			})
+			.then(() => setIsLoaded(true))
+			.catch(async (res) => {
+				const data = await res.json();
+				if (data && data.errors) setErrors(Object.values(data.errors));
+			});
+
 		if (!showMenu) return;
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
@@ -99,11 +100,7 @@ const GroupDetail = () => {
 		};
 		document.addEventListener("click", closeMenu);
 		return () => document.removeEventListener("click", closeMenu);
-	}, [showMenu]);
-
-	const closeMenu = () => setShowMenu(false);
-
-	//----------------
+	}, [dispatch, showMenu, isLoaded]);
 
 	if (isLoaded) {
 		const {
@@ -133,12 +130,15 @@ const GroupDetail = () => {
 
 		let host;
 		let curr;
+
 		if (user) {
-			host = Object.values(members).filter(
+			host = newmembers.filter(
 				(el) => el.id === user.id && el.status === "co-host"
 			);
-			curr = Object.values(members).filter((el) => el.id === user.id);
+			curr = newmembers.filter((el) => el.id === user.id);
 		}
+		let fullgroup = group[groupId];
+		fullgroup["Members"] = newmembers;
 
 		let status;
 		if (curr && curr[0]) {
@@ -161,191 +161,181 @@ const GroupDetail = () => {
 		//return
 		return (
 			<>
-				{isLoaded && (
-					<div id="group-details-page">
-						{errors.length > 0 ? (
-							<div className="error-handler-container">
-								<ErrorHandler errors={errors} />
-							</div>
-						) : null}
-						<div id="details-container-header">
-							<div id="left-details-img">
-								{image && image.url ? (
-									<img
-										src={image.url}
-										className="details-img-default"
-										alt="group image"
-									/>
-								) : (
-									<img
-										src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-										className="no-groups-img-detail"
-										alt="No Group Image"
-									/>
-								)}
-							</div>
-							<div id="right-details-header">
-								<div id="name-details-div">
-									<h1 id="right-details-header-name">
-										{name}
-									</h1>
-								</div>
-
-								<div className="groups-icon-container margin-groups-icon-first">
-									<div className="icons">
-										<img
-											src={location}
-											className="small-icons"
-											alt="share icon"
-										/>
-									</div>
-									<div className="details-info">{`${city}, ${state}`}</div>
-								</div>
-
-								<div className="groups-icon-container">
-									<div className="icons">
-										<img
-											src={people}
-											className="small-icons"
-											alt="share icon"
-										/>
-									</div>
-
-									<div className="details-info">
-										{`${numMembers} members • ${
-											privated
-												? `Private group`
-												: `Public group`
-										}`}
-									</div>
-								</div>
-
-								<div className="groups-icon-container">
-									<div className="icons">
-										<img
-											src={person}
-											className="small-icons"
-											alt="share icon"
-										/>
-									</div>
-
-									<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
-								</div>
-
-								<div className="groups-icon-container  margin-groups-icon-last">
-									<div className="share-icon-header">
-										Share:
-									</div>
-									<div className="small-icons icon-stack-share">
-										<img
-											src={share2}
-											className="small-icons"
-											alt="share icon"
-										/>
-										<img
-											src={email}
-											className="small-icons"
-											alt="share icon"
-										/>
-										<img
-											src={share1}
-											className="small-icons"
-											alt="share icon"
-										/>
-									</div>
-								</div>
-
-								<div className="groups-icon-container  margin-groups-icon-last">
-									<div className="status-drop-header">
-										{status}
-									</div>
-									<div className="small-icons"></div>
-								</div>
-							</div>
+				<div id="group-details-page">
+					{errors.length > 0 ? (
+						<div className="error-handler-container">
+							<ErrorHandler errors={errors} />
 						</div>
+					) : null}
+					<div id="details-container-header">
+						<div id="left-details-img">
+							{image && image.url ? (
+								<img
+									src={image.url}
+									className="details-img-default"
+									alt="group image"
+								/>
+							) : (
+								<img
+									src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+									className="no-groups-img-detail"
+									alt="No Group Image"
+								/>
+							)}
+						</div>
+						<div id="right-details-header">
+							<div id="name-details-div">
+								<h1 id="right-details-header-name">{name}</h1>
+							</div>
 
-						<div className="details-container-body">
-							<div className="borders sticky-deets">
-								<div id="details-nav-section">
-									<div id="update-groups-link-container">
-										<div className="members-link details-nav-section-border">
-											<div
-												onClick={aboutClickHandler}
-												className="clicker"
-											>
-												About
-											</div>
-										</div>
+							<div className="groups-icon-container margin-groups-icon-first">
+								<div className="icons">
+									<img
+										src={location}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+								<div className="details-info">{`${city}, ${state}`}</div>
+							</div>
 
-										<div className="members-link details-nav-section-border">
-											<div
-												onClick={eventsClickHandler}
-												className="clicker"
-											>
-												Events
-											</div>
-										</div>
+							<div className="groups-icon-container">
+								<div className="icons">
+									<img
+										src={people}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
 
-										<div className="members-link details-nav-section-border">
-											{user ? (
-												<NavLink
-													to={`/groups/${id}/members`}
-												>
-													Members
-												</NavLink>
-											) : (
-												<OpenModalButton
-													props="link-buttons"
-													buttonText="Members"
-													onButtonClick={closeMenu}
-													modalComponent={
-														<LoginFormModal />
-													}
-												/>
-											)}
-										</div>
-
-										{host && host.length ? (
-											<div className="crud-btns">
-												<EditModalButton
-													id="update-group-button"
-													buttonText="Edit Group"
-													onButtonClick={closeMenu}
-													modalComponent={
-														<UpdateGroup
-															group={
-																group[groupId]
-															}
-														/>
-													}
-												/>
-
-												<DeleteModalButton
-													id="delete-group-button"
-													buttonText="Delete Group"
-													onButtonClick={closeMenu}
-													modalComponent={
-														<DeleteGroup
-															group={
-																group[groupId]
-															}
-														/>
-													}
-												/>
-											</div>
-										) : null}
-									</div>
+								<div className="details-info">
+									{`${numMembers} members • ${
+										privated
+											? `Private group`
+											: `Public group`
+									}`}
 								</div>
 							</div>
 
-							{isAbout ? (
-								<AboutGroup group={group[groupId]} />
-							) : isEvents ? (
-								<EventsByGroup events={Events} />
-							) : null}
+							<div className="groups-icon-container">
+								<div className="icons">
+									<img
+										src={person}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+
+								<div className="details-info">{`Organized by ${organizer.firstName} ${organizer.lastName}`}</div>
+							</div>
+
+							<div className="groups-icon-container  margin-groups-icon-last">
+								<div className="share-icon-header">Share:</div>
+								<div className="small-icons icon-stack-share">
+									<img
+										src={share2}
+										className="small-icons"
+										alt="share icon"
+									/>
+									<img
+										src={email}
+										className="small-icons"
+										alt="share icon"
+									/>
+									<img
+										src={share1}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+							</div>
+
+							<div className="groups-icon-container  margin-groups-icon-last">
+								<div className="status-drop-header">
+									{status}
+								</div>
+								<div className="small-icons"></div>
+							</div>
 						</div>
 					</div>
-				)}
+
+					<div className="details-container-body">
+						<div className="borders sticky-deets">
+							<div id="details-nav-section">
+								<div id="update-groups-link-container">
+									<div className="members-link details-nav-section-border">
+										<div
+											onClick={aboutClickHandler}
+											className="clicker"
+										>
+											About
+										</div>
+									</div>
+
+									<div className="members-link details-nav-section-border">
+										<div
+											onClick={eventsClickHandler}
+											className="clicker"
+										>
+											Events
+										</div>
+									</div>
+
+									<div className="members-link details-nav-section-border">
+										{user ? (
+											<NavLink
+												to={`/groups/${id}/members`}
+											>
+												Members
+											</NavLink>
+										) : (
+											<OpenModalButton
+												props="link-buttons"
+												buttonText="Members"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<LoginFormModal />
+												}
+											/>
+										)}
+									</div>
+
+									{host && host.length ? (
+										<div className="crud-btns">
+											<EditModalButton
+												id="update-group-button"
+												buttonText="Edit Group"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<UpdateGroup
+														group={group[groupId]}
+													/>
+												}
+											/>
+
+											<DeleteModalButton
+												id="delete-group-button"
+												buttonText="Delete Group"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<DeleteGroup
+														group={group[groupId]}
+													/>
+												}
+											/>
+										</div>
+									) : null}
+								</div>
+							</div>
+						</div>
+
+						{isLoaded && isAbout ? (
+							<AboutGroup group={fullgroup} />
+						) : isLoaded && isEvents ? (
+							<EventsByGroup events={Events} />
+						) : null}
+					</div>
+				</div>
 			</>
 		);
 	} else return <Loading />;

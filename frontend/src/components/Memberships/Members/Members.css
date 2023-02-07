@@ -1,12 +1,8 @@
 /* members css */
 
-.members-container {
-	display: flex;
-	flex-direction: column;
+#member-container {
 	margin-bottom: 4rem;
-	padding-left: 1.5rem;
-	padding-right: 1.5rem;
-	width: inherit;
+	max-width: 90%;
 }
 
 #member-detail-container {
@@ -24,6 +20,12 @@
 	justify-content: space-around;
 	width: inherit;
 	max-width: 660px;
+	margin: auto;
+	margin-bottom: 10px;
+	height: auto;
+}
+
+.group-detail-header-members {
 	margin: auto;
 }
 

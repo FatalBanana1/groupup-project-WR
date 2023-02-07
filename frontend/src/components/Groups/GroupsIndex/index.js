@@ -4,11 +4,11 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadGroups, actionResetState } from "../../../store/groups";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { thunkReadGroups } from "../../../store/groups";
+import { NavLink } from "react-router-dom";
 import CreateModalButton from "../CreateGroup/CreateModalButton";
 import OpenModalButton from "../../OpenModalButton";
-import * as sessionActions from "../../../store/session";
+// import * as sessionActions from "../../../store/session";
 
 //comps
 import ReadGroups from "../ReadGroups";
@@ -19,15 +19,20 @@ import { removeSearch, thunkSearchPage } from "../../../store/search";
 import Loading from "../../Loading";
 
 //main
-const GroupsIndex = (props) => {
+const GroupsIndex = () => {
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
 	let [search2, setSearch] = useState(1);
 
 	//-----------------
-
 	const [showMenu, setShowMenu] = useState(false);
+	const ulRef = useRef();
+	const openMenu = () => {
+		if (showMenu) return;
+		setShowMenu(true);
+	};
+
 	const closeMenu = () => setShowMenu(false);
 
 	//----------------
@@ -44,7 +49,16 @@ const GroupsIndex = (props) => {
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
-	}, [dispatch, isLoaded, search2]);
+
+		if (!showMenu) return;
+		const closeMenu = (e) => {
+			if (!ulRef.current.contains(e.target)) {
+				setShowMenu(false);
+			}
+		};
+		document.addEventListener("click", closeMenu);
+		return () => document.removeEventListener("click", closeMenu);
+	}, [dispatch, isLoaded, search2, showMenu]);
 
 	const resetGroupsHandler = () => {
 		setSearch(1);
@@ -98,9 +112,9 @@ const GroupsIndex = (props) => {
 						</div>
 					</div>
 
-					{isLoaded && search === `No Groups were found.` ? (
+					{search === `No Groups were found.` ? (
 						<div className="nothing-found">{`${search}..`}</div>
-					) : isLoaded ? (
+					) : (
 						<div id="groups-container">
 							<div id="group-detail-container">
 								{groups.map((group) => {
@@ -140,7 +154,7 @@ const GroupsIndex = (props) => {
 							</div>
 
 							<div>
-								{user ? (
+								{isLoaded && user ? (
 									<div className="groups-link-container-signin">
 										<CreateModalButton
 											className="splash-link join-group"
@@ -151,18 +165,22 @@ const GroupsIndex = (props) => {
 										/>
 									</div>
 								) : (
-									<div className="groups-link-container">
-										<OpenModalButton
-											props="link-buttons border"
-											buttonText="Create a group"
-											onButtonClick={closeMenu}
-											modalComponent={<LoginFormModal />}
-										/>
-									</div>
+									isLoaded && (
+										<div className="groups-link-container">
+											<OpenModalButton
+												props="link-buttons border"
+												buttonText="Create a group"
+												onButtonClick={closeMenu}
+												modalComponent={
+													<LoginFormModal />
+												}
+											/>
+										</div>
+									)
 								)}
 							</div>
 						</div>
-					) : null}
+					)}
 				</div>
 			</div>
 		);

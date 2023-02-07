@@ -143,8 +143,7 @@
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
-	max-width: 800px;
-	/* justify-content: center; */
+	max-width: 900px;
 	align-items: center;
 }
 
@@ -231,6 +230,8 @@
 	max-height: 14px;
 	max-width: 14px;
 }
+
+/* .group-member-icons{} */
 
 /* ------------------------------- */
 
