@@ -15,7 +15,6 @@ const RESET_EVENT = "event/resetState";
 
 //----------------------------------------------
 
-//regular actions
 //read
 const actionReadEvents = (events) => ({
 	type: READ_EVENTS,
@@ -58,26 +57,21 @@ export const actionResetStateEvent = () => ({
 // GET: Get All Events Route: /api/events
 export const thunkReadEvents = (payload) => async (dispatch) => {
 	let response;
-	// console.log(`thunk>>> payload: `, payload);
 	if (payload) {
 		response = await csrfFetch(`/api/events`);
 	} else {
 		response = await csrfFetch(`/api/events`);
 	}
-
 	if (response.ok) {
 		const events = await response.json();
 		dispatch(actionReadEvents(events));
-		// console.log(`thunk>>> events: `, events);
 		return events;
 	}
 };
 
 // GET: Get all Events by groupId Route: /api/groups/:groupId/events
 export const thunkReadEventsbyGroup = (payload) => async (dispatch) => {
-	// console.log(`response = thunk -----------`, payload);
 	const response = await csrfFetch(`/api/groups/${payload.groupId}/events`);
-
 	if (response.ok) {
 		const events = await response.json();
 		dispatch(actionReadEvents(events));
@@ -87,9 +81,7 @@ export const thunkReadEventsbyGroup = (payload) => async (dispatch) => {
 
 // GET: Get details of an Event Route: /api/events/:eventId
 export const thunkReadEventDetails = (payload) => async (dispatch) => {
-	// console.log(`response = thunk -----------`, payload);
 	const response = await csrfFetch(`/api/events/${payload}`);
-
 	if (response.ok) {
 		const event = await response.json();
 		dispatch(actionReadEventDetails(event));
@@ -104,7 +96,6 @@ export const thunkCreateEvent = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
 	if (response.ok) {
 		const event = await response.json();
 		dispatch(actionCreateEvent(event));
@@ -119,7 +110,6 @@ export const thunkUpdateEvent = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
 	if (response.ok) {
 		const event = await response.json();
 		dispatch(actionUpdateEvent(event));
@@ -134,8 +124,6 @@ export const thunkDeleteEvent = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
-	// console.log(`group id in THUNK>>>>>>>`,response);
 	if (response.ok) {
 		const event = await response.json();
 		dispatch(actionDeleteEvent(event));
@@ -183,7 +171,7 @@ const eventsReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_EVENT: {
-			return { ...state, ...(state[action.event.id] = action.event) };
+			return { ...state, [action.event.id]: action.event };
 		}
 
 		case DELETE_EVENT: {

@@ -11,7 +11,7 @@ const READ_MEMBER_DETAILS = `member/READ`;
 const CREATE_MEMBERSHIP = `member/CREATE`;
 const UPDATE_MEMBERSHIP = `member/UPDATE`;
 const DELETE_MEMBERSHIP = `member/DELETE`;
-const RESET = "member/resetState";
+const RESET_MEMBERS = "members/resetState";
 
 //----------------------------------------------
 
@@ -48,7 +48,7 @@ const actionDeleteMembership = (membership) => ({
 
 //reset
 export const actionResetMember = () => ({
-	type: RESET,
+	type: RESET_MEMBERS,
 });
 
 //----------------------------------------------
@@ -176,10 +176,6 @@ const memberReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_MEMBERSHIP: {
-			console.log(
-				`front - reducer - update memberships >>>>>>>>`,
-				action.membership.status
-			);
 			action.membership.member["status"] = action.membership.status;
 			return {
 				...state,
@@ -193,7 +189,7 @@ const memberReducer = (state = defaultState(), action) => {
 			return newState;
 		}
 
-		case RESET:
+		case RESET_MEMBERS:
 			return defaultState();
 
 		default:

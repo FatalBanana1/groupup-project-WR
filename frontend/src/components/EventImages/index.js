@@ -1,20 +1,16 @@
-//group detail js
-
 //imports
-
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../store/session";
 import { useParams } from "react-router-dom";
-import { thunkReadGroupDetails } from "../../store/groups";
-import "./GroupImages.css";
+import "./EventImages.css";
 import Loading from "../Loading";
 
 //main
-export default function GroupImages() {
+export default function EventImages() {
 	//states
 	let dispatch = useDispatch();
-	let { groupId } = useParams();
+	let { eventId } = useParams();
 	const [isLoaded, setIsLoaded] = useState();
 
 	// useEffect(() => {
@@ -42,40 +38,37 @@ export default function GroupImages() {
 	}, [showMenu]);
 
 	const closeMenu = () => setShowMenu(false);
-	const logout = (e) => {
-		e.preventDefault();
-		dispatch(sessionActions.logout());
-		closeMenu();
-	};
 
 	//----------------
 
-	const groups = useSelector((state) => state.groups);
-	const group = groups[groupId];
-	const {
+	const events = useSelector((state) => state.events);
+	const event = events[eventId];
+	let {
 		id,
-		organizerId,
+		venueId,
+		groupId,
 		name,
-		about,
+		description,
 		type,
-		private: privated,
-		city,
-		state,
+		capacity,
+		price,
+		startDate,
+		endDate,
+		Group,
+		Venue,
+		EventImages,
+		numAttending,
+		previewImage: image,
 		createdAt,
-		updatedAt,
-		GroupImages: groupImages,
-		Organizer: organizer,
-		Venues: venues,
-		numMembers,
-	} = group;
+	} = event;
 
-	console.log(`front images======`, groups[groupId]);
+	// console.log(`front images======`, groups[groupId]);
 
-	if (!organizer) return null;
+	// if (!organizer) return null;
 
-	if (group) {
-		let image = groupImages.find((el) => el.preview === true);
-		group["image"] = image;
+	if (event) {
+		// let image = EventImages.find((el) => el.preview === true);
+		// event["image"] = image;
 
 		//dates
 		let date = new Date(createdAt).toString().split(" ");
@@ -91,22 +84,24 @@ export default function GroupImages() {
 				<div id="group-detail-images">
 					<h2 className="about-title-font">
 						{`Photos (${
-							groupImages.length > 0 ? groupImages.length : 0
+							EventImages.length > 1 ? EventImages.length - 1 : 0
 						})`}
 					</h2>
 
 					<div className="about-details-font">
-						{groupImages.length >= 1 ? (
-							groupImages.map((image) => (
-								<img
-									className="read-group-images"
-									key={image.id}
-									src={image.url}
-									alt={`Group Image`}
-								/>
-							))
+						{EventImages.length > 1 ? (
+							EventImages.map((image) =>
+								image.preview ? null : (
+									<img
+										className="read-group-images"
+										key={image.id}
+										src={image.url}
+										alt={`Event Image for: "${image.url}"`}
+									/>
+								)
+							)
 						) : (
-							<div>No Group Images...</div>
+							<div>No Event Images...</div>
 						)}
 					</div>
 				</div>

@@ -11,7 +11,7 @@ const READ_GROUP_DETAILS = `group/READ`;
 const CREATE_GROUP = `groups/CREATE`;
 const UPDATE_GROUP = `groups/UPDATE`;
 const DELETE_GROUP = `groups/DELETE`;
-const RESET = "group/resetState";
+const RESET_GROUPS = "groups/resetState";
 
 //----------------------------------------------
 
@@ -48,7 +48,7 @@ const actionDeleteGroup = (group) => ({
 
 //reset
 export const actionResetState = () => ({
-	type: RESET,
+	type: RESET_GROUPS,
 });
 
 //----------------------------------------------
@@ -186,7 +186,7 @@ const groupsReducer = (state = defaultState(), action) => {
 			return newState;
 		}
 
-		case RESET:
+		case RESET_GROUPS:
 			return defaultState();
 
 		default:

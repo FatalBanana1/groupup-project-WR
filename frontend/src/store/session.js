@@ -38,7 +38,6 @@ export const login = (user) => async (dispatch) => {
 			password,
 		}),
 	});
-	// console.log(`inside thunk for login-----`)
 	const data = await response.json();
 	dispatch(setUser(data.user));
 	return response;

@@ -7,33 +7,43 @@ import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteModalButton from "../../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../../Groups/UpdateGroup/EditModalButton.js";
-// import * as sessionActions from "../../../store/session";
 import { NavLink, useHistory, useParams } from "react-router-dom";
-
-//comps
 import { thunkReadEventDetails } from "../../../store/events";
 import UpdateGroup from "../../Groups/UpdateGroup";
 import "./EventDetail.css";
 import DeleteGroup from "../../Groups/DeleteGroup";
 import ErrorHandler from "../../ErrorHandler";
-// import { thunkReadMembers } from "../../../store/members";
 import LoginFormModal from "../../LoginFormModal";
 import clock from "../../Groups/images/clock-icon.png";
 import location from "../../Groups/images/location-icon.png";
 import Loading from "../../Loading";
+import AboutEvent from "../AboutEvent";
+import EventImages from "../../EventImages";
 
 //main
 const EventDetail = () => {
 	//states
+	// let history = useHistory();
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
-	// let history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(false);
+	let [isImages, setIsImages] = useState(false);
+	let [isAbout, setIsAbout] = useState(true);
 
 	let { eventId } = useParams();
-	let state = useSelector((state) => state);
-	let user = state.session.user;
-	const event = state.events;
+	let user = useSelector((state) => state.session.user);
+	let events = useSelector((state) => state.events);
+	let event = events[eventId];
+	//-----------------
+
+	let aboutClickHandler = () => {
+		setIsImages(false);
+		setIsAbout(true);
+	};
+	let imagesClickHandler = () => {
+		setIsImages(true);
+		setIsAbout(false);
+	};
 
 	//-----------------
 
@@ -51,7 +61,9 @@ const EventDetail = () => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
+	}, [dispatch]);
 
+	useEffect(() => {
 		if (!showMenu) return;
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
@@ -60,13 +72,13 @@ const EventDetail = () => {
 		};
 		document.addEventListener("click", closeMenu);
 		return () => document.removeEventListener("click", closeMenu);
-	}, [showMenu, dispatch, isLoaded]);
+	}, [showMenu]);
 
 	const closeMenu = () => setShowMenu(false);
 
 	//----------------
 
-	if (isLoaded) {
+	if (isLoaded && event) {
 		let {
 			id,
 			venueId,
@@ -80,10 +92,9 @@ const EventDetail = () => {
 			endDate,
 			Group,
 			Venue,
-			EventImages,
 			numAttending,
 			previewImage: image,
-		} = event[eventId];
+		} = event;
 
 		//dates
 		let date = new Date(startDate).toString().split(" ");
@@ -136,267 +147,188 @@ const EventDetail = () => {
 
 		//return
 		return (
-			<>
-				<div id="group-details-page">
-					{errors.length > 0 ? (
-						<div className="error-handler-container">
-							<ErrorHandler errors={errors} />
-						</div>
-					) : null}
+			<div id="group-details-page">
+				{errors.length > 0 ? (
+					<div className="error-handler-container">
+						<ErrorHandler errors={errors} />
+					</div>
+				) : null}
 
-					<div className="event-details-container-header">
-						<div id="event-right-details-header">
-							<div id="event-name-details-div">
-								<h1 className="event-details-header-name">
-									{name}
-								</h1>
+				<div className="event-details-container-header">
+					<div id="event-right-details-header">
+						<div id="event-name-details-div">
+							<h1 className="event-details-header-name">
+								{name}
+							</h1>
+						</div>
+
+						<div className="hosted-by-events">
+							<div className="left-events-hosted">
+								<img
+									className="events-small-avatar-icon"
+									src={Group.Organizer.avatar}
+								/>
 							</div>
 
-							<div className="hosted-by-events">
-								<div className="left-events-hosted">
+							<div className="right-events-hosted">
+								<div>{`Hosted By`}</div>
+								<div className="event-details-info-bold">
+									{`${Group.Organizer.firstName} ${Group.Organizer.lastName}`}
+								</div>
+							</div>
+						</div>
+
+						<div className="event-info-header">
+							<div className="event-details-info-container icons-container">
+								<div className="icons">
 									<img
-										className="events-small-avatar-icon"
-										src={Group.Organizer.avatar}
+										src={clock}
+										className="small-icons"
+										alt="share icon"
 									/>
 								</div>
+								<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
+							</div>
 
-								<div className="right-events-hosted">
-									<div>{`Hosted By`}</div>
-									<div className="event-details-info-bold">
-										{`${Group.Organizer.firstName} ${Group.Organizer.lastName}`}
-									</div>
+							<div className="event-details-info-container icons-container">
+								<div className="icons">
+									<img
+										src={location}
+										className="small-icons"
+										alt="share icon"
+									/>
+								</div>
+								<div className="event-venue-details-header">
+									<div className="event-venue-details-info">{`${Venue.address}`}</div>
+									{Venue.state ? (
+										<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+									) : (
+										<div className="event-venue-details-info gray-text">{`${Venue.city} Only`}</div>
+									)}
 								</div>
 							</div>
 
-							<div className="event-info-header">
-								<div className="event-details-info-container icons-container">
-									<div className="icons">
-										<img
-											src={clock}
-											className="small-icons"
-											alt="share icon"
-										/>
+							<div className="event-details-info-container icons-container">
+								<NavLink
+									to={`/groups/${groupId}`}
+									className="icons"
+								>
+									<img
+										src={Group.GroupImages[0].url}
+										className="small-group-image"
+										alt="share icon"
+									/>
+								</NavLink>
+								<NavLink to={`/groups/${groupId}`}>
+									<div className="event-venue-details-info">{`${Group.name}`}</div>
+									<div className="event-venue-details-info gray-text">
+										{`${
+											Group.private ? "Private" : "Public"
+										} group`}
 									</div>
-									<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
-								</div>
-
-								<div className="event-details-info-container icons-container">
-									<div className="icons">
-										<img
-											src={location}
-											className="small-icons"
-											alt="share icon"
-										/>
-									</div>
-									<div className="event-venue-details-header">
-										<div className="event-venue-details-info">{`${Venue.address}`}</div>
-										{Venue.state ? (
-											<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
-										) : (
-											<div className="event-venue-details-info gray-text">{`${Venue.city} Only`}</div>
-										)}
-									</div>
-								</div>
-
-								<div className="event-details-info-container icons-container">
-									<NavLink
-										to={`/groups/${groupId}`}
-										className="icons"
-									>
-										<img
-											src={Group.GroupImages[0].url}
-											className="small-group-image"
-											alt="share icon"
-										/>
-									</NavLink>
-									<NavLink to={`/groups/${groupId}`}>
-										<div className="event-venue-details-info">{`${Group.name}`}</div>
-										<div className="event-venue-details-info gray-text">
-											{`${
-												Group.private
-													? "Private"
-													: "Public"
-											} group`}
-										</div>
-									</NavLink>
-								</div>
+								</NavLink>
 							</div>
-						</div>
-
-						<div className="event-left-details-img">
-							{image ? (
-								<img
-									src={image}
-									className="event-details-img-default"
-									alt="event image"
-								/>
-							) : (
-								<img
-									src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-									className="no-groups-img-detail"
-									alt="No Event Image"
-								/>
-							)}
 						</div>
 					</div>
 
-					<div className="details-container-body">
-						<div className="borders sticky-deets">
-							<div id="details-nav-section">
-								<div id="update-groups-link-container">
-									<div className="members-link details-nav-section-border">
-										{user ? (
-											<NavLink
-												to={`/events/${eventId}/attendees`}
-											>
-												Attendees
-											</NavLink>
-										) : (
-											<OpenModalButton
-												props="link-buttons"
-												buttonText="Attendees"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<LoginFormModal />
-												}
-											/>
-										)}
-									</div>
-									<div className="members-link details-nav-section-border">
-										<NavLink to={`/groups/${groupId}`}>
-											Group
-										</NavLink>
-									</div>
-
-									{host && host.length ? (
-										<div>
-											<EditModalButton
-												id="update-group-button"
-												buttonText="Edit Event"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<UpdateGroup
-														event={event}
-													/>
-												}
-											/>
-										</div>
-									) : null}
-
-									{host && host.length ? (
-										<div>
-											<DeleteModalButton
-												id="delete-group-button"
-												buttonText="Delete Event"
-												onButtonClick={closeMenu}
-												modalComponent={
-													<DeleteGroup
-														event={event}
-													/>
-												}
-											/>
-										</div>
-									) : null}
-								</div>
-							</div>
-						</div>
-
-						<>
-							<div id="about-section-container">
-								<div id="about-section-container-left">
-									<h2 className="about-title-font">
-										Details
-									</h2>
-									<div className="about-details-font">
-										{description}
-									</div>
-
-									<div id="group-detail-images">
-										<h2 className="about-title-font">
-											{`Photos (${
-												EventImages.length > 1
-													? EventImages.length - 1
-													: 0
-											})`}
-										</h2>
-										<div className="about-details-font">
-											{EventImages.length > 1 ? (
-												EventImages.map((image) =>
-													image.preview ? null : (
-														<img
-															className="read-group-images"
-															key={image.id}
-															src={image.url}
-															alt={`Event Image for: "${image.url}"`}
-														/>
-													)
-												)
-											) : (
-												<div>No Event Images...</div>
-											)}
-										</div>
-									</div>
-								</div>
-
-								<div id="about-section-container-right">
-									<div className="events-sticky">
-										<NavLink
-											to={`/groups/${groupId}`}
-											className="events-side-panel events-link-side icons-container"
-										>
-											<div className="icons">
-												<img
-													src={
-														Group.GroupImages[0].url
-													}
-													className="small-group-image"
-													alt="share icon"
-												/>
-											</div>
-											<div>
-												<div className="event-venue-details-info">{`${Group.name}`}</div>
-												<div className="event-venue-details-info gray-text">
-													{`${
-														Group.private
-															? "Private"
-															: "Public"
-													} group`}
-												</div>
-											</div>
-										</NavLink>
-
-										<div className="events-side-panel">
-											<div className="event-details-info-container icons-container">
-												<div className="icons">
-													<img
-														src={clock}
-														className="small-icons"
-														alt="share icon"
-													/>
-												</div>
-												<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
-											</div>
-											<div className="event-details-info-container icons-container">
-												<div className="icons">
-													<img
-														src={location}
-														className="small-icons"
-														alt="share icon"
-													/>
-												</div>
-												<div className="event-venue-details-header">
-													<div className="event-venue-details-info">{`${Venue.address}`}</div>
-													<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</>
+					<div className="event-left-details-img">
+						{image ? (
+							<img
+								src={image}
+								className="event-details-img-default"
+								alt="event image"
+							/>
+						) : (
+							<img
+								src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+								className="no-groups-img-detail"
+								alt="No Event Image"
+							/>
+						)}
 					</div>
 				</div>
-			</>
+
+				<div className="details-container-body">
+					<div className="borders sticky-deets">
+						<div id="details-nav-section">
+							<div id="update-groups-link-container">
+								<div className="members-link details-nav-section-border">
+									<div
+										onClick={aboutClickHandler}
+										className="clicker"
+									>
+										About
+									</div>
+								</div>
+
+								<div className="members-link details-nav-section-border">
+									<div
+										onClick={imagesClickHandler}
+										className="clicker"
+									>
+										Images
+									</div>
+								</div>
+
+								<div className="members-link details-nav-section-border">
+									{user ? (
+										<NavLink
+											to={`/events/${eventId}/attendees`}
+										>
+											Attendees
+										</NavLink>
+									) : (
+										<OpenModalButton
+											props="link-buttons"
+											buttonText="Attendees"
+											onButtonClick={closeMenu}
+											modalComponent={<LoginFormModal />}
+										/>
+									)}
+								</div>
+
+								<div className="members-link details-nav-section-border">
+									<NavLink to={`/groups/${groupId}`}>
+										Group
+									</NavLink>
+								</div>
+
+								{host && host.length ? (
+									<div>
+										<EditModalButton
+											id="update-group-button"
+											buttonText="Edit Event"
+											onButtonClick={closeMenu}
+											modalComponent={
+												<UpdateGroup event={event} />
+											}
+										/>
+									</div>
+								) : null}
+
+								{host && host.length ? (
+									<div>
+										<DeleteModalButton
+											id="delete-group-button"
+											buttonText="Delete Event"
+											onButtonClick={closeMenu}
+											modalComponent={
+												<DeleteGroup event={event} />
+											}
+										/>
+									</div>
+								) : null}
+							</div>
+						</div>
+					</div>
+
+					{isLoaded && isAbout ? (
+						<AboutEvent event={event} />
+					) : isLoaded && isImages ? (
+						<EventImages event={event} />
+					) : null}
+				</div>
+			</div>
 		);
 	} else return <Loading />;
 };
