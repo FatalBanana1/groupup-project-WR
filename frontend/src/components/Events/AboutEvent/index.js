@@ -85,11 +85,7 @@ export default function AboutEvent({ event }) {
 
 					<div id="group-detail-images">
 						<h2 className="about-title-font">
-							{`Photos (${
-								EventImages.length > 1
-									? EventImages.length - 1
-									: 0
-							})`}
+							{`Photos (${EventImages.length})`}
 						</h2>
 						<div className="about-details-font">
 							{EventImages.length > 0 ? (

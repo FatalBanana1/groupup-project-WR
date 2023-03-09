@@ -83,13 +83,11 @@ export default function EventImages() {
 			<div className="images-ct">
 				<div id="group-detail-images">
 					<h2 className="about-title-font">
-						{`Photos (${
-							EventImages.length > 1 ? EventImages.length - 1 : 0
-						})`}
+						{`Photos (${EventImages.length})`}
 					</h2>
 
 					<div className="images-comp">
-						{EventImages.length > 1 ? (
+						{EventImages.length > 0 ? (
 							EventImages.map((image) => (
 								<img
 									className="images"
