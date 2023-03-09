@@ -77,6 +77,20 @@ a:hover,
 	color: rgba(0, 131, 148, 0.884);
 }
 
+.col {
+	display: flex;
+	flex-direction: column;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.mauto {
+	margin: auto;
+}
+
 ::-webkit-scrollbar {
 	width: 9px;
 }

@@ -12,6 +12,7 @@
 	font-size: 14px;
 	width: auto;
 	height: auto;
+	z-index: 100;
 }
 
 .profile-button {
@@ -42,7 +43,12 @@
 }
 
 .nav-details {
-	padding: 4px 0;
+	margin-bottom: 8px;
+	font-size: 1rem;
+}
+
+.dropdown-tags {
+	font-size: 0.6rem;
 }
 
 #nav-details-log-out {
@@ -51,6 +57,7 @@
 	border: rgb(242, 231, 216) solid 1px;
 	padding: 8px 12px;
 	border-radius: 2%;
+	font-size: 1rem;
 }
 
 .dropdown-buttons {
@@ -100,6 +107,31 @@
 
 .small-drop {
 	padding: 3px;
+}
+
+#create-group-drop {
+	background-color: transparent;
+	text-decoration: none;
+	border: 0;
+	font-size: 1rem;
+}
+
+#create-group-drop:hover {
+	color: rgb(0, 130, 148);
+}
+
+.justifycenter {
+	justify-content: center;
+}
+
+.drop-left {
+	margin-right: 20px;
+	padding-right: 10px;
+	border-right: solid 0.3px rgba(128, 128, 128, 0.4);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
 }
 
 @media screen and (max-width: 610px) {

@@ -9,7 +9,10 @@ import { useModal } from "../../context/Modal";
 import "./ProfileButton.css";
 import upArrow from "../Groups/images/up-arrow.png";
 import downArrow from "../Groups/images/down-arrow.png";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import CreateGroup from "../Groups/CreateGroup";
+import CreateModalButton from "../Groups/CreateGroup/CreateModalButton";
+import CreateModalDrop from "./CreateModalDrop";
 
 function ProfileButton({ user }) {
 	const dispatch = useDispatch();
@@ -22,6 +25,8 @@ function ProfileButton({ user }) {
 		if (showMenu) return;
 		setShowMenu(true);
 	};
+
+	//-------------------
 
 	useEffect(() => {
 		if (!showMenu) return;
@@ -146,18 +151,50 @@ function ProfileButton({ user }) {
 
 			<ul className={ulClassName} ref={ulRef}>
 				{user ? (
-					<>
-						<div className="nav-details">{user.username}</div>
-						<div className="nav-details">
-							{user.firstName} {user.lastName}
+					<div className="row">
+						<div className="drop-left">
+							<NavLink className="nav-details" to={`/`}>
+								Home
+							</NavLink>
+
+							<div className="nav-details">Edit Profile</div>
+
+							<div className="nav-details">My Groups</div>
+
+							<CreateModalDrop
+								buttonText="Create a group"
+								onButtonClick={closeMenu}
+								modalComponent={<CreateGroup />}
+							/>
 						</div>
-						<div className="nav-details">{user.email}</div>
-						<div className="nav-details">
-							<button id="nav-details-log-out" onClick={logout}>
-								Log Out
-							</button>
+
+						<div className="drop-right">
+							<div>
+								<div className="dropdown-tags">Username:</div>
+								<div className="nav-details">
+									{user.username}
+								</div>
+							</div>
+							<div>
+								<div className="dropdown-tags">Name:</div>
+								<div className="nav-details">
+									{user.firstName} {user.lastName}
+								</div>
+							</div>
+							<div>
+								<div className="dropdown-tags">Email:</div>
+								<div className="nav-details">{user.email}</div>
+							</div>
+							<div className="nav-details">
+								<button
+									id="nav-details-log-out"
+									onClick={logout}
+								>
+									Log Out
+								</button>
+							</div>
 						</div>
-					</>
+					</div>
 				) : (
 					<>
 						<div className="users">

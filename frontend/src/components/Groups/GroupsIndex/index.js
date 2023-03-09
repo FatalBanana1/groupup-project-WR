@@ -68,17 +68,15 @@ const GroupsIndex = () => {
 	const nextPageHandler = () => {
 		setIsLoaded(false);
 		setSearch(search2 + 1);
-		dispatch(thunkSearchPage(search2 + 1))
-			// .then(() => dispatch(thunkReadGroups()))
-
+		dispatch(thunkSearchPage(search2 + 1));
+		// .then(() => dispatch(thunkReadGroups()))
 	};
 
 	const previousPageHandler = () => {
 		setIsLoaded(false);
 		setSearch(search2 - 1);
-		dispatch(thunkSearchPage(search2 - 1))
-			// .then(() => dispatch(thunkReadGroups()))
-		
+		dispatch(thunkSearchPage(search2 - 1));
+		// .then(() => dispatch(thunkReadGroups()))
 	};
 
 	if (isLoaded) {
@@ -153,7 +151,7 @@ const GroupsIndex = () => {
 								) : null}
 							</div>
 
-							<div>
+							<div className="mauto">
 								{isLoaded && user ? (
 									<div className="groups-link-container-signin">
 										<CreateModalButton
