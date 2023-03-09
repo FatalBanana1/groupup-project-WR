@@ -76,7 +76,7 @@ const ReadMembers = ({ member }) => {
 	}
 
 	if (member && id) {
-		// console.log(`front member======`, organizerId, user.id);
+		console.log(`front member======`, organizerId, user.id);
 
 		//return
 		return (

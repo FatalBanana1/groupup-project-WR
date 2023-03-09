@@ -46,9 +46,9 @@ const Members = () => {
 		let payload = {
 			groupId,
 		};
-		dispatch(thunkReadMembers(payload))
+		dispatch(thunkReadGroupDetails(payload.groupId))
 			.then(() => {
-				dispatch(thunkReadGroupDetails(payload.groupId));
+				dispatch(thunkReadMembers(payload));
 			})
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
