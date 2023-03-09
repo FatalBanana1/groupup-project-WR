@@ -24,7 +24,7 @@ export default function UpdateEvent({ event }) {
 	const [startDate, setStartDate] = useState(starting);
 	const [endDate, setEndDate] = useState(ending);
 	const [url, setUrl] = useState("");
-	const [preview, setPreview] = useState(true);
+	const [preview, setPreview] = useState(false);
 	const [errors, setErrors] = useState({});
 
 	// submit
@@ -46,7 +46,7 @@ export default function UpdateEvent({ event }) {
 				startDate,
 				endDate,
 				venueId: 1,
-				image: { url, preview: true },
+				image: { url, preview },
 			};
 		} else {
 			payload = {
@@ -61,7 +61,7 @@ export default function UpdateEvent({ event }) {
 				endDate,
 				venueId: event.Venue.id,
 				venue: { address, city, state },
-				image: { url, preview: true },
+				image: { url, preview },
 			};
 		}
 		return dispatch(thunkUpdateEvent(payload))
