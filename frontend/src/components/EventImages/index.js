@@ -88,18 +88,16 @@ export default function EventImages() {
 						})`}
 					</h2>
 
-					<div className="about-details-font">
+					<div className="images-comp">
 						{EventImages.length > 1 ? (
-							EventImages.map((image) =>
-								image.preview ? null : (
-									<img
-										className="read-group-images"
-										key={image.id}
-										src={image.url}
-										alt={`Event Image for: "${image.url}"`}
-									/>
-								)
-							)
+							EventImages.map((image) => (
+								<img
+									className="images"
+									key={image.id}
+									src={image.url}
+									alt={`Event Image for: "${image.url}"`}
+								/>
+							))
 						) : (
 							<div>No Event Images...</div>
 						)}

@@ -52,8 +52,6 @@ export const actionResetStateRsvp = () => ({
 // GET: Get All Attendees of an event Route: /api/events/:eventId/attendees
 export const thunkReadRsvps = (payload) => async (dispatch) => {
 	let response = await csrfFetch(`/api/events/${payload}/attendees`);
-	// console.log(`thunk>>> events: `, events);
-
 	if (response.ok) {
 		const rsvps = await response.json();
 		dispatch(actionReadRsvps(rsvps));
@@ -83,7 +81,6 @@ export const thunkUpdateRsvp = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
 	if (response.ok) {
 		const rsvp = await response.json();
 		dispatch(actionUpdateRsvp(rsvp));
@@ -98,8 +95,6 @@ export const thunkDeleteRsvp = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
-	// console.log(`group id in THUNK>>>>>>>`,response);
 	if (response.ok) {
 		const rsvp = await response.json();
 		dispatch(actionDeleteRsvp(rsvp));
@@ -147,7 +142,7 @@ const rsvpsReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_RSVP: {
-			return { ...state, ...(state[action.rsvp.id] = action.rsvp) };
+			return { ...state, [action.rsvp.id]: action.rsvp };
 		}
 
 		case DELETE_RSVP: {

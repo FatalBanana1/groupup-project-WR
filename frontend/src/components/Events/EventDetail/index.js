@@ -19,6 +19,7 @@ import location from "../../Groups/images/location-icon.png";
 import Loading from "../../Loading";
 import AboutEvent from "../AboutEvent";
 import EventImages from "../../EventImages";
+import UpdateEvent from "../UpdateEvent";
 
 //main
 const EventDetail = () => {
@@ -78,7 +79,7 @@ const EventDetail = () => {
 
 	//----------------
 
-	if (isLoaded && event) {
+	if (isLoaded && event && event.Group) {
 		let {
 			id,
 			venueId,
@@ -144,6 +145,12 @@ const EventDetail = () => {
 			Venue.city = "Online";
 			Venue.state = "";
 		}
+
+		//-------------------------------------------------------
+
+		// console.log(`event deets=====>>>>------`, host);
+
+		//-------------------------------------------------------
 
 		//return
 		return (
@@ -306,8 +313,17 @@ const EventDetail = () => {
 									</div>
 								) : null}
 
-								{host && host.length ? (
-									<div>
+								{host ? (
+									<div className="crud-btns">
+										<EditModalButton
+											id="update-group-button"
+											buttonText="Edit Event"
+											onButtonClick={closeMenu}
+											modalComponent={
+												<UpdateEvent event={event} />
+											}
+										/>
+
 										<DeleteModalButton
 											id="delete-group-button"
 											buttonText="Delete Event"

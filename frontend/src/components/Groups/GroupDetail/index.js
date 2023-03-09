@@ -60,7 +60,8 @@ const GroupDetail = () => {
 	//-----------------
 
 	let user = useSelector((state) => state.session.user);
-	const group = useSelector((state) => state.groups);
+	const groups = useSelector((state) => state.groups);
+	const group = groups[groupId];
 	let members = useSelector((state) => state.members);
 	let newmembers = Object.values(members);
 
@@ -100,7 +101,7 @@ const GroupDetail = () => {
 		return () => document.removeEventListener("click", closeMenu);
 	}, [showMenu]);
 
-	if (isLoaded) {
+	if (isLoaded && group && group.numMembers) {
 		const {
 			id,
 			organizerId,
@@ -117,7 +118,7 @@ const GroupDetail = () => {
 			Venues: venues,
 			numMembers,
 			Events,
-		} = group[groupId];
+		} = group;
 		let image = groupImages.find((el) => el.preview === true);
 
 		//dates
@@ -135,7 +136,7 @@ const GroupDetail = () => {
 			);
 			curr = newmembers.filter((el) => el.id === user.id);
 		}
-		let fullgroup = group[groupId];
+		let fullgroup = group;
 		fullgroup["Members"] = newmembers;
 
 		let status;
@@ -306,9 +307,7 @@ const GroupDetail = () => {
 											buttonText="Edit Group"
 											onButtonClick={closeMenu}
 											modalComponent={
-												<UpdateGroup
-													group={group[groupId]}
-												/>
+												<UpdateGroup group={group} />
 											}
 										/>
 
@@ -317,9 +316,7 @@ const GroupDetail = () => {
 											buttonText="Delete Group"
 											onButtonClick={closeMenu}
 											modalComponent={
-												<DeleteGroup
-													group={group[groupId]}
-												/>
+												<DeleteGroup group={group} />
 											}
 										/>
 									</div>

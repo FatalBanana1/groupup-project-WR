@@ -31,6 +31,7 @@
 
 #about-section-container-left {
 	margin: 0 20px;
+	min-width: 40vw;
 }
 
 .details-img-default {
@@ -278,11 +279,6 @@
 
 	#details-container-header {
 		flex-direction: column;
-	}
-
-	#right-details-header {
-		width: 100%;
-		height: auto;
 	}
 
 	#name-details-div {

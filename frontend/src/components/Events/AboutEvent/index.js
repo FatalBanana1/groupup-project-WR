@@ -92,17 +92,15 @@ export default function AboutEvent({ event }) {
 							})`}
 						</h2>
 						<div className="about-details-font">
-							{EventImages.length > 1 ? (
-								EventImages.map((image) =>
-									image.preview ? null : (
-										<img
-											className="read-group-images"
-											key={image.id}
-											src={image.url}
-											alt={`Event Image for: "${image.url}"`}
-										/>
-									)
-								)
+							{EventImages.length > 0 ? (
+								EventImages.map((image) => (
+									<img
+										className="read-group-images"
+										key={image.id}
+										src={image.url}
+										alt={`Event Image for: "${image.url}"`}
+									/>
+								))
 							) : (
 								<div>No Event Images...</div>
 							)}
@@ -154,7 +152,11 @@ export default function AboutEvent({ event }) {
 								</div>
 								<div className="event-venue-details-header">
 									<div className="event-venue-details-info">{`${Venue.address}`}</div>
-									<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+									{Venue.city === "Online" ? (
+										<div className="event-venue-details-info gray-text">{`Online Only`}</div>
+									) : (
+										<div className="event-venue-details-info gray-text">{`${Venue.city}, ${Venue.state}`}</div>
+									)}
 								</div>
 							</div>
 						</div>

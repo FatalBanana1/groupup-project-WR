@@ -3,34 +3,37 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkCreateEvent } from "../../../store/events";
+import {
+	thunkCreateEvent,
+	thunkReadEventDetails,
+	thunkUpdateEvent,
+} from "../../../store/events";
 import icon from "../../Groups/images/favicon.ico";
 import apple from "../../Groups/images/apple1.png";
 
 //main
-const CreateEvent = () => {
+export default function UpdateEvent({ event }) {
 	const dispatch = useDispatch();
 	let history = useHistory();
 	const { closeModal } = useModal();
+	const starting = new Date(event.startDate).toISOString().slice(0, -8);
+	const ending = new Date(event.endDate).toISOString().slice(0, -8);
 	//states
-	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
-	const [capacity, setCapacity] = useState("");
-	const [type, setType] = useState("In person");
-	const [address, setAddress] = useState("");
-	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
-	const [price, setPrice] = useState("");
-	const [startDate, setStartDate] = useState("");
-	const [endDate, setEndDate] = useState("");
+	const [name, setName] = useState(event.name);
+	const [description, setDescription] = useState(event.description);
+	const [capacity, setCapacity] = useState(event.capacity);
+	const [type, setType] = useState(event.type);
+	const [address, setAddress] = useState(event.Venue.address);
+	const [city, setCity] = useState(event.Venue.city);
+	const [state, setState] = useState(event.Venue.state);
+	const [price, setPrice] = useState(event.price);
+	const [startDate, setStartDate] = useState(starting);
+	const [endDate, setEndDate] = useState(ending);
 	const [url, setUrl] = useState("");
 	const [preview, setPreview] = useState(true);
 	const [errors, setErrors] = useState({});
 
-	//selectors
-	let groups = useSelector((state) => state.groups);
-	let group = Object.values(groups)[0];
-
+	// submit
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (Object.values(errors).length > 0) {
@@ -39,7 +42,8 @@ const CreateEvent = () => {
 		let payload;
 		if (type === "Online") {
 			payload = {
-				groupId: group.id,
+				id: event.id,
+				groupId: event.Group.id,
 				name,
 				description,
 				type,
@@ -52,7 +56,8 @@ const CreateEvent = () => {
 			};
 		} else {
 			payload = {
-				groupId: group.id,
+				id: event.id,
+				groupId: event.Group.id,
 				name,
 				description,
 				type,
@@ -60,14 +65,13 @@ const CreateEvent = () => {
 				capacity,
 				startDate,
 				endDate,
+				venueId: event.Venue.id,
 				venue: { address, city, state },
 				image: { url, preview: true },
 			};
 		}
-		return dispatch(thunkCreateEvent(payload))
-			.then((data) => {
-				history.push(`/events/${data.id}`);
-			})
+		return dispatch(thunkUpdateEvent(payload))
+			.then((data) => dispatch(thunkReadEventDetails(data.id)))
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
@@ -164,10 +168,10 @@ const CreateEvent = () => {
 
 	//---------------------------------------
 
-	// console.log(`group in create event ================`, group);
+	// console.log(`group in create event ================`, event.type);
 	// console.log(`group in create event ================`, errors);
 
-	if (group) {
+	if (event && event.type) {
 		//return
 		return (
 			<div id="create-group-container">
@@ -176,7 +180,7 @@ const CreateEvent = () => {
 						<img className="image-logo fall" src={apple} />
 						<img className="image-logo spins" src={icon} />
 					</div>
-					<div className="signup-header-name">Create an Event</div>
+					<div className="signup-header-name">Edit Event</div>
 				</div>
 
 				<form className="create-group-form" onSubmit={handleSubmit}>
@@ -390,17 +394,43 @@ const CreateEvent = () => {
 						</label>
 					</div>
 
+					<div className="private" id="private-edit">
+						<label className="private-container">
+							<div className="text-private">
+								Set as Default Image:
+							</div>
+							<div className="private-select">
+								<select
+									className="selected"
+									value={preview}
+									onChange={(e) =>
+										setPreview(
+											e.target.value === "false"
+												? false
+												: true
+										)
+									}
+								>
+									<option value={true} className="options">
+										Yes
+									</option>
+									<option value={false} className="options">
+										No
+									</option>
+								</select>
+							</div>
+						</label>
+					</div>
+
 					<button
 						id="submit-button"
 						type="submit"
 						className="create selected"
 					>
-						Create Event
+						Edit Event
 					</button>
 				</form>
 			</div>
 		);
 	} else return null;
-};
-
-export default CreateEvent;
+}

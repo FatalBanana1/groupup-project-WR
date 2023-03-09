@@ -89,9 +89,9 @@ export const thunkReadEventDetails = (payload) => async (dispatch) => {
 	}
 };
 
-// POST: Create Event Route: /api/events
+// POST: Create Event Route: /api/groups/:groupId/events
 export const thunkCreateEvent = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events`, {
+	const response = await csrfFetch(`/api/groups/${payload.groupId}/events`, {
 		method: `POST`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
@@ -105,7 +105,7 @@ export const thunkCreateEvent = (payload) => async (dispatch) => {
 
 // PUT: Edit Event Route: /api/event/:eventId
 export const thunkUpdateEvent = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload}`, {
+	const response = await csrfFetch(`/api/events/${payload.id}`, {
 		method: `PUT`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),

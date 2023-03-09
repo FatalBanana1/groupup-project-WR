@@ -69,8 +69,6 @@ export default function GroupImages() {
 		numMembers,
 	} = group;
 
-	console.log(`front images======`, groups[groupId]);
-
 	if (!organizer) return null;
 
 	if (group) {
@@ -82,6 +80,8 @@ export default function GroupImages() {
 		let month = date[1];
 		let day = date[2];
 		let year = date[3];
+
+		// console.log(`front images======`, groupImages);
 
 		//------------------------------------------------------
 
@@ -95,11 +95,11 @@ export default function GroupImages() {
 						})`}
 					</h2>
 
-					<div className="about-details-font">
+					<div className="images-comp">
 						{groupImages.length >= 1 ? (
 							groupImages.map((image) => (
 								<img
-									className="read-group-images"
+									className="images"
 									key={image.id}
 									src={image.url}
 									alt={`Group Image`}

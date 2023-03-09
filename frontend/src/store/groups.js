@@ -177,7 +177,7 @@ const groupsReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_GROUP: {
-			return { ...state, ...(state[action.group.id] = action.group) };
+			return { ...state, [action.group.id]: action.group };
 		}
 
 		case DELETE_GROUP: {

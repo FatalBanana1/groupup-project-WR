@@ -618,7 +618,6 @@ router.put(
 router.put(
 	"/:eventId",
 	valid_event,
-	valid_venue,
 	requireAuth,
 	valid_user,
 	async (req, res) => {
@@ -626,6 +625,7 @@ router.put(
 
 		let {
 			venueId,
+			venue,
 			name,
 			type,
 			capacity,
@@ -633,7 +633,20 @@ router.put(
 			description,
 			startDate,
 			endDate,
+			groupId,
+			image,
 		} = req.body;
+
+		let defaultImage = await EventImage.findOne({
+			where: {
+				eventId: id,
+				url: image.url,
+			},
+		});
+
+		//deal with event img
+		let previewer = false;
+		let { url, preview } = image;
 
 		let options = {
 			message: "Validation Error",
@@ -641,7 +654,7 @@ router.put(
 			errors: {},
 		};
 
-		if (!venueId) options.errors.venueId = `Venue does not exist`;
+		if (!venueId && !venue) options.errors.venueId = `Venue does not exist`;
 		if (!name) options.errors.name = `Name must be at least 5 characters`;
 		if (!type) options.errors.type = `Type must be Online or In person`;
 		if (!capacity) options.errors.capacity = `Capacity must be an integer`;
@@ -658,32 +671,57 @@ router.put(
 		if (Object.values(options.errors).length > 0) {
 			return res.status(400).json(options);
 		} else {
-			// check if venue already exists
-			let check = await Event.findOne({
-				where: {
-					venueId,
-					name,
-					type,
-					capacity,
-					price,
-					description,
-					startDate,
-					endDate,
-				},
-			});
-			if (check) {
-				return res.status(400).json({
-					message: "Validation Error",
-					statusCode: 400,
-					errors: {
-						Error: `Event has already been updated.`,
+			let editVenue = { id: venueId };
+
+			if (!venueId) {
+				editVenue = await Venue.create({
+					groupId,
+					address: venue.address,
+					city: venue.city,
+					state: venue.state,
+					lat: 100,
+					lng: 100,
+				});
+			}
+
+			if (
+				venueId !== 1 &&
+				((venueId && venue.city) ||
+					(venueId && venue.address) ||
+					(venueId && venue.state))
+			) {
+				editVenue = await Venue.update(
+					{
+						address: venue.address,
+						city: venue.city,
+						state: venue.state,
 					},
+					{ where: { id: venueId } }
+				);
+			}
+
+			//check add image
+			//event images add and change defaults
+			if (preview && url) {
+				await EventImage.update(
+					{ preview: false },
+					{
+						where: { eventId: id, preview: true },
+					}
+				);
+				previewer = true;
+			}
+			if (url) {
+				await EventImage.create({
+					url,
+					preview: previewer,
+					eventId: id,
 				});
 			}
 
 			await Event.update(
 				{
-					venueId,
+					venueId: editVenue.id,
 					name,
 					type,
 					capacity,

@@ -909,6 +909,7 @@ router.post(
 		let { user } = req;
 
 		let {
+			venue,
 			venueId,
 			name,
 			type,
@@ -925,21 +926,28 @@ router.post(
 			errors: {},
 		};
 
-		if (!venueId) options.errors.venueId = `Venue does not exist`;
-		if (!name || name.length < 5)
-			options.errors.name = `Name must be at least 5 characters`;
+		// if (!venueId) options.errors.venue = `Venue does not exist`;
+		if (!venue && !venueId) options.errors.venue = `Venue does not exist`;
+		if (!name || name.length < 2)
+			options.errors.name = `Name must be at least 2 characters`;
+		if (description && description.length > 1000)
+			options.errors.description = `Description must be at less than 1000 characters`;
 		if (!type || (type !== "Online" && type !== "In person"))
 			options.errors.type = `Type must be Online or In person`;
-		if (!capacity || capacity < 0)
-			options.errors.capacity = `Capacity must be an integer`;
-		if (!price || price < 0) options.errors.price = `Price is invalid`;
-		if (!description || description.length < 1)
-			options.errors.description = `Description is required`;
+		if (!capacity || capacity < 0 || capacity > 400000000)
+			options.errors.capacity = `Capacity must be a valid number`;
+		if (!price || price < 0)
+			options.errors.price = `Price must be a valid number`;
+		if (
+			venue &&
+			(!venue.state || venue.state.length > 2 || venue.state.length < 2)
+		)
+			options.errors.state = `State must be 2 characters`;
 		if (Date.parse(startDate) < Date.parse(new Date()) || !startDate) {
 			options.errors.startDate = `Start date must be in the future`;
 		}
 		if (Date.parse(endDate) < Date.parse(startDate) || !endDate) {
-			options.errors.endDate = `End date is less than start date`;
+			options.errors.endDate = `End date must be after start date`;
 		}
 
 		if (Object.values(options.errors).length > 0) {
@@ -953,8 +961,19 @@ router.post(
 				return res.json(check);
 			}
 
+			let newvenue = { id: venueId };
+			if (!venueId) {
+				newvenue = await Venue.create({
+					groupId,
+					address: venue.address,
+					city: venue.city,
+					state: venue.state,
+					lat: 100,
+					lng: 100,
+				});
+			}
 			let newevent = await Event.create({
-				venueId,
+				venueId: newvenue.id,
 				name,
 				type,
 				capacity,

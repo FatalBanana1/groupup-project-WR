@@ -10,7 +10,7 @@ import OpenModalButton from "../../OpenModalButton";
 import ReadEvent from "../ReadEvent";
 import CreateEvent from "../CreateEvent";
 import LoginFormModal from "../../LoginFormModal";
-import "../ReadEvent/ReadEvent.css";
+import "../Events.css";
 
 //main
 const EventsByGroup = ({ events }) => {
@@ -22,48 +22,50 @@ const EventsByGroup = ({ events }) => {
 	// //----------------
 	const user = useSelector((state) => state.session.user);
 
-	if (!events.length) {
-		return <div className="no-display">No Events to Display...</div>;
-	}
-
 	//return
 	return (
 		<div className="margin-events-container">
 			<div className="groups-events-container events-padding-top">
-				<div id="group-detail-container">
-					{events.map((event) => {
-						if (event && event.id >= 0) {
-							return (
-								<NavLink
-									className="event-detail"
-									key={event.id}
-									to={`/events/${event.id}`}
-								>
-									<ReadEvent event={event} />
-								</NavLink>
-							);
-						}
-					})}
+				<div className="create-event-ct">
+					{user ? (
+						<div className="groups-link-container-signin">
+							<CreateEventModalButton
+								className="splash-link join-group"
+								buttonText="Create an Event"
+								id="create-splash"
+								onButtonClick={closeMenu}
+								modalComponent={<CreateEvent />}
+							/>
+						</div>
+					) : (
+						<div className="groups-link-container">
+							<OpenModalButton
+								buttonText="Create an Event"
+								onButtonClick={closeMenu}
+								modalComponent={<LoginFormModal />}
+							/>
+						</div>
+					)}
 				</div>
 
-				{user ? (
-					<div className="groups-link-container-signin">
-						<CreateEventModalButton
-							className="splash-link join-group"
-							buttonText="Create an Event"
-							id="create-splash"
-							onButtonClick={closeMenu}
-							modalComponent={<CreateEvent />}
-						/>
+				{events.length ? (
+					<div id="group-detail-container">
+						{events.map((event) => {
+							if (event && event.id >= 0) {
+								return (
+									<NavLink
+										className="event-detail"
+										key={event.id}
+										to={`/events/${event.id}`}
+									>
+										<ReadEvent event={event} />
+									</NavLink>
+								);
+							}
+						})}
 					</div>
 				) : (
-					<div className="groups-link-container">
-						<OpenModalButton
-							buttonText="Create an Event"
-							onButtonClick={closeMenu}
-							modalComponent={<LoginFormModal />}
-						/>
-					</div>
+					<div className="no-display">No Events to Display...</div>
 				)}
 			</div>
 		</div>
