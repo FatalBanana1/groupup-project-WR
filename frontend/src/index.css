@@ -80,6 +80,8 @@ a:hover,
 .col {
 	display: flex;
 	flex-direction: column;
+	justify-self: flex-start;
+	align-self: flex-start;
 }
 
 .row {

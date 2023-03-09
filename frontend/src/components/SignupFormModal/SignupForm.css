@@ -41,7 +41,8 @@
 	font-size: 8px;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	align-items: center;
+	justify-content: center;
 	margin: 5px;
 }
 
@@ -59,7 +60,10 @@
 	display: flex;
 	flex-direction: column;
 	justify-self: center;
-	width: 50vw;
+	min-width: 280px;
+	width: auto;
+	padding: 5px;
+	margin-bottom: 10px;
 }
 
 .form-icon {
@@ -81,4 +85,15 @@
 
 input {
 	font-size: 12px;
+}
+
+.input {
+	width: 130px;
+}
+
+.signup-err {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	top: auto;
 }

@@ -12,7 +12,7 @@ function LoginFormModal(props) {
 	const dispatch = useDispatch();
 	const [credential, setCredential] = useState("");
 	const [password, setPassword] = useState("");
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
 	let history = useHistory();
 	let propClass;
@@ -30,7 +30,9 @@ function LoginFormModal(props) {
 			.catch(async (res) => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(data.errors);
-				if (data && data.message) setErrors(data.message);
+				setTimeout(() => {
+					setErrors({});
+				}, 6000);
 			});
 	};
 
@@ -61,8 +63,6 @@ function LoginFormModal(props) {
 			.then(() => history.push("/"));
 	};
 
-
-
 	return (
 		<div id="login-container">
 			<div className="form-icon">
@@ -70,29 +70,30 @@ function LoginFormModal(props) {
 				<img className="image-logo spins" src={icon} />
 			</div>
 			<div className="signup-header-name">Log In</div>
-			<ul className="error-list-login">
-				{Object.values(errors).map((error) => (
-					<div className="errors-li-login" key={error}>
-						{`- ${error}`}
-					</div>
-				))}
-			</ul>
+
 			<form className="login-form-container" onSubmit={handleSubmit}>
 				<div id="username">
-					<label>
-						Username or Email:{" "}
-						<input
-							type="text"
-							value={credential}
-							onChange={(e) => setCredential(e.target.value)}
-							required
-						/>
+					<label className="col">
+						{Object.values(errors).length > 0 ? (
+							<div className="errors-form">User not found!</div>
+						) : (
+							<div>Username or Email:</div>
+						)}
 					</label>
+					<input
+						className="input"
+						type="text"
+						value={credential}
+						onChange={(e) => setCredential(e.target.value)}
+						required
+					/>
 				</div>
+
 				<div id="password">
-					<label>
-						Password:{" "}
+					<label className="col">
+						<div>Password:</div>
 						<input
+							className="input"
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
