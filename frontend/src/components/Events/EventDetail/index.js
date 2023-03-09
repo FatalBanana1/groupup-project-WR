@@ -97,43 +97,22 @@ const EventDetail = () => {
 		} = event;
 
 		//dates
-		let date = new Date(startDate).toString().split(" ");
-		let month = date[1];
-		let day = date[2];
-		let year = date[3];
-		let time = date[4].split(":").splice(0, 2).join(":");
-		let ampm = Number(time.slice(0, 2));
-		if (ampm > 12) {
-			if (ampm > 21) {
-				time = ampm - 12 + time.slice(2) + " PM";
-			} else {
-				time = ampm - 12 + time.slice(2) + " PM";
-			}
-		} else if (ampm === 12) {
-			time += " PM";
-		} else {
-			time += " AM";
-		}
-		let weekday = date[0];
-
-		let date2 = new Date(endDate).toString().split(" ");
-		let month2 = date2[1];
-		let day2 = date2[2];
-		let year2 = date2[3];
-		let time2 = date2[4].split(":").splice(0, 2).join(":");
-		let ampm2 = Number(time2.slice(0, 2));
-		if (ampm2 > 12) {
-			if (ampm2 > 21) {
-				time2 = ampm2 - 12 + time2.slice(2) + " PM EST";
-			} else {
-				time2 = ampm2 - 12 + time2.slice(2) + " PM EST";
-			}
-		} else if (ampm2 === 12) {
-			time2 += " PM EST";
-		} else {
-			time2 += " AM EST";
-		}
-		let weekday2 = date2[0];
+		const formatStart = new Date(startDate).toLocaleDateString("en-US", {
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			hour: "numeric",
+			minute: "numeric",
+		});
+		const formatEnd = new Date(endDate).toLocaleDateString("en-US", {
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			hour: "numeric",
+			minute: "numeric",
+		});
 
 		let host;
 		if (user) {
@@ -147,7 +126,7 @@ const EventDetail = () => {
 
 		//-------------------------------------------------------
 
-		// console.log(`event deets=====>>>>------`, host);
+		// console.log(`event deets=====>>>>------`, time);
 
 		//-------------------------------------------------------
 
@@ -193,7 +172,9 @@ const EventDetail = () => {
 										alt="share icon"
 									/>
 								</div>
-								<div className="event-details-info">{`${weekday}, ${month} ${day}, ${year} at ${time} to ${weekday2}, ${month2} ${day2}, ${year2} at ${time2}`}</div>
+								<div className="event-details-info">
+									{`${formatStart} to ${formatEnd}`}
+								</div>
 							</div>
 
 							<div className="event-details-info-container icons-container">

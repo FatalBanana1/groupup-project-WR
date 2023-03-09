@@ -2,38 +2,17 @@
 
 //imports
 //hooks
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import { thunkReadGroupDetails, thunkUpdateGroup } from "../../../store/groups";
-import * as sessionActions from "../../../store/session";
-
-//comps
-import { NavLink } from "react-router-dom";
 import "./UpdateGroup.css";
 import icon from "../images/favicon.ico";
 import apple from "../images/apple1.png";
 
 //main
 const UpdateGroup = ({ group }) => {
-	// let {
-	// 	id,
-	// 	organizerId,
-	// 	name,
-	// 	about,
-	// 	type,
-	// 	privates,
-	// 	city,
-	// 	state,
-	// 	numMembers,
-	// 	previewImage,
-	// } = group;
-	// console.log(`group =============`, group);
-
 	const dispatch = useDispatch();
-	let history = useHistory();
 	let [type, setType] = useState(group.type);
 	let [city, setCity] = useState(group.city);
 	let [state, setState] = useState(group.state);
@@ -42,14 +21,12 @@ const UpdateGroup = ({ group }) => {
 	let [preview, setPreview] = useState(false);
 	let [about, setAbout] = useState(group.about);
 	let [privated, setPrivated] = useState(group.private);
-	let [showPreview, setShowPreview] = useState("hidden");
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
-	const stateError = "State is required";
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setErrors([]);
+		setErrors({});
 
 		const payload = {
 			id: group.id,
@@ -69,9 +46,7 @@ const UpdateGroup = ({ group }) => {
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.message)
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
+				if (data && data.errors) setErrors(data.errors);
 			});
 	};
 
@@ -83,10 +58,9 @@ const UpdateGroup = ({ group }) => {
 					<img className="image-logo spins" src={icon} />
 				</div>
 				<div className="signup-header-name">Edit Group</div>
-				<div className="edit-group-req">(* is required)</div>
 			</div>
 
-			<div id="errors-create-group">
+			{/* <div id="errors-create-group">
 				<ul>
 					{Object.values(errors).map((error) => (
 						<div className="errors-li" key={error}>
@@ -94,29 +68,39 @@ const UpdateGroup = ({ group }) => {
 						</div>
 					))}
 				</ul>
-			</div>
+			</div> */}
 
 			<form className="edit-group-form" onSubmit={handleSubmit}>
 				<div id="name" className="create">
-					<label>
-						*Name:{" "}
+					<label className="col">
+						{errors.name ? (
+							<div className="errors-form">{errors.name}</div>
+						) : (
+							<div>Name:</div>
+						)}
 						<input
 							type="text"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div id="about" className="create">
-					<label>
-						*About:{" "}
+					<label className="col">
+						{errors.about ? (
+							<div className="errors-form">{errors.about}</div>
+						) : (
+							<div>About:</div>
+						)}
 						<input
 							type="text"
 							value={about}
 							onChange={(e) => setAbout(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
@@ -173,19 +157,28 @@ const UpdateGroup = ({ group }) => {
 
 				<div id="city" className="create">
 					<label>
-						*City:{" "}
+						{errors.city ? (
+							<div className="errors-form">{errors.city}</div>
+						) : (
+							<div>City:</div>
+						)}
 						<input
 							type="text"
 							value={city}
 							onChange={(e) => setCity(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div id="state" className="create">
 					<label>
-						*State:{" "}
+						{errors.state ? (
+							<div className="errors-form">{errors.state}</div>
+						) : (
+							<div>State:</div>
+						)}
 						<input
 							type="text"
 							value={state}
@@ -193,13 +186,18 @@ const UpdateGroup = ({ group }) => {
 								setState(e.target.value.toUpperCase())
 							}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div id="about" className="create">
-					<label>
-						Group Image Url:{" "}
+					<label className="col">
+						{errors.image ? (
+							<div>{errors.image}</div>
+						) : (
+							<div>Group Image Url:</div>
+						)}
 						<input
 							type="url"
 							value={url}

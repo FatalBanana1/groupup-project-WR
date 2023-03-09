@@ -17,12 +17,14 @@ const Searchbar = () => {
 	//handlers
 	//click handler
 	const clickHandler = (e) => {
-		e.preventDefault();
 		setSearch(e.target.value);
+
 		let newsearch = search.toLowerCase().split(" ").join("");
 		setSearch("");
 		searchbar["search"] = newsearch;
+
 		dispatch(thunkSearch(search));
+
 		return (
 			<NavLink
 				to={`/groups?name=${search}`}
@@ -48,11 +50,7 @@ const Searchbar = () => {
 	//return
 	return (
 		<div id="nav-mid">
-			<form
-				onSubmit={handleKeyDown}
-				id="nav-search-bar"
-				className="search"
-			>
+			<div id="nav-search-bar" className="search">
 				<input
 					type="search"
 					id="navbar-search"
@@ -70,7 +68,7 @@ const Searchbar = () => {
 				>
 					<img id="search-bar-button" src={searchIcon} />
 				</NavLink>
-			</form>
+			</div>
 		</div>
 	);
 };

@@ -10,8 +10,12 @@ import apple from "../../Groups/images/apple1.png";
 export default function UpdateEvent({ event }) {
 	const dispatch = useDispatch();
 	const { closeModal } = useModal();
-	const starting = new Date(event.startDate).toISOString().slice(0, -8);
-	const ending = new Date(event.endDate).toISOString().slice(0, -8);
+	const formatStart = new Date(event.startDate);
+	const formatStart2 = new Date(formatStart.getTime() - 18000000);
+	const formatEnd = new Date(event.endDate);
+	const formatEnd2 = new Date(formatEnd.getTime() - 18000000);
+	const starting = new Date(formatStart2).toISOString().slice(0, -8);
+	const ending = new Date(formatEnd2).toISOString().slice(0, -8);
 	//states
 	const [name, setName] = useState(event.name);
 	const [description, setDescription] = useState(event.description);
