@@ -91,6 +91,14 @@ a:hover,
 	margin: auto;
 }
 
+.mtop5 {
+	margin-top: 5px;
+}
+
+.mtop10 {
+	margin-top: 10px;
+}
+
 ::-webkit-scrollbar {
 	width: 9px;
 }

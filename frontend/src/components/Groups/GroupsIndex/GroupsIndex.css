@@ -142,10 +142,8 @@
 	margin-top: 35px;
 	width: 120px;
 	height: 30px;
-	background-color: rgb(249, 238, 224);
 	color: white;
 	border-radius: 6px;
-	/* border: 0.5px solid gray; */
 }
 
 .groups-link-container-signin {
@@ -196,11 +194,6 @@
 		padding: 0;
 		margin: 0 0 0 10px;
 		width: fit-content;
-	}
-
-	.users-button {
-		height: 18px;
-		width: auto;
 	}
 
 	.nav-container {

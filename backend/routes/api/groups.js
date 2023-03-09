@@ -1383,13 +1383,6 @@ router.delete(
 			where: { userId: memberId, groupId: +groupId },
 		});
 
-		console.log(
-			`deleted BACKEND =============`,
-			req.body,
-			groupId,
-			deleted
-		);
-
 		if (!deleted) {
 			return res.status(400).json({
 				message: "Validation Error",

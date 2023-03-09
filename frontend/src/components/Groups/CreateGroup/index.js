@@ -22,15 +22,12 @@ const CreateGroup = () => {
 	const [url, setUrl] = useState("");
 	const [preview, setPreview] = useState(true);
 	const [privated, setPrivated] = useState(false);
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
-	const stateError = "State is required";
 
-	let groupId = useParams();
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setErrors([]);
-
+		setErrors({});
 		const payload = {
 			name,
 			about,
@@ -40,7 +37,6 @@ const CreateGroup = () => {
 			state,
 			image: { url, preview: true },
 		};
-
 		return dispatch(thunkCreateGroups(payload))
 			.then((data) => {
 				history.push(`/groups/${data.id}`);
@@ -48,10 +44,7 @@ const CreateGroup = () => {
 			.then(closeModal)
 			.catch(async (res) => {
 				const data = await res.json();
-				if (data && data.message)
-					setErrors((data[errors] = [data.message]));
-				if (data && data.errors) setErrors(Object.values(data.errors));
-				console.log(`errors in create group`, errors);
+				if (data && data.errors) setErrors(data.errors);
 			});
 	};
 
@@ -65,10 +58,9 @@ const CreateGroup = () => {
 				<div className="signup-header-name">Create a Group</div>
 			</div>
 
-			<div id="errors-create-group">
+			{/* <div id="errors-create-group">
 				{Object.values(errors).length > 0 ? (
 					<ul>
-						{/* <div className="errors-h">Errors</div> */}
 						{Object.values(errors).map((error) => (
 							<div className="errors-li" key={error}>
 								{`- ${error}`}
@@ -76,34 +68,44 @@ const CreateGroup = () => {
 						))}
 					</ul>
 				) : null}
-			</div>
+			</div> */}
 
 			<form className="create-group-form" onSubmit={handleSubmit}>
 				<div id="name" className="create">
 					<label>
-						Name:{" "}
+						{errors.name ? (
+							<div className="errors-form">{errors.name}</div>
+						) : (
+							<div>Name:</div>
+						)}
 						<input
 							type="text"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div id="about" className="create">
 					<label>
-						About:{" "}
+						{errors.about ? (
+							<div className="errors-form">{errors.about}</div>
+						) : (
+							<div>About:</div>
+						)}
 						<input
 							type="text"
 							value={about}
 							onChange={(e) => setAbout(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
-				<div id="type">
+				<div id="type" className="mtop5">
 					<label id="type-container">
 						<div id="text-type">Type:</div>
 						<div id="type-select">
@@ -119,7 +121,7 @@ const CreateGroup = () => {
 					</label>
 				</div>
 
-				<div className="private">
+				<div className="private mtop5">
 					<label className="private-container">
 						<div className="text-private">Private:</div>
 						<div className="private-select">
@@ -147,19 +149,28 @@ const CreateGroup = () => {
 
 				<div id="city" className="create">
 					<label>
-						City:{" "}
+						{errors.city ? (
+							<div className="errors-form">{errors.city}</div>
+						) : (
+							<div>City:</div>
+						)}
 						<input
 							type="text"
 							value={city}
 							onChange={(e) => setCity(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div id="state" className="create">
 					<label>
-						State:{" "}
+						{errors.state ? (
+							<div className="errors-form">{errors.state}</div>
+						) : (
+							<div>State:</div>
+						)}
 						<input
 							type="text"
 							value={state}
@@ -167,13 +178,18 @@ const CreateGroup = () => {
 								setState(e.target.value.toUpperCase())
 							}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div id="about" className="create">
 					<label>
-						Group Image:{" "}
+						{errors.image ? (
+							<div className="errors-form">{errors.image}</div>
+						) : (
+							<div>Group Image:</div>
+						)}
 						<input
 							type="url"
 							value={url}

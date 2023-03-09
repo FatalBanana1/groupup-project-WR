@@ -37,15 +37,7 @@ const EventsByGroup = ({ events }) => {
 								modalComponent={<CreateEvent />}
 							/>
 						</div>
-					) : (
-						<div className="groups-link-container">
-							<OpenModalButton
-								buttonText="Create an Event"
-								onButtonClick={closeMenu}
-								modalComponent={<LoginFormModal />}
-							/>
-						</div>
-					)}
+					) : null}
 				</div>
 
 				{events.length ? (

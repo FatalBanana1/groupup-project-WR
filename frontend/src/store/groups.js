@@ -58,26 +58,32 @@ export const actionResetState = () => ({
 // GET: Get All Groups Route: /api/groups
 export const thunkReadGroups = (payload) => async (dispatch) => {
 	let response;
-	// console.log(`thunk>>> payload: `, payload);
 	if (payload) {
 		response = await csrfFetch(`/api/groups${payload}`);
 	} else {
 		response = await csrfFetch(`/api/groups`);
 	}
-
 	if (response.ok) {
 		const groups = await response.json();
 		dispatch(actionReadGroups(groups));
-		// console.log(`thunk>>> groups: `, groups);
+		return groups;
+	}
+};
+
+// GET: Get groups by user
+// Route: /api/groups/current
+export const thunkReadGroupsCurrent = () => async (dispatch) => {
+	let response = await csrfFetch(`/api/groups/current`);
+	if (response.ok) {
+		const groups = await response.json();
+		dispatch(actionReadGroups(groups));
 		return groups;
 	}
 };
 
 // GET: Get details of a Group Route: /api/groups/:groupId
 export const thunkReadGroupDetails = (payload) => async (dispatch) => {
-	// console.log(`response = thunk -----------`, payload);
 	const response = await csrfFetch(`/api/groups/${payload}`);
-
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionReadGroupDetails(group));
@@ -92,7 +98,6 @@ export const thunkCreateGroups = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionCreateGroup(group));

@@ -56,11 +56,10 @@
 }
 
 .signup-form {
-	/* background-color: blue; */
 	display: flex;
 	flex-direction: column;
 	justify-self: center;
-	width: 180px;
+	width: 50vw;
 }
 
 .form-icon {

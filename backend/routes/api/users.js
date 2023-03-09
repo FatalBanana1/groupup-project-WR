@@ -106,7 +106,7 @@ router.post("/", validateSignup, async (req, res, next) => {
 });
 
 /*
-// testing singup error handling
+// testing signup error handling
 
 fetch('/api/users', {
   method: 'POST',

@@ -16,14 +16,14 @@ function SignupFormModal() {
 	const [lastName, setLastName] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState({});
 	const { closeModal } = useModal();
 	const history = useHistory();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (password === confirmPassword) {
-			setErrors([]);
+			setErrors({});
 			return dispatch(
 				sessionActions.signup({
 					email,
@@ -46,9 +46,10 @@ function SignupFormModal() {
 				});
 		}
 
-		return setErrors([
-			"Confirm Password field must be the same as the Password field",
-		]);
+		return setErrors({
+			confirmed:
+				"Confirm Password field must be the same as the Password field",
+		});
 	};
 
 	return (
@@ -60,7 +61,7 @@ function SignupFormModal() {
 				</div>
 				<div className="signup-header-name">Sign Up</div>
 			</div>
-			{errors.length === 0 ? null : (
+			{/* {errors.length === 0 ? null : (
 				<div id="errors-list">
 					<ul id="errors-list-signup">
 						{errors.map((error) => (
@@ -70,75 +71,96 @@ function SignupFormModal() {
 						))}
 					</ul>
 				</div>
-			)}
+			)} */}
 			<form className="signup-form" onSubmit={handleSubmit}>
 				<div id="name" className="signup">
-					<label>
-						First Name:{" "}
+					<label className="col">
+						<div>First Name:</div>
 						<input
 							type="text"
 							value={firstName}
 							onChange={(e) => setFirstName(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
+
 				<div id="lastname" className="signup">
-					<label>
-						Last Name:{" "}
+					<label className="col">
+						<div>Last Name:</div>
 						<input
 							type="text"
 							value={lastName}
 							onChange={(e) => setLastName(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
+
 				<div id="email" className="signup">
-					<label>
-						Email:{" "}
+					<label className="col">
+						<div>Email:</div>
 						<input
 							type="text"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
-						/>
-					</label>
-				</div>
-				<div className="signup">
-					<label>
-						Username:{" "}
-						<input
-							type="text"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
 
 				<div className="signup">
-					<label>
-						Password:{" "}
+					<label className="col">
+						<div>Username:</div>
+						<input
+							type="text"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							required
+							placeholder="Required"
+						/>
+					</label>
+				</div>
+
+				<div className="signup">
+					<label className="col">
+						{errors.password ? (
+							<div className="errors-form">{errors.password}</div>
+						) : (
+							<div>Password:</div>
+						)}
 						<input
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
+
 				<div className="signup">
-					<label>
-						Confirm Password:{" "}
+					<label className="col">
+						{errors.confirmed ? (
+							<div className="errors-form">
+								{errors.confirmed}
+							</div>
+						) : (
+							<div>Confirm Password:</div>
+						)}
 						<input
 							type="password"
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							required
+							placeholder="Required"
 						/>
 					</label>
 				</div>
+
 				<button
 					className="signup-button"
 					id="submit-button"

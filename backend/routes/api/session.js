@@ -96,16 +96,12 @@ const validateLogin = [
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
 	const { credential, password } = req.body;
-
 	let user = await User.login({ credential, password });
-
 	// check credentials
 	let errors = {};
-
 	if (user === undefined) {
 		errors.user = `Invalid Credentials`;
 	}
-
 	//checking email/pass
 	if (Object.values(errors).length) {
 		return res.status(400).json({
@@ -114,14 +110,12 @@ router.post("/", validateLogin, async (req, res, next) => {
 			errors: { errors },
 		});
 	}
-
 	if (!user.id) {
 		return res.status(401).json({
 			errors: { message: `Invalid Credentials` },
 			statusCode: 401,
 		});
 	}
-
 	user = await User.findOne({
 		where: { id: user.id },
 	});
