@@ -667,6 +667,7 @@ router.put(
 		if (endDate < startDate || !endDate) {
 			options.errors.endDate = `End date is less than start date`;
 		}
+		if (defaultImage) options.errors.image = `Image already exists`;
 
 		if (Object.values(options.errors).length > 0) {
 			return res.status(400).json(options);

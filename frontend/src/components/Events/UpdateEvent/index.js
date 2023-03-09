@@ -385,11 +385,19 @@ export default function UpdateEvent({ event }) {
 
 					<div id="about" className="create">
 						<label>
-							<div>Event Image:</div>
+							{errors.image ? (
+								<div className="errors-form">
+									{errors.image}
+								</div>
+							) : (
+								<div>Event Image:</div>
+							)}
 							<input
 								type="url"
 								value={url}
-								onChange={(e) => setUrl(e.target.value)}
+								onChange={(e) => {
+									setErrors({})
+									setUrl(e.target.value)}}
 							/>
 						</label>
 					</div>
