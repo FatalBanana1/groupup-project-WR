@@ -148,13 +148,11 @@ const groupsReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_GROUPS: {
 			// console.log(`reducer>>> groups: `, action.groups);
-
 			const newGroups = action.groups.Groups.reduce((acc, group) => {
 				acc[group.id] = group;
 				return acc;
 			}, {});
 			return {
-				...state,
 				...newGroups,
 			};
 		}

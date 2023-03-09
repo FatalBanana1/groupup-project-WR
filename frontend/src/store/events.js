@@ -119,7 +119,7 @@ export const thunkUpdateEvent = (payload) => async (dispatch) => {
 
 // DELETE: Delete Event Route: /api/events/:eventId
 export const thunkDeleteEvent = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload}`, {
+	const response = await csrfFetch(`/api/events/${payload.eventId}`, {
 		method: `DELETE`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
@@ -149,7 +149,6 @@ const eventsReducer = (state = defaultState(), action) => {
 				return acc;
 			}, {});
 			return {
-				...state,
 				...newEvents,
 			};
 		}

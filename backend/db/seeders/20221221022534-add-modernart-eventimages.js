@@ -92,13 +92,8 @@ module.exports = {
 				},
 				{
 					eventId: 10,
-					url: "https://news.jardinemotors.co.uk/uploads/2017-24-08/d/dee6a0a0240253ef123bc66a3789a4c4.jpg",
-					preview: true,
-				},
-				{
-					eventId: 10,
 					url: "https://carcollectorsclub.com/wp-content/uploads/2020/11/20201114_120053-1024x557.jpg",
-					preview: false,
+					preview: true,
 				},
 				{
 					eventId: 11,

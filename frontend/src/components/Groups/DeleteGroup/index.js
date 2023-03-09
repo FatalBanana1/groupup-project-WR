@@ -1,28 +1,15 @@
-//read group detail
-
 //imports
-//hooks
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import {
-	actionResetState,
-	thunkDeleteGroup,
-	thunkReadGroups,
-} from "../../../store/groups";
-// import * as sessionActions from "../../../store/session";
-
-//comps
-// import { NavLink } from "react-router-dom";
-// import Groups from "../GroupsIndex";
+import { thunkDeleteGroup, thunkReadGroups } from "../../../store/groups";
 import "./DeleteGroup.css";
 import icon from "../images/favicon.ico";
 import apple from "../images/apple1.png";
 
 //main
-const DeleteGroup = (group) => {
+const DeleteGroup = ({ group }) => {
 	let {
 		id,
 		organizerId,
@@ -33,7 +20,7 @@ const DeleteGroup = (group) => {
 		state,
 		numMembers,
 		previewImage,
-	} = group.group;
+	} = group;
 
 	const dispatch = useDispatch();
 	let history = useHistory();
@@ -47,15 +34,14 @@ const DeleteGroup = (group) => {
 		e.preventDefault();
 		setErrors([]);
 
-		if (name === `Delete ${group.group.name}.`) {
+		if (name === `Delete ${group.name}.`) {
 			const payload = {
-				groupId: group.group.id,
+				groupId: group.id,
 			};
 
 			return dispatch(thunkDeleteGroup(payload))
-				.then(() => dispatch(thunkReadGroups()))
-				.then(history.push("/groups"))
 				.then(closeModal)
+				.then(history.push("/groups"))
 				.catch(async (res) => {
 					const data = await res.json();
 					if (data && data.message)
@@ -97,7 +83,7 @@ const DeleteGroup = (group) => {
 						<input
 							type="text"
 							readOnly
-							defaultValue={group.group.name}
+							defaultValue={group.name}
 							required
 							disabled
 						/>
@@ -182,7 +168,7 @@ const DeleteGroup = (group) => {
 						<div id="confirming-delete">
 							Confirm Delete by typing out Delete followed by the
 							name of the Group:
-							<div id="check-delete-type">{`Delete ${group.group.name}.`}</div>
+							<div id="check-delete-type">{`Delete ${group.name}.`}</div>
 						</div>
 						<input
 							type="text"
@@ -208,17 +194,3 @@ const DeleteGroup = (group) => {
 
 //exports
 export default DeleteGroup;
-
-//structure of group prop
-// {
-// 	id,
-// 	organizerId,
-// 	name,
-// 	about,
-// 	type,
-// 	privates,
-// 	city,
-// 	state,
-// 	numMembers,
-// 	previewImage,
-// }

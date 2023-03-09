@@ -7,11 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteModalButton from "../../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../../Groups/UpdateGroup/EditModalButton.js";
-import { NavLink, useHistory, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { thunkReadEventDetails } from "../../../store/events";
 import UpdateGroup from "../../Groups/UpdateGroup";
 import "./EventDetail.css";
-import DeleteGroup from "../../Groups/DeleteGroup";
 import ErrorHandler from "../../ErrorHandler";
 import LoginFormModal from "../../LoginFormModal";
 import clock from "../../Groups/images/clock-icon.png";
@@ -20,11 +19,11 @@ import Loading from "../../Loading";
 import AboutEvent from "../AboutEvent";
 import EventImages from "../../EventImages";
 import UpdateEvent from "../UpdateEvent";
+import DeleteEvent from "../DeleteEvent";
 
 //main
 const EventDetail = () => {
 	//states
-	// let history = useHistory();
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -329,7 +328,7 @@ const EventDetail = () => {
 											buttonText="Delete Event"
 											onButtonClick={closeMenu}
 											modalComponent={
-												<DeleteGroup event={event} />
+												<DeleteEvent event={event} />
 											}
 										/>
 									</div>

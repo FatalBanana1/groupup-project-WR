@@ -1,20 +1,14 @@
 //imports
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import {
-	thunkCreateEvent,
-	thunkReadEventDetails,
-	thunkUpdateEvent,
-} from "../../../store/events";
+import { thunkReadEventDetails, thunkUpdateEvent } from "../../../store/events";
 import icon from "../../Groups/images/favicon.ico";
 import apple from "../../Groups/images/apple1.png";
 
 //main
 export default function UpdateEvent({ event }) {
 	const dispatch = useDispatch();
-	let history = useHistory();
 	const { closeModal } = useModal();
 	const starting = new Date(event.startDate).toISOString().slice(0, -8);
 	const ending = new Date(event.endDate).toISOString().slice(0, -8);
@@ -396,8 +390,9 @@ export default function UpdateEvent({ event }) {
 								type="url"
 								value={url}
 								onChange={(e) => {
-									setErrors({})
-									setUrl(e.target.value)}}
+									setErrors({});
+									setUrl(e.target.value);
+								}}
 							/>
 						</label>
 					</div>
