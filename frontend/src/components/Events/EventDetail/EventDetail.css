@@ -108,16 +108,17 @@
 }
 
 .events-side-panel {
-	border: 1px solid white;
+	border: 1px solid rgb(242, 231, 216);
 	padding: 10px;
 	border-radius: 15px;
 	--tw-bg-opacity: 1;
-	background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+	background-color: rgb(242, 231, 216);
 	margin-bottom: 10px;
+	box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
 }
 
 .events-link-side:hover {
-	box-shadow: 0 0 20px 5px rgba(128, 128, 128, 0.2);
+	box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.3);
 	cursor: pointer;
 }
 

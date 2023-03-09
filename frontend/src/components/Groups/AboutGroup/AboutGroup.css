@@ -55,8 +55,9 @@
 }
 
 #gray-back {
-	background-color: rgb(246, 247, 248);
+	background-color: rgb(242, 231, 216);
 	border: 0;
+	box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.1);
 }
 
 #gray-back:hover {

@@ -12,7 +12,7 @@
 	flex-direction: column;
 	width: 100%;
 	padding-bottom: 60px;
-	background-color: rgb(246, 247, 248);
+	background-color: rgb(214, 201, 185);
 }
 
 #other {
@@ -78,8 +78,7 @@
 	position: sticky;
 	top: 0px;
 	z-index: 10;
-	--tw-bg-opacity: 1;
-	background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+	background-color: rgb(249, 238, 224);
 }
 
 .details-info {
@@ -208,7 +207,8 @@
 	/* border-bottom: solid 0.3px rgba(128, 128, 128, 0.4); */
 	border: solid 0.3px rgba(255, 255, 255, 0.6);
 	border-radius: 20px;
-	background-color: white;
+	background-color: rgb(249, 238, 224);
+	box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
 	text-decoration: none;
 	color: black;
 	width: 660px;
@@ -219,7 +219,7 @@
 }
 
 .event-detail:hover {
-	box-shadow: 0 0 27px 15px rgba(128, 128, 128, 0.2);
+	box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.3);
 	color: black;
 }
 

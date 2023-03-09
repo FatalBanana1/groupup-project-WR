@@ -7,7 +7,7 @@
 	border: solid 0.1px rgba(0, 0, 0, 0.1);
 	border-radius: 4%;
 	box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
-	background-color: white;
+	background-color: rgb(242, 231, 216);
 	padding: 12px 16px;
 	font-size: 14px;
 	width: auto;
@@ -20,7 +20,7 @@
 	height: 51px;
 	width: 58px;
 	font-size: 260%;
-	background-color: white;
+	background-color: rgb(242, 231, 216);
 }
 
 .users {
@@ -47,14 +47,14 @@
 
 #nav-details-log-out {
 	text-decoration: none;
-	background-color: white;
-	border: white 1px;
+	background-color: rgb(242, 231, 216);
+	border: rgb(242, 231, 216) solid 1px;
 	padding: 8px 12px;
 	border-radius: 2%;
 }
 
 .dropdown-buttons {
-	background-color: white;
+	background-color: rgb(242, 231, 216);
 	border: 0;
 	font-size: 11px;
 }

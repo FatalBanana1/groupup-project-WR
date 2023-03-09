@@ -58,7 +58,6 @@ export const actionResetMember = () => ({
 // GET: Get All Members of a Group - Route: /api/groups/:groupId/members
 export const thunkReadMembers = (payload) => async (dispatch) => {
 	const response = await csrfFetch(`/api/groups/${payload.groupId}/members`);
-
 	if (response.ok) {
 		const members = await response.json();
 		dispatch(actionReadMembers(members));
@@ -69,8 +68,6 @@ export const thunkReadMembers = (payload) => async (dispatch) => {
 // GET: Get All Groups by Current User - Route: /api/groups/current
 export const thunkReadMemberDetails = (payload) => async (dispatch) => {
 	const response = await csrfFetch(`/api/groups/current`);
-	// console.log(`response = thunk -----------`, response);
-
 	if (response.ok) {
 		const member = await response.json();
 		dispatch(actionReadMemberDetails(member));
@@ -88,7 +85,6 @@ export const thunkCreateMembership = (payload) => async (dispatch) => {
 			body: JSON.stringify(payload),
 		}
 	);
-
 	if (response.ok) {
 		const member = await response.json();
 		dispatch(actionCreateMembership(member));
@@ -106,7 +102,6 @@ export const thunkUpdateMembership = (payload) => async (dispatch) => {
 			body: JSON.stringify(payload),
 		}
 	);
-
 	if (response.ok) {
 		const member = await response.json();
 		dispatch(actionUpdateMembership(member));
@@ -116,8 +111,6 @@ export const thunkUpdateMembership = (payload) => async (dispatch) => {
 
 // DELETE: Delete a Group Membership - Route: /api/groups/:groupId/membership
 export const thunkDeleteMembership = (payload) => async (dispatch) => {
-	console.log(`THUNK DELETE res`, payload);
-
 	const response = await csrfFetch(
 		`/api/groups/${payload.groupId}/membership`,
 		{
@@ -126,8 +119,6 @@ export const thunkDeleteMembership = (payload) => async (dispatch) => {
 			body: JSON.stringify(payload),
 		}
 	);
-	console.log(`THUNK DELETE res`, response);
-
 	if (response.ok) {
 		const member = await response.json();
 		dispatch(actionDeleteMembership(member));
@@ -183,6 +174,7 @@ const memberReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_MEMBERSHIP: {
+			console.log(`front - reducer - update memberships >>>>>>>>`)
 			return {
 				...state,
 				...(state[action.membership.memberId] = action.membership),

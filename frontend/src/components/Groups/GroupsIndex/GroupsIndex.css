@@ -19,7 +19,7 @@
 	top: -1px;
 	z-index: 10;
 	--tw-bg-opacity: 1;
-	background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+	background-color: rgb(242, 231, 216);
 	width: 100%;
 	border-bottom: solid 0.3px rgba(128, 128, 128, 0.4);
 }
@@ -91,10 +91,6 @@
 }
 .groups-page-link:hover {
 	color: rgba(0, 131, 148, 0.884);
-}
-
-.remove-color:hover {
-	background-color: white;
 }
 
 #create-group-link {
