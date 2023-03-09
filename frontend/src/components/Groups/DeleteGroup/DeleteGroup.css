@@ -11,7 +11,7 @@
 }
 
 #delete-group-container {
-	background-color: white;
+	background-color: rgb(249, 238, 224);
 	border: solid 0.5px black;
 	box-shadow: 0 0 100px 10px rgba(0, 0, 0, 0.7);
 	border-radius: 2%;

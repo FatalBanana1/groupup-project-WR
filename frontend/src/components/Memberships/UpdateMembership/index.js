@@ -51,10 +51,7 @@ const UpdateMembership = ({ member }) => {
 		};
 		if (status === "remove") {
 			dispatch(thunkDeleteMembership(payload))
-				.then((data) => {
-					dispatch(actionResetMember());
-					dispatch(thunkReadMembers(data));
-				})
+
 				.then(closeModal)
 				.catch(async (res) => {
 					const data = await res.json();
@@ -64,10 +61,9 @@ const UpdateMembership = ({ member }) => {
 		} else {
 			if (payload.status === "pending") payload.status = "member";
 			return dispatch(thunkUpdateMembership(payload))
-				.then((data) => {
-					dispatch(actionResetMember());
-					dispatch(thunkReadMembers(data));
-				})
+				// .then((data) => {
+				// 	dispatch(thunkReadMembers(data));
+				// })
 				.then(closeModal)
 				.catch(async (res) => {
 					const data = await res.json();

@@ -8,6 +8,7 @@ import {
 	thunkCreateMembership,
 	thunkReadMembers,
 	thunkDeleteMembership,
+	actionResetMember,
 } from "../../../store/members";
 import { NavLink, useParams } from "react-router-dom";
 // import OpenModalButton from "../../OpenModalButton";
@@ -41,8 +42,6 @@ const Members = () => {
 		groupId = params.groupId;
 	}
 
-	// console.log(`from attend to members----to groups`, groupId);
-
 	useEffect(() => {
 		let payload = {
 			groupId,
@@ -56,10 +55,11 @@ const Members = () => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
-	}, [isLoaded]);
+		return () => actionResetMember();
+	}, [dispatch]);
 
 	const joinGroupHandler = () => {
-		setIsLoaded(false);
+		// setIsLoaded(false);
 		setErrors([]);
 		let payload = {
 			groupId,
@@ -105,6 +105,10 @@ const Members = () => {
 
 	// return
 	if (isLoaded) {
+		// console.log(`from attend to members----to groups`, organizer);
+
+		//-------------------------------------
+
 		return (
 			<div id="member-container">
 				{Object.values(errors).length > 0 ? (
@@ -185,14 +189,13 @@ const Members = () => {
 								member["logId"] = logId;
 								member["groupId"] = groupId;
 								return (
-									<NavLink
+									<div
 										id="group-detail"
 										className="group-detail-first"
 										key={member.id}
-										to={`/groups/${groupId}/members`}
 									>
 										<ReadMembers member={member} />
-									</NavLink>
+									</div>
 								);
 							}
 						})

@@ -865,11 +865,9 @@ router.post(
 
 		let { user } = req;
 		let userId = user.id;
-
 		let check = await Membership.findOne({
 			where: { userId, groupId },
 		});
-
 		if (check && check.status === "pending") {
 			return res.json({
 				errors: {
@@ -885,16 +883,15 @@ router.post(
 				statusCode: 400,
 			});
 		}
-
 		let member = await Membership.create({
 			userId,
 			groupId,
 		});
-
 		return res.json({
 			memberId: member.userId,
 			status: member.status,
 			groupId,
+			user,
 		});
 	}
 );
@@ -1258,6 +1255,7 @@ router.put(
 			groupId,
 			memberId,
 			status,
+			member,
 		});
 	}
 );
@@ -1366,7 +1364,12 @@ router.delete(
 			where: { userId: memberId, groupId: +groupId },
 		});
 
-		console.log(`deleted BACKEND =============`, req.body, groupId, deleted);
+		console.log(
+			`deleted BACKEND =============`,
+			req.body,
+			groupId,
+			deleted
+		);
 
 		if (!deleted) {
 			return res.status(400).json({

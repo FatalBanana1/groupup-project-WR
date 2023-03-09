@@ -166,18 +166,24 @@ const memberReducer = (state = defaultState(), action) => {
 		}
 
 		case CREATE_MEMBERSHIP: {
+			// console.log(`front end reducer --- member =====`, action);
+			action.membership.user["status"] = action.membership.status;
 			const newState = {
 				...state,
-				[action.membership.id]: action.membership,
+				[action.membership.memberId]: action.membership.user,
 			};
 			return newState;
 		}
 
 		case UPDATE_MEMBERSHIP: {
-			console.log(`front - reducer - update memberships >>>>>>>>`)
+			console.log(
+				`front - reducer - update memberships >>>>>>>>`,
+				action.membership.status
+			);
+			action.membership.member["status"] = action.membership.status;
 			return {
 				...state,
-				...(state[action.membership.memberId] = action.membership),
+				[action.membership.memberId]: action.membership.member,
 			};
 		}
 
