@@ -74,12 +74,12 @@
 #navbar-search {
 	width: 250px;
 	max-width: 500px;
-	height: 31px;
 	text-decoration: none;
 	border: solid 0.5px rgba(128, 128, 128, 0.4);
 	border-radius: 3px;
-	padding: 10px;
+	padding: 5px;
 	padding-right: 10px;
+	height: 100%;
 }
 
 #navbar-search:hover {
@@ -90,29 +90,22 @@
 	height: 12px;
 	width: 12px;
 	padding-left: 4px;
-	padding-right: 1px;
+	padding-right: 3px;
+	padding-top: 7px;
 	text-decoration: none;
-	padding-bottom: 2px;
+	align-self: center;
+	justify-self: center;
 }
 
 #search-btn-container {
 	text-decoration: none;
-	margin: 5px;
-	padding: 3.5px;
-	padding-top: 6px;
-	padding-right: 6px;
-	padding-bottom: 3px;
 	background-color: rgb(247, 60, 39);
 	border: solid 0.1px rgba(128, 128, 128, 0.4);
-	height: 52px;
-	width: 68px;
 	border-left: 0;
 	border-radius: 0 5px 5px 0;
 	margin-left: -10px;
-}
-
-#button-submit-query {
-	margin-top: 5px;
+	height: calc(100% - 0.85px);
+	padding: 0 2px;
 }
 
 #search-btn-container:hover {
