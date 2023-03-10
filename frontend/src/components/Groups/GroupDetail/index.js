@@ -340,10 +340,3 @@ const GroupDetail = () => {
 
 //exports
 export default GroupDetail;
-
-/*
-//---------------
-TODO:
-organizer div >>> user details pg
-
-*/
