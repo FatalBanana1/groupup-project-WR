@@ -272,7 +272,7 @@ const GroupDetail = () => {
 										onClick={eventsClickHandler}
 										className="clicker"
 									>
-										Events
+										{`Events(${group.Events.length})`}
 									</div>
 								</div>
 
@@ -281,14 +281,14 @@ const GroupDetail = () => {
 										onClick={imagesClickHandler}
 										className="clicker"
 									>
-										Images
+										{`Photos(${group.GroupImages.length})`}
 									</div>
 								</div>
 
 								<div className="members-link details-nav-section-border">
 									{user ? (
 										<NavLink to={`/groups/${id}/members`}>
-											Members
+											{`Members(${newmembers.length})`}
 										</NavLink>
 									) : (
 										<OpenModalButton

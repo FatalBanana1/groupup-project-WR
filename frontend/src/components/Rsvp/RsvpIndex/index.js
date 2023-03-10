@@ -81,23 +81,15 @@ const RsvpIndex = () => {
 								<h2 id="header-groups-pg">Event</h2>
 							</NavLink>
 						</div>
-						{rsvps.length ? (
-							<div className="group-detail-header-members">
-								<NavLink
-									className="members-page-link"
-									to={`/groups/${event.groupId}`}
-								>
-									<h2>Group</h2>
-								</NavLink>
-							</div>
-						) : null}
-						{rsvps.length ? (
-							<div className="group-detail-header-members">
-								<div className="members-page-link">
-									<h2>Members</h2>
-								</div>
-							</div>
-						) : null}
+
+						<div className="group-detail-header-members">
+							<NavLink
+								className="members-page-link"
+								to={`/groups/${event.groupId}`}
+							>
+								<h2>Group</h2>
+							</NavLink>
+						</div>
 					</div>
 
 					<div className="rsvp-detail-container">
@@ -107,14 +99,13 @@ const RsvpIndex = () => {
 									return null;
 								} else {
 									return (
-										<NavLink
+										<div
 											id="group-detail"
 											className="group-detail-first"
 											key={rsvp.id}
-											to={`/events/${eventId}/attendees`}
 										>
 											<ReadRsvp rsvp={rsvp} />
-										</NavLink>
+										</div>
 									);
 								}
 							})
@@ -126,12 +117,12 @@ const RsvpIndex = () => {
 
 				<div className="attend-ct">
 					<div>
-						<div className="date-attend">Date</div>
-						<div className="date-attend">{`${formatStart} to ${formatEnd}`}</div>
+						<div className="date-attend">Date:</div>
+						<div className="date-attend-time">{`${formatStart} to ${formatEnd}`}</div>
 					</div>
 
 					<div>
-						<div className="price-attend">Price</div>
+						<div className="price-attend">Price:</div>
 						<div className="price-attend">{`${price}`}</div>
 					</div>
 

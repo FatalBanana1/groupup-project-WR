@@ -20,6 +20,7 @@ import AboutEvent from "../AboutEvent";
 import EventImages from "../../EventImages";
 import UpdateEvent from "../UpdateEvent";
 import DeleteEvent from "../DeleteEvent";
+import { thunkReadRsvps } from "../../../store/rsvps";
 
 //main
 const EventDetail = () => {
@@ -33,6 +34,8 @@ const EventDetail = () => {
 	let { eventId } = useParams();
 	let user = useSelector((state) => state.session.user);
 	let events = useSelector((state) => state.events);
+	let allRsvps = useSelector((state) => state.rsvps);
+	let rsvps = Object.values(allRsvps);
 	let event = events[eventId];
 	//-----------------
 
@@ -53,9 +56,10 @@ const EventDetail = () => {
 		if (showMenu) return;
 		setShowMenu(true);
 	};
-
+	let payload = { eventId };
 	useEffect(() => {
 		dispatch(thunkReadEventDetails(eventId))
+			.then(() => dispatch(thunkReadRsvps(payload)))
 			.then(() => setIsLoaded(true))
 			.catch(async (res) => {
 				const data = await res.json();
@@ -87,7 +91,6 @@ const EventDetail = () => {
 			description,
 			type,
 			capacity,
-			price,
 			startDate,
 			endDate,
 			Group,
@@ -122,6 +125,10 @@ const EventDetail = () => {
 			Venue.city = "Online";
 			Venue.state = "";
 		}
+		const price = event.price.toLocaleString("en-US", {
+			style: "currency",
+			currency: "USD",
+		});
 
 		//-------------------------------------------------------
 
@@ -234,7 +241,7 @@ const EventDetail = () => {
 					</div>
 				</div>
 
-				<div className="details-container-body">
+				<div className="details-ct-body">
 					<div className="borders sticky-deets">
 						<div id="details-nav-section">
 							<div id="update-groups-link-container">
@@ -252,7 +259,7 @@ const EventDetail = () => {
 										onClick={imagesClickHandler}
 										className="clicker"
 									>
-										Images
+										{`Photos(${event.EventImages.length})`}
 									</div>
 								</div>
 
@@ -261,7 +268,7 @@ const EventDetail = () => {
 										<NavLink
 											to={`/events/${eventId}/attendees`}
 										>
-											Attendees
+											{`Attendees(${rsvps.length})`}
 										</NavLink>
 									) : (
 										<OpenModalButton
@@ -322,6 +329,22 @@ const EventDetail = () => {
 					) : isLoaded && isImages ? (
 						<EventImages event={event} />
 					) : null}
+
+					<div className="attend-ct">
+						<div>
+							<div className="date-attend">Date:</div>
+							<div className="date-attend-time">{`${formatStart} to ${formatEnd}`}</div>
+						</div>
+
+						<div>
+							<div className="price-attend">Price:</div>
+							<div className="price-attend">{`${price}`}</div>
+						</div>
+
+						<div className="event-attend splash-group-button">
+							Attend
+						</div>
+					</div>
 				</div>
 			</div>
 		);

@@ -34,8 +34,10 @@
 	height: 60px;
 	width: 100%;
 	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
-	padding-top: 15px;
+	padding-top: 5px;
 	padding-bottom: 10px;
+	z-index: 6;
+	cursor: default;
 }
 
 .event-attend {
@@ -47,4 +49,8 @@
 .event-attend:hover {
 	background-color: rgb(255, 85, 66);
 	cursor: pointer;
+}
+
+.date-attend-time {
+	font-size: 0.85rem;
 }
