@@ -259,30 +259,46 @@ const GroupDetail = () => {
 						<div id="details-nav-section">
 							<div id="update-groups-link-container">
 								<div className="members-link details-nav-section-border">
-									<div
-										onClick={aboutClickHandler}
-										className="clicker"
-									>
-										About
-									</div>
+									{isAbout ? (
+										<div className="highlighted">About</div>
+									) : (
+										<div
+											onClick={aboutClickHandler}
+											className="clicker"
+										>
+											About
+										</div>
+									)}
 								</div>
 
 								<div className="members-link details-nav-section-border">
-									<div
-										onClick={eventsClickHandler}
-										className="clicker"
-									>
-										{`Events(${group.Events.length})`}
-									</div>
+									{isEvents ? (
+										<div className="highlighted">
+											{`Events(${group.Events.length})`}
+										</div>
+									) : (
+										<div
+											onClick={eventsClickHandler}
+											className="clicker"
+										>
+											{`Events(${group.Events.length})`}
+										</div>
+									)}
 								</div>
 
 								<div className="members-link details-nav-section-border">
-									<div
-										onClick={imagesClickHandler}
-										className="clicker"
-									>
-										{`Photos(${group.GroupImages.length})`}
-									</div>
+									{isImages ? (
+										<div className="highlighted">
+											{`Photos(${group.GroupImages.length})`}
+										</div>
+									) : (
+										<div
+											onClick={imagesClickHandler}
+											className="clicker"
+										>
+											{`Photos(${group.GroupImages.length})`}
+										</div>
+									)}
 								</div>
 
 								<div className="members-link details-nav-section-border">

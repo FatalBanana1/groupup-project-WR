@@ -246,21 +246,31 @@ const EventDetail = () => {
 						<div id="details-nav-section">
 							<div id="update-groups-link-container">
 								<div className="members-link details-nav-section-border">
-									<div
-										onClick={aboutClickHandler}
-										className="clicker"
-									>
-										About
-									</div>
+									{isAbout ? (
+										<div className="highlighted">About</div>
+									) : (
+										<div
+											onClick={aboutClickHandler}
+											className="clicker"
+										>
+											About
+										</div>
+									)}
 								</div>
 
 								<div className="members-link details-nav-section-border">
-									<div
-										onClick={imagesClickHandler}
-										className="clicker"
-									>
-										{`Photos(${event.EventImages.length})`}
-									</div>
+									{isImages ? (
+										<div className="highlighted">
+											{`Photos(${event.EventImages.length})`}
+										</div>
+									) : (
+										<div
+											onClick={imagesClickHandler}
+											className="clicker"
+										>
+											{`Photos(${event.EventImages.length})`}
+										</div>
+									)}
 								</div>
 
 								<div className="members-link details-nav-section-border">
@@ -338,7 +348,7 @@ const EventDetail = () => {
 
 						<div>
 							<div className="price-attend">Price:</div>
-							<div className="price-attend">{`${price}`}</div>
+							<div className="price-attend">{`$${event.price}.00`}</div>
 						</div>
 
 						<div className="event-attend splash-group-button">

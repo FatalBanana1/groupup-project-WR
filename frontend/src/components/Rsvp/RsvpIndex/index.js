@@ -93,7 +93,7 @@ const RsvpIndex = () => {
 					</div>
 
 					<div className="rsvp-detail-container">
-						{rsvps ? (
+						{rsvps && rsvps.length > 0 ? (
 							rsvps.map((rsvp) => {
 								if (!rsvp.firstName) {
 									return null;
@@ -110,7 +110,7 @@ const RsvpIndex = () => {
 								}
 							})
 						) : (
-							<div>No Members to display.</div>
+							<div className="none">No Attendees to display.</div>
 						)}
 					</div>
 				</div>
@@ -123,7 +123,7 @@ const RsvpIndex = () => {
 
 					<div>
 						<div className="price-attend">Price:</div>
-						<div className="price-attend">{`${price}`}</div>
+						<div className="price-attend">{`$${event.price}.00`}</div>
 					</div>
 
 					<div className="event-attend splash-group-button">
