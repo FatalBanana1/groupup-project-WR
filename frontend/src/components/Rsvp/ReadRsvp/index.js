@@ -1,6 +1,7 @@
-//read group detail
-
 //imports
+import EditModalButtonRSVP from "../UpdateRsvp/EditModalButton";
+import UpdateRsvp from "../UpdateRsvp";
+import { useEffect, useRef, useState } from "react";
 
 //main
 const ReadRsvp = ({ rsvp }) => {
@@ -14,7 +15,29 @@ const ReadRsvp = ({ rsvp }) => {
 		Memberships,
 	} = rsvp;
 
-	// console.log(` read rsvp >---`, rsvp);
+	//---------
+
+	const [showMenu, setShowMenu] = useState(false);
+	const ulRef = useRef();
+	const openMenu = () => {
+		if (showMenu) return;
+		setShowMenu(true);
+	};
+
+	useEffect(() => {
+		if (!showMenu) return;
+		const closeMenu = (e) => {
+			if (!ulRef.current.contains(e.target)) {
+				setShowMenu(false);
+			}
+		};
+		document.addEventListener("click", closeMenu);
+		return () => document.removeEventListener("click", closeMenu);
+	}, [showMenu]);
+
+	const closeMenu = () => setShowMenu(false);
+
+	//---------
 
 	//dates
 	let date = new Date(Attendances[0].createdAt).toString().split(" ");
@@ -30,69 +53,53 @@ const ReadRsvp = ({ rsvp }) => {
 	}
 	let weekday = date[0];
 
-	//return
-	return (
-		<div id="detail-container">
-			<div id="detail-left">
-				{avatar ? (
-					<img
-						src={avatar}
-						id="read-members-img"
-						alt="avatar image"
-					/>
-				) : (
-					<img
-						src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-						className="no-groups-img-read"
-						id="read-members-img"
-						alt="no image available"
-					/>
-				)}
-			</div>
+	// console.log(` read rsvp >---`, rsvp);
 
-			<div className="rsvp-detail-right">
-				<h3 id="detail-right-name">
-					{firstName} {lastName}
-				</h3>
-				<div className="about-section">{`Username: ${username}`}</div>
-				<div className="about-section">
-					{`Status: ${
-						Attendances[0].status[0].toUpperCase() +
-						Attendances[0].status.substring(1)
-					}`}
+	if (rsvp) {
+		//return
+		return (
+			<div id="detail-container">
+				<div id="detail-left">
+					{avatar ? (
+						<img
+							src={avatar}
+							id="read-members-img"
+							alt="avatar image"
+						/>
+					) : (
+						<img
+							src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+							className="no-groups-img-read"
+							id="read-members-img"
+							alt="no image available"
+						/>
+					)}
+				</div>
+
+				<div className="rsvp-detail-right">
+					<h3 id="detail-right-name">
+						{firstName} {lastName}
+					</h3>
+					<div className="about-section">{`Username: ${username}`}</div>
+					<div className="about-section">
+						{`Status: ${
+							Attendances[0].status[0].toUpperCase() +
+							Attendances[0].status.substring(1)
+						}`}
+					</div>
+
+					<div className="hiddens">
+						<EditModalButtonRSVP
+							id="update-group-button"
+							buttonText="Edit Status"
+							onButtonClick={closeMenu}
+							modalComponent={<UpdateRsvp rsvp={rsvp} />}
+						/>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
+		);
+	} else return null;
 };
-
 //exports
 export default ReadRsvp;
-
-/*
-{organizer.length && organizerId !== id ? (
-	<div className="hiddens">
-		<EditModalButton
-			id="update-group-button"
-			buttonText="Edit Status"
-			onButtonClick={closeMenu}
-			modalComponent={
-				<UpdateMembership member={member} />
-			}
-		/>
-	</div>
-) : null}
-
-{
-	id,
-	firstName,
-	lastName,
-	avatar,
-	username,
-	Attendance: [{userId, status, createdAt}]
-	Memberships: [{groupId, status, createdAt}]
-
-}
-
-
-*/

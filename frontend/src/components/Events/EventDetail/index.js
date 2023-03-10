@@ -113,7 +113,6 @@ const EventDetail = () => {
 			hour: "numeric",
 			minute: "numeric",
 		});
-
 		let host;
 		if (user) {
 			host = Group.Memberships.find((el) => el.userId === user.id);

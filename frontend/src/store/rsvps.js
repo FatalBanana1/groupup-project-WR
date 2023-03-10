@@ -51,7 +51,7 @@ export const actionResetStateRsvp = () => ({
 
 // GET: Get All Attendees of an event Route: /api/events/:eventId/attendees
 export const thunkReadRsvps = (payload) => async (dispatch) => {
-	let response = await csrfFetch(`/api/events/${payload}/attendees`);
+	let response = await csrfFetch(`/api/events/${payload.eventId}/attendees`);
 	if (response.ok) {
 		const rsvps = await response.json();
 		dispatch(actionReadRsvps(rsvps));
@@ -61,11 +61,14 @@ export const thunkReadRsvps = (payload) => async (dispatch) => {
 
 // POST: Create - request attendance to event Route: /api/events/:eventId/attendance
 export const thunkCreateRsvp = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload}/attendees`, {
-		method: `POST`,
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(payload),
-	});
+	const response = await csrfFetch(
+		`/api/events/${payload.eventId}/attendees`,
+		{
+			method: `POST`,
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		}
+	);
 
 	if (response.ok) {
 		const rsvp = await response.json();
@@ -76,11 +79,14 @@ export const thunkCreateRsvp = (payload) => async (dispatch) => {
 
 // PUT: Edit - change attendance status Route: /api/events/:eventId/attendance
 export const thunkUpdateRsvp = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload}/attendance`, {
-		method: `PUT`,
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(payload),
-	});
+	const response = await csrfFetch(
+		`/api/events/${payload.eventId}/attendance`,
+		{
+			method: `PUT`,
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		}
+	);
 	if (response.ok) {
 		const rsvp = await response.json();
 		dispatch(actionUpdateRsvp(rsvp));
@@ -90,11 +96,14 @@ export const thunkUpdateRsvp = (payload) => async (dispatch) => {
 
 // DELETE: Delete attendance Route: /api/events/:eventId/attendance
 export const thunkDeleteRsvp = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload}/attendance`, {
-		method: `DELETE`,
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(payload),
-	});
+	const response = await csrfFetch(
+		`/api/events/${payload.eventId}/attendance`,
+		{
+			method: `DELETE`,
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		}
+	);
 	if (response.ok) {
 		const rsvp = await response.json();
 		dispatch(actionDeleteRsvp(rsvp));
@@ -120,7 +129,6 @@ const rsvpsReducer = (state = defaultState(), action) => {
 				return acc;
 			}, {});
 			return {
-				...state,
 				...newState,
 			};
 		}
@@ -142,12 +150,12 @@ const rsvpsReducer = (state = defaultState(), action) => {
 		}
 
 		case UPDATE_RSVP: {
-			return { ...state, [action.rsvp.id]: action.rsvp };
+			return { ...state, [action.rsvp.userId]: action.rsvp };
 		}
 
 		case DELETE_RSVP: {
 			const newState = { ...state };
-			delete newState[action.rsvp.id];
+			delete newState[action.rsvp.userId];
 			return newState;
 		}
 

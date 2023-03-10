@@ -21,3 +21,30 @@
 	height: auto;
 	max-height: 100%;
 }
+
+.attend-ct {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	position: sticky;
+	bottom: 0px;
+	background-color: rgb(242, 231, 216);
+	margin: 0;
+	height: 60px;
+	width: 100%;
+	border-top: solid 0.3px rgba(128, 128, 128, 0.4);
+	padding-top: 15px;
+	padding-bottom: 10px;
+}
+
+.event-attend {
+	padding: 3px 15px;
+	font-size: 0.9rem;
+	height: 25px;
+}
+
+.event-attend:hover {
+	background-color: rgb(255, 85, 66);
+	cursor: pointer;
+}

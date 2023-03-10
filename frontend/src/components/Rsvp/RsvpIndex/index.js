@@ -1,21 +1,12 @@
 //read group detail
 
 //imports
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-// 	thunkCreateMembership,
-// 	thunkReadMembers,
-// 	thunkDeleteMembership,
-// 	actionResetState,
-// } from "../../../store/members";
-import { NavLink, useHistory, useParams } from "react-router-dom";
-// import OpenModalButton from "../../OpenModalButton";
-import * as sessionActions from "../../../store/session";
-
-//comps
-import ReadMembers from "../../Memberships/ReadMembers";
+import { NavLink, useParams } from "react-router-dom";
+import { thunkReadEventDetails } from "../../../store/events";
 import { thunkReadRsvps } from "../../../store/rsvps";
+import Loading from "../../Loading";
 import ReadRsvp from "../ReadRsvp";
 import "./RsvpIndex.css";
 
@@ -27,108 +18,131 @@ const RsvpIndex = () => {
 	let { eventId } = useParams();
 
 	useEffect(() => {
-		dispatch(thunkReadRsvps(eventId)).then(() => setIsLoaded(true));
+		let payload = {
+			eventId,
+		};
+		dispatch(thunkReadRsvps(payload))
+			.then(() => dispatch(thunkReadEventDetails(eventId)))
+			.then(() => setIsLoaded(true));
 	}, [dispatch]);
 
 	let allRsvps = useSelector((state) => state.rsvps);
+	let events = useSelector((state) => state.events);
+	let event = events[eventId];
 
 	let rsvps = Object.values(allRsvps);
 
-	if (isLoaded) {
+	if (isLoaded && rsvps) {
+		//dates
+		const formatStart = new Date(event.startDate).toLocaleDateString(
+			"en-US",
+			{
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+				hour: "numeric",
+				minute: "numeric",
+			}
+		);
+		const formatEnd = new Date(event.endDate).toLocaleDateString("en-US", {
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+			hour: "numeric",
+			minute: "numeric",
+		});
+		const price = event.price.toLocaleString("en-US", {
+			style: "currency",
+			currency: "USD",
+		});
+
+		// console.log(`front rsvp index-------------------`, price);
+
 		//return
 		return (
-			<div id="member-container">
-				<div id="member-headers">
-					<div className="group-detail-header-members">
-						<NavLink
-							className="members-page-link curr-link"
-							to={`/events/${eventId}/attendees`}
-						>
-							<h2>Attendees</h2>
-						</NavLink>
-					</div>
-					<div className="group-detail-header-members">
-						<NavLink
-							className="members-page-link"
-							to={`/events/${eventId}`}
-						>
-							<h2 id="header-groups-pg">Event</h2>
-						</NavLink>
-					</div>
-					{rsvps.length ? (
+			<>
+				<div id="member-container">
+					<div id="member-headers">
+						<div className="group-detail-header-members">
+							<NavLink
+								className="members-page-link curr-link"
+								to={`/events/${eventId}/attendees`}
+							>
+								<h2>Attendees</h2>
+							</NavLink>
+						</div>
 						<div className="group-detail-header-members">
 							<NavLink
 								className="members-page-link"
-								to={`/groups/${rsvps[0].Attendances[0].Event.groupId}`}
+								to={`/events/${eventId}`}
 							>
-								<h2>Group</h2>
+								<h2 id="header-groups-pg">Event</h2>
 							</NavLink>
 						</div>
-					) : null}
-					{rsvps.length ? (
-						<div className="group-detail-header-members">
-							<NavLink
-								className="members-page-link"
-								to={`/groups/${rsvps[0].Attendances[0].Event.groupId}/members`}
-							>
-								<h2>Members</h2>
-							</NavLink>
-						</div>
-					) : null}
+						{rsvps.length ? (
+							<div className="group-detail-header-members">
+								<NavLink
+									className="members-page-link"
+									to={`/groups/${event.groupId}`}
+								>
+									<h2>Group</h2>
+								</NavLink>
+							</div>
+						) : null}
+						{rsvps.length ? (
+							<div className="group-detail-header-members">
+								<div className="members-page-link">
+									<h2>Members</h2>
+								</div>
+							</div>
+						) : null}
+					</div>
+
+					<div className="rsvp-detail-container">
+						{rsvps ? (
+							rsvps.map((rsvp) => {
+								if (!rsvp.firstName) {
+									return null;
+								} else {
+									return (
+										<NavLink
+											id="group-detail"
+											className="group-detail-first"
+											key={rsvp.id}
+											to={`/events/${eventId}/attendees`}
+										>
+											<ReadRsvp rsvp={rsvp} />
+										</NavLink>
+									);
+								}
+							})
+						) : (
+							<div>No Members to display.</div>
+						)}
+					</div>
 				</div>
 
-				<div className="rsvp-detail-container">
-					{rsvps ? (
-						rsvps.map((rsvp) => {
-							if (!rsvp.firstName) {
-								return null;
-							} else {
-								return (
-									<NavLink
-										id="group-detail"
-										className="group-detail-first"
-										key={rsvp.id}
-										to={`/events/${eventId}/attendees`}
-									>
-										<ReadRsvp rsvp={rsvp} />
-									</NavLink>
-								);
-							}
-						})
-					) : (
-						<div>No Members to display.</div>
-					)}
+				<div className="attend-ct">
+					<div>
+						<div className="date-attend">Date</div>
+						<div className="date-attend">{`${formatStart} to ${formatEnd}`}</div>
+					</div>
+
+					<div>
+						<div className="price-attend">Price</div>
+						<div className="price-attend">{`${price}`}</div>
+					</div>
+
+					<div className="event-attend splash-group-button">
+						Attend
+					</div>
 				</div>
-			</div>
+			</>
 		);
-	} else return null;
+	} else return <Loading />;
 };
 
 //exports
 export default RsvpIndex;
-
-/*
-
-{
-	id,
-	firstName,
-	lastName,
-	Attendances: [{userId, status, createdAt, Event: {
-			groupId,
-			id,
-			venueId,
-			name,
-			description,
-			type,
-			capacity,
-			price,
-			startDate,
-			endDate,
-		}
-	}]
-	Memberships: [{groupId, status, createdAt}]
-
-}
-
-
-*/

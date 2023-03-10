@@ -1,7 +1,7 @@
 // frontend/src/components/OpenModalButton/index.js
 import React from "react";
 import { useModal } from "../../../context/Modal";
-import "./UpdateGroup.css";
+import "../Rsvps.css";
 
 function EditModalButton({
 	modalComponent, // component to render inside the modal
