@@ -157,7 +157,7 @@ function ProfileButton({ user }) {
 								Home
 							</NavLink>
 
-							<div className="nav-details">My Groups</div>
+							{/* <div className="nav-details">My Groups</div> */}
 
 							<CreateModalDrop
 								buttonText="Create a group"
