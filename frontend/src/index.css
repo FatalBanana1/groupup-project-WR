@@ -101,6 +101,10 @@ a:hover,
 	margin-top: 10px;
 }
 
+.aligncenter {
+	align-items: center;
+}
+
 ::-webkit-scrollbar {
 	width: 9px;
 }
@@ -112,6 +116,10 @@ a:hover,
 ::-webkit-scrollbar-thumb {
 	background-color: rgb(247, 60, 39);
 	border-radius: 20px;
+}
+
+.red {
+	color: red;
 }
 
 /* errors-------------------- */

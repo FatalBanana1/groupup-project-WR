@@ -20,23 +20,29 @@ import AboutEvent from "../AboutEvent";
 import EventImages from "../../EventImages";
 import UpdateEvent from "../UpdateEvent";
 import DeleteEvent from "../DeleteEvent";
-import { thunkReadRsvps } from "../../../store/rsvps";
+import {
+	thunkCreateRsvp,
+	thunkDeleteRsvp,
+	thunkReadRsvps,
+} from "../../../store/rsvps";
 
 //main
 const EventDetail = () => {
 	//states
 	let dispatch = useDispatch();
 	let [errors, setErrors] = useState([]);
-	const [isLoaded, setIsLoaded] = useState(false);
-	let [isImages, setIsImages] = useState(false);
-	let [isAbout, setIsAbout] = useState(true);
-
 	let { eventId } = useParams();
+	const [isLoaded, setIsLoaded] = useState(false);
+	const [isImages, setIsImages] = useState(false);
+	const [isAbout, setIsAbout] = useState(true);
+	//selectors
 	let user = useSelector((state) => state.session.user);
 	let events = useSelector((state) => state.events);
 	let allRsvps = useSelector((state) => state.rsvps);
 	let rsvps = Object.values(allRsvps);
 	let event = events[eventId];
+	const [isAttending, setIsAttending] = useState("");
+
 	//-----------------
 
 	let aboutClickHandler = () => {
@@ -82,7 +88,7 @@ const EventDetail = () => {
 
 	//----------------
 
-	if (isLoaded && event && event.Group) {
+	if (isLoaded && event && event.Group && rsvps) {
 		let {
 			id,
 			venueId,
@@ -125,12 +131,38 @@ const EventDetail = () => {
 			Venue.city = "Online";
 			Venue.state = "";
 		}
-		const price = event.price.toLocaleString("en-US", {
-			style: "currency",
-			currency: "USD",
-		});
+		// const price = event.price.toLocaleString("en-US", {
+		// 	style: "currency",
+		// 	currency: "USD",
+		// });
 
 		//-------------------------------------------------------
+
+		const curr = rsvps.find((el) => el.id === user.id);
+		let member;
+		let status;
+		let attending;
+		if (curr) {
+			member = curr.Memberships.find(
+				(el) => el.groupId === event.groupId
+			);
+			status = member.status;
+			attending = curr.Attendances[0].status;
+		}
+
+		const createRsvp = () => {
+			let payload = { eventId, userId: user.id };
+			dispatch(thunkCreateRsvp(payload)).then(() =>
+				dispatch(thunkReadRsvps(payload))
+			);
+		};
+
+		const deleteRsvp = () => {
+			let payload = { eventId, userId: user.id };
+			dispatch(thunkDeleteRsvp(payload)).then(() =>
+				dispatch(thunkReadRsvps(payload))
+			);
+		};
 
 		// console.log(`event deets=====>>>>------`, time);
 
@@ -335,7 +367,7 @@ const EventDetail = () => {
 					</div>
 
 					{isLoaded && isAbout ? (
-						<AboutEvent event={event} />
+						<AboutEvent event={event} rsvps={rsvps} />
 					) : isLoaded && isImages ? (
 						<EventImages event={event} />
 					) : null}
@@ -351,9 +383,21 @@ const EventDetail = () => {
 							<div className="price-attend">{`$${event.price}.00`}</div>
 						</div>
 
-						<div className="event-attend splash-group-button">
-							Attend
-						</div>
+						{attending ? (
+							<div
+								className="event-attend splash-group-button"
+								onClick={deleteRsvp}
+							>
+								Not Attend
+							</div>
+						) : (
+							<div
+								className="event-attend splash-group-button"
+								onClick={createRsvp}
+							>
+								Attend
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

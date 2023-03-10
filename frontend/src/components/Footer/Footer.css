@@ -3,7 +3,7 @@
 .footer-container {
 	padding-top: 50px;
 	background-color: rgb(53, 62, 72);
-	color: white;
+	color: rgb(242, 231, 216);
 }
 
 .footer-end-container {
@@ -45,7 +45,7 @@
 }
 
 #footer-links:hover {
-	color: rgb(203, 206, 211);
+	color: rgb(242, 231, 216);
 }
 
 .spacer-footer {

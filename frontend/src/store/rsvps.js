@@ -62,7 +62,7 @@ export const thunkReadRsvps = (payload) => async (dispatch) => {
 // POST: Create - request attendance to event Route: /api/events/:eventId/attendance
 export const thunkCreateRsvp = (payload) => async (dispatch) => {
 	const response = await csrfFetch(
-		`/api/events/${payload.eventId}/attendees`,
+		`/api/events/${payload.eventId}/attendance`,
 		{
 			method: `POST`,
 			headers: { "Content-Type": "application/json" },
@@ -144,7 +144,7 @@ const rsvpsReducer = (state = defaultState(), action) => {
 		case CREATE_RSVP: {
 			const newState = {
 				...state,
-				[action.rsvp.id]: action.rsvp,
+				[action.rsvp.userId]: action.rsvp,
 			};
 			return newState;
 		}

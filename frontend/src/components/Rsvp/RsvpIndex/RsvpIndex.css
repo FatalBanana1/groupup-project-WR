@@ -59,3 +59,40 @@
 	margin-bottom: 30vh;
 	margin-top: 5vh;
 }
+
+@media screen and (max-width: 940px) {
+	.event-details-img-default {
+		width: 100vw;
+		border-radius: 0;
+	}
+}
+@media screen and (max-width: 680px) {
+	.attend-ct,
+	.date-attend-time,
+	.event-attend {
+		font-size: 0.5rem;
+		padding: 0;
+	}
+	.event-attend {
+		margin: 0;
+		display: block;
+		width: auto;
+		padding: 0px 5px;
+	}
+	#group-detail {
+		width: 70vw;
+	}
+	.rsvp-detail-container {
+		width: 100vw;
+	}
+	.event-detail {
+		width: 90vw;
+	}
+	#update-groups-link-container {
+		display: flex;
+		flex-direction: column;
+	}
+	.crud-btns {
+		margin-right: auto;
+	}
+}

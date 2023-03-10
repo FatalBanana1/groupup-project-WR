@@ -60,12 +60,12 @@ module.exports = {
 				{
 					userId: 5,
 					groupId: 2,
-					status: "pending",
+					status: "member",
 				},
 				{
 					userId: 5,
 					groupId: 3,
-					status: "pending",
+					status: "member",
 				},
 				{
 					userId: 6,
@@ -75,6 +75,26 @@ module.exports = {
 				{
 					userId: 7,
 					groupId: 1,
+					status: "member",
+				},
+				{
+					userId: 3,
+					groupId: 1,
+					status: "member",
+				},
+				{
+					userId: 4,
+					groupId: 1,
+					status: "member",
+				},
+				{
+					userId: 4,
+					groupId: 2,
+					status: "member",
+				},
+				{
+					userId: 4,
+					groupId: 6,
 					status: "pending",
 				},
 				{

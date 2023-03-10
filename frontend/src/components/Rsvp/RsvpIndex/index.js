@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
 import { thunkReadEventDetails } from "../../../store/events";
-import { thunkReadRsvps } from "../../../store/rsvps";
+import {
+	thunkCreateRsvp,
+	thunkDeleteRsvp,
+	thunkReadRsvps,
+} from "../../../store/rsvps";
 import Loading from "../../Loading";
 import ReadRsvp from "../ReadRsvp";
 import "./RsvpIndex.css";
@@ -26,6 +30,7 @@ const RsvpIndex = () => {
 			.then(() => setIsLoaded(true));
 	}, [dispatch]);
 
+	let user = useSelector((state) => state.session.user);
 	let allRsvps = useSelector((state) => state.rsvps);
 	let events = useSelector((state) => state.events);
 	let event = events[eventId];
@@ -53,12 +58,50 @@ const RsvpIndex = () => {
 			hour: "numeric",
 			minute: "numeric",
 		});
-		const price = event.price.toLocaleString("en-US", {
-			style: "currency",
-			currency: "USD",
-		});
+		// const price = event.price.toLocaleString("en-US", {
+		// 	style: "currency",
+		// 	currency: "USD",
+		// });
 
-		// console.log(`front rsvp index-------------------`, price);
+		const curr = rsvps.find((el) => el.id === user.id);
+		let member;
+		let status;
+		let attending;
+		if (curr) {
+			member = curr.Memberships.find(
+				(el) => el.groupId === event.groupId
+			);
+			status = member.status;
+			attending = curr.Attendances[0].status;
+		}
+		if (!curr) {
+			member = event.Group.Memberships.find(
+				(el) => el.userId === user.id
+			);
+			status = member.status;
+		}
+
+		//--------------------------------------------------------------
+		//handlers
+
+		const createRsvp = () => {
+			let payload = { eventId, userId: user.id };
+			dispatch(thunkCreateRsvp(payload)).then(() =>
+				dispatch(thunkReadRsvps(payload))
+			);
+		};
+
+		const deleteRsvp = () => {
+			let payload = { eventId, userId: user.id };
+			dispatch(thunkDeleteRsvp(payload)).then(() =>
+				dispatch(thunkReadRsvps(payload))
+			);
+		};
+
+		//--------------------------------------------------------------
+
+		// console.log(`front rsvp index-------------------`, rsvps);
+		// console.log(`front rsvp index-------------------`, member);
 
 		//return
 		return (
@@ -104,7 +147,11 @@ const RsvpIndex = () => {
 											className="group-detail-first"
 											key={rsvp.id}
 										>
-											<ReadRsvp rsvp={rsvp} />
+											<ReadRsvp
+												rsvp={rsvp}
+												user={user}
+												status={status}
+											/>
 										</div>
 									);
 								}
@@ -126,9 +173,21 @@ const RsvpIndex = () => {
 						<div className="price-attend">{`$${event.price}.00`}</div>
 					</div>
 
-					<div className="event-attend splash-group-button">
-						Attend
-					</div>
+					{attending ? (
+						<div
+							className="event-attend splash-group-button"
+							onClick={deleteRsvp}
+						>
+							Not Attend
+						</div>
+					) : (
+						<div
+							className="event-attend splash-group-button"
+							onClick={createRsvp}
+						>
+							Attend
+						</div>
+					)}
 				</div>
 			</>
 		);

@@ -4,7 +4,7 @@ import UpdateRsvp from "../UpdateRsvp";
 import { useEffect, useRef, useState } from "react";
 
 //main
-const ReadRsvp = ({ rsvp }) => {
+const ReadRsvp = ({ rsvp, user, status }) => {
 	let {
 		id,
 		firstName,
@@ -53,9 +53,14 @@ const ReadRsvp = ({ rsvp }) => {
 	}
 	let weekday = date[0];
 
-	// console.log(` read rsvp >---`, rsvp);
-
+	//----------------------------------------------------------
 	if (rsvp) {
+		let curr = rsvp.id === user.id;
+
+		//----------------------------------------------------------
+
+		// console.log(` read rsvp >---`, rsvp);
+
 		//return
 		return (
 			<div id="detail-container">
@@ -81,21 +86,23 @@ const ReadRsvp = ({ rsvp }) => {
 						{firstName} {lastName}
 					</h3>
 					<div className="about-section">{`Username: ${username}`}</div>
-					<div className="about-section">
-						{`Status: ${
+					<div className={`about-section ${curr ? "red" : ""}`}>
+						{`${curr ? "Your " : ""}Status: ${
 							Attendances[0].status[0].toUpperCase() +
 							Attendances[0].status.substring(1)
 						}`}
 					</div>
 
-					<div className="hiddens">
-						<EditModalButtonRSVP
-							id="update-group-button"
-							buttonText="Edit Status"
-							onButtonClick={closeMenu}
-							modalComponent={<UpdateRsvp rsvp={rsvp} />}
-						/>
-					</div>
+					{status === "co-host" && (
+						<div className="hiddens">
+							<EditModalButtonRSVP
+								id="update-group-button"
+								buttonText="Edit Status"
+								onButtonClick={closeMenu}
+								modalComponent={<UpdateRsvp rsvp={rsvp} />}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		);

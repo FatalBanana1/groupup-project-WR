@@ -322,7 +322,7 @@ router.get("/:eventId", valid_event, async (req, res) => {
 			{
 				model: Attendance,
 				attributes: ["userId"],
-				where: { status: "attending" },
+				// where: { status: "attending" },
 			},
 		],
 	});
@@ -450,7 +450,7 @@ router.get("/", async (req, res) => {
 			{
 				model: Attendance,
 				attributes: ["userId"],
-				where: { status: "attending" },
+				// where: { status: "attending" },
 			},
 		],
 	});
@@ -767,6 +767,7 @@ router.delete(
 
 		await deleted.destroy();
 		return res.json({
+			userId,
 			message: "Successfully deleted attendance from event",
 		});
 	}

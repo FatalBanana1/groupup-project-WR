@@ -16,93 +16,33 @@ module.exports = {
 			options,
 			[
 				{
+					eventId: 1,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 2,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 3,
+					userId: 1,
+					status: "attending",
+				},
+				{
 					eventId: 4,
-					userId: 3,
+					userId: 1,
 					status: "attending",
 				},
 				{
 					eventId: 5,
-					userId: 3,
+					userId: 1,
 					status: "attending",
 				},
 				{
 					eventId: 6,
-					userId: 3,
-					status: "attending",
-				},
-				{
-					eventId: 4,
 					userId: 1,
-					status: "attending",
-				},
-				{
-					eventId: 1,
-					userId: 1,
-					status: "attending",
-				},
-				{
-					eventId: 1,
-					userId: 3,
-					status: "waitlist",
-				},
-				{
-					eventId: 1,
-					userId: 4,
-					status: "pending",
-				},
-				{
-					eventId: 4,
-					userId: 5,
-					status: "pending",
-				},
-				{
-					eventId: 1,
-					userId: 5,
-					status: "pending",
-				},
-				{
-					eventId: 5,
-					userId: 2,
-					status: "waitlist",
-				},
-				{
-					eventId: 5,
-					userId: 4,
-					status: "pending",
-				},
-				{
-					eventId: 1,
-					userId: 4,
-					status: "pending",
-				},
-				{
-					eventId: 3,
-					userId: 3,
-					status: "attending",
-				},
-				{
-					eventId: 2,
-					userId: 5,
-					status: "pending",
-				},
-				{
-					eventId: 4,
-					userId: 2,
-					status: "waitlist",
-				},
-				{
-					eventId: 4,
-					userId: 4,
-					status: "attending",
-				},
-				{
-					eventId: 7,
-					userId: 3,
-					status: "attending",
-				},
-				{
-					eventId: 8,
-					userId: 3,
 					status: "attending",
 				},
 				{
@@ -116,18 +56,58 @@ module.exports = {
 					status: "attending",
 				},
 				{
-					eventId: 2,
+					eventId: 9,
 					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 10,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 11,
+					userId: 1,
+					status: "attending",
+				},
+				{
+					eventId: 1,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 2,
+					userId: 2,
 					status: "attending",
 				},
 				{
 					eventId: 3,
-					userId: 1,
+					userId: 2,
 					status: "attending",
 				},
 				{
-					eventId: 9,
-					userId: 1,
+					eventId: 4,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 5,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 6,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 7,
+					userId: 2,
+					status: "attending",
+				},
+				{
+					eventId: 8,
+					userId: 2,
 					status: "attending",
 				},
 				{
@@ -136,48 +116,8 @@ module.exports = {
 					status: "attending",
 				},
 				{
-					eventId: 9,
-					userId: 6,
-					status: "attending",
-				},
-				{
-					eventId: 9,
-					userId: 7,
-					status: "attending",
-				},
-				{
-					eventId: 9,
-					userId: 8,
-					status: "pending",
-				},
-				{
-					eventId: 10,
-					userId: 1,
-					status: "attending",
-				},
-				{
 					eventId: 10,
 					userId: 2,
-					status: "attending",
-				},
-				{
-					eventId: 10,
-					userId: 6,
-					status: "attending",
-				},
-				{
-					eventId: 10,
-					userId: 7,
-					status: "attending",
-				},
-				{
-					eventId: 10,
-					userId: 8,
-					status: "pending",
-				},
-				{
-					eventId: 11,
-					userId: 1,
 					status: "attending",
 				},
 				{
@@ -186,19 +126,59 @@ module.exports = {
 					status: "attending",
 				},
 				{
-					eventId: 11,
-					userId: 6,
-					status: "attending",
+					eventId: 1,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 2,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 3,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 4,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 5,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 6,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 7,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 8,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 9,
+					userId: 3,
+					status: "waitlist",
+				},
+				{
+					eventId: 10,
+					userId: 3,
+					status: "waitlist",
 				},
 				{
 					eventId: 11,
-					userId: 7,
-					status: "attending",
-				},
-				{
-					eventId: 11,
-					userId: 8,
-					status: "pending",
+					userId: 3,
+					status: "waitlist",
 				},
 			],
 			{}
