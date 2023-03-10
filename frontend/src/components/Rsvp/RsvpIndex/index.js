@@ -78,7 +78,9 @@ const RsvpIndex = () => {
 			member = event.Group.Memberships.find(
 				(el) => el.userId === user.id
 			);
-			status = member.status;
+			if (member) {
+				status = member.status;
+			}
 		}
 
 		//--------------------------------------------------------------
