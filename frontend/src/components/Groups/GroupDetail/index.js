@@ -157,6 +157,10 @@ const GroupDetail = () => {
 			status = "You're not a member yet";
 		}
 
+		//----------------------------------------------------------
+
+		console.log(`group deets=========`, host);
+
 		//return
 		return (
 			<div id="group-details-page">

@@ -148,7 +148,6 @@ const memberReducer = (state = defaultState(), action) => {
 					{}
 				);
 				return {
-					...state,
 					...newMembers,
 				};
 			} else {
