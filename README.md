@@ -141,3 +141,5 @@ This was my first Full Stack Application. I spent 2 weeks developing this and po
 [express-url]: https://expressjs.com/en/4x/api.html
 [sqlite-url]: https://www.sqlite.org/index.html
 [sequelize-shield]:	https://img.shields.io/badge/sequelize-323330?style=for-the-badge&logo=sequelize&logoColor=blue
+[sequelize-url]:	https://sequelize.org/docs/v6/
+[express-shield]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
