@@ -15,6 +15,7 @@ import RsvpIndex from "./components/Rsvp/RsvpIndex";
 import EventIndex from "./components/Events/EventIndex";
 import Footer from "./components/Footer";
 import Scroller from "./components/Navigation/Scroller";
+import NotFoundPage from "./components/NotFoundPage";
 
 function App() {
 	const dispatch = useDispatch();
@@ -56,8 +57,11 @@ function App() {
 						<Route path="/events?name=">
 							<EventIndex />
 						</Route>
+						<Route path="/notfound">
+							<NotFoundPage />
+						</Route>
 						<Route>
-							<div>404: Error Not Found.</div>
+							<NotFoundPage />
 						</Route>
 					</Switch>
 				</Scroller>

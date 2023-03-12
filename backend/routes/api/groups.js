@@ -903,9 +903,8 @@ router.post(
 	valid_group,
 	valid_dates,
 	requireAuth,
-	valid_user,
+	// valid_user,
 	async (req, res) => {
-		let groupId = req.params.groupId;
 		let { user } = req;
 
 		let {
@@ -918,6 +917,7 @@ router.post(
 			description,
 			startDate,
 			endDate,
+			groupId,
 		} = req.body;
 
 		let options = {

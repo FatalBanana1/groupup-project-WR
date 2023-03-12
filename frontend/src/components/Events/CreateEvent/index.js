@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkCreateEvent } from "../../../store/events";
+import { thunkCreateEvent, thunkReadEventDetails } from "../../../store/events";
 import icon from "../../Groups/images/favicon.ico";
 import apple from "../../Groups/images/apple1.png";
 
@@ -30,18 +30,21 @@ const CreateEvent = () => {
 	//selectors
 	let groups = useSelector((state) => state.groups);
 	let group = Object.values(groups)[0];
+	console.log(`groupId in creatte event ====`, groups);
+	console.log(`groupId in creatte event ====`, group.id);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (Object.values(errors).length > 0) {
 			return;
 		}
+
 		let payload;
 		if (type === "Online") {
 			payload = {
 				groupId: group.id,
-				name,
-				description,
+				name: name.trim(),
+				description: description.trim(),
 				type,
 				price,
 				capacity,
@@ -53,14 +56,18 @@ const CreateEvent = () => {
 		} else {
 			payload = {
 				groupId: group.id,
-				name,
-				description,
+				name: name.trim(),
+				description: description.trim(),
 				type,
 				price,
 				capacity,
 				startDate,
 				endDate,
-				venue: { address, city, state },
+				venue: {
+					address: address.trim(),
+					city: city.trim(),
+					state: state.trim(),
+				},
 				image: { url, preview: true },
 			};
 		}
@@ -79,7 +86,7 @@ const CreateEvent = () => {
 
 	const handleName = (e) => {
 		const val = e.target.value;
-		if (val.length < 2) {
+		if (val.length < 2 || val.trim() === "") {
 			setErrors({ name: `Name must be at least 2 characters` });
 		} else {
 			setErrors({});
@@ -88,7 +95,7 @@ const CreateEvent = () => {
 	};
 	const handleDescription = (e) => {
 		const val = e.target.value;
-		if (val.length > 1000) {
+		if (val.length > 1000 || val.trim() === "") {
 			setErrors({
 				description: `Description must be less than 1000 characters`,
 			});
@@ -105,7 +112,7 @@ const CreateEvent = () => {
 		if (!isLettersOnly) {
 			setErrors({ state: "State can only contain letters" });
 		}
-		if (newVal.length > 2 || newVal.length < 2) {
+		if (newVal.length > 2 || newVal.length < 2 || newVal.trim() === "") {
 			setErrors({ state: `State must be 2 characters` });
 		} else {
 			setErrors({});
@@ -386,6 +393,8 @@ const CreateEvent = () => {
 								type="url"
 								value={url}
 								onChange={(e) => setUrl(e.target.value)}
+								required
+								placeholder="Url Required"
 							/>
 						</label>
 					</div>

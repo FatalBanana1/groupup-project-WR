@@ -88,6 +88,8 @@ const EventDetail = () => {
 
 	//----------------
 
+	// console.log(`inside event deets=====`, event.Group);
+
 	if (isLoaded && event && event.Group && rsvps) {
 		let {
 			id,

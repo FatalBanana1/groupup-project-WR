@@ -156,7 +156,6 @@ const eventsReducer = (state = defaultState(), action) => {
 		case READ_EVENT_DETAILS: {
 			const newState = { ...action.event };
 			return {
-				...state,
 				[action.event.id]: newState,
 			};
 		}

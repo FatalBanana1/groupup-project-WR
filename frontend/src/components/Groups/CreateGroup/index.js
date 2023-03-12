@@ -28,13 +28,14 @@ const CreateGroup = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErrors({});
+
 		const payload = {
-			name,
-			about,
+			name: name.trim(),
+			about: about.trim(),
 			type,
 			private: privated,
-			city,
-			state,
+			city: city.trim(),
+			state: state.trim(),
 			image: { url, preview: true },
 		};
 		return dispatch(thunkCreateGroups(payload))
@@ -194,6 +195,8 @@ const CreateGroup = () => {
 							type="url"
 							value={url}
 							onChange={(e) => setUrl(e.target.value)}
+							required
+							placeholder="Url Required"
 						/>
 					</label>
 				</div>

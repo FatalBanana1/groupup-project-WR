@@ -166,7 +166,6 @@ const groupsReducer = (state = defaultState(), action) => {
 			action.group["privated"] = action.group.private;
 			const newState = { ...action.group };
 			return {
-				...state,
 				[action.group.id]: newState,
 			};
 		}

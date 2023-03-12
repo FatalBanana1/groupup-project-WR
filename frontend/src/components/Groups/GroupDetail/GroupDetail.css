@@ -120,6 +120,7 @@
 .about-details-font {
 	font-size: 14px;
 	padding: 2px;
+	word-break: break-all;
 }
 
 .about-title-font {

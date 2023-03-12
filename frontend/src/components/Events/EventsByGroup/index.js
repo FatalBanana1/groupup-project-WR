@@ -1,33 +1,32 @@
-//groups page
-
 //imports
-//hooks
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import CreateEventModalButton from "../CreateEvent/CreateEventModalButton";
-import OpenModalButton from "../../OpenModalButton";
 import ReadEvent from "../ReadEvent";
 import CreateEvent from "../CreateEvent";
-import LoginFormModal from "../../LoginFormModal";
 import "../Events.css";
 
 //main
 const EventsByGroup = ({ events }) => {
 	let [errors, setErrors] = useState([]);
+	let { groupId } = useParams();
 
 	// //-----------------
 	const [showMenu, setShowMenu] = useState(false);
 	const closeMenu = () => setShowMenu(false);
 	// //----------------
 	const user = useSelector((state) => state.session.user);
+	const groups = useSelector((state) => state.groups);
+	const group = groups[groupId];
+	const org = group.organizerId === user.id;
 
 	//return
 	return (
 		<div className="margin-events-container">
 			<div className="groups-events-container events-padding-top">
 				<div className="create-event-ct">
-					{user ? (
+					{user && org ? (
 						<div className="groups-link-container-signin">
 							<CreateEventModalButton
 								className="splash-link join-group"
