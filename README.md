@@ -1,4 +1,4 @@
-# Swift - by Wasiq Rashid
+# Groupup - by Wasiq Rashid
 
 ## **About**
 
@@ -110,11 +110,11 @@ This was my first Full Stack Application. I spent 2 weeks developing this and po
 
 ## Database Schema Design
 
-![swift-db-schema]
+![groupup-db-schema]
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[swift-db-schema]: ./swift-schema-re.png
+[groupup-db-schema]: ./groupup-wr-diagram.png
 [javascript-shield]: https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
 [python-shield]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [html-shield]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
