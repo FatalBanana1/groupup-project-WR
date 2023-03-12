@@ -1,19 +1,11 @@
 // footer
-
-import { useState } from "react";
-import { NavLink, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "./Footer.css";
-import { actionResetState } from "../../store/groups";
-import { actionResetStateEvent } from "../../store/events";
 import { removeSearch } from "../../store/search";
 import Loading from "../Loading";
 
 function Footer({ isLoaded }) {
-	// const sessionUser = useSelector((state) => state.session.user);
-
-	//return
-
 	let dispatch = useDispatch();
 
 	const clickHandlerGroups = () => {

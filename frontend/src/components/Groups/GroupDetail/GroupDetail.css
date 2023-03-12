@@ -261,6 +261,12 @@
 
 /* ------------------------------- */
 
+@media screen and (max-width: 505px) {
+
+	#read-groups-img{
+		width: 20vw;
+	}
+}
 @media screen and (max-width: 939px) {
 	#root {
 		margin: 0px;
