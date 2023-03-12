@@ -12,6 +12,7 @@
 	padding-left: 1rem;
 	padding-right: 1rem;
 	max-width: 970px;
+	width: calc(100% - 4rem);
 }
 
 .sticky-groups {
@@ -37,12 +38,11 @@
 #group-detail-header {
 	display: flex;
 	flex-direction: row;
-	width: inherit;
 	justify-content: flex-start;
 	align-items: center;
 	padding-left: 1.5rem;
 	padding-right: 1.5rem;
-	width: inherit;
+	width: calc(100% - 4rem);
 	max-width: 660px;
 }
 

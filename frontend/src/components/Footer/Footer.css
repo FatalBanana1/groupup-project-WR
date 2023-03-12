@@ -63,9 +63,6 @@
 	.last-footer-line {
 		flex-direction: column;
 	}
-	#footer-links-wr {
-		padding-bottom: 0px;
-	}
 }
 
 @media screen and (max-width: 430px) {

@@ -145,7 +145,7 @@ const EventIndex = () => {
 								) : null}
 							</div>
 
-							<div>
+							<div className="mauto">
 								{user ? (
 									<div className="groups-link-container-signin">
 										<CreateEventModalButton
