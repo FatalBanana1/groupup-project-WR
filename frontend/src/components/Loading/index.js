@@ -1,12 +1,17 @@
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./Loading.css";
 
 const Loading = () => {
 	let history = useHistory("/");
 
-	setTimeout(() => {
-		history.push("/notfound");
-	}, 6000);
+	useEffect(() => {
+		let timer = setTimeout(() => {
+			history.push("/notfound");
+		}, 6000);
+
+		return () => clearInterval(timer);
+	}, []);
 
 	//return
 	return (
