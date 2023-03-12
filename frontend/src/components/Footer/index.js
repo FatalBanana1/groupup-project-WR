@@ -58,14 +58,14 @@ function Footer({ isLoaded }) {
 						<div className="footer-title">Discover</div>
 						<a
 							id="footer-links-wr"
-							href="https://www.linkedin.com/in/wasiq-rashid-3164b2258/"
+							href="https://wasiqr-portfolio.onrender.com/"
 							target="_blank"
 						>
 							Wasiq Rashid
 						</a>
 						<a
 							id="footer-links"
-							href="https://www.linkedin.com/in/wasiq-rashid-3164b2258/"
+							href="https://www.linkedin.com/in/wasiq-rashid-fsd/"
 							target="_blank"
 						>
 							Linkedin
@@ -92,7 +92,7 @@ function Footer({ isLoaded }) {
 
 					<div className="last-footer-line">
 						<a
-							href="https://github.com/FatalBanana1"
+							href="https://wasiqr-portfolio.onrender.com/"
 							id="footer-links-wr"
 							className="spacer-footer"
 							target="_blank"
