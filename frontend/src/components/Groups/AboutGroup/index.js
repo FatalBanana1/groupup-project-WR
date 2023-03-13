@@ -5,7 +5,7 @@ import { NavLink, useParams } from "react-router-dom";
 import "./AboutGroup.css";
 
 //main
-const AboutGroup = (props) => {
+const AboutGroup = ({ group, user }) => {
 	const {
 		id,
 		organizerId,
@@ -22,9 +22,8 @@ const AboutGroup = (props) => {
 		Venues: venues,
 		numMembers,
 		Members,
-	} = props.group;
+	} = group;
 
-	let [isLoaded, setIsLoaded] = useState(false);
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
 
@@ -79,70 +78,75 @@ const AboutGroup = (props) => {
 							</div>
 
 							<div className="groups-sticky-org-name">
-								<NavLink
-									to={`/groups/${id}/members`}
-									className="event-venue-details-info"
-								>
-									{organizer.avatar ? (
-										<img
-											className="events-small-avatar-icon"
-											src={organizer.avatar}
-										/>
-									) : (
-										<img
-											src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-											className="events-small-avatar-icon"
-										/>
-									)}
-								</NavLink>
-								<NavLink
-									to={`/groups/${id}/members`}
-									className="event-venue-details-info small-padding-left"
-								>
-									{`${organizer.firstName} ${organizer.lastName}`}
-								</NavLink>
+								{user ? (
+									<>
+										<NavLink
+											to={`/groups/${id}/members`}
+											className="event-venue-details-info"
+										>
+											{organizer.avatar ? (
+												<img
+													className="events-small-avatar-icon"
+													src={organizer.avatar}
+												/>
+											) : (
+												<img
+													src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+													className="events-small-avatar-icon"
+												/>
+											)}
+										</NavLink>
+										<NavLink
+											to={`/groups/${id}/members`}
+											className="event-venue-details-info small-padding-left"
+										>
+											{`${organizer.firstName} ${organizer.lastName}`}
+										</NavLink>
+									</>
+								) : (
+									<>
+										<div className="event-venue-details-info">
+											{organizer.avatar ? (
+												<img
+													className="events-small-avatar-icon"
+													src={organizer.avatar}
+												/>
+											) : (
+												<img
+													src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+													className="events-small-avatar-icon"
+												/>
+											)}
+										</div>
+										<div className="event-venue-details-info small-padding-left">
+											{`${organizer.firstName} ${organizer.lastName}`}
+										</div>
+									</>
+								)}
 							</div>
 						</div>
 
-						<div className="events-side-panel" id="gray-back">
-							<div className="icons-container space-around">
-								<div className="sticky-text-headers">{`Members (${Members.length})`}</div>
-								<NavLink
-									to={`/groups/${id}/members`}
-									className="clicker"
-									id="see-all"
-								>
-									See all
-								</NavLink>
-							</div>
+						{user && (
+							<div className="events-side-panel" id="gray-back">
+								<div className="icons-container space-around">
+									<div className="sticky-text-headers">{`Members (${Members.length})`}</div>
+									{user ? (
+										<NavLink
+											to={`/groups/${id}/members`}
+											className="clicker"
+											id="see-all"
+										>
+											See all
+										</NavLink>
+									) : (
+										<div className="default" id="see-all">
+											See all
+										</div>
+									)}
+								</div>
 
-							<div className="event-details-info-container icons-container space-around">
-								{Members.slice(0, 4).map((el) => (
-									<NavLink
-										key={el.id}
-										to={`/groups/${id}/members`}
-										className="group-member-icons"
-									>
-										{el.avatar ? (
-											<img
-												src={el.avatar}
-												className="events-small-avatar-icon"
-												alt="members pics"
-											/>
-										) : (
-											<img
-												src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
-												className="events-small-avatar-icon"
-												alt="members pics"
-											/>
-										)}
-									</NavLink>
-								))}
-							</div>
-
-							{Members.length > 4 ? (
-								<div className="icons-container">
-									{Members.slice(4, 8).map((el) => (
+								<div className="event-details-info-container icons-container space-around">
+									{Members.slice(0, 4).map((el) => (
 										<NavLink
 											key={el.id}
 											to={`/groups/${id}/members`}
@@ -164,8 +168,34 @@ const AboutGroup = (props) => {
 										</NavLink>
 									))}
 								</div>
-							) : null}
-						</div>
+
+								{Members.length > 4 ? (
+									<div className="icons-container">
+										{Members.slice(4, 8).map((el) => (
+											<NavLink
+												key={el.id}
+												to={`/groups/${id}/members`}
+												className="group-member-icons"
+											>
+												{el.avatar ? (
+													<img
+														src={el.avatar}
+														className="events-small-avatar-icon"
+														alt="members pics"
+													/>
+												) : (
+													<img
+														src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+														className="events-small-avatar-icon"
+														alt="members pics"
+													/>
+												)}
+											</NavLink>
+										))}
+									</div>
+								) : null}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

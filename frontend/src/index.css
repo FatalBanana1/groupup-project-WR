@@ -122,6 +122,10 @@ a:hover,
 	color: red;
 }
 
+.default {
+	cursor: default;
+}
+
 /* errors-------------------- */
 
 .errors-form {

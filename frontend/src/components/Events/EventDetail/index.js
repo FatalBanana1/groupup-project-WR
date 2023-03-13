@@ -377,33 +377,35 @@ const EventDetail = () => {
 						<EventImages event={event} />
 					) : null}
 
-					<div className="attend-ct">
-						<div>
-							<div className="date-attend">Date:</div>
-							<div className="date-attend-time">{`${formatStart} to ${formatEnd}`}</div>
-						</div>
-
-						<div>
-							<div className="price-attend">Price:</div>
-							<div className="price-attend">{`$${event.price}.00`}</div>
-						</div>
-
-						{attending ? (
-							<div
-								className="event-attend splash-group-button"
-								onClick={deleteRsvp}
-							>
-								Not Attend
+					{user && (
+						<div className="attend-ct">
+							<div>
+								<div className="date-attend">Date:</div>
+								<div className="date-attend-time">{`${formatStart} to ${formatEnd}`}</div>
 							</div>
-						) : (
-							<div
-								className="event-attend splash-group-button"
-								onClick={createRsvp}
-							>
-								Attend
+
+							<div>
+								<div className="price-attend">Price:</div>
+								<div className="price-attend">{`$${event.price}.00`}</div>
 							</div>
-						)}
-					</div>
+
+							{attending ? (
+								<div
+									className="event-attend splash-group-button"
+									onClick={deleteRsvp}
+								>
+									Not Attend
+								</div>
+							) : (
+								<div
+									className="event-attend splash-group-button"
+									onClick={createRsvp}
+								>
+									Attend
+								</div>
+							)}
+						</div>
+					)}
 				</div>
 			</div>
 		);

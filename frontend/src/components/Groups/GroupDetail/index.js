@@ -159,7 +159,7 @@ const GroupDetail = () => {
 
 		//----------------------------------------------------------
 
-		console.log(`group deets=========`, host);
+		// console.log(`group deets=========`, host);
 
 		//return
 		return (
@@ -346,7 +346,7 @@ const GroupDetail = () => {
 					</div>
 
 					{isLoaded && isAbout ? (
-						<AboutGroup group={fullgroup} />
+						<AboutGroup group={fullgroup} user={user} />
 					) : isLoaded && isEvents ? (
 						<EventsByGroup events={Events} />
 					) : isLoaded && isImages ? (
