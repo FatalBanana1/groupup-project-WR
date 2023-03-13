@@ -140,7 +140,10 @@ const EventDetail = () => {
 
 		//-------------------------------------------------------
 
-		const curr = rsvps.find((el) => el.id === user.id);
+		let curr;
+		if (user) {
+			curr = rsvps.find((el) => el.id === user.id);
+		}
 		let member;
 		let status;
 		let attending;

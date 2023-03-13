@@ -19,7 +19,10 @@ const EventsByGroup = ({ events }) => {
 	const user = useSelector((state) => state.session.user);
 	const groups = useSelector((state) => state.groups);
 	const group = groups[groupId];
-	const org = group.organizerId === user.id;
+	let org;
+	if (user) {
+		org = group.organizerId === user.id;
+	}
 
 	//return
 	return (
