@@ -294,7 +294,11 @@ router.get("/:eventId", valid_event, async (req, res) => {
 					},
 					{
 						model: Membership,
-						where: { status: "co-host" },
+						where: {
+							status: {
+								[Op.or]: ["co-host", "member"],
+							},
+						},
 						attributes: ["userId", "status"],
 					},
 					{

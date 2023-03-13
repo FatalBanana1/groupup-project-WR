@@ -37,7 +37,7 @@ const RsvpIndex = () => {
 
 	let rsvps = Object.values(allRsvps);
 
-	if (isLoaded && rsvps) {
+	if (isLoaded && rsvps && user) {
 		//dates
 		const formatStart = new Date(event.startDate).toLocaleDateString(
 			"en-US",
@@ -164,7 +164,12 @@ const RsvpIndex = () => {
 					</div>
 				</div>
 
-				<div className="attend-ct">
+				<div
+					className="attend-ct"
+					title={`${
+						!member ? "Must be Group Member to Attend Event" : null
+					}`}
+				>
 					<div>
 						<div className="date-attend">Date:</div>
 						<div className="date-attend-time">{`${formatStart} to ${formatEnd}`}</div>
@@ -175,21 +180,21 @@ const RsvpIndex = () => {
 						<div className="price-attend">{`$${event.price}.00`}</div>
 					</div>
 
-					{attending ? (
+					{attending && member ? (
 						<div
 							className="event-attend splash-group-button"
 							onClick={deleteRsvp}
 						>
 							Not Attend
 						</div>
-					) : (
+					) : !attending && member ? (
 						<div
 							className="event-attend splash-group-button"
 							onClick={createRsvp}
 						>
 							Attend
 						</div>
-					)}
+					) : null}
 				</div>
 			</>
 		);

@@ -155,6 +155,15 @@ const EventDetail = () => {
 			attending = curr.Attendances[0].status;
 		}
 
+		if (!curr) {
+			member = event.Group.Memberships.find(
+				(el) => el.userId === user.id
+			);
+			if (member) {
+				status = member.status;
+			}
+		}
+
 		const createRsvp = () => {
 			let payload = { eventId, userId: user.id };
 			dispatch(thunkCreateRsvp(payload)).then(() =>
@@ -169,7 +178,7 @@ const EventDetail = () => {
 			);
 		};
 
-		// console.log(`event deets=====>>>>------`, time);
+		// console.log(`event deets=====>>>>------`, member);
 
 		//-------------------------------------------------------
 
@@ -378,7 +387,14 @@ const EventDetail = () => {
 					) : null}
 
 					{user && (
-						<div className="attend-ct">
+						<div
+							className="attend-ct"
+							title={`${
+								!member
+									? "Must be Group Member to Attend Event"
+									: null
+							}`}
+						>
 							<div>
 								<div className="date-attend">Date:</div>
 								<div className="date-attend-time">{`${formatStart} to ${formatEnd}`}</div>
@@ -389,21 +405,21 @@ const EventDetail = () => {
 								<div className="price-attend">{`$${event.price}.00`}</div>
 							</div>
 
-							{attending ? (
+							{attending && member ? (
 								<div
 									className="event-attend splash-group-button"
 									onClick={deleteRsvp}
 								>
 									Not Attend
 								</div>
-							) : (
+							) : !attending && member ? (
 								<div
 									className="event-attend splash-group-button"
 									onClick={createRsvp}
 								>
 									Attend
 								</div>
-							)}
+							) : null}
 						</div>
 					)}
 				</div>
