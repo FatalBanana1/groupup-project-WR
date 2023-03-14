@@ -155,7 +155,7 @@ const EventDetail = () => {
 			attending = curr.Attendances[0].status;
 		}
 
-		if (!curr) {
+		if (!curr && user) {
 			member = event.Group.Memberships.find(
 				(el) => el.userId === user.id
 			);

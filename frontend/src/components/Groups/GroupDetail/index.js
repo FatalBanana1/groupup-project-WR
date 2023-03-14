@@ -1,5 +1,4 @@
 //group detail js
-
 //imports
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
