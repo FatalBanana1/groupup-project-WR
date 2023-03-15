@@ -183,9 +183,10 @@ const groupsReducer = (state = defaultState(), action) => {
 		}
 
 		case DELETE_GROUP: {
-			const newState = { ...state };
-			delete newState[action.group.id];
-			return newState;
+			// const newState = { ...state };
+			// delete newState[action.group.id];
+			// return newState
+			return defaultState();
 		}
 
 		case RESET_GROUPS:

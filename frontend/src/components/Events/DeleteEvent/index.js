@@ -24,7 +24,7 @@ export default function DeleteEvent({ event }) {
 		e.preventDefault();
 		setErrors({});
 
-		if (name === `Delete ${event.name}.`) {
+		if (name === `Delete ${event.name}`) {
 			const payload = {
 				eventId: event.id,
 			};
@@ -98,7 +98,7 @@ export default function DeleteEvent({ event }) {
 						<div id="confirming-delete">
 							Confirm Delete by typing out Delete followed by the
 							name of the Group:
-							<div id="check-delete-type">{`Delete ${event.name}.`}</div>
+							<div id="check-delete-type">{`Delete ${event.name}`}</div>
 						</div>
 						<input
 							type="text"

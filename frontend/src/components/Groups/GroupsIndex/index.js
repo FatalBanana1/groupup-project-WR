@@ -4,7 +4,7 @@
 //hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadGroups } from "../../../store/groups";
+import { actionResetState, thunkReadGroups } from "../../../store/groups";
 import { NavLink } from "react-router-dom";
 import CreateModalButton from "../CreateGroup/CreateModalButton";
 import OpenModalButton from "../../OpenModalButton";
@@ -50,6 +50,10 @@ const GroupsIndex = () => {
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
 
+		return () => actionResetState();
+	}, [dispatch, isLoaded, search2, showMenu]);
+
+	useEffect(() => {
 		if (!showMenu) return;
 		const closeMenu = (e) => {
 			if (!ulRef.current.contains(e.target)) {
@@ -58,7 +62,9 @@ const GroupsIndex = () => {
 		};
 		document.addEventListener("click", closeMenu);
 		return () => document.removeEventListener("click", closeMenu);
-	}, [dispatch, isLoaded, search2, showMenu]);
+	}, [showMenu]);
+
+	//-------------------------------------------
 
 	const resetGroupsHandler = () => {
 		setSearch(1);

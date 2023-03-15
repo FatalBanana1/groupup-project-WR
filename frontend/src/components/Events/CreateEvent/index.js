@@ -30,8 +30,6 @@ const CreateEvent = () => {
 	//selectors
 	let groups = useSelector((state) => state.groups);
 	let group = Object.values(groups)[0];
-	console.log(`groupId in creatte event ====`, groups);
-	console.log(`groupId in creatte event ====`, group.id);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

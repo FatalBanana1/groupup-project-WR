@@ -8,7 +8,10 @@ import OpenModalButton from "../../OpenModalButton";
 import DeleteModalButton from "../../Groups/DeleteGroup/DeleteModalButton.js";
 import EditModalButton from "../../Groups/UpdateGroup/EditModalButton.js";
 import { NavLink, useParams } from "react-router-dom";
-import { thunkReadEventDetails } from "../../../store/events";
+import {
+	actionResetStateEvent,
+	thunkReadEventDetails,
+} from "../../../store/events";
 import UpdateGroup from "../../Groups/UpdateGroup";
 import "./EventDetail.css";
 import ErrorHandler from "../../ErrorHandler";
@@ -71,6 +74,7 @@ const EventDetail = () => {
 				const data = await res.json();
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
+		return () => actionResetStateEvent();
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -201,10 +205,17 @@ const EventDetail = () => {
 
 						<div className="hosted-by-events">
 							<div className="left-events-hosted">
-								<img
-									className="events-small-avatar-icon"
-									src={Group.Organizer.avatar}
-								/>
+								{Group.Organizer.avatar ? (
+									<img
+										className="events-small-avatar-icon"
+										src={Group.Organizer.avatar}
+									/>
+								) : (
+									<img
+										className="events-small-avatar-icon"
+										src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
+									/>
+								)}
 							</div>
 
 							<div className="right-events-hosted">

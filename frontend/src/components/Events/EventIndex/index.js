@@ -1,17 +1,9 @@
-//groups page
-
 //imports
-//hooks
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReadEvents } from "../../../store/events";
+import { actionResetStateEvent, thunkReadEvents } from "../../../store/events";
 import { NavLink } from "react-router-dom";
-import CreateEventModalButton from "../CreateEvent/CreateEventModalButton";
-import OpenModalButton from "../../OpenModalButton";
-// import * as sessionActions from "../../../store/session";
 import ReadEvent from "../ReadEvent";
-import CreateEvent from "../CreateEvent";
-import LoginFormModal from "../../LoginFormModal";
 import { removeSearch, thunkSearchEvents } from "../../../store/search";
 import "../ReadEvent/ReadEvent.css";
 import Loading from "../../Loading";
@@ -43,6 +35,8 @@ const EventIndex = () => {
 					setErrors((data[errors] = [data.message]));
 				if (data && data.errors) setErrors(Object.values(data.errors));
 			});
+
+		return () => actionResetStateEvent();
 	}, [dispatch, isLoaded, search2]);
 
 	const resetGroupsHandler = () => {
@@ -143,29 +137,6 @@ const EventIndex = () => {
 										{`Next Page >`}
 									</NavLink>
 								) : null}
-							</div>
-
-							<div className="mauto">
-								{user ? (
-									<div className="groups-link-container-signin">
-										<CreateEventModalButton
-											className="splash-link join-group"
-											buttonText="Create an Event"
-											id="create-splash"
-											onButtonClick={closeMenu}
-											modalComponent={<CreateEvent />}
-										/>
-									</div>
-								) : (
-									<div className="groups-link-container">
-										<OpenModalButton
-											props="link-buttons border"
-											buttonText="Create an Event"
-											onButtonClick={closeMenu}
-											modalComponent={<LoginFormModal />}
-										/>
-									</div>
-								)}
 							</div>
 						</div>
 					)}

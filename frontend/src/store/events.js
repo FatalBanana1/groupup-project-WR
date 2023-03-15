@@ -119,7 +119,7 @@ export const thunkUpdateEvent = (payload) => async (dispatch) => {
 
 // DELETE: Delete Event Route: /api/events/:eventId
 export const thunkDeleteEvent = (payload) => async (dispatch) => {
-	const response = await csrfFetch(`/api/events/${payload.eventId}`, {
+	const response = await csrfFetch(`/api/events/${+payload.eventId}`, {
 		method: `DELETE`,
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
@@ -143,14 +143,12 @@ function defaultState() {
 const eventsReducer = (state = defaultState(), action) => {
 	switch (action.type) {
 		case READ_EVENTS: {
-			// console.log(`reducer>>> groups: `, action.events);
+			// console.log(`reducer>>> events: `, action.events);
 			const newEvents = action.events.Events.reduce((acc, event) => {
 				acc[event.id] = event;
 				return acc;
 			}, {});
-			return {
-				...newEvents,
-			};
+			return newEvents;
 		}
 
 		case READ_EVENT_DETAILS: {
@@ -173,9 +171,10 @@ const eventsReducer = (state = defaultState(), action) => {
 		}
 
 		case DELETE_EVENT: {
-			const newState = { ...state };
-			delete newState[action.event.id];
-			return newState;
+			// const newState = { ...state };
+			// delete newState[action.event.id];
+			// return newState;
+			return defaultState();
 		}
 
 		case RESET_EVENT:

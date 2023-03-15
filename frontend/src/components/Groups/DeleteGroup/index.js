@@ -34,7 +34,7 @@ const DeleteGroup = ({ group }) => {
 		e.preventDefault();
 		setErrors([]);
 
-		if (name === `Delete ${group.name}.`) {
+		if (name === `Delete ${group.name}`) {
 			const payload = {
 				groupId: group.id,
 			};
@@ -168,7 +168,7 @@ const DeleteGroup = ({ group }) => {
 						<div id="confirming-delete">
 							Confirm Delete by typing out Delete followed by the
 							name of the Group:
-							<div id="check-delete-type">{`Delete ${group.name}.`}</div>
+							<div id="check-delete-type">{`Delete ${group.name}`}</div>
 						</div>
 						<input
 							type="text"
