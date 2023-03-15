@@ -403,7 +403,7 @@ const EventDetail = () => {
 							title={`${
 								!member
 									? "Must be Group Member to Attend Event"
-									: null
+									: ""
 							}`}
 						>
 							<div>

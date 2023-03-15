@@ -167,7 +167,7 @@ const RsvpIndex = () => {
 				<div
 					className="attend-ct"
 					title={`${
-						!member ? "Must be Group Member to Attend Event" : null
+						!member ? "Must be Group Member to Attend Event" : ""
 					}`}
 				>
 					<div>
