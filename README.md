@@ -69,7 +69,7 @@ This was my first Full Stack Application. I spent 2 weeks developing this and po
 6. This app uses Sequelize.js as the ORM to handle creating the Database. Go to the backend directory, migrate your database, seed your database, and run the app
 
     ```bash
-	cd backend
+    cd backend
     ```
 
     ```bash
@@ -108,6 +108,11 @@ This was my first Full Stack Application. I spent 2 weeks developing this and po
 2. SQLite
 3. PostgreSQL
 
+### Future Goals:
+
+1. Implement Group Images feaure
+2. Implement Event Images feaure
+
 ## Database Schema Design
 
 ![groupup-db-schema]
@@ -140,6 +145,6 @@ This was my first Full Stack Application. I spent 2 weeks developing this and po
 [portfolio-url]: https://wasiqr-portfolio.onrender.com/
 [express-url]: https://expressjs.com/en/4x/api.html
 [sqlite-url]: https://www.sqlite.org/index.html
-[sequelize-shield]:	https://img.shields.io/badge/sequelize-323330?style=for-the-badge&logo=sequelize&logoColor=blue
-[sequelize-url]:	https://sequelize.org/docs/v6/
+[sequelize-shield]: https://img.shields.io/badge/sequelize-323330?style=for-the-badge&logo=sequelize&logoColor=blue
+[sequelize-url]: https://sequelize.org/docs/v6/
 [express-shield]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
