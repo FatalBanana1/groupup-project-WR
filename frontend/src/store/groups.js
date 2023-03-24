@@ -138,6 +138,27 @@ export const thunkDeleteGroup = (payload) => async (dispatch) => {
 
 //----------------------------------------------
 
+// handle group images
+
+// Delete an Image for a Group
+// delete - /api/group-images/:imageId
+export const thunkDeleteGroupIMAGE = (payload) => async (dispatch) => {
+	const response = await csrfFetch(`/api/group-images/${payload.id}`, {
+		method: `DELETE`,
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+	});
+
+	// console.log(`group id in THUNK>>>>>>>`,response);
+	if (response.ok) {
+		const group = await response.json();
+		dispatch(actionUpdateGroup(group));
+		return group;
+	}
+};
+
+//----------------------------------------------
+
 //reducer
 
 function defaultState() {

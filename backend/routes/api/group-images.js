@@ -189,6 +189,7 @@ router.delete(
 	requireAuth,
 	async (req, res) => {
 		let imageId = req.params.imageId;
+		let { groupId } = req.body;
 
 		let image = await GroupImage.findOne({
 			where: { id: imageId },
@@ -196,10 +197,71 @@ router.delete(
 
 		await image.destroy();
 
-		return res.json({
-			message: "Successfully deleted",
-			statusCode: 200,
+		let group = await Group.findOne({
+			where: { id: groupId },
+			include: [
+				{
+					model: GroupImage,
+					attributes: [
+						"id",
+						"url",
+						"preview",
+						"createdAt",
+						"updatedAt",
+					],
+				},
+				{
+					model: User,
+					as: "Organizer",
+					attributes: ["id", "firstName", "lastName", "avatar"],
+				},
+				{
+					model: Venue,
+					as: "Venues",
+					attributes: [
+						"id",
+						"groupId",
+						"city",
+						"state",
+						"lat",
+						"lng",
+					],
+				},
+				{
+					model: Event,
+					include: [
+						{
+							model: EventImage,
+							where: { preview: true },
+							attributes: ["url"],
+						},
+						{
+							model: Venue,
+							attributes: ["city", "state"],
+						},
+						{
+							model: Attendance,
+						},
+					],
+				},
+			],
 		});
+
+		let members = await Group.findOne({
+			where: { id: groupId },
+			attributes: ["id"],
+			include: [
+				{
+					model: Membership,
+					attributes: ["userId"],
+					where: { groupId },
+				},
+			],
+		});
+
+		group.dataValues.numMembers = members.dataValues.Memberships.length;
+
+		return res.json(group);
 	}
 );
 
