@@ -597,7 +597,7 @@ router.get("/:groupId", valid_group_only, async (req, res) => {
 		include: [
 			{
 				model: GroupImage,
-				attributes: ["id", "url", "preview"],
+				attributes: ["id", "url", "preview", "createdAt", "updatedAt"],
 			},
 			{
 				model: User,

@@ -15,5 +15,52 @@
 	height: 500px;
 	object-fit: cover;
 	border-radius: 8px;
-	margin: 50px 0px;
+	margin: 0px;
+	margin-bottom: 50px;
+}
+
+.image-delete {
+	width: fit-content;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+	padding: 2px 4px;
+}
+
+.image-delete:hover,
+.delete-image-text:hover {
+	background-color: rgb(248, 98, 81);
+	cursor: pointer;
+}
+
+.above-image {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 60%;
+	margin-bottom: 5px;
+}
+
+.confirmImageDelete {
+	width: calc(60% - 6px);
+	height: 494px;
+	object-fit: cover;
+	border-radius: 8px;
+	margin: 0px;
+	margin-bottom: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border: 3px dashed gray;
+}
+
+.delete-image-text {
+	width: fit-content;
+	background-color: rgb(247, 60, 39);
+	color: white;
+	border-radius: 6px;
+	border: 0;
+	padding: 4px 8px;
 }

@@ -349,7 +349,10 @@ const GroupDetail = () => {
 					) : isLoaded && isEvents ? (
 						<EventsByGroup events={Events} />
 					) : isLoaded && isImages ? (
-						<GroupImages />
+						<GroupImages
+							host={host}
+							curr={curr}
+						/>
 					) : null}
 				</div>
 			</div>

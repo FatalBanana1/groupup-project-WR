@@ -1,17 +1,14 @@
-//group detail js
-
 //imports
-
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../store/session";
 import { useParams } from "react-router-dom";
-import { thunkReadGroupDetails } from "../../store/groups";
 import "./GroupImages.css";
 import Loading from "../Loading";
+import ReadGroupImages from "./ReadImage";
 
 //main
-export default function GroupImages() {
+export default function GroupImages({ host, curr }) {
 	//states
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
@@ -76,12 +73,22 @@ export default function GroupImages() {
 		group["image"] = image;
 
 		//dates
-		let date = new Date(createdAt).toString().split(" ");
-		let month = date[1];
-		let day = date[2];
-		let year = date[3];
+		// let date = new Date(createdAt).toString().split(" ");
+		// let month = date[1];
+		// let day = date[2];
+		// let year = date[3];
 
-		// console.log(`front images======`, groupImages);
+		//dates
+		// const formatStart = new Date(startDate).toLocaleDateString("en-US", {
+		// 	weekday: "long",
+		// 	year: "numeric",
+		// 	month: "long",
+		// 	day: "numeric",
+		// 	hour: "numeric",
+		// 	minute: "numeric",
+		// });
+
+		// console.log(`front images======`, host, curr);
 
 		//------------------------------------------------------
 
@@ -98,15 +105,17 @@ export default function GroupImages() {
 					<div className="images-comp">
 						{groupImages.length >= 1 ? (
 							groupImages.map((image) => (
-								<img
-									className="images"
+								<ReadGroupImages
+									image={image}
+									host={host}
+									curr={curr}
 									key={image.id}
-									src={image.url}
-									alt={`Group Image`}
 								/>
 							))
 						) : (
-							<div>No Group Images...</div>
+							<div className="nothing-found">
+								No Group Images...
+							</div>
 						)}
 					</div>
 				</div>
