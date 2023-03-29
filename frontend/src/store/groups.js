@@ -127,8 +127,6 @@ export const thunkDeleteGroup = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
-
-	// console.log(`group id in THUNK>>>>>>>`,response);
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionDeleteGroup(group));
@@ -148,8 +146,21 @@ export const thunkDeleteGroupIMAGE = (payload) => async (dispatch) => {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(payload),
 	});
+	if (response.ok) {
+		const group = await response.json();
+		dispatch(actionUpdateGroup(group));
+		return group;
+	}
+};
 
-	// console.log(`group id in THUNK>>>>>>>`,response);
+//Add an Image to a Group based on the Group's id
+// post - api/groups/:groupId/images
+export const thunkCreateGroupIMAGE = (payload) => async (dispatch) => {
+	const response = await csrfFetch(`/api/groups/${payload.id}/images`, {
+		method: `POST`,
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+	});
 	if (response.ok) {
 		const group = await response.json();
 		dispatch(actionUpdateGroup(group));
@@ -163,10 +174,6 @@ export const thunkDeleteGroupIMAGE = (payload) => async (dispatch) => {
 
 function defaultState() {
 	const initialState = {};
-	// return action.groups.Groups.reduce((acc, group) => {
-	// 	acc[group.id] = group;
-	// 	return acc;
-	// }, {});
 	return initialState;
 }
 

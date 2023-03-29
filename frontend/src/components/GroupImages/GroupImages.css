@@ -64,3 +64,9 @@
 	border: 0;
 	padding: 4px 8px;
 }
+
+.cancel-img:hover,
+.submit-img:hover {
+	color: rgb(0, 130, 148);
+	cursor: pointer;
+}

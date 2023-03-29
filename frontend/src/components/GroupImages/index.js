@@ -6,17 +6,16 @@ import { useParams } from "react-router-dom";
 import "./GroupImages.css";
 import Loading from "../Loading";
 import ReadGroupImages from "./ReadImage";
+import { thunkCreateGroupIMAGE } from "../../store/groups";
 
 //main
 export default function GroupImages({ host, curr }) {
 	//states
 	let dispatch = useDispatch();
 	let { groupId } = useParams();
-	const [isLoaded, setIsLoaded] = useState();
-
-	// useEffect(() => {
-	// 	dispatch(thunkReadGroupDetails(groupId)).then(() => setIsLoaded(true));
-	// }, [dispatch]);
+	const [showAddImage, setShowAddImage] = useState(false);
+	const [confirmed, setConfirmed] = useState(false);
+	const [url, setUrl] = useState("");
 
 	//-----------------
 
@@ -43,6 +42,34 @@ export default function GroupImages({ host, curr }) {
 		e.preventDefault();
 		dispatch(sessionActions.logout());
 		closeMenu();
+	};
+
+	//----------------
+
+	//clicks - state
+
+	//show image form
+	const clickAddImage = () => {
+		setShowAddImage(true);
+	};
+	// cancel image button
+	const clickCancelImage = () => {
+		setShowAddImage(false);
+	};
+	// handle image
+	const handleImage = (e) => {
+		setUrl(e.target.value);
+	};
+	// handle image submit
+	const handleSubmitImage = async () => {
+		let payload = { id: groupId, url, preview: false };
+		await dispatch(thunkCreateGroupIMAGE(payload)).then(() =>
+			setConfirmed(true)
+		);
+		setTimeout(() => {
+			setConfirmed(false);
+			setShowAddImage(false);
+		}, 4000);
 	};
 
 	//----------------
@@ -87,8 +114,16 @@ export default function GroupImages({ host, curr }) {
 		// 	hour: "numeric",
 		// 	minute: "numeric",
 		// });
+		let host2;
+		let curr2;
+		if (host && host.length > 0) {
+			host2 = host[0].status;
+		}
+		if (curr && curr.length > 0) {
+			curr2 = curr[0].status;
+		}
 
-		// console.log(`front images======`, host, curr);
+		// console.log(`front images======`, host2, curr2);
 
 		//------------------------------------------------------
 
@@ -101,6 +136,41 @@ export default function GroupImages({ host, curr }) {
 							groupImages.length > 0 ? groupImages.length : 0
 						})`}
 					</h2>
+
+					{curr2 === "co-host" && !showAddImage && (
+						// <div className="image-delete" onClick={clickAddImage}>
+						<div className="image-delete">
+							Add Image: Coming Soon!
+						</div>
+					)}
+					{curr2 === "co-host" && showAddImage && (
+						<>
+							{confirmed ? (
+								<div>Image was successfully added!</div>
+							) : (
+								<input
+									type="text"
+									value={url}
+									onChange={handleImage}
+									required
+								/>
+							)}
+							<div className="row">
+								<div
+									className="mright15 submit-img"
+									onClick={handleSubmitImage}
+								>
+									Submit
+								</div>
+								<div
+									className="cancel-img"
+									onClick={clickCancelImage}
+								>
+									Cancel
+								</div>
+							</div>
+						</>
+					)}
 
 					<div className="images-comp">
 						{groupImages.length >= 1 ? (

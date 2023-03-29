@@ -648,74 +648,6 @@ router.get("/:groupId", valid_group_only, async (req, res) => {
 
 //-------------
 
-// // get all groups
-// // get - /api/groups/
-// router.get("/", async (req, res) => {
-// 	let groups = await Group.findAll({
-// 		attributes: [
-// 			"id",
-// 			"organizerId",
-// 			"name",
-// 			"about",
-// 			"type",
-// 			"private",
-// 			"city",
-// 			"state",
-// 			"createdAt",
-// 			"updatedAt",
-// 		],
-// 	});
-
-// 	if (!groups.length) {
-// 		return res.json({ Groups: null });
-// 	}
-
-// 	let members = await Group.findAll({
-// 		attributes: ["id"],
-// 		include: [
-// 			{
-// 				model: Membership,
-// 				attributes: ["userId"],
-// 			},
-// 		],
-// 	});
-
-// 	let images = await GroupImage.findAll({
-// 		where: { preview: true },
-// 		attributes: ["groupId", "url"],
-// 	});
-
-// 	//filter duplicates
-// 	let newarray = [];
-// 	let visited = new Set();
-// 	groups.forEach((el, i) => {
-// 		if (!visited.has(el.id)) {
-// 			//add nummembers
-// 			for (let j in members) {
-// 				if (el.id === members[j].dataValues.id) {
-// 					el.dataValues.numMembers =
-// 						members[j].dataValues.Memberships.length;
-// 					break;
-// 				}
-// 				el.dataValues.previewImage = null;
-// 			}
-// 			// add preview image
-// 			for (let k = 0; k < images.length; k++) {
-// 				if (images[k].dataValues.groupId === el.id) {
-// 					el.dataValues.previewImage = images[k].dataValues.url;
-// 					break;
-// 				}
-// 			}
-// 			visited.add(el.id);
-// 			newarray.push(el);
-// 		}
-// 	});
-
-// 	return res.json({ Groups: newarray });
-// });
-
-//-------------
-
 // get all groups - WITH QUERY
 // get - /api/groups/
 router.get("/", async (req, res) => {
@@ -1109,11 +1041,64 @@ router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
 		preview,
 	});
 
-	return res.json({
-		id: newimage.id,
-		url,
-		preview,
+	// return res.json({
+	// 	id: newimage.id,
+	// 	url,
+	// 	preview,
+	// });
+
+	let group = await Group.findOne({
+		where: { id: groupId },
+		include: [
+			{
+				model: GroupImage,
+				attributes: ["id", "url", "preview", "createdAt", "updatedAt"],
+			},
+			{
+				model: User,
+				as: "Organizer",
+				attributes: ["id", "firstName", "lastName", "avatar"],
+			},
+			{
+				model: Venue,
+				as: "Venues",
+				attributes: ["id", "groupId", "city", "state", "lat", "lng"],
+			},
+			{
+				model: Event,
+				include: [
+					{
+						model: EventImage,
+						where: { preview: true },
+						attributes: ["url"],
+					},
+					{
+						model: Venue,
+						attributes: ["city", "state"],
+					},
+					{
+						model: Attendance,
+					},
+				],
+			},
+		],
 	});
+
+	let members = await Group.findOne({
+		where: { id: groupId },
+		attributes: ["id"],
+		include: [
+			{
+				model: Membership,
+				attributes: ["userId"],
+				where: { groupId },
+			},
+		],
+	});
+
+	group.dataValues.numMembers = members.dataValues.Memberships.length;
+
+	return res.json(group);
 });
 
 // Create a Group
@@ -1168,7 +1153,7 @@ router.post("/", requireAuth, async (req, res) => {
 		organizerId,
 	});
 
-	let member = await Membership.create({
+	await Membership.create({
 		userId: user.id,
 		groupId: group.id,
 		status: "co-host",
