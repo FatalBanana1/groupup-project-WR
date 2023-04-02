@@ -7,7 +7,6 @@ import "./GroupImages.css";
 import Loading from "../Loading";
 import ReadGroupImages from "./ReadImage";
 import { thunkCreateGroupIMAGE } from "../../store/groups";
-import { data } from "jquery";
 
 //main
 export default function GroupImages({ host, curr }) {
