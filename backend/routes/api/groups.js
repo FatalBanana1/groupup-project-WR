@@ -1031,6 +1031,7 @@ router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
 			id: check.id,
 			url,
 			preview,
+			groupimage: true
 		});
 	}
 
@@ -1040,12 +1041,6 @@ router.post("/:groupId/images", valid_group, valid_user, async (req, res) => {
 		url,
 		preview,
 	});
-
-	// return res.json({
-	// 	id: newimage.id,
-	// 	url,
-	// 	preview,
-	// });
 
 	let group = await Group.findOne({
 		where: { id: groupId },

@@ -7,6 +7,7 @@ import "./GroupImages.css";
 import Loading from "../Loading";
 import ReadGroupImages from "./ReadImage";
 import { thunkCreateGroupIMAGE } from "../../store/groups";
+import { data } from "jquery";
 
 //main
 export default function GroupImages({ host, curr }) {
@@ -15,7 +16,9 @@ export default function GroupImages({ host, curr }) {
 	let { groupId } = useParams();
 	const [showAddImage, setShowAddImage] = useState(false);
 	const [confirmed, setConfirmed] = useState(false);
+	const [notConfirmed, setNOTConfirmed] = useState(false);
 	const [url, setUrl] = useState("");
+	const [errors, setErrors] = useState("");
 
 	//-----------------
 
@@ -51,10 +54,13 @@ export default function GroupImages({ host, curr }) {
 	//show image form
 	const clickAddImage = () => {
 		setShowAddImage(true);
+		setUrl("");
+		setErrors("");
 	};
 	// cancel image button
 	const clickCancelImage = () => {
-		setShowAddImage(false);
+		if (!confirmed) setShowAddImage(false);
+		setErrors("");
 	};
 	// handle image
 	const handleImage = (e) => {
@@ -62,14 +68,38 @@ export default function GroupImages({ host, curr }) {
 	};
 	// handle image submit
 	const handleSubmitImage = async () => {
-		let payload = { id: groupId, url, preview: false };
-		await dispatch(thunkCreateGroupIMAGE(payload)).then(() =>
-			setConfirmed(true)
-		);
-		setTimeout(() => {
-			setConfirmed(false);
-			setShowAddImage(false);
-		}, 4000);
+		setErrors("");
+		let err;
+		if (!confirmed) {
+			//check url
+			const textValue = url.trim();
+			const pattern = /\.(gif|jpg|jpeg|tiff|png)$/i;
+			const isImageUrl = pattern.test(textValue);
+			//send image
+			let payload = { id: groupId, url, preview: false };
+			if (isImageUrl) {
+				await dispatch(thunkCreateGroupIMAGE(payload)).then((data) => {
+					if (data && data.groupimage) {
+						// img already been added
+						err = "Image has already been uploaded!";
+					} else {
+						setConfirmed(true);
+						setUrl("");
+						setTimeout(() => {
+							setConfirmed(false);
+							setShowAddImage(false);
+							setErrors("");
+						}, 4000);
+					}
+				});
+			} else {
+				err = "Image was not uploaded! Image must be URL";
+			}
+		}
+		//check errors
+		if (err) {
+			setErrors({ Error: err });
+		}
 	};
 
 	//----------------
@@ -138,23 +168,31 @@ export default function GroupImages({ host, curr }) {
 					</h2>
 
 					{curr2 === "co-host" && !showAddImage && (
-						// <div className="image-delete" onClick={clickAddImage}>
-						<div className="image-delete">
-							Add Image: Coming Soon!
+						<div className="image-delete" onClick={clickAddImage}>
+							{/*  <div className="image-delete"> */}
+							Add Image
 						</div>
 					)}
+
 					{curr2 === "co-host" && showAddImage && (
 						<>
 							{confirmed ? (
-								<div>Image was successfully added!</div>
+								<div className="success-image">Image was successfully added!</div>
 							) : (
-								<input
-									type="text"
-									value={url}
-									onChange={handleImage}
-									required
-								/>
+								<>
+									{errors && errors.Error && (
+										<div className="image-errors">{`Error: ${errors.Error}`}</div>
+									)}
+									<input
+										type="text"
+										value={url}
+										onChange={handleImage}
+										className="image-upload-input"
+										required
+									/>
+								</>
 							)}
+
 							<div className="row">
 								<div
 									className="mright15 submit-img"
@@ -162,6 +200,7 @@ export default function GroupImages({ host, curr }) {
 								>
 									Submit
 								</div>
+
 								<div
 									className="cancel-img"
 									onClick={clickCancelImage}

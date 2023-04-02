@@ -70,3 +70,21 @@
 	color: rgb(0, 130, 148);
 	cursor: pointer;
 }
+
+.image-upload-input {
+	width: 50vw;
+}
+
+.image-errors {
+	color: rgb(225, 0, 0);
+	position: relative;
+	right: -5px;
+	top: -20px;
+	width: 85vw;
+	height: 0;
+	font-size: 0.9rem;
+}
+
+.success-image {
+	color: rgb(0, 130, 148);
+}
